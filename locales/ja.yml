@@ -1,13 +1,44 @@
+language:
+  zh: 簡体字中国語
+  jp: 日本語
+  en: 英語
 button:
   about: これは？
   back: 戻る
   go: 進む
+  canal: キャンセル
   home: ホーム
-  toggle_dark: ダークモード切り替え
+  title: Snow
+  toggle_dark: 背景を切り替える
   toggle_langs: 言語切り替え
+  noLogin: ログイン
+  admin: 管理
+  quit: サインアウト
+  login: ログイン
+  copy: コピー
+  copyOk: 正常にコピー
 intro:
   desc: 固執された Vite スターターテンプレート
   dynamic-route: 動的ルートのデモ
   hi: こんにちは、{name}!
   whats-your-name: 君の名は。
 not-found: 見つかりませんでした
+home:
+  fileTips: ファイル一覧
+  control: 操作する
+tip:
+  noData: データがありません。ログインしてバックグラウンド操作に入ってください。
+  dev: すでに開発中です！
+  deving: 頑張って開発中です！
+  progress: 開発進捗
+  account: アカウント
+  password: パスワード
+  accountPh: アカウントを入力してください
+  passwordPh: パスワードを入力してください
+menu:
+  index: コンソール
+message:
+  error: 間違い
+tag:
+  yes: はい
+  no: しない

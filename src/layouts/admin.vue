@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { isDark } from '~/composables/dark'
 
+const router = useRouter()
+const props = ref<Boolean>(false)
+// 控制菜单收缩
+const menuStatus = ref<Boolean>(true)
+
 const toggleTheme = () => {
   if (isDark.value) {
     // 恢复亮色主题
@@ -11,23 +16,40 @@ const toggleTheme = () => {
   }
   toggleDark()
 }
+
+const onMenuCollapse = () => {
+  menuStatus.value = !menuStatus.value
+}
+
+/** 路由切换 */
+const routerPage = (val: string) => {
+  if (val) {
+    router.push('/@admin')
+  } else {
+    router.push('/@admin')
+  }
+}
 </script>
 
 <template>
-  <a-layout>
+  <a-layout style="height: 100%;">
     <a-layout-header>
-      <Header @toggleTheme="toggleTheme" />
+      <Header @onMenuCollapse="onMenuCollapse" @toggleTheme="toggleTheme" :value="props" />
     </a-layout-header>
     <a-layout>
-      <a-layout-sider>
-        6
+      <a-layout-sider
+        hide-trigger
+        collapsible
+        :collapsed="menuStatus"
+      >
+        <PopMenu @routerPage="routerPage"/>
       </a-layout-sider>
       <a-layout-content>
         <slot />
       </a-layout-content>
     </a-layout>
     <a-layout-footer>
-      6
+      <Footer />
     </a-layout-footer>
   </a-layout>
 </template>

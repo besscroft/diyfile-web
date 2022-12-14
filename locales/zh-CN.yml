@@ -1,10 +1,22 @@
+language:
+  zh: 简体中文
+  jp: 日文
+  en: 英文
 button:
   about: 关于
   back: 返回
   go: 确定
+  canal: 取消
   home: 首页
-  toggle_dark: 切换深色模式
+  title: Snow
+  toggle_dark: 切换背景
   toggle_langs: 切换语言
+  noLogin: 未登录
+  admin: 管理
+  quit: 退出
+  login: 登录
+  copy: 复制
+  copyOk: 复制成功
 intro:
   desc: 固执己见的 Vite 项目模板
   dynamic-route: 动态路由演示
@@ -12,3 +24,22 @@ intro:
   aka: 也叫
   whats-your-name: 输入你的名字
 not-found: 未找到页面
+home:
+  fileTips: 文件列表
+  control: 操作
+tip:
+  noData: 暂无数据，请登录后进入后台操作！
+  dev: 已经在努力开发中了！
+  deving: 正在努力开发中！
+  progress: 开发进度
+  account: 账号
+  password: 密码
+  accountPh: 请输入账号
+  passwordPh:  请输入密码
+menu:
+  index: 控制台
+message:
+  error: 错误
+tag:
+  yes: 是
+  no: 否

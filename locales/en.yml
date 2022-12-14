@@ -1,10 +1,22 @@
+language:
+  zh: Chinese
+  jp: Japanese
+  en: English
 button:
   about: About
   back: Back
   go: GO
+  canal: Canal
   home: Home
-  toggle_dark: Toggle dark mode
+  title: Snow
+  toggle_dark: Change background
   toggle_langs: Change languages
+  noLogin: login
+  admin: board
+  quit: quit
+  login: login
+  copy: Copy
+  copyOk: Copy Success
 intro:
   desc: Opinionated Vite Starter Template
   dynamic-route: Demo of dynamic route
@@ -12,3 +24,22 @@ intro:
   aka: Also known as
   whats-your-name: What's your name?
 not-found: Not found
+home:
+  fileTips: File List
+  control: Control
+tip:
+  noData: No data, please log in and enter the background operation!
+  dev: It's already under development!
+  deving: We are working hard to develop!
+  progress: dev progress
+  account: Account
+  password: Password
+  accountPh: please enter account
+  passwordPh: please enter password
+menu:
+  index: Dashboard
+message:
+  error: Error
+tag:
+  yes: Yes
+  no: No

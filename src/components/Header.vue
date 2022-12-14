@@ -1,18 +1,48 @@
 <script setup lang="ts">
-const emit = defineEmits(['toggleTheme'])
+import useDevice from '~/hooks/device'
+
+// 路由状态
+const props = defineProps(['value'])
+const emit = defineEmits(['toggleTheme', 'onMenuCollapse'])
 const { t, availableLocales, locale } = useI18n()
+const router = useRouter()
+const { isMobile } = useDevice()
 const username = ref<String>('旅行者')
 const avatar = ref<String>('')
 
 const toggleTheme = () => {
   emit('toggleTheme')
 }
+
+const onMenuCollapse = () => {
+  emit('onMenuCollapse')
+}
+
+/** 路由切换 */
+const routerPage = (val: string) => {
+  if (val) {
+    router.push(val)
+  } else {
+    if (props.value) {
+      router.push('/admin')
+    } else {
+      router.push('/')
+    }
+  }
+}
 </script>
 
 <template>
   <a-row class="grid-demo">
     <a-col class="title-container" :xs="8" :sm="8" :md="8" :lg="8" :xl="8" :xxl="8">
-      <icon-sun-fill /> Xanadu
+      <div v-if="props.value || isMobile">
+        Xanadu
+      </div>
+      <div v-else>
+        <a-button shape="round" @click="onMenuCollapse">
+          <icon-list />
+        </a-button>
+      </div>
     </a-col>
     <a-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" :xxl="8">
       <div class="content-container">
@@ -47,7 +77,7 @@ const toggleTheme = () => {
             <template #content>
               <div v-if="username">
                 <a-doption @click="routerPage('')">{{ props.value ? t('button.admin') : t('button.home') }}</a-doption>
-                <a-doption @click="routerPage('/admin')" v-if="!props.value && isMobile">{{ t('menu.index') }}</a-doption>
+                <a-doption @click="routerPage('/admin')" v-if="!props.value">{{ t('menu.index') }}</a-doption>
                 <a-doption @click="loginOut">{{ t('button.quit') }}</a-doption>
               </div>
               <div v-else>
