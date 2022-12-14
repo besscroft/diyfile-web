@@ -1,8 +1,41 @@
+<script setup lang="ts">
+import { isDark } from '~/composables/dark'
+
+const router = useRouter()
+const props = ref<Boolean>(false)
+// 控制菜单收缩
+const menuStatus = ref<Boolean>(true)
+
+const toggleTheme = () => {
+  if (isDark.value) {
+    // 恢复亮色主题
+    document.body.removeAttribute('arco-theme')
+    localStorage.setItem('Xanadu-theme', 'light')
+  } else {
+    // 设置为暗黑主题
+    document.body.setAttribute('arco-theme', 'dark')
+    localStorage.setItem('Xanadu-theme', 'dark')
+  }
+  toggleDark()
+}
+
+const onMenuCollapse = () => {
+  menuStatus.value = !menuStatus.value
+}
+</script>
+
 <template>
-  <main class="px-4 py-10 text-center text-gray-700 dark:text-gray-200">
-    <RouterView />
-    <div class="mt-5 mx-auto text-center opacity-75 dark:opacity-50 text-sm">
-      [Default Layout]
-    </div>
-  </main>
+  <a-layout style="height: 100%;">
+    <a-layout-header>
+      <Header @onMenuCollapse="onMenuCollapse" @toggleTheme="toggleTheme" :value="props" />
+    </a-layout-header>
+    <a-layout>
+      <a-layout-content>
+        <RouterView />
+      </a-layout-content>
+    </a-layout>
+    <a-layout-footer>
+      <Footer />
+    </a-layout-footer>
+  </a-layout>
 </template>

@@ -3,9 +3,11 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <RouterLink class="icon-btn mx-2" to="/about" :title="t('button.about')">
-    <div i-carbon-dicom-overlay />
-  </RouterLink>
+  <div class="flex flex-row flex-wrap" style="margin-top: 6rem">
+    <RouterLink class="flex-initial mx-auto" to="/about" :title="t('button.about')">
+      <div i-carbon-dicom-overlay />
+    </RouterLink>
+  </div>
 </template>
 
 <route lang="yaml">

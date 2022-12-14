@@ -47,7 +47,7 @@ const routerPage = (val: string) => {
         <PopMenu @routerPage="routerPage"/>
       </a-layout-sider>
       <a-layout-content>
-        <slot />
+        <RouterView />
       </a-layout-content>
     </a-layout>
     <a-layout-footer>
