@@ -4,7 +4,7 @@ import useDevice from '~/hooks/device'
 // 路由状态
 const props = defineProps(['value'])
 const emit = defineEmits(['toggleTheme', 'onMenuCollapse'])
-const { t, availableLocales, locale } = useI18n()
+const { t, locale } = useI18n()
 const router = useRouter()
 const { isMobile } = useDevice()
 const username = ref<String>('旅行者')
@@ -30,6 +30,23 @@ const routerPage = (val: string) => {
     }
   }
 }
+
+/** 切换语言 */
+const toggleLocales = (item: any) => {
+  locale.value = item
+  localStorage.setItem('Xanadu-locale', item)
+}
+
+onMounted(() => {
+  const localValue = localStorage.getItem('Xanadu-locale')
+  const localTheme = localStorage.getItem('Xanadu-theme')
+  if (localValue) {
+    locale.value = localValue
+  } else {
+    locale.value = 'zh-CN'
+  }
+  localTheme === 'dark' ? document.body.setAttribute('arco-theme', 'dark') : document.body.removeAttribute('arco-theme')
+})
 </script>
 
 <template>
@@ -61,8 +78,9 @@ const routerPage = (val: string) => {
               </template>
             </a-button>
             <template #content>
-              <a-doption>简体中文</a-doption>
-              <a-doption>English</a-doption>
+              <a-doption @click="toggleLocales('zh-CN')">简体中文</a-doption>
+              <a-doption @click="toggleLocales('en')">English</a-doption>
+              <a-doption @click="toggleLocales('ja')">日本語</a-doption>
             </template>
           </a-dropdown>
           <a-tag color="#168cff" v-show="username">{{ username }}</a-tag>

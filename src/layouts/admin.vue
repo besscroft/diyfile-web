@@ -10,9 +10,11 @@ const toggleTheme = () => {
   if (isDark.value) {
     // 恢复亮色主题
     document.body.removeAttribute('arco-theme')
+    localStorage.setItem('Xanadu-theme', 'light')
   } else {
     // 设置为暗黑主题
     document.body.setAttribute('arco-theme', 'dark')
+    localStorage.setItem('Xanadu-theme', 'dark')
   }
   toggleDark()
 }
