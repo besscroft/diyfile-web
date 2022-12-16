@@ -35,7 +35,7 @@ tip:
   account: 账号
   password: 密码
   accountPh: 请输入账号
-  passwordPh:  请输入密码
+  passwordPh: 请输入密码
 menu:
   index: 控制台
 message:

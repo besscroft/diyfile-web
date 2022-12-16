@@ -24,7 +24,7 @@ const routerPage = (val: string) => {
     router.push(val)
   } else {
     if (props.value) {
-      router.push('/admin')
+      router.push('/@admin')
     } else {
       router.push('/')
     }
@@ -111,7 +111,7 @@ onMounted(() => {
                 <a-doption @click="loginOut">{{ t('button.quit') }}</a-doption>
               </div>
               <div v-else>
-                <a-doption @click="routerPage('/')">{{ t('button.home') }}</a-doption>
+                <a-doption v-if="!props" @click="routerPage('/')">{{ t('button.home') }}</a-doption>
                 <a-doption @click="login">{{ t('button.login') }}</a-doption>
               </div>
             </template>

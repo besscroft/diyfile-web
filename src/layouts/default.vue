@@ -2,7 +2,7 @@
 import { isDark } from '~/composables/dark'
 
 const router = useRouter()
-const props = ref<Boolean>(false)
+const props = ref<Boolean>(true)
 // 控制菜单收缩
 const menuStatus = ref<Boolean>(true)
 

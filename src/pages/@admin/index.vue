@@ -77,7 +77,7 @@ const handleOk = () => {
       </div>
     </a-card>
     <a-drawer
-      :visible="visible"
+      :visible="visible.value"
       placement="top"
       @ok="handleOk"
       unmountOnClose
