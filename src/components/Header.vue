@@ -6,6 +6,7 @@ const props = defineProps(['value'])
 const emit = defineEmits(['toggleTheme', 'onMenuCollapse'])
 const { t, locale } = useI18n()
 const router = useRouter()
+const user = useUserStore()
 const { isMobile } = useDevice()
 const username = ref<String>('')
 const avatar = ref<String>('')
@@ -37,19 +38,21 @@ const toggleLocales = (item: any) => {
   localStorage.setItem('Xanadu-locale', item)
 }
 
-const login = () => {
-  username.value = '旅行者'
-  avatar.value = 'https://besscroft.com/uploads/avatar.jpeg'
-}
-
 /** 退出登录 */
 const loginOut = () => {
   username.value = ''
   avatar.value = ''
+  user.setToken('')
+  user.setUserName('')
+  user.setAvatar('')
+  user.setTokenHead('')
+  user.setRefreshToken('')
   router.push('/')
 }
 
 onMounted(() => {
+  username.value = user.userName
+  avatar.value = user.avatar
   const localValue = localStorage.getItem('Xanadu-locale')
   const localTheme = localStorage.getItem('Xanadu-theme')
   if (localValue) {
@@ -107,12 +110,12 @@ onMounted(() => {
             <template #content>
               <div v-if="username">
                 <a-doption @click="routerPage('')">{{ props.value ? t('button.admin') : t('button.home') }}</a-doption>
-                <a-doption @click="routerPage('/@admin')" v-if="!props.value">{{ t('menu.index') }}</a-doption>
+                <a-doption @click="routerPage('/@admin')" v-if="router.currentRoute.value.path !== '/@admin' && router.currentRoute.value.path !== '/'">{{ t('menu.index') }}</a-doption>
                 <a-doption @click="loginOut">{{ t('button.quit') }}</a-doption>
               </div>
               <div v-else>
                 <a-doption v-if="!props" @click="routerPage('/')">{{ t('button.home') }}</a-doption>
-                <a-doption @click="login">{{ t('button.login') }}</a-doption>
+                <a-doption @click="routerPage('/@login')">{{ t('button.login') }}</a-doption>
               </div>
             </template>
           </a-dropdown>

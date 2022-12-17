@@ -36,8 +36,21 @@ tip:
   password: 密码
   accountPh: 请输入账号
   passwordPh: 请输入密码
+  isRememberMe: 记住我
 menu:
   index: 控制台
+  drive:
+    index: 驱动管理
+    cdn: CDN 配置
+    setting: 驱动配置
+  file:
+    index: 文件管理
+    file: 文件
+    category: 分类
+  system:
+    index: 系统管理
+    setting: 设置
+    about: 关于
 message:
   error: 错误
 tag:

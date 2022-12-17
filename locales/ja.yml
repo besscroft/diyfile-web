@@ -35,8 +35,21 @@ tip:
   password: パスワード
   accountPh: アカウントを入力してください
   passwordPh: パスワードを入力してください
+  isRememberMe: 覚えて
 menu:
   index: コンソール
+  drive:
+    index: ドライバー管理
+    cdn: CDN 構成
+    setting: ドライバー構成
+  file:
+    index: ファイル管理
+    file: 資料
+    category: 分類
+  system:
+    index: システム設定
+    setting: 設定
+    about: だいたい
 message:
   error: 間違い
 tag:

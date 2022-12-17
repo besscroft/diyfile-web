@@ -1,6 +1,8 @@
 import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import axios from 'axios'
 import { Message } from '@arco-design/web-vue'
+import { createPinia } from 'pinia'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import { AxiosCanceler } from './helper/axiosCancel'
 import type { ResultData } from '~/api/interface'
 import { ResultEnum } from '~/enums/httpEnum'
@@ -12,7 +14,9 @@ import { checkStatus } from '~/api/helper/checkStatus'
  * https://github.com/vuejs/pinia/discussions/664#discussioncomment-1329898
  * https://pinia.vuejs.org/core-concepts/outside-component-usage.html#single-page-applications
  */
-const user = useUserStore()
+const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
+const user = useUserStore(pinia)
 const router = useRouter()
 const axiosCanceler = new AxiosCanceler()
 
@@ -42,7 +46,7 @@ class RequestHttp {
         axiosCanceler.addPending(config)
         // 如果当前请求不需要显示 loading,在 api 服务中通过指定的第三个参数: { headers: { noLoading: true } }来控制不显示loading
         config.headers!.noLoading
-        const token: string = user.tokenHead + user.token
+        const token = `Bearer ${user.token}`
         return { ...config, headers: { ...config.headers, authorization: token } }
       },
       (error: AxiosError) => {

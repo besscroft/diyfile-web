@@ -25,6 +25,20 @@ export default defineConfig({
     },
   },
 
+  server: {
+    // 服务器主机名，如果允许外部访问，可设置为 '0.0.0.0'
+    host: '0.0.0.0',
+    cors: true,
+    // 代理跨域
+    proxy: {
+      '/@api': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/@api/, ''),
+      },
+    },
+  },
+
   plugins: [
     Preview(),
 

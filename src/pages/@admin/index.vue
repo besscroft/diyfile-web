@@ -49,9 +49,9 @@ const handleOk = () => {
         <div class="flex-1 w-64 m-1">
           <a-card title="Todo List">
             <a-list>
-              <a-list-item><icon-subscribe />MySQL 存储适配</a-list-item>
+              <a-list-item><icon-subscribed />MySQL 存储适配</a-list-item>
+              <a-list-item><icon-subscribed />基于 openJDK 17 的 SpringBoot3 开发</a-list-item>
               <a-list-item><icon-subscribe />OneDrive 支持</a-list-item>
-              <a-list-item><icon-subscribe />基于 openJDK 17 的 SpringBoot3 开发</a-list-item>
               <a-list-item><icon-subscribe />多元化存储支持</a-list-item>
               <a-list-item><icon-subscribe />多平台部署支持</a-list-item>
               <a-list-item><icon-subscribe />对接更多存储/驱动</a-list-item>
@@ -66,11 +66,9 @@ const handleOk = () => {
               <a-list-item><icon-subscribe /><a-link href="https://workers.cloudflare.com/">CloudFlare</a-link></a-list-item>
               <a-list-item><icon-subscribe /><a-link href="https://aws.amazon.com/lambda/">AWS Lambda</a-link></a-list-item>
               <a-list-item><icon-subscribe /><a-link href="https://learn.microsoft.com/en-us/azure/static-web-apps/">Azure</a-link></a-list-item>
-              <a-list-item><icon-subscribe /><a-link href="https://docs.digitalocean.com/products/app-platform/">DigitalOcean</a-link></a-list-item>
+              <a-list-item><icon-subscribed /><a-link href="https://docs.digitalocean.com/products/app-platform/">DigitalOcean</a-link></a-list-item>
               <a-list-item><icon-subscribe /><a-link href="https://heroku.com/">Heroku</a-link></a-list-item>
               <a-list-item><icon-subscribe /><a-link href="https://firebase.google.com/docs/hosting">Firebase</a-link></a-list-item>
-              <a-list-item><icon-subscribe /><a-link href="https://render.com/">Render.com</a-link></a-list-item>
-              <a-list-item><icon-subscribe /><a-link href="https://app.stormkit.io/apps/new">StormKit</a-link></a-list-item>
             </a-list>
           </a-card>
         </div>

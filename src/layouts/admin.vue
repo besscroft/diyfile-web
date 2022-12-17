@@ -25,8 +25,18 @@ const onMenuCollapse = () => {
 
 /** 路由切换 */
 const routerPage = (val: string) => {
-  if (val) {
-    router.push('/@admin')
+  if (val === '2_0') {
+    router.push('/@admin/drive/setting')
+  } else if (val === '2_1') {
+    router.push('/@admin/drive/cdn')
+  } else if (val === '3_0') {
+    router.push('/@admin/file/file')
+  } else if (val === '3_1') {
+    router.push('/@admin/file/category')
+  } else if (val === '4_0') {
+    router.push('/@admin/system/setting')
+  } else if (val === '4_1') {
+    router.push('/@admin/system/about')
   } else {
     router.push('/@admin')
   }

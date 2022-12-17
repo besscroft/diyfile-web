@@ -36,8 +36,21 @@ tip:
   password: Password
   accountPh: please enter account
   passwordPh: please enter password
+  isRememberMe: Remember Me
 menu:
   index: Dashboard
+  drive:
+    index: Driver Manage
+    cdn: CDN Config
+    setting: Driver Config
+  file:
+    index: File Manage
+    file: file
+    category: category
+  system:
+    index: System Manage
+    setting: Setting
+    about: About
 message:
   error: Error
 tag:
