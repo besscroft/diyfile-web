@@ -37,7 +37,6 @@ declare module '@vue/runtime-core' {
     ARow: typeof import('@arco-design/web-vue')['Row']
     ASkeleton: typeof import('@arco-design/web-vue')['Skeleton']
     ASkeletonLine: typeof import('@arco-design/web-vue')['SkeletonLine']
-    ASkeletonShape: typeof import('@arco-design/web-vue')['SkeletonShape']
     ASpace: typeof import('@arco-design/web-vue')['Space']
     ASubMenu: typeof import('@arco-design/web-vue')['SubMenu']
     ATable: typeof import('@arco-design/web-vue')['Table']
