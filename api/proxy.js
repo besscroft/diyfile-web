@@ -3,14 +3,14 @@ const { createProxyMiddleware } = require('http-proxy-middleware')
 module.exports = (req, res) => {
   let target = ''
 
-  if (req.url.startsWith('/api')) {
-    target = 'https://api.besscroft.com/api'
+  if (req.url.startsWith('/xanadu')) {
+    target = 'https://api.besscroft.com/xanadu'
   }
   createProxyMiddleware({
     target,
     changeOrigin: true,
     pathRewrite: {
-      '^/api/': '/',
+      '^/xanadu/': '/',
     },
   })(req, res)
 }
