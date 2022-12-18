@@ -9,12 +9,14 @@ export interface ResultData<T = any> extends Result {
   data: T
 }
 
-// 分页响应参数
-export interface ResPage<T> {
-  datalist: T[]
+// 分页请求响应参数(包含data)
+export interface PageResultData<T = any> extends Result {
+  data: T
+  list: T[]
   pageNum: number
   pageSize: number
   total: number
+  totalPage: number
 }
 
 // 分页请求参数

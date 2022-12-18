@@ -71,7 +71,7 @@ onMounted(() => {
         Xanadu
       </div>
       <div v-else>
-        <a-button shape="round" @click="onMenuCollapse">
+        <a-button shape="circle" @click="onMenuCollapse">
           <icon-list />
         </a-button>
       </div>

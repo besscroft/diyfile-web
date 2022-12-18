@@ -1,5 +1,5 @@
 import { API_URL } from '../../../config/config'
-import type { Login, ResultData } from '~/api/interface/index'
+import type { Login, PageResultData, ReqPage, ResultData } from '~/api/interface/index'
 import http from '~/api'
 
 /**
@@ -9,6 +9,7 @@ enum Api {
   Login = '/user/login',
   GetUserInfo = '/user/info',
   LoginOut = '/user/loginOut',
+  UserPage = '/user/userPage',
 }
 
 /** 用户登录接口 */
@@ -24,4 +25,9 @@ export const getInfo = () => {
 /** 退出登录 */
 export const loginOut = () => {
   return http.post<ResultData>(API_URL + Api.LoginOut)
+}
+
+/** 用户分页列表 */
+export const userPage = (params: ReqPage) => {
+  return http.get<PageResultData>(API_URL + Api.UserPage, params)
 }

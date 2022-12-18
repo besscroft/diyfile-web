@@ -21,7 +21,7 @@ const { t } = useI18n()
         }"
       >
         <div class="flex-auto">
-          <a-result :status="null" :title="t('menu.file.file')" :subtitle="t('tip.deving')">
+          <a-result :status="null" :title="t('menu.setting.cdn')" :subtitle="t('tip.deving')">
             <template #icon>
               <IconFaceSmileFill />
             </template>

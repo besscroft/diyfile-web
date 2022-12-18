@@ -39,20 +39,25 @@ tip:
   isRememberMe: 记住我
 menu:
   index: 控制台
-  drive:
-    index: 驱动管理
-    cdn: CDN 配置
-    setting: 驱动配置
-  file:
-    index: 文件管理
-    file: 文件
-    category: 分类
+  setting:
+    index: 配置
+    cdn: CDN
+    storage: 存储
   system:
-    index: 系统管理
+    index: 系统
     setting: 设置
+    user: 用户
     about: 关于
 message:
   error: 错误
 tag:
   yes: 是
   no: 否
+table:
+  Optional: 操作
+  UserInfo: 用户信息
+  user:
+    userName: 用户名
+    role: 角色
+    avatar: 头像
+    loginTime: 登录时间

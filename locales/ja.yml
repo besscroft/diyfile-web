@@ -38,20 +38,25 @@ tip:
   isRememberMe: 覚えて
 menu:
   index: コンソール
-  drive:
-    index: ドライバー管理
-    cdn: CDN 構成
-    setting: ドライバー構成
-  file:
-    index: ファイル管理
-    file: 資料
-    category: 分類
+  setting:
+    index: 構成
+    cdn: CDN
+    storage: ストレージ
   system:
-    index: システム設定
+    index: システム
     setting: 設定
+    user: ユーザー
     about: だいたい
 message:
   error: 間違い
 tag:
   yes: はい
   no: しない
+table:
+  Optional: 操作する
+  UserInfo: ユーザー情報
+  user:
+    userName: ユーザー名
+    role: 役割
+    avatar: アバター
+    loginTime: ログイン時間

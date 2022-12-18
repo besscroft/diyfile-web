@@ -39,20 +39,25 @@ tip:
   isRememberMe: Remember Me
 menu:
   index: Dashboard
-  drive:
-    index: Driver Manage
-    cdn: CDN Config
-    setting: Driver Config
-  file:
-    index: File Manage
-    file: file
-    category: category
+  setting:
+    index: Manage
+    cdn: CDN
+    storage: Storage
   system:
-    index: System Manage
+    index: System
     setting: Setting
+    user: User
     about: About
 message:
   error: Error
 tag:
   yes: Yes
   no: No
+table:
+  Optional: Optional
+  UserInfo: User Info
+  user:
+    userName: userName
+    role: role
+    avatar: avatar
+    loginTime: loginTime
