@@ -21,6 +21,7 @@
     "@vueuse/core": "^9.6.0",
     "@vueuse/head": "^1.0.22",
     "axios": "^1.2.1",
+    "http-proxy-middleware": "^2.0.6",
     "nprogress": "^0.2.0",
     "pinia": "^2.0.28",
     "pinia-plugin-persistedstate": "^3.0.1",
