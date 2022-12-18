@@ -44,6 +44,9 @@ const handleSubmit = () => {
         </a-checkbox>
       </a-form-item>
       <a-form-item>
+        账号/密码：xanadu/666666
+      </a-form-item>
+      <a-form-item>
         <a-button html-type="submit">{{ t('button.login') }}</a-button>
       </a-form-item>
     </a-form>
