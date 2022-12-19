@@ -1,16 +1,21 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import { getServerInfo } from '~/api/modules/monitor'
+import useDevice from '~/hooks/device'
 
 const { t } = useI18n()
 const visible = ref<Boolean>(false)
+const loading = ref<Boolean>(true)
 const serverInfo = ref()
+const { isMobile } = useDevice()
 
 const handServerInfo = () => {
+  loading.value = true
   getServerInfo().then((res) => {
     if (res.code === 200) {
       serverInfo.value = res.data
     }
+    loading.value = false
   })
 }
 
@@ -38,7 +43,7 @@ handServerInfo()
     <a-card hoverable :style="{ height: '100%' }">
       <div class="flex flex-wrap flex-col sm:flex-row">
         <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
-          <a-card v-if="serverInfo" title="运行信息" hoverable>
+          <a-card :loading="loading" title="运行信息" hoverable>
             <a-list>
               <a-list-item>服务器名称: {{ serverInfo.systemInfo.computerName }}</a-list-item>
               <a-list-item>服务器IP: {{ serverInfo.systemInfo.computerIp }}</a-list-item>
@@ -52,8 +57,6 @@ handServerInfo()
                 使用率: {{ ((serverInfo.memoryInfo.used / 1024 / 1024).toFixed(2) / (serverInfo.memoryInfo.total / 1024 / 1024).toFixed(2) * 100).toFixed(2) }} %
               </a-list-item>
             </a-list>
-          </a-card>
-          <a-card v-else title="运行信息" hoverable>
           </a-card>
         </div>
         <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
