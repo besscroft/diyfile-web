@@ -7,6 +7,7 @@ import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import App from './App.vue'
 import type { UserModule } from './types'
+import { AxiosCanceler } from '~/api/helper/axiosCancel'
 import generatedRoutes from '~pages'
 import { getInfo } from '~/api/modules/user'
 
@@ -16,6 +17,7 @@ import './styles/main.css'
 import 'uno.css'
 
 const routes = setupLayouts(generatedRoutes)
+const axiosCanceler = new AxiosCanceler()
 
 // https://github.com/antfu/vite-ssg
 export const createApp = ViteSSG(
@@ -30,6 +32,7 @@ export const createApp = ViteSSG(
     ctx.app.use(ArcoVue).use(ArcoVueIcon).use(Previewer).use(pinia)
     if (ctx.isClient) {
       ctx.router.beforeEach(async (to, from, next) => {
+        axiosCanceler.removeAllPending()
         const user = useUserStore()
         if (to.path === '/' || to.path === '/@login' || to.path === '/@about') {
           return next()

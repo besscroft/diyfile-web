@@ -34,7 +34,7 @@ const devList = ref<Array<Object>>([
           </a-typography-paragraph>
         </a-typography>
         <div class="flex flex-wrap" style="justify-content: center;">
-          <a-card v-for="item in devList" :key="item" class="flex-initial w-64 m-1">
+          <a-card v-for="item in devList" :key="item" class="flex-initial w-64 m-1" hoverable>
             <template #actions>
               <span class="icon-hover"> <IconThumbUp /> </span>
               <span class="icon-hover"> <IconShareInternal /> </span>

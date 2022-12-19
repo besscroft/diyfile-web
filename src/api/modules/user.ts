@@ -1,5 +1,5 @@
 import { API_URL } from '../../../config/config'
-import type { Login, PageResultData, ReqPage, ResultData } from '~/api/interface/index'
+import type { Login, PageResultData, ReqPage, ResultData } from '~/api/interface'
 import http from '~/api'
 
 /**

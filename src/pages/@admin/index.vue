@@ -1,8 +1,18 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
+import { getServerInfo } from '~/api/modules/monitor'
 
 const { t } = useI18n()
 const visible = ref<Boolean>(false)
+const serverInfo = ref()
+
+const handServerInfo = () => {
+  getServerInfo().then((res) => {
+    if (res.code === 200) {
+      serverInfo.value = res.data
+    }
+  })
+}
 
 const handleClick = () => {
   visible.value = true
@@ -11,6 +21,8 @@ const handleClick = () => {
 const handleOk = () => {
   visible.value = false
 }
+
+handServerInfo()
 </script>
 
 <template>
@@ -26,16 +38,26 @@ const handleOk = () => {
     <a-card hoverable :style="{ height: '100%' }">
       <div class="flex flex-row flex-wrap">
         <div class="flex-1 w-64 m-1">
-          <a-card title="运行信息">
-            Memory Usage: 0 MB
-            <br />
-            CPU Usage: 0%
-            <br />
-            Run Time: 0 hour(s)
+          <a-card v-if="serverInfo" title="运行信息" hoverable>
+            <a-list>
+              <a-list-item>服务器名称: {{ serverInfo.systemInfo.computerName }}</a-list-item>
+              <a-list-item>服务器IP: {{ serverInfo.systemInfo.computerIp }}</a-list-item>
+              <a-list-item>操作系统: {{ serverInfo.systemInfo.osName }}</a-list-item>
+              <a-list-item>系统架构: {{ serverInfo.systemInfo.osArch }}</a-list-item>
+              <a-list-item>CPU 核心数: {{ serverInfo.cpuInfo.cpuNum }}</a-list-item>
+              <a-list-item>总内存: {{ (serverInfo.memoryInfo.total / 1024 / 1024).toFixed(2) }} MB</a-list-item>
+              <a-list-item>已用内存: {{ (serverInfo.memoryInfo.used / 1024 / 1024).toFixed(2) }} MB</a-list-item>
+              <a-list-item>剩余内存: {{ (serverInfo.memoryInfo.free / 1024 / 1024).toFixed(2) }} MB</a-list-item>
+              <a-list-item>
+                使用率: {{ ((serverInfo.memoryInfo.used / 1024 / 1024).toFixed(2) / (serverInfo.memoryInfo.total / 1024 / 1024).toFixed(2) * 100).toFixed(2) }} %
+              </a-list-item>
+            </a-list>
+          </a-card>
+          <a-card v-else title="运行信息" hoverable>
           </a-card>
         </div>
         <div class="flex-1 w-64 m-1">
-          <a-card title="关于">
+          <a-card title="关于" hoverable>
             <template #extra>
               <a-button type="text" @click="handleClick">More</a-button>
             </template>
@@ -47,7 +69,7 @@ const handleOk = () => {
           </a-card>
         </div>
         <div class="flex-1 w-64 m-1">
-          <a-card title="Todo List">
+          <a-card title="Todo List" hoverable>
             <a-list>
               <a-list-item><icon-subscribed />MySQL 存储适配</a-list-item>
               <a-list-item><icon-subscribed />基于 openJDK 17 的 SpringBoot3 开发</a-list-item>
@@ -59,7 +81,7 @@ const handleOk = () => {
           </a-card>
         </div>
         <div class="flex-1 w-64 m-1">
-          <a-card title="Deployment Support">
+          <a-card title="Deployment Support" hoverable>
             <a-list>
               <a-list-item><icon-subscribed /><a-link href="https://vercel.com/">Vercel</a-link></a-list-item>
               <a-list-item><icon-subscribed /><a-link href="https://www.netlify.com/">Netlify</a-link></a-list-item>
