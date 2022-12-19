@@ -39,7 +39,7 @@ useUserPage()
 
 <template>
   <div
-    :style="{
+    class="layout-demo" :style="{
       boxSizing: 'border-box',
       width: '100%',
       padding: '12px',
@@ -47,43 +47,39 @@ useUserPage()
       backgroundColor: 'var(--color-fill-2)',
     }"
   >
-    <a-card hoverable :style="{ width: '100%', height: '100%', marginBottom: '16px' }">
-      <div
-        :style="{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }"
-      >
-        <a-space v-if="loading" direction="vertical" size="large" :style="{ width: '100%' }">
-          <a-skeleton animation="animation">
-            <a-space direction="vertical" :style="{ width: '100%' }" size="large">
-              <a-skeleton-line :rows="10" />
-            </a-space>
-          </a-skeleton>
-        </a-space>
-        <a-table v-else :data="dataList" :style="{ width: '100%' }">
-          <template #columns>
-            <a-table-column :title="t('table.user.userName')" data-index="name"></a-table-column>
-            <a-table-column :title="t('table.user.role')" data-index="role"></a-table-column>
-            <a-table-column :title="t('table.user.avatar')">
-              <template #cell="{ record }">
-                <a-avatar>
-                  <img
-                    alt="avatar"
-                    :src="record.avatar"
-                  />
-                </a-avatar>
+    <a-card hoverable :style="{ height: '100%' }">
+      <a-space v-if="loading" direction="vertical" size="large" :style="{ width: '100%' }">
+        <a-skeleton animation="animation">
+          <a-space direction="vertical" :style="{ width: '100%' }" size="large">
+            <a-skeleton-line :rows="10" />
+          </a-space>
+        </a-skeleton>
+      </a-space>
+      <div v-else class="flex flex-wrap flex-col sm:flex-row">
+        <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1" :key="item" v-for="item in dataList">
+          <a-card :style="{ height: '360px' }">
+            <template #actions>
+              <span class="icon-hover"><icon-user @click="handleClickDetail(item)" /></span>
+            </template>
+            <a-card-meta :title="item.name" :description="item.remark">
+              <template #avatar>
+                <div
+                  :style="{ display: 'flex', alignItems: 'center', color: '#1D2129' }"
+                >
+                  <a-avatar :size="40" :style="{ marginRight: '8px' }">
+                    <img
+                      alt="avatar"
+                      :src="item.avatar"
+                    />
+                  </a-avatar>
+                  <a-typography-text>{{ t('table.user.role') }}: <a-tag>{{ item.role }}</a-tag></a-typography-text>
+                </div>
+                <br />
+                {{ t('table.user.loginTime') }}: {{ item.loginTime }}
               </template>
-            </a-table-column>
-            <a-table-column :title="t('table.user.loginTime')" data-index="loginTime"></a-table-column>
-            <a-table-column :title="t('table.Optional')">
-              <template #cell="{ record }">
-                <a-button @click="handleClickDetail(record)" shape="circle"><icon-user /></a-button>
-              </template>
-            </a-table-column>
-          </template>
-        </a-table>
+            </a-card-meta>
+          </a-card>
+        </div>
       </div>
     </a-card>
   </div>

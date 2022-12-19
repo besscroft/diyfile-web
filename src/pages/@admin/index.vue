@@ -36,8 +36,8 @@ handServerInfo()
     }"
   >
     <a-card hoverable :style="{ height: '100%' }">
-      <div class="flex flex-row flex-wrap">
-        <div class="flex-1 w-64 m-1">
+      <div class="flex flex-wrap flex-col sm:flex-row">
+        <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
           <a-card v-if="serverInfo" title="运行信息" hoverable>
             <a-list>
               <a-list-item>服务器名称: {{ serverInfo.systemInfo.computerName }}</a-list-item>
@@ -56,7 +56,7 @@ handServerInfo()
           <a-card v-else title="运行信息" hoverable>
           </a-card>
         </div>
-        <div class="flex-1 w-64 m-1">
+        <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
           <a-card title="关于" hoverable>
             <template #extra>
               <a-button type="text" @click="handleClick">More</a-button>
@@ -68,7 +68,7 @@ handServerInfo()
             积极开发、错误修复和增强功能！
           </a-card>
         </div>
-        <div class="flex-1 w-64 m-1">
+        <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
           <a-card title="Todo List" hoverable>
             <a-list>
               <a-list-item><icon-subscribed />MySQL 存储适配</a-list-item>
@@ -80,7 +80,7 @@ handServerInfo()
             </a-list>
           </a-card>
         </div>
-        <div class="flex-1 w-64 m-1">
+        <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
           <a-card title="Deployment Support" hoverable>
             <a-list>
               <a-list-item><icon-subscribed /><a-link href="https://vercel.com/">Vercel</a-link></a-list-item>
