@@ -11,7 +11,10 @@ import { AxiosCanceler } from '~/api/helper/axiosCancel'
 import generatedRoutes from '~pages'
 import { getInfo } from '~/api/modules/user'
 
-import '@arco-design/web-vue/dist/arco.css'
+// 樱花粉皮肤
+import '@arco-themes/vue-sakura/css/arco.css'
+// 默认皮肤
+// import '@arco-design/web-vue/dist/arco.css'
 import '@unocss/reset/tailwind.css'
 import './styles/main.css'
 import 'uno.css'
