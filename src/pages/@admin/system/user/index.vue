@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { Message } from '@arco-design/web-vue'
-import { userPage } from '~/api/modules/user'
+import { userDelete, userPage } from '~/api/modules/user'
 import useDevice from '~/hooks/device'
 
+const router = useRouter()
 const loading = ref<Boolean>(true)
 const { t } = useI18n()
 const { isMobile } = useDevice()
@@ -14,18 +15,8 @@ const data = reactive({
   },
 })
 const userDetail = ref({})
-const visible = ref<Boolean>(false)
 
 const dataList = ref()
-
-const handleClickDetail = (data: any) => {
-  userDetail.value = data
-  visible.value = true
-}
-
-const handleOk = () => {
-  visible.value = false
-}
 
 const useUserPage = () => {
   loading.value = true
@@ -38,11 +29,15 @@ const useUserPage = () => {
 }
 
 const handleUserAdd = () => {
-  Message.info('触发用户新增事件，还没写！')
+  Message.info('触发用户新增事件！')
 }
 
-const handleUserDelete = () => {
-  Message.info('触发用户删除事件，还没写！')
+const handleUserDelete = (id: number) => {
+  userDelete(id).then((res) => {
+    if (res.code === 200) {
+      Message.info(res.message)
+    }
+  })
 }
 
 useUserPage()
@@ -71,8 +66,14 @@ useUserPage()
         <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1" :key="item" v-for="item in dataList">
           <a-card :style="{ height: '360px' }" hoverable>
             <template #actions>
-              <span class="icon-hover"><icon-user @click="handleClickDetail(item)" /></span>
-              <span class="icon-hover"><icon-delete @click="handleUserDelete(item)" /></span>
+              <span class="icon-hover">
+                <icon-user @click="router.push({ path: `/@admin/system/user/${encodeURIComponent(item.username)}`, params: { username: item.username } })" />
+              </span>
+              <span class="icon-hover">
+                <a-popconfirm content="确定要删除吗?" type="warning" :onCancel="handleUserAdd" :onOk="handleUserDelete">
+                  <a-button><icon-delete /></a-button>
+                </a-popconfirm>
+              </span>
             </template>
             <a-card-meta :title="item.name" :description="item.remark">
               <template #avatar>
@@ -95,24 +96,18 @@ useUserPage()
         </div>
         <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
           <a-card :style="{ height: '360px' }" hoverable>
-            <a-button type="text" :style="{ height: '328px', width: '100%' }" @click="handleUserAdd">
-              <template #icon>
-                <icon-plus />
-              </template>
-            </a-button>
+            <router-link to="/@admin/system/user/add">
+              <a-button type="text" :style="{ height: '328px', width: '100%' }" @click="handleUserAdd">
+                <template #icon>
+                  <icon-plus />
+                </template>
+              </a-button>
+            </router-link>
           </a-card>
         </div>
       </div>
     </a-card>
   </div>
-  <a-modal
-    v-model:visible="visible"
-    @ok="handleOk"
-    hide-cancel
-    :closable="false"
-  >
-    <UserDesc :value="userDetail" />
-  </a-modal>
 </template>
 
 <style scoped>

@@ -10,6 +10,8 @@ enum Api {
   GetUserInfo = '/user/info',
   LoginOut = '/user/loginOut',
   UserPage = '/user/userPage',
+  UserDelete = '/user/delete',
+  GetUserInfoByUserName = '/user/info',
 }
 
 /** 用户登录接口 */
@@ -30,4 +32,14 @@ export const loginOut = () => {
 /** 用户分页列表 */
 export const userPage = (params: ReqPage) => {
   return http.get<PageResultData>(API_URL + Api.UserPage, params)
+}
+
+/** 用户删除接口 */
+export const userDelete = (userId: number) => {
+  return http.delete<ResultData>(`${API_URL + Api.UserDelete}/${userId}`)
+}
+
+/** 根据用户名获取用户信息 */
+export const GetUserInfoByUserName = (username: any) => {
+  return http.get<ResultData>(`${API_URL + Api.GetUserInfoByUserName}/${username}`, undefined, { headers: { noLoading: true } })
 }
