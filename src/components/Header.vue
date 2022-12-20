@@ -87,7 +87,7 @@ onMounted(() => {
             <div i="carbon-sun dark:carbon-moon" />
           </button>
           <a-dropdown>
-            <a-button shape="circle">
+            <a-button shape="circle" aria-label="language">
               <template #icon>
                 <icon-language />
               </template>
@@ -106,7 +106,9 @@ onMounted(() => {
                 :src="avatar"
               />
             </a-avatar>
-            <a-avatar :size="40" :style="{ backgroundColor: '#14a9f8' }" v-else>{{ t('button.noLogin') }}</a-avatar>
+            <a-avatar v-else :style="{ backgroundColor: '#3370ff' }">
+              <IconUser />
+            </a-avatar>
             <template #content>
               <div v-if="username">
                 <a-doption @click="routerPage('')">{{ props.value ? t('button.admin') : t('button.home') }}</a-doption>
