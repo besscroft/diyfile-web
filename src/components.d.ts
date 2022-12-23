@@ -52,6 +52,7 @@ declare module '@vue/runtime-core' {
     ATypographyTitle: typeof import('@arco-design/web-vue')['TypographyTitle']
     Footer: typeof import('./components/Footer.vue')['default']
     Header: typeof import('./components/Header.vue')['default']
+    MobileMenu: typeof import('./components/MobileMenu.vue')['default']
     PopMenu: typeof import('./components/PopMenu.vue')['default']
     README: typeof import('./components/README.md')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

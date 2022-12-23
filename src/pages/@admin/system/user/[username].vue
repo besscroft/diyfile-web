@@ -22,7 +22,7 @@ useDetail()
 
 <template>
   <div
-    class="layout-demo" :style="{
+    :style="{
       boxSizing: 'border-box',
       width: '100%',
       padding: '12px',

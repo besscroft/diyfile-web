@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { isDark } from '~/composables/dark'
+import useDevice from '~/hooks/device'
 
 const router = useRouter()
+const { isMobile } = useDevice()
 const props = ref<Boolean>(false)
 // 控制菜单收缩
 const menuStatus = ref<Boolean>(true)
@@ -51,14 +53,21 @@ const routerPage = (val: string) => {
         hide-trigger
         collapsible
         :collapsed="menuStatus"
+        v-if="!isMobile"
       >
         <PopMenu @routerPage="routerPage"/>
       </a-layout-sider>
-      <a-layout-content>
+      <a-layout-content v-if="isMobile" style="margin-bottom: 56px;">
+        <RouterView />
+      </a-layout-content>
+      <a-layout-content v-else>
         <RouterView />
       </a-layout-content>
     </a-layout>
-    <a-layout-footer>
+    <a-layout-footer v-if="isMobile" style="position: fixed; bottom: 0; width: 100%;">
+      <MobileMenu @routerPage="routerPage" />
+    </a-layout-footer>
+    <a-layout-footer v-else>
       <Footer />
     </a-layout-footer>
   </a-layout>
