@@ -17,7 +17,7 @@ const router = useRouter()
       <br/>
       <a-progress :percent="0.1" :style="{ width: '50%' }">
         <template v-slot:text="scope" >
-          用户新增开发进度 {{ scope.percent * 100 }}%
+          用户编辑开发进度 {{ scope.percent * 100 }}%
         </template>
       </a-progress>
     </a-card>

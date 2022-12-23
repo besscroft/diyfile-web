@@ -17,6 +17,10 @@ button:
   login: login
   copy: Copy
   copyOk: Copy Success
+  add: Add
+  edit: Edit
+  detail: Detail
+  delete: Delete
 intro:
   desc: Opinionated Vite Starter Template
   dynamic-route: Demo of dynamic route

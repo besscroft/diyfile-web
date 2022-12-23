@@ -27,10 +27,6 @@ const useUserPage = () => {
   })
 }
 
-const handleUserAdd = () => {
-  Message.info('触发用户新增事件！')
-}
-
 const handleUserDelete = (id: number) => {
   userDelete(id).then((res) => {
     if (res.code === 200) {
@@ -61,9 +57,9 @@ useUserPage()
           </a-space>
         </a-skeleton>
       </a-space>
-      <div v-else class="flex flex-wrap flex-col sm:flex-row">
-        <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1" :key="item" v-for="item in dataList">
-          <a-card :style="{ height: '360px' }" hoverable>
+      <a-row v-else :gutter="[12, 10]">
+        <a-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6" :key="item.id" v-for="item in dataList">
+          <a-card :style="{ height: '320px' }" hoverable>
             <template #actions>
               <span class="icon-hover">
                 <icon-user @click="router.push({ path: `/@admin/system/user/${encodeURIComponent(item.username)}`, params: { username: item.username } })" />
@@ -92,19 +88,22 @@ useUserPage()
               </template>
             </a-card-meta>
           </a-card>
-        </div>
-        <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
-          <a-card :style="{ height: '360px' }" hoverable>
-            <router-link to="/@admin/system/user/add">
-              <a-button type="text" :style="{ height: '328px', width: '100%' }" @click="handleUserAdd">
-                <template #icon>
-                  <icon-plus />
-                </template>
-              </a-button>
-            </router-link>
+        </a-col>
+        <a-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
+          <a-card
+            hoverable
+            :style="{ height: '320px' }"
+            class="flex items-center justify-center"
+            @click="router.push('/@admin/system/user/add')"
+          >
+            <a-result>
+              <template #icon>
+                <icon-plus style="font-size: 20px" />
+              </template>
+            </a-result>
           </a-card>
-        </div>
-      </div>
+        </a-col>
+      </a-row>
     </a-card>
   </div>
 </template>

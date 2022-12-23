@@ -1,5 +1,17 @@
 <script setup lang="ts">
+import { storageInfo } from '~/api/modules/storage'
+
+const { t } = useI18n()
 const router = useRouter()
+const detail = ref({})
+const loading = ref<Boolean>(true)
+
+const useDetail = () => {
+  const id = router.currentRoute.value.params.id
+  console.log(id)
+}
+
+useDetail()
 </script>
 
 <template>
@@ -17,7 +29,7 @@ const router = useRouter()
       <br/>
       <a-progress :percent="0.1" :style="{ width: '50%' }">
         <template v-slot:text="scope" >
-          用户新增开发进度 {{ scope.percent * 100 }}%
+          存储详情开发进度 {{ scope.percent * 100 }}%
         </template>
       </a-progress>
     </a-card>

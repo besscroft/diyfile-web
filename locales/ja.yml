@@ -17,6 +17,10 @@ button:
   login: ログイン
   copy: コピー
   copyOk: 正常にコピー
+  add: 追加
+  edit: 編集
+  detail: 詳細
+  delete: 消去
 intro:
   desc: 固執された Vite スターターテンプレート
   dynamic-route: 動的ルートのデモ

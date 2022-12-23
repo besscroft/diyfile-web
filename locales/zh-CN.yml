@@ -17,6 +17,10 @@ button:
   login: 登录
   copy: 复制
   copyOk: 复制成功
+  add: 新增
+  edit: 编辑
+  detail: 详情
+  delete: 删除
 intro:
   desc: 固执己见的 Vite 项目模板
   dynamic-route: 动态路由演示

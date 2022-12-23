@@ -29,7 +29,7 @@ const { t } = useI18n()
           <br/>
           <a-progress :percent="0.01" :style="{ width: '50%' }">
             <template v-slot:text="scope" >
-              CDN 页面开发进度 {{scope.percent * 100}}%
+              CDN 页面开发进度 {{ scope.percent * 100 }}%
             </template>
           </a-progress>
         </div>

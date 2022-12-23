@@ -98,7 +98,7 @@ onMounted(() => {
               <a-doption @click="toggleLocales('ja')">日本語</a-doption>
             </template>
           </a-dropdown>
-          <a-tag color="#168cff" v-show="username">{{ username }}</a-tag>
+          <a-tag color="#FBC3CB" v-show="username">{{ username }}</a-tag>
           <a-dropdown>
             <a-avatar :size="40" v-if="avatar">
               <img
@@ -106,7 +106,7 @@ onMounted(() => {
                 :src="avatar"
               />
             </a-avatar>
-            <a-avatar v-else :style="{ backgroundColor: '#3370ff' }">
+            <a-avatar v-else :style="{ backgroundColor: '#FBC3CB' }">
               <IconUser />
             </a-avatar>
             <template #content>

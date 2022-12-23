@@ -1,5 +1,12 @@
 <script setup lang="ts">
 const router = useRouter()
+
+const useDetail = () => {
+  const id = router.currentRoute.value.query.id
+  console.log(id)
+}
+
+useDetail()
 </script>
 
 <template>
@@ -17,7 +24,7 @@ const router = useRouter()
       <br/>
       <a-progress :percent="0.1" :style="{ width: '50%' }">
         <template v-slot:text="scope" >
-          用户新增开发进度 {{ scope.percent * 100 }}%
+          存储编辑开发进度 {{ scope.percent * 100 }}%
         </template>
       </a-progress>
     </a-card>

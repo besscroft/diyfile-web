@@ -3,6 +3,7 @@ import { useI18n } from 'vue-i18n'
 import { getServerInfo } from '~/api/modules/monitor'
 import useDevice from '~/hooks/device'
 
+const router = useRouter()
 const { t } = useI18n()
 const visible = ref<Boolean>(false)
 const loading = ref<Boolean>(true)
@@ -62,7 +63,7 @@ handServerInfo()
         <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
           <a-card title="关于" hoverable>
             <template #extra>
-              <a-button type="text" @click="handleClick">More</a-button>
+              <a-button type="text" @click="router.push('/@admin/system/about')">More</a-button>
             </template>
             🧪 Working in Progress
             <br />

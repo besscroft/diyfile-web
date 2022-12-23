@@ -12,6 +12,8 @@ enum Api {
   UserPage = '/user/userPage',
   UserDelete = '/user/delete',
   GetUserInfoByUserName = '/user/info',
+  UserAdd = '/user/add',
+  UserUpdate = '/user/add',
 }
 
 /** 用户登录接口 */

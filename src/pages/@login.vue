@@ -47,7 +47,7 @@ const handleSubmit = () => {
         账号/密码：xanadu/666666
       </a-form-item>
       <a-form-item>
-        <a-button html-type="submit">{{ t('button.login') }}</a-button>
+        <a-button type="primary" html-type="submit">{{ t('button.login') }}</a-button>
       </a-form-item>
     </a-form>
   </div>
