@@ -35,6 +35,7 @@ declare module '@vue/runtime-core' {
     AMenuItem: typeof import('@arco-design/web-vue')['MenuItem']
     AModal: typeof import('@arco-design/web-vue')['Modal']
     APopconfirm: typeof import('@arco-design/web-vue')['Popconfirm']
+    AProgress: typeof import('@arco-design/web-vue')['Progress']
     AResult: typeof import('@arco-design/web-vue')['Result']
     ARow: typeof import('@arco-design/web-vue')['Row']
     ASkeleton: typeof import('@arco-design/web-vue')['Skeleton']

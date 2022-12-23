@@ -14,6 +14,12 @@ const router = useRouter()
   >
     <a-card hoverable :style="{ height: '100%' }">
       <icon-arrow-left @click="router.back()"/>
+      <br/>
+      <a-progress :percent="0.1" :style="{ width: '50%' }">
+        <template v-slot:text="scope" >
+          用户新增开发进度 {{scope.percent * 100}}%
+        </template>
+      </a-progress>
     </a-card>
   </div>
 </template>

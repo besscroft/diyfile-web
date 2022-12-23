@@ -4,13 +4,16 @@ import { GetUserInfoByUserName } from '~/api/modules/user'
 const { t } = useI18n()
 const router = useRouter()
 const detail = ref({})
+const loading = ref<Boolean>(true)
 
 const useDetail = () => {
+  loading.value = true
   const username = router.currentRoute.value.params.username
   GetUserInfoByUserName(username).then((res) => {
     if (res.code === 200) {
       detail.value = res.data
     }
+    loading.value = false
   })
 }
 
@@ -29,7 +32,14 @@ useDetail()
   >
     <a-card hoverable :style="{ height: '100%' }">
       <icon-arrow-left @click="router.back()"/>
-      <a-space direction="vertical" size="large" fill>
+      <a-space v-if="loading" direction="vertical" size="large" :style="{ width: '100%' }">
+        <a-skeleton animation="animation">
+          <a-space direction="vertical" :style="{ width: '100%' }" size="large">
+            <a-skeleton-line :rows="5" />
+          </a-space>
+        </a-skeleton>
+      </a-space>
+      <a-space v-else direction="vertical" size="large" fill>
         <a-descriptions :data="detail" :title="t('table.UserInfo')" layout="inline-vertical" bordered>
           <descriptions-item label="用户名">{{ detail.username }}</descriptions-item>
           <descriptions-item label="邮箱">{{ detail.email }}</descriptions-item>

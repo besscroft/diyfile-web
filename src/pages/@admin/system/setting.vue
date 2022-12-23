@@ -26,6 +26,12 @@ const { t } = useI18n()
               <IconFaceSmileFill />
             </template>
           </a-result>
+          <br/>
+          <a-progress :percent="0.01" :style="{ width: '50%' }">
+            <template v-slot:text="scope" >
+              设置页面开发进度 {{scope.percent * 100}}%
+            </template>
+          </a-progress>
         </div>
       </div>
     </a-card>

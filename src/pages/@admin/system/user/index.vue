@@ -14,7 +14,6 @@ const data = reactive({
     pageSize: 10,
   },
 })
-const userDetail = ref({})
 
 const dataList = ref()
 
