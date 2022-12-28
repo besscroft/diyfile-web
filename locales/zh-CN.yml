@@ -60,8 +60,20 @@ tag:
 table:
   Optional: 操作
   UserInfo: 用户信息
+  StorageInto: 存储信息
   user:
     userName: 用户名
     role: 角色
     avatar: 头像
     loginTime: 登录时间
+user:
+  username: 用户名
+  password: 密码
+  avatar: 头像
+  email: 邮箱
+  name: 昵称
+  realName: 真实姓名
+  telephone: 手机号
+  birthday: 生日
+  sex: 性别
+  remark: 备注

@@ -59,8 +59,20 @@ tag:
 table:
   Optional: 操作する
   UserInfo: ユーザー情報
+  StorageInto: ストレージ情報
   user:
     userName: ユーザー名
     role: 役割
     avatar: アバター
     loginTime: ログイン時間
+user:
+  username: ユーザー名
+  password: パスワード
+  avatar: アバター
+  email: 郵便
+  name: ニックネーム
+  realName: 本名
+  telephone: 電話番号
+  birthday: お誕生日
+  sex: 性別
+  remark: 述べる

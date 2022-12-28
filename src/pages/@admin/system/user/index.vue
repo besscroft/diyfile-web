@@ -32,6 +32,7 @@ const handleUserDelete = (id: number) => {
     if (res.code === 200) {
       Message.info(res.message)
     }
+    useUserPage()
   })
 }
 
@@ -65,7 +66,7 @@ useUserPage()
                 <icon-user @click="router.push({ path: `/@admin/system/user/${encodeURIComponent(item.username)}`, params: { username: item.username } })" />
               </span>
               <span class="icon-hover">
-                <a-popconfirm content="确定要删除吗?" type="warning" :onCancel="handleUserAdd" :onOk="handleUserDelete">
+                <a-popconfirm content="确定要删除吗?" type="warning" :onCancel="handleUserAdd" :onOk="() => handleUserDelete(item.id)">
                   <a-button><icon-delete /></a-button>
                 </a-popconfirm>
               </span>

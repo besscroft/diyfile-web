@@ -10,7 +10,7 @@ enum Api {
   StorageDelete = '/storage/delete',
   StorageAdd = '/storage/add',
   StorageUpdate = '/storage/update',
-  StorageInfo = '/user/info',
+  StorageInfo = '/storage/info',
 }
 
 /** 驱动分页列表 */

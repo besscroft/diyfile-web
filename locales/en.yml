@@ -60,8 +60,20 @@ tag:
 table:
   Optional: Optional
   UserInfo: User Info
+  StorageInto: Storage Into
   user:
     userName: userName
     role: role
     avatar: avatar
     loginTime: loginTime
+user:
+  username: Username
+  password: Password
+  avatar: Avatar
+  email: Email
+  name: Name
+  realName: RealName
+  telephone: Telephone
+  birthday: Birthday
+  sex: Sex
+  remark: Remark

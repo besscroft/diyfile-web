@@ -1,5 +1,6 @@
 import { API_URL } from '../../../config/config'
 import type { Login, PageResultData, ReqPage, ResultData } from '~/api/interface'
+import type { User } from '~/api/interface/user'
 import http from '~/api'
 
 /**
@@ -44,4 +45,9 @@ export const userDelete = (userId: number) => {
 /** 根据用户名获取用户信息 */
 export const GetUserInfoByUserName = (username: any) => {
   return http.get<ResultData>(`${API_URL + Api.GetUserInfoByUserName}/${username}`, undefined, { headers: { noLoading: true } })
+}
+
+/** 新增用户接口 */
+export const userAdd = (data: User.AddUserRequestData) => {
+  return http.post<ResultData>(API_URL + Api.UserAdd, data)
 }
