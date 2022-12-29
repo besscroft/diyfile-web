@@ -44,12 +44,12 @@ useUserPage()
     :style="{
       boxSizing: 'border-box',
       width: '100%',
-      padding: '12px',
+      padding: '0.25rem',
       height: '100%',
       backgroundColor: 'var(--color-fill-2)',
     }"
   >
-    <a-card hoverable :style="{ height: '100%' }">
+    <a-card hoverable :style="{ height: '100%' }" :title="t('menu.system.user')">
       <a-space v-if="loading" direction="vertical" size="large" :style="{ width: '100%' }">
         <a-skeleton animation="animation">
           <a-space direction="vertical" :style="{ width: '100%' }" size="large">

@@ -1,6 +1,7 @@
 import { API_URL } from '../../../config/config'
 import type { PageResultData, ReqPage, ResultData } from '~/api/interface'
 import http from '~/api'
+import type { Storage } from '~/api/interface/storage'
 
 /**
  * @name 存储模块
@@ -26,4 +27,9 @@ export const storageDelete = (storageId: number) => {
 /** 驱动详情接口 */
 export const storageInfo = (storageId: number) => {
   return http.get<ResultData>(`${API_URL + Api.StorageInfo}/${storageId}`)
+}
+
+/** 驱动新增接口 */
+export const storageAdd = (data: Storage.AddStorageRequestData) => {
+  return http.post(API_URL + Api.StorageAdd, data)
 }

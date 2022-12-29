@@ -7,7 +7,7 @@ const router = useRouter()
     :style="{
       boxSizing: 'border-box',
       width: '100%',
-      padding: '12px',
+      padding: '0.25rem',
       height: '100%',
       backgroundColor: 'var(--color-fill-2)',
     }"

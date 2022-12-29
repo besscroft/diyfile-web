@@ -36,12 +36,12 @@ handServerInfo()
     :style="{
       boxSizing: 'border-box',
       width: '100%',
-      padding: '12px',
+      padding: '0.25rem',
       height: '100%',
       backgroundColor: 'var(--color-fill-2)',
     }"
   >
-    <a-card hoverable :style="{ height: '100%' }">
+    <a-card hoverable :style="{ height: '100%' }"  :title="t('menu.index')">
       <div class="flex flex-wrap flex-col sm:flex-row">
         <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
           <a-card :loading="loading" title="运行信息" hoverable>

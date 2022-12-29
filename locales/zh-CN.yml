@@ -8,7 +8,7 @@ button:
   go: 确定
   canal: 取消
   home: 首页
-  title: Snow
+  title: Xanadu
   toggle_dark: 切换背景
   toggle_langs: 切换语言
   noLogin: 未登录
@@ -21,6 +21,7 @@ button:
   edit: 编辑
   detail: 详情
   delete: 删除
+  submit: 提交
 intro:
   desc: 固执己见的 Vite 项目模板
   dynamic-route: 动态路由演示
@@ -41,6 +42,7 @@ tip:
   accountPh: 请输入账号
   passwordPh: 请输入密码
   isRememberMe: 记住我
+  cardTitle: 请填写信息
 menu:
   index: 控制台
   setting:
@@ -76,4 +78,8 @@ user:
   telephone: 手机号
   birthday: 生日
   sex: 性别
+  remark: 备注
+storage:
+  name: 存储名称
+  type: 存储类型
   remark: 备注

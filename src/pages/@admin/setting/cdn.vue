@@ -7,12 +7,12 @@ const { t } = useI18n()
     :style="{
       boxSizing: 'border-box',
       width: '100%',
-      padding: '12px',
+      padding: '0.25rem',
       height: '100%',
       backgroundColor: 'var(--color-fill-2)',
     }"
   >
-    <a-card hoverable :style="{ width: '100%', height: '100%', marginBottom: '16px' }">
+    <a-card hoverable :style="{ width: '100%', height: '100%', marginBottom: '16px' }" :title="t('menu.setting.cdn')">
       <div
         :style="{
           display: 'flex',

@@ -8,7 +8,7 @@ button:
   go: 進む
   canal: キャンセル
   home: ホーム
-  title: Snow
+  title: Xanadu
   toggle_dark: 背景を切り替える
   toggle_langs: 言語切り替え
   noLogin: ログイン
@@ -21,6 +21,7 @@ button:
   edit: 編集
   detail: 詳細
   delete: 消去
+  submit: 送信
 intro:
   desc: 固執された Vite スターターテンプレート
   dynamic-route: 動的ルートのデモ
@@ -40,6 +41,7 @@ tip:
   accountPh: アカウントを入力してください
   passwordPh: パスワードを入力してください
   isRememberMe: 覚えて
+  cardTitle: 情報を記入してください
 menu:
   index: コンソール
   setting:
@@ -75,4 +77,8 @@ user:
   telephone: 電話番号
   birthday: お誕生日
   sex: 性別
+  remark: 述べる
+storage:
+  name: ストレージ名
+  type: ストレージタイプ
   remark: 述べる

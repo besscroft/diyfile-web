@@ -18,17 +18,14 @@ const devList = ref<Array<Object>>([
     :style="{
       boxSizing: 'border-box',
       width: '100%',
-      padding: '12px',
+      padding: '0.25rem',
       height: '100%',
       backgroundColor: 'var(--color-fill-2)',
     }"
   >
-    <a-card hoverable :style="{ height: '100%' }">
+    <a-card hoverable :style="{ height: '100%' }" :title="t('menu.system.about')">
       <div class="flex-auto">
-        <a-typography :style="{ marginTop: '-40px' }">
-          <a-typography-title>
-            {{ t('menu.system.about') }}
-          </a-typography-title>
+        <a-typography>
           <a-typography-paragraph>
             一款好看的文件交互管理。
           </a-typography-paragraph>

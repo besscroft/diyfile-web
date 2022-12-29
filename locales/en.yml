@@ -8,7 +8,7 @@ button:
   go: GO
   canal: Canal
   home: Home
-  title: Snow
+  title: Xanadu
   toggle_dark: Change background
   toggle_langs: Change languages
   noLogin: login
@@ -21,6 +21,7 @@ button:
   edit: Edit
   detail: Detail
   delete: Delete
+  submit: Submit
 intro:
   desc: Opinionated Vite Starter Template
   dynamic-route: Demo of dynamic route
@@ -41,6 +42,7 @@ tip:
   accountPh: please enter account
   passwordPh: please enter password
   isRememberMe: Remember Me
+  cardTitle: Please fill in the information.
 menu:
   index: Dashboard
   setting:
@@ -76,4 +78,8 @@ user:
   telephone: Telephone
   birthday: Birthday
   sex: Sex
+  remark: Remark
+storage:
+  name: Name
+  type: Type
   remark: Remark

@@ -29,7 +29,7 @@ export namespace User {
     remark: string | undefined
   }
 
-  /** 新增用户请求参数 */
+  /** 更新用户请求参数 */
   export interface UpdateUserRequestData {
     /** 用户id */
     id: number
