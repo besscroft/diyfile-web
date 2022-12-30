@@ -12,10 +12,10 @@ const { t } = useI18n()
       backgroundColor: 'var(--color-fill-2)',
     }"
   >
-    <a-card hoverable :style="{ width: '100%', height: '100%', marginBottom: '16px' }" :title="t('menu.system.setting')">
+    <a-card hoverable :style="{ width: '100%', height: '100%', marginBottom: '16px' }" :title="t('menu.setting.cdn')">
       <a-progress :percent="0.01" :style="{ width: '50%' }">
         <template v-slot:text="scope" >
-          设置页面开发进度 {{ scope.percent * 100 }}%
+          CDN 页面开发进度 {{ scope.percent * 100 }}%
         </template>
       </a-progress>
     </a-card>

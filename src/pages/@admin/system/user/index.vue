@@ -67,7 +67,7 @@ useUserPage()
               </span>
               <span class="icon-hover">
                 <a-popconfirm content="确定要删除吗?" type="warning" :onCancel="handleUserAdd" :onOk="() => handleUserDelete(item.id)">
-                  <a-button><icon-delete /></a-button>
+                  <icon-delete />
                 </a-popconfirm>
               </span>
             </template>

@@ -61,7 +61,7 @@ tag:
 table:
   Optional: 操作する
   UserInfo: ユーザー情報
-  StorageInto: ストレージ情報
+  StorageInfo: ストレージ情報
   user:
     userName: ユーザー名
     role: 役割

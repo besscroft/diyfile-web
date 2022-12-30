@@ -62,7 +62,7 @@ tag:
 table:
   Optional: 操作
   UserInfo: 用户信息
-  StorageInto: 存储信息
+  StorageInfo: 存储信息
   user:
     userName: 用户名
     role: 角色

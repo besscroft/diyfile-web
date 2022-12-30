@@ -30,14 +30,9 @@ useDetail()
       backgroundColor: 'var(--color-fill-2)',
     }"
   >
-    <a-card hoverable :style="{ height: '100%' }">
-      <icon-arrow-left @click="router.back()"/>
+    <a-card hoverable :style="{ height: '100%' }"  :title="t('table.StorageInfo')">
+      <icon-arrow-left @click="router.back()"/>  {{ t('button.back') }}
       <br/>
-      <a-progress :percent="0.5" :style="{ width: '50%' }">
-        <template v-slot:text="scope" >
-          存储详情开发进度 {{ scope.percent * 100 }}%
-        </template>
-      </a-progress>
       <a-space v-if="loading" direction="vertical" size="large" :style="{ width: '100%' }">
         <a-skeleton animation="animation">
           <a-space direction="vertical" :style="{ width: '100%' }" size="large">
@@ -46,7 +41,7 @@ useDetail()
         </a-skeleton>
       </a-space>
       <a-space v-else direction="vertical" size="large" fill>
-        <a-descriptions :data="detail" :title="t('table.UserInfo')" layout="inline-vertical" bordered>
+        <a-descriptions :data="detail" layout="inline-vertical" bordered>
           <descriptions-item label="存储名称">{{ detail.name }}</descriptions-item>
           <descriptions-item label="存储类型">
             <template #default>

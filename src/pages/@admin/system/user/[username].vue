@@ -30,8 +30,9 @@ useDetail()
       backgroundColor: 'var(--color-fill-2)',
     }"
   >
-    <a-card hoverable :style="{ height: '100%' }">
-      <icon-arrow-left @click="router.back()"/>
+    <a-card hoverable :style="{ height: '100%' }"  :title="t('table.UserInfo')">
+      <icon-arrow-left @click="router.back()"/> {{ t('button.back') }}
+      <br />
       <a-space v-if="loading" direction="vertical" size="large" :style="{ width: '100%' }">
         <a-skeleton animation="animation">
           <a-space direction="vertical" :style="{ width: '100%' }" size="large">
@@ -40,7 +41,7 @@ useDetail()
         </a-skeleton>
       </a-space>
       <a-space v-else direction="vertical" size="large" fill>
-        <a-descriptions :data="detail" :title="t('table.UserInfo')" layout="inline-vertical" bordered>
+        <a-descriptions :data="detail" layout="inline-vertical" bordered>
           <descriptions-item label="用户名">{{ detail.username }}</descriptions-item>
           <descriptions-item label="邮箱">{{ detail.email }}</descriptions-item>
           <descriptions-item label="昵称">{{ detail.name }}</descriptions-item>

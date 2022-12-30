@@ -62,7 +62,7 @@ tag:
 table:
   Optional: Optional
   UserInfo: User Info
-  StorageInto: Storage Into
+  StorageInfo: Storage Info
   user:
     userName: userName
     role: role

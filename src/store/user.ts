@@ -10,7 +10,7 @@ export const useUserStore = defineStore('user', {
     tokenHead: '',
     // 刷新 token
     refreshToken: '',
-    // 用户名
+    // 用户名称
     userName: '',
     // 头像
     avatar: '',
@@ -18,6 +18,8 @@ export const useUserStore = defineStore('user', {
     language: '',
     // 暗黑模式
     theme: '',
+    // 网站标题
+    title: '',
   }),
   actions: {
     /** 设置用户名称 */
@@ -47,6 +49,10 @@ export const useUserStore = defineStore('user', {
     /** 设置暗黑模式 */
     setTheme(theme: string) {
       this.theme = theme
+    },
+    /** 设置网站标题 */
+    setTitle(title: string) {
+      this.title = title
     },
   },
   persist: piniaPersistConfig('user'),
