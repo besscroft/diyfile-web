@@ -13,10 +13,16 @@ const data = reactive({
   queryParam: {
     pageNum: 1,
     pageSize: 10,
+    type: null as any,
   },
 })
 
-const handleStoragePage = () => {
+const handleStoragePage = (type: number) => {
+  if (type === -1) {
+    data.queryParam.type = null
+  } else {
+    data.queryParam.type = type
+  }
   loading.value = true
   storagePage(data.queryParam).then((res) => {
     if (res.code === 200) {
@@ -34,7 +40,7 @@ const handleStorageDelete = () => {
   Message.warning('还没写!')
 }
 
-handleStoragePage()
+handleStoragePage(-1)
 </script>
 
 <template>
@@ -48,6 +54,19 @@ handleStoragePage()
     }"
   >
     <a-card hoverable :style="{ height: '100%' }" :title="t('menu.setting.storage')">
+      <template #extra>
+        <a-space>
+          <a-dropdown>
+            <a-button>{{ t('button.type') }}</a-button>
+            <template #content>
+              <!-- 存储类型：0->本地存储；1->OneDrive -->
+              <a-doption @click="handleStoragePage()">所有类型</a-doption>
+              <a-doption @click="handleStoragePage(0)">本地存储</a-doption>
+              <a-doption @click="handleStoragePage(1)">OneDrive</a-doption>
+            </template>
+          </a-dropdown>
+        </a-space>
+      </template>
       <a-space v-if="loading" direction="vertical" size="large" :style="{ width: '100%' }">
         <a-skeleton animation="animation">
           <a-space direction="vertical" :style="{ width: '100%' }" size="large">

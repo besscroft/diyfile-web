@@ -22,6 +22,8 @@ button:
   detail: Detail
   delete: Delete
   submit: Submit
+  role: Role
+  type: Type
 intro:
   desc: Opinionated Vite Starter Template
   dynamic-route: Demo of dynamic route
@@ -43,6 +45,7 @@ tip:
   passwordPh: please enter password
   isRememberMe: Remember Me
   cardTitle: Please fill in the information.
+  rolePh: Please select a role.
 menu:
   index: Dashboard
   setting:
@@ -72,6 +75,7 @@ user:
   username: Username
   password: Password
   avatar: Avatar
+  role: Role
   email: Email
   name: Name
   realName: RealName

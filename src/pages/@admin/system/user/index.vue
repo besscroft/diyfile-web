@@ -12,12 +12,18 @@ const data = reactive({
   queryParam: {
     pageNum: 1,
     pageSize: 10,
+    role: '',
   },
 })
 
 const dataList = ref()
 
-const useUserPage = () => {
+const useUserPage = (role: string) => {
+  if (role) {
+    data.queryParam.role = role
+  } else {
+    data.queryParam.role = ''
+  }
   loading.value = true
   userPage(data.queryParam).then((res) => {
     if (res.code === 200) {
@@ -32,11 +38,11 @@ const handleUserDelete = (id: number) => {
     if (res.code === 200) {
       Message.info(res.message)
     }
-    useUserPage()
+    useUserPage('')
   })
 }
 
-useUserPage()
+useUserPage('')
 </script>
 
 <template>
@@ -50,6 +56,21 @@ useUserPage()
     }"
   >
     <a-card hoverable :style="{ height: '100%' }" :title="t('menu.system.user')">
+      <template #extra>
+        <a-space>
+          <a-dropdown>
+            <a-button>{{ t('button.role') }}</a-button>
+            <template #content>
+              <a-doption @click="useUserPage('')">所有用户</a-doption>
+              <a-doption @click="useUserPage('platform-super-admin')">超级管理员</a-doption>
+              <a-doption @click="useUserPage('platform-admin')">平台管理员</a-doption>
+              <a-doption @click="useUserPage('platform-self-provisioner')">平台运维员</a-doption>
+              <a-doption @click="useUserPage('platform-view')">平台观察员</a-doption>
+              <a-doption @click="useUserPage('platform-visitor')">游客</a-doption>
+            </template>
+          </a-dropdown>
+        </a-space>
+      </template>
       <a-space v-if="loading" direction="vertical" size="large" :style="{ width: '100%' }">
         <a-skeleton animation="animation">
           <a-space direction="vertical" :style="{ width: '100%' }" size="large">
@@ -82,7 +103,13 @@ useUserPage()
                       :src="item.avatar"
                     />
                   </a-avatar>
-                  <a-typography-text>{{ t('table.user.role') }}: <a-tag>{{ item.role }}</a-tag></a-typography-text>
+                  <a-typography-text>{{ t('table.user.role') }}:
+                    <a-tag v-if="item.role === 'platform-super-admin'">超级管理员</a-tag>
+                    <a-tag v-if="item.role === 'platform-admin'">平台管理员</a-tag>
+                    <a-tag v-if="item.role === 'platform-self-provisioner'">平台运维员</a-tag>
+                    <a-tag v-if="item.role === 'platform-view'">平台观察员</a-tag>
+                    <a-tag v-if="item.role === 'platform-visitor'">游客</a-tag>
+                  </a-typography-text>
                 </div>
                 <br />
                 {{ t('table.user.loginTime') }}: {{ item.loginTime }}

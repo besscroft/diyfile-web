@@ -22,6 +22,8 @@ button:
   detail: 詳細
   delete: 消去
   submit: 送信
+  role: 役割
+  type: ストレージタイプ
 intro:
   desc: 固執された Vite スターターテンプレート
   dynamic-route: 動的ルートのデモ
@@ -42,6 +44,7 @@ tip:
   passwordPh: パスワードを入力してください
   isRememberMe: 覚えて
   cardTitle: 情報を記入してください
+  rolePh: 役割を選択してください
 menu:
   index: コンソール
   setting:
@@ -71,6 +74,7 @@ user:
   username: ユーザー名
   password: パスワード
   avatar: アバター
+  role: 役割
   email: 郵便
   name: ニックネーム
   realName: 本名

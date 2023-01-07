@@ -22,6 +22,8 @@ button:
   detail: 详情
   delete: 删除
   submit: 提交
+  role: 角色
+  type: 存储类型
 intro:
   desc: 固执己见的 Vite 项目模板
   dynamic-route: 动态路由演示
@@ -43,6 +45,7 @@ tip:
   passwordPh: 请输入密码
   isRememberMe: 记住我
   cardTitle: 请填写信息
+  rolePh: 请选择角色
 menu:
   index: 控制台
   setting:
@@ -72,6 +75,7 @@ user:
   username: 用户名
   password: 密码
   avatar: 头像
+  role: 角色
   email: 邮箱
   name: 昵称
   realName: 真实姓名

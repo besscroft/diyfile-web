@@ -5,6 +5,7 @@ import { userAdd } from '~/api/modules/user'
 
 const router = useRouter()
 const { t } = useI18n()
+const emailTipData = ref()
 
 const addUserRuleForm = reactive<User.AddUserRequestData>({
   /** 用户名 */
@@ -13,6 +14,8 @@ const addUserRuleForm = reactive<User.AddUserRequestData>({
   password: undefined,
   /** 头像 */
   avatar: undefined,
+  /** 角色 */
+  role: undefined,
   /** 邮箱 */
   email: undefined,
   /** 昵称 */
@@ -36,6 +39,18 @@ const handleSubmit = () => {
       router.push('/@admin/system/user')
     }
   })
+}
+
+const handleEmailSearch = (value: string) => {
+  if (value) {
+    emailTipData.value = [
+      value.concat('@qq.com'),
+      value.concat('@163.com'),
+      value.concat('@foxmail.com'),
+      value.concat('@gmail.com'),
+      value.concat('@outlook.com'),
+    ]
+  }
 }
 </script>
 
@@ -68,10 +83,19 @@ const handleSubmit = () => {
               <a-input-password v-model="addUserRuleForm.password" placeholder="请输入密码" :max-length="{ length: 20, errorOnly: true }" show-word-limit allow-clear />
             </a-form-item>
             <a-form-item field="avatar" :label="t('user.avatar')">
-              <a-input v-model="addUserRuleForm.avatar" placeholder="头像地址，后面改成上传图片" allow-clear />
+              <a-input v-model="addUserRuleForm.avatar" placeholder="头像地址" allow-clear />
+            </a-form-item>
+            <a-form-item field="role" :label="t('user.role')" required>
+              <a-select v-model="addUserRuleForm.role" :placeholder="t('tip.rolePh')" allow-clear>
+                <a-option value="platform-super-admin" disabled>超级管理员</a-option>
+                <a-option value="platform-admin">平台管理员</a-option>
+                <a-option value="platform-self-provisioner">平台运维员</a-option>
+                <a-option value="platform-view">平台观察员</a-option>
+                <a-option value="platform-visitor">游客</a-option>
+              </a-select>
             </a-form-item>
             <a-form-item field="email" :label="t('user.email')">
-              <a-input v-model="addUserRuleForm.email" placeholder="请输入邮箱" allow-clear />
+              <a-auto-complete :data="emailTipData" v-model="addUserRuleForm.email" @search="handleEmailSearch" placeholder="请输入邮箱" />
             </a-form-item>
             <a-form-item field="name" :label="t('user.name')">
               <a-input v-model="addUserRuleForm.name" placeholder="请输入昵称" ::max-length="{ length: 20, errorOnly: true }" show-word-limit allow-clear />

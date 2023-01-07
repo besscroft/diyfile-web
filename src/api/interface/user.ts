@@ -13,6 +13,8 @@ export namespace User {
     password: string | undefined
     /** 头像 */
     avatar: string | undefined
+    /** 角色 */
+    role: string | undefined
     /** 邮箱 */
     email: string | undefined
     /** 昵称 */
@@ -35,6 +37,8 @@ export namespace User {
     id: number
     /** 头像 */
     avatar: string | undefined
+    /** 角色 */
+    role: string | undefined
     /** 邮箱 */
     email: string | undefined
     /** 昵称 */
