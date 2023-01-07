@@ -37,8 +37,8 @@ const handleUserDelete = (id: number) => {
   userDelete(id).then((res) => {
     if (res.code === 200) {
       Message.info(res.message)
+      useUserPage('')
     }
-    useUserPage('')
   })
 }
 

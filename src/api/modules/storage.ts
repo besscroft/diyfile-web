@@ -1,5 +1,5 @@
 import { API_URL } from '../../../config/config'
-import type { PageResultData, ReqPage, ResultData } from '~/api/interface'
+import type { PageResultData, ReqPage, Result } from '~/api/interface'
 import http from '~/api'
 import type { Storage } from '~/api/interface/storage'
 
@@ -21,12 +21,12 @@ export const storagePage = (params: ReqPage) => {
 
 /** 驱动删除接口 */
 export const storageDelete = (storageId: number) => {
-  return http.delete<ResultData>(`${API_URL + Api.StorageDelete}/${storageId}`)
+  return http.delete<Result>(`${API_URL + Api.StorageDelete}/${storageId}`)
 }
 
 /** 驱动详情接口 */
 export const storageInfo = (storageId: number) => {
-  return http.get<ResultData>(`${API_URL + Api.StorageInfo}/${storageId}`)
+  return http.get<Result>(`${API_URL + Api.StorageInfo}/${storageId}`)
 }
 
 /** 驱动新增接口 */

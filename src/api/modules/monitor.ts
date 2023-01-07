@@ -1,5 +1,5 @@
 import { API_URL } from '../../../config/config'
-import type { ResultData } from '~/api/interface'
+import type { Result } from '~/api/interface'
 import http from '~/api'
 
 /**
@@ -11,5 +11,5 @@ enum Api {
 
 /** 获取用户信息 */
 export const getServerInfo = () => {
-  return http.get<ResultData>(API_URL + Api.ServerInfo)
+  return http.get<Result>(API_URL + Api.ServerInfo)
 }

@@ -1,18 +1,14 @@
 <script setup lang="ts">
-const { t } = useI18n()
 </script>
 
 <template>
   <div
     :style="{
-      boxSizing: 'border-box',
       width: '100%',
-      padding: '0.25rem',
       height: '100%',
-      backgroundColor: 'var(--color-fill-2)',
     }"
   >
-    <a-card hoverable :style="{ width: '100%', height: '100%', marginBottom: '16px' }" :title="t('menu.setting.cdn')">
+    <a-card :bordered="false" hoverable :style="{ height: '100%' }">
       <a-empty>
         <template #image>
           <icon-exclamation-circle-fill />

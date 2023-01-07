@@ -1,5 +1,5 @@
 import { API_URL } from '../../../config/config'
-import type { Login, PageResultData, ReqPage, ResultData } from '~/api/interface'
+import type { Login, PageResultData, ReqPage, Result } from '~/api/interface'
 import type { User } from '~/api/interface/user'
 import http from '~/api'
 
@@ -29,7 +29,7 @@ export const getInfo = () => {
 
 /** 退出登录 */
 export const loginOut = () => {
-  return http.post<ResultData>(API_URL + Api.LoginOut)
+  return http.post<Result>(API_URL + Api.LoginOut)
 }
 
 /** 用户分页列表 */
@@ -39,15 +39,15 @@ export const userPage = (params: ReqPage) => {
 
 /** 用户删除接口 */
 export const userDelete = (userId: number) => {
-  return http.delete<ResultData>(`${API_URL + Api.UserDelete}/${userId}`)
+  return http.delete<Result>(`${API_URL + Api.UserDelete}/${userId}`)
 }
 
 /** 根据用户名获取用户信息 */
 export const GetUserInfoByUserName = (username: any) => {
-  return http.get<ResultData>(`${API_URL + Api.GetUserInfoByUserName}/${username}`, undefined, { headers: { noLoading: true } })
+  return http.get<Result>(`${API_URL + Api.GetUserInfoByUserName}/${username}`, undefined, { headers: { noLoading: true } })
 }
 
 /** 新增用户接口 */
 export const userAdd = (data: User.AddUserRequestData) => {
-  return http.post<ResultData>(API_URL + Api.UserAdd, data)
+  return http.post<Result>(API_URL + Api.UserAdd, data)
 }

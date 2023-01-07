@@ -87,3 +87,6 @@ storage:
   name: Name
   type: Type
   remark: Remark
+setting:
+  base: Basic Config
+  web: Site Config

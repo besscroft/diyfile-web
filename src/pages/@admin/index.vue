@@ -42,6 +42,15 @@ handServerInfo()
     }"
   >
     <a-card hoverable :style="{ height: '100%' }"  :title="t('menu.index')">
+      <template #extra>
+        <a-space>
+          <a-button @click="handServerInfo">
+            <template #icon>
+              <icon-sync />
+            </template>
+          </a-button>
+        </a-space>
+      </template>
       <div class="flex flex-wrap flex-col sm:flex-row">
         <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
           <a-card :loading="loading" title="运行信息" hoverable>

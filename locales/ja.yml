@@ -86,3 +86,6 @@ storage:
   name: ストレージ名
   type: ストレージタイプ
   remark: 述べる
+setting:
+  base: 基本構成
+  web: Webサイト構成

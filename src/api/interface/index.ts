@@ -1,17 +1,12 @@
-// 请求响应参数(不包含data)
-export interface Result {
+// 请求响应参数
+export interface Result<T = any> {
   code: number
   message: string
-}
-
-// 请求响应参数(包含data)
-export interface ResultData<T = any> extends Result {
   data: T
 }
 
-// 分页请求响应参数(包含data)
+// 分页请求响应参数
 export interface PageResultData<T = any> extends Result {
-  data: T
   list: T[]
   pageNum: number
   pageSize: number

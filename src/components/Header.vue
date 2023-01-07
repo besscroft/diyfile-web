@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { getSiteTitle } from '~/api/modules/systemConfig'
 import useDevice from '~/hooks/device'
 
 // 路由状态
@@ -61,6 +62,13 @@ onMounted(() => {
     locale.value = 'zh-CN'
   }
   localTheme === 'dark' ? document.body.setAttribute('arco-theme', 'dark') : document.body.removeAttribute('arco-theme')
+  if (!user.title) {
+    getSiteTitle().then((res) => {
+      if (res.code === 200) {
+        user.setTitle(res.data)
+      }
+    })
+  }
 })
 </script>
 
@@ -68,7 +76,7 @@ onMounted(() => {
   <a-row class="grid-demo">
     <a-col class="title-container" :xs="8" :sm="8" :md="8" :lg="8" :xl="8" :xxl="8">
       <div v-if="props.value || isMobile">
-        Xanadu
+        {{ user.title || 'Xanadu' }}
       </div>
       <div v-else>
         <a-button shape="circle" @click="onMenuCollapse">
