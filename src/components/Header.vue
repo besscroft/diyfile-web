@@ -75,7 +75,7 @@ onMounted(() => {
 <template>
   <a-row class="grid-demo">
     <a-col class="title-container" :xs="8" :sm="8" :md="8" :lg="8" :xl="8" :xxl="8">
-      <div v-if="props.value || isMobile">
+      <div v-if="props.value || isMobile" @click="routerPage('/')">
         {{ user.title || 'Xanadu' }}
       </div>
       <div v-else>
