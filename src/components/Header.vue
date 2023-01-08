@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { getSiteTitle } from '~/api/modules/systemConfig'
 import useDevice from '~/hooks/device'
+import { isDark } from '~/composables/dark'
 
 // 路由状态
 const props = defineProps(['value'])
@@ -61,7 +62,7 @@ onMounted(() => {
   } else {
     locale.value = 'zh-CN'
   }
-  localTheme === 'dark' ? document.body.setAttribute('arco-theme', 'dark') : document.body.removeAttribute('arco-theme')
+  localTheme === 'dark' || isDark.value ? document.body.setAttribute('arco-theme', 'dark') : document.body.removeAttribute('arco-theme')
   if (!user.title) {
     getSiteTitle().then((res) => {
       if (res.code === 200) {
