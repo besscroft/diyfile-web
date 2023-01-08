@@ -62,7 +62,6 @@ useUserPage('')
             <a-button>{{ t('button.role') }}</a-button>
             <template #content>
               <a-doption @click="useUserPage('')">所有用户</a-doption>
-              <a-doption @click="useUserPage('platform-super-admin')">超级管理员</a-doption>
               <a-doption @click="useUserPage('platform-admin')">平台管理员</a-doption>
               <a-doption @click="useUserPage('platform-self-provisioner')">平台运维员</a-doption>
               <a-doption @click="useUserPage('platform-view')">平台观察员</a-doption>

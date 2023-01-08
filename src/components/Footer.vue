@@ -1,5 +1,17 @@
 <script setup lang="ts">
+import { getBeian } from '~/api/modules/systemConfig'
 
+const beian = ref<string>('')
+
+const handleGetBeian = () => {
+  getBeian().then((res) => {
+    if (res.code === 200) {
+      beian.value = res.data
+    }
+  })
+}
+
+handleGetBeian()
 </script>
 
 <template>
@@ -16,6 +28,7 @@
       >
         <a-typography-text>Made with ❤ by Bess Croft.</a-typography-text>
       </span>
+      <a v-if="beian" href="https://beian.miit.gov.cn/" target="_blank">{{ beian }}</a>
       <a-tag color="gray">
         <template #icon>
           <icon-github />

@@ -20,14 +20,8 @@ const addUserRuleForm = reactive<User.AddUserRequestData>({
   email: undefined,
   /** 昵称 */
   name: undefined,
-  /** 真实姓名 */
-  realName: undefined,
   /** 手机号 */
   telephone: undefined,
-  /** 生日 */
-  birthday: new Date(),
-  /** 性别：1->男；2->女；3->未知 */
-  sex: 1,
   /** 备注 */
   remark: undefined,
 })
@@ -100,25 +94,12 @@ const handleEmailSearch = (value: string) => {
             <a-form-item field="name" :label="t('user.name')">
               <a-input v-model="addUserRuleForm.name" placeholder="请输入昵称" ::max-length="{ length: 20, errorOnly: true }" show-word-limit allow-clear />
             </a-form-item>
-            <a-form-item field="realName" :label="t('user.realName')">
-              <a-input v-model="addUserRuleForm.realName" placeholder="请输入真实姓名" allow-clear />
-            </a-form-item>
             <a-form-item field="telephone" :label="t('user.telephone')">
               <a-input v-model="addUserRuleForm.telephone" placeholder="请输入手机号" :max-length="{ length: 11, errorOnly: true }" show-word-limit allow-clear>
                 <template #prepend>
                   +86
                 </template>
               </a-input>
-            </a-form-item>
-            <a-form-item field="birthday" :label="t('user.birthday')">
-              <a-date-picker v-model="addUserRuleForm.birthday" placeholder="请选择生日"/>
-            </a-form-item>
-            <a-form-item field="sex" :label="t('user.sex')">
-              <a-radio-group v-model="addUserRuleForm.sex" value="number">
-                <a-radio value="1">男</a-radio>
-                <a-radio value="2">女</a-radio>
-                <a-radio value="3">未知</a-radio>
-              </a-radio-group>
             </a-form-item>
             <a-form-item field="remark" :label="t('user.remark')">
               <a-textarea v-model="addUserRuleForm.remark" placeholder="请输入备注" allow-clear auto-size :max-length="{ length: 200, errorOnly: true }" show-word-limit />

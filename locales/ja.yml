@@ -56,6 +56,7 @@ menu:
     setting: 設定
     user: ユーザー
     about: だいたい
+    faqs: よくある質問
 message:
   error: 間違い
 tag:
@@ -77,10 +78,7 @@ user:
   role: 役割
   email: 郵便
   name: ニックネーム
-  realName: 本名
   telephone: 電話番号
-  birthday: お誕生日
-  sex: 性別
   remark: 述べる
 storage:
   name: ストレージ名

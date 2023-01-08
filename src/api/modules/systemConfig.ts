@@ -9,6 +9,7 @@ enum Api {
   GetConfig = '/systemConfig/getConfig',
   GetSiteTitle = '/systemConfig/getSiteTitle',
   GetSiteConfig = '/systemConfig/getSiteConfig',
+  GetBeian = '/systemConfig/getBeian',
 }
 
 /** 获取系统配置 */
@@ -24,4 +25,9 @@ export const getSiteTitle = () => {
 /** 获取网站配置 */
 export const getSiteConfig = () => {
   return http.get<Result>(API_URL + Api.GetSiteConfig)
+}
+
+/** 获取备案信息 */
+export const getBeian = () => {
+  return http.get<Result>(API_URL + Api.GetBeian)
 }

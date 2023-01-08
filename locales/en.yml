@@ -57,6 +57,7 @@ menu:
     setting: Setting
     user: User
     about: About
+    faqs: FAQs
 message:
   error: Error
 tag:
@@ -78,10 +79,7 @@ user:
   role: Role
   email: Email
   name: Name
-  realName: RealName
   telephone: Telephone
-  birthday: Birthday
-  sex: Sex
   remark: Remark
 storage:
   name: Name

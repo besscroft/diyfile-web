@@ -6,7 +6,7 @@ const router = useRouter()
 const { isMobile } = useDevice()
 const props = ref<Boolean>(false)
 // 控制菜单收缩
-const menuStatus = ref<Boolean>(true)
+const menuStatus = ref<Boolean>(false)
 
 const toggleTheme = () => {
   if (isDark.value) {
@@ -37,6 +37,8 @@ const routerPage = (val: string) => {
     router.push('/@admin/system/user')
   } else if (val === '3_2') {
     router.push('/@admin/system/about')
+  } else if (val === '3_3') {
+    router.push('/@admin/system/faqs')
   } else {
     router.push('/@admin')
   }

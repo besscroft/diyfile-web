@@ -72,6 +72,12 @@ const routerPage = (val: string) => {
               </template>
               <template #default>{{ t('menu.system.about') }}</template>
             </a-doption>
+            <a-doption @click="routerPage('3_3')">
+              <template #icon>
+                <icon-question-circle-fill />
+              </template>
+              <template #default>{{ t('menu.system.faqs') }}</template>
+            </a-doption>
           </template>
         </a-dropdown>
       </div>

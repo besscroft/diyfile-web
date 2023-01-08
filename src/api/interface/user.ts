@@ -19,14 +19,8 @@ export namespace User {
     email: string | undefined
     /** 昵称 */
     name: string | undefined
-    /** 真实姓名 */
-    realName: string | undefined
     /** 手机号 */
     telephone: number | undefined
-    /** 生日 */
-    birthday: Date | undefined
-    /** 性别：1->男；2->女；3->未知 */
-    sex: number | undefined
     /** 备注 */
     remark: string | undefined
   }
@@ -43,14 +37,8 @@ export namespace User {
     email: string | undefined
     /** 昵称 */
     name: string | undefined
-    /** 真实姓名 */
-    realName: string | undefined
     /** 手机号 */
     telephone: number | undefined
-    /** 生日 */
-    birthday: Date | undefined
-    /** 性别：1->男；2->女；3->未知 */
-    sex: number | undefined
     /** 备注 */
     remark: string | undefined
   }

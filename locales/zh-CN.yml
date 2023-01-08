@@ -57,6 +57,7 @@ menu:
     setting: 设置
     user: 用户
     about: 关于
+    faqs: 常见问题
 message:
   error: 错误
 tag:
@@ -78,10 +79,7 @@ user:
   role: 角色
   email: 邮箱
   name: 昵称
-  realName: 真实姓名
   telephone: 手机号
-  birthday: 生日
-  sex: 性别
   remark: 备注
 storage:
   name: 存储名称
