@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Message } from '@arco-design/web-vue'
-import { storagePage } from '~/api/modules/storage'
+import { storageDelete, storagePage } from '~/api/modules/storage'
 import useDevice from '~/hooks/device'
 
 const router = useRouter()
@@ -36,8 +36,13 @@ const handleStorageUpdate = () => {
   Message.warning('还没写!')
 }
 
-const handleStorageDelete = () => {
-  Message.warning('还没写!')
+const handleStorageDelete = (storageId: number) => {
+  storageDelete(storageId).then((res) => {
+    if (res.code === 200) {
+      Message.success('删除成功!')
+      handleStoragePage(-1)
+    }
+  })
 }
 
 handleStoragePage(-1)
@@ -84,22 +89,23 @@ handleStoragePage(-1)
                 <template #content>
                   <a-doption @click="router.push({ path: `/@admin/setting/storage/${encodeURIComponent(item.id)}`, params: { id: item.id } })">{{ t('button.detail') }}</a-doption>
                   <a-doption @click="router.push({ path: '/@admin/setting/storage/edit', query: { id: item.id } })">{{ t('button.edit') }}</a-doption>
-                  <a-doption @click="handleStorageDelete">{{ t('button.delete') }}</a-doption>
                 </template>
               </a-dropdown>
             </template>
             <template #cover>
-              <div
-                :style="{
-                  height: '180px',
-                  overflow: 'hidden',
-                }"
-              >
+              <div class="h-46">
                 <icon-storage :style="{ 'margin-top': '12px', 'height': '36px', 'width': '100%' }" />
-                <a-typography-paragraph>
+                <a-typography-paragraph class="mt-4 ml-2 mr-2 mb-2">
                   {{ item.remark }}
                 </a-typography-paragraph>
               </div>
+            </template>
+            <template #actions>
+              <span class="icon-hover">
+                <a-popconfirm content="确定要删除吗?" type="warning" :onOk="() => handleStorageDelete(item.id)">
+                  <icon-delete />
+                </a-popconfirm>
+              </span>
             </template>
             <a-card-meta >
               <template #avatar>
@@ -110,7 +116,7 @@ handleStoragePage(-1)
                     <a-tag v-if="item.type === 0" color="cyan">本地存储</a-tag>
                     <a-tag v-else-if="item.type === 1" color="cyan">OneDrive</a-tag>
                     <a-tag v-if="item.enable === 1" color="green">启用</a-tag>
-                    <a-tag v-else color="gray">禁用</a-tag>
+                    <a-tag v-else color="red">禁用</a-tag>
                   </a-space>
                 </div>
               </template>

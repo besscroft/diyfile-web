@@ -28,7 +28,7 @@ export namespace User {
   /** 更新用户请求参数 */
   export interface UpdateUserRequestData {
     /** 用户id */
-    id: number
+    id: number | undefined
     /** 头像 */
     avatar: string | undefined
     /** 角色 */

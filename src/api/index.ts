@@ -4,7 +4,7 @@ import { Message } from '@arco-design/web-vue'
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import { AxiosCanceler } from './helper/axiosCancel'
-import type { ResultData } from '~/api/interface'
+import type { Result } from '~/api/interface'
 import { ResultEnum } from '~/enums/httpEnum'
 import { checkStatus } from '~/api/helper/checkStatus'
 
@@ -76,7 +76,8 @@ class RequestHttp {
         }
         // 全局错误信息拦截（防止下载文件得时候返回数据流，没有code，直接报错）
         if (data.code && data.code !== ResultEnum.SUCCESS) {
-          Message.error(data.message)
+          // Message.error(data.message)
+          return Promise.reject(data)
         }
         // 成功请求（在页面上除非特殊情况，否则不用处理失败逻辑）
         return data
@@ -101,19 +102,19 @@ class RequestHttp {
   }
 
   // * 常用请求方法封装
-  get<T>(url: string, params?: object, _object = {}): Promise<ResultData<T>> {
+  get<T>(url: string, params?: object, _object = {}): Promise<Result<T>> {
     return this.service.get(url, { params, ..._object })
   }
 
-  post<T>(url: string, params?: object, _object = {}): Promise<ResultData<T>> {
+  post<T>(url: string, params?: object, _object = {}): Promise<Result<T>> {
     return this.service.post(url, params, _object)
   }
 
-  put<T>(url: string, params?: object, _object = {}): Promise<ResultData<T>> {
+  put<T>(url: string, params?: object, _object = {}): Promise<Result<T>> {
     return this.service.put(url, params, _object)
   }
 
-  delete<T>(url: string, params?: any, _object = {}): Promise<ResultData<T>> {
+  delete<T>(url: string, params?: any, _object = {}): Promise<Result<T>> {
     return this.service.delete(url, { params, ..._object })
   }
 }

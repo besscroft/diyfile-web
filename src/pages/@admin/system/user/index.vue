@@ -80,38 +80,50 @@ useUserPage('')
       </a-space>
       <a-row v-else :gutter="[12, 10]">
         <a-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6" :key="item.id" v-for="item in dataList">
-          <a-card :style="{ height: '320px' }" hoverable>
+          <a-card :title="item.name" :style="{ height: '320px' }" hoverable>
+            <template #extra>
+              <a-dropdown>
+                <a-button type="primary">{{ t('table.Optional') }}</a-button>
+                <template #content>
+                  <a-doption @click="router.push({ path: `/@admin/system/user/${encodeURIComponent(item.username)}`, params: { username: item.username } })">{{ t('button.detail') }}</a-doption>
+                  <a-doption @click="router.push({ path: '/@admin/system/user/edit', query: { id: item.id } })">{{ t('button.edit') }}</a-doption>
+                </template>
+              </a-dropdown>
+            </template>
+            <template #cover>
+              <div class="h-48">
+                <img
+                  class="rounded-full mt-2 w-14 h-14 mx-auto"
+                  alt="avatar"
+                  :src="item.avatar"
+                />
+                <a-typography-paragraph class="mt-4 ml-2 mr-2 mb-2">
+                  {{ item.remark }}
+                </a-typography-paragraph>
+              </div>
+            </template>
             <template #actions>
-              <span class="icon-hover">
-                <icon-user @click="router.push({ path: `/@admin/system/user/${encodeURIComponent(item.username)}`, params: { username: item.username } })" />
-              </span>
-              <span class="icon-hover">
-                <a-popconfirm content="确定要删除吗?" type="warning" :onCancel="handleUserAdd" :onOk="() => handleUserDelete(item.id)">
+              <span class="icon-hover" v-if="item.role !== 'platform-super-admin'">
+                <a-popconfirm content="确定要删除吗?" type="warning" :onOk="() => handleUserDelete(item.id)">
                   <icon-delete />
                 </a-popconfirm>
               </span>
             </template>
-            <a-card-meta :title="item.name" :description="item.remark">
+            <a-card-meta>
               <template #avatar>
                 <div
                   :style="{ display: 'flex', alignItems: 'center', color: '#1D2129' }"
                 >
-                  <a-avatar :size="40" :style="{ marginRight: '8px' }">
-                    <img
-                      alt="avatar"
-                      :src="item.avatar"
-                    />
-                  </a-avatar>
-                  <a-typography-text>{{ t('table.user.role') }}:
-                    <a-tag v-if="item.role === 'platform-super-admin'">超级管理员</a-tag>
-                    <a-tag v-if="item.role === 'platform-admin'">平台管理员</a-tag>
-                    <a-tag v-if="item.role === 'platform-self-provisioner'">平台运维员</a-tag>
-                    <a-tag v-if="item.role === 'platform-view'">平台观察员</a-tag>
-                    <a-tag v-if="item.role === 'platform-visitor'">游客</a-tag>
-                  </a-typography-text>
+                  <a-space>
+                    <a-tag color="blue" v-if="item.role === 'platform-super-admin'">超级管理员</a-tag>
+                    <a-tag color="cyan" v-if="item.role === 'platform-admin'">平台管理员</a-tag>
+                    <a-tag color="orange" v-if="item.role === 'platform-self-provisioner'">平台运维员</a-tag>
+                    <a-tag color="lime" v-if="item.role === 'platform-view'">平台观察员</a-tag>
+                    <a-tag color="green" v-if="item.role === 'platform-visitor'">游客</a-tag>
+                    {{ t('table.user.loginTime') }}: {{ item.loginTime }}
+                  </a-space>
                 </div>
                 <br />
-                {{ t('table.user.loginTime') }}: {{ item.loginTime }}
               </template>
             </a-card-meta>
           </a-card>

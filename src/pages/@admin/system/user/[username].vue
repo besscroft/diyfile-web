@@ -45,15 +45,7 @@ useDetail()
           <descriptions-item label="用户名">{{ detail.username }}</descriptions-item>
           <descriptions-item label="邮箱">{{ detail.email }}</descriptions-item>
           <descriptions-item label="昵称">{{ detail.name }}</descriptions-item>
-          <descriptions-item label="真实姓名">{{ detail.realName }}</descriptions-item>
           <descriptions-item label="手机">{{ detail.telephone }}</descriptions-item>
-          <descriptions-item label="生日">{{ detail.birthday }}</descriptions-item>
-          <descriptions-item label="性别">
-            <template #default>
-              <a-tag v-if="detail.sex === 1" size="small">男</a-tag>
-              <a-tag v-else size="small">女</a-tag>
-            </template>
-          </descriptions-item>
           <descriptions-item label="创建者">{{ detail.creator }}</descriptions-item>
           <descriptions-item label="更新者">{{ detail.updater }}</descriptions-item>
           <descriptions-item label="创建时间">{{ detail.createTime }}</descriptions-item>

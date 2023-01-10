@@ -33,3 +33,8 @@ export const storageInfo = (storageId: number) => {
 export const storageAdd = (data: Storage.AddStorageRequestData) => {
   return http.post(API_URL + Api.StorageAdd, data)
 }
+
+/** 驱动更新接口 */
+export const storageUpdate = (data: Storage.UpdateStorageRequestData) => {
+  return http.put(API_URL + Api.StorageUpdate, data)
+}

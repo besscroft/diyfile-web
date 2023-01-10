@@ -63,6 +63,7 @@ const handleSubmit = () => {
             </a-form-item>
           </a-form>
           <!-- TODO key 列表增加 -->
+          配置列表新增还在开发中...
           <!-- TODO 表单校验 -->
         </a-col>
         <a-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6"></a-col>

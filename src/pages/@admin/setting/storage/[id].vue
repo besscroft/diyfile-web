@@ -45,14 +45,14 @@ useDetail()
           <descriptions-item label="存储名称">{{ detail.name }}</descriptions-item>
           <descriptions-item label="存储类型">
             <template #default>
-              <a-tag v-if="detail.type === 0" size="small">本地存储</a-tag>
-              <a-tag v-if="detail.type === 1" size="small">OneDrive</a-tag>
+              <a-tag v-if="detail.type === 0" size="small" color="cyan">本地存储</a-tag>
+              <a-tag v-if="detail.type === 1" size="small" color="cyan">OneDrive</a-tag>
             </template>
           </descriptions-item>
           <descriptions-item label="存储启用状态">
             <template #default>
-              <a-tag v-if="detail.enable === 1" size="small">启用</a-tag>
-              <a-tag v-else size="small">禁用</a-tag>
+              <a-tag v-if="detail.enable === 1" size="small" color="green">启用</a-tag>
+              <a-tag v-else size="small" color="red">禁用</a-tag>
             </template>
           </descriptions-item>
           <descriptions-item label="创建者">{{ detail.creator }}</descriptions-item>

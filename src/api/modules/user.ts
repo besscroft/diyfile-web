@@ -14,7 +14,8 @@ enum Api {
   UserDelete = '/user/delete',
   GetUserInfoByUserName = '/user/info',
   UserAdd = '/user/add',
-  UserUpdate = '/user/add',
+  UserUpdate = '/user/update',
+  GetUserById = '/user/getUser',
 }
 
 /** 用户登录接口 */
@@ -50,4 +51,14 @@ export const GetUserInfoByUserName = (username: any) => {
 /** 新增用户接口 */
 export const userAdd = (data: User.AddUserRequestData) => {
   return http.post<Result>(API_URL + Api.UserAdd, data)
+}
+
+/** 更新用户接口 */
+export const userUpdate = (data: User.UpdateUserRequestData) => {
+  return http.put<Result>(API_URL + Api.UserUpdate, data)
+}
+
+/** 获取用户 */
+export const getUserById = (userId: number) => {
+  return http.get<Result>(`${API_URL + Api.GetUserById}/${userId}`)
 }

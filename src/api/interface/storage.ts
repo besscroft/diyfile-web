@@ -36,7 +36,7 @@ export namespace Storage {
   /** 更新存储请求参数 */
   export interface UpdateStorageRequestData {
     /** 存储id */
-    id: number
+    id: number | undefined
     /** 存储名称 */
     name: string | undefined
     /** 存储类型：0->本地存储；1->OneDrive */

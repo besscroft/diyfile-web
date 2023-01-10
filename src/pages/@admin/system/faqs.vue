@@ -43,7 +43,7 @@ const { t } = useI18n()
             平台管理员：管理系统平台中的大部分资源，<b>但不允许删除用户。</b><br />
             平台运维员：管理平台中的运维资源，查看系统平台中的大部分资源。<br />
             平台观察员：查看系统平台中的所有<b>非机密</b>资源。<br />
-            游客：查看系统平台中处后台外所有<b>非机密</b>资源。
+            游客：查看系统平台中除后台外所有<b>非机密</b>资源。
           </p>
         </details>
 
@@ -72,7 +72,7 @@ const { t } = useI18n()
           </summary>
 
           <p class="px-4 mt-4 leading-relaxed text-gray-700">
-            超级管理员是系统最高权限用户，如果允许删除自己，将会导致系统无法管理。
+            超级管理员是系统最高权限用户，如果允许删除自己，将<b>会导致系统无法管理。</b>同时我们也在后端进行了拦截判断，如果您直接操作数据库，那您开心就好！
           </p>
         </details>
 
@@ -132,6 +132,36 @@ const { t } = useI18n()
 
           <p class="px-4 mt-4 leading-relaxed text-gray-700">
             我们决定支持本地文件管理，但前提是您部署的方式支持！
+          </p>
+        </details>
+
+        <details class="group [&_summary::-webkit-details-marker]:hidden">
+          <summary
+            class="flex items-center justify-between p-4 rounded-lg cursor-pointer bg-gray-50"
+          >
+            <h2 class="font-medium text-gray-900">
+              你这程序开源、免费吗？
+            </h2>
+
+            <svg
+              class="ml-1.5 h-5 w-5 flex-shrink-0 transition duration-300 group-open:-rotate-180"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </summary>
+
+          <p class="px-4 mt-4 leading-relaxed text-gray-700">
+            我们决定在开发完成、并且经过测试后进行<b>开源</b>！我们承诺程序<b>永久免费</b>，只对服务收费，比如收费部署、收费维护、收费咨询等！但是我们仍然会提供<b>完善的文档</b>供您阅读！
+            也就是说，您<b>永远都不需要花钱</b>即可像使用其它开源软件那样使用本程序，当然您如果愿意打赏一杯咖啡那就再好不过了！
           </p>
         </details>
       </div>

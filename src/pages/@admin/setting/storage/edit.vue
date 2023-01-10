@@ -1,12 +1,46 @@
 <script setup lang="ts">
-const router = useRouter()
+import { Message } from '@arco-design/web-vue'
+import { storageInfo, storageUpdate } from '~/api/modules/storage'
+import type { Storage } from '~/api/interface/storage'
 
-const useDetail = () => {
-  const id = router.currentRoute.value.query.id
-  console.log(id)
+const router = useRouter()
+const { t } = useI18n()
+
+const updateStorageForm = reactive<Storage.UpdateStorageRequestData>({
+  /** 存储id */
+  id: undefined,
+  /** 存储名称 */
+  name: '',
+  /** 存储类型 */
+  type: '',
+  /** 备注 */
+  remark: '',
+  enable: undefined,
+  configList: undefined,
+})
+
+const handleSubmit = () => {
+  storageUpdate(updateStorageForm).then((res) => {
+    if (res.code === 200) {
+      Message.info(res.message)
+      router.push('/@admin/setting/storage')
+    }
+  })
 }
 
-useDetail()
+onMounted(() => {
+  const id = Number(router.currentRoute.value.query.id)
+  storageInfo(id).then((res) => {
+    if (res.code === 200) {
+      updateStorageForm.id = res.data.id
+      updateStorageForm.name = res.data.name
+      updateStorageForm.type = res.data.type
+      updateStorageForm.remark = res.data.remark
+      updateStorageForm.enable = res.data.enable
+      updateStorageForm.configList = res.data.configList
+    }
+  })
+})
 </script>
 
 <template>
@@ -19,14 +53,38 @@ useDetail()
       backgroundColor: 'var(--color-fill-2)',
     }"
   >
-    <a-card hoverable :style="{ height: '100%' }">
+    <a-card hoverable :style="{ height: '100%' }" :title="t('tip.cardTitle')">
+      <template #extra>
+        <a-space>
+          <a-button type="primary" @click="handleSubmit">{{ t('button.submit') }}</a-button>
+        </a-space>
+      </template>
       <icon-arrow-left @click="router.back()"/>
       <br/>
-      <a-progress :percent="0.1" :style="{ width: '50%' }">
-        <template v-slot:text="scope" >
-          存储编辑开发进度 {{ scope.percent * 100 }}%
-        </template>
-      </a-progress>
+      <a-row>
+        <a-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6"></a-col>
+        <a-col :xs="22" :sm="12" :md="12" :lg="12" :xl="12" :xxl="12">
+          <a-form :model="updateStorageForm" layout="vertical">
+            <a-form-item field="name" :label="t('storage.name')" required>
+              <a-input v-model="updateStorageForm.name" placeholder="请输入驱动名称" :max-length="{ length: 20, errorOnly: true }" show-word-limit allow-clear />
+            </a-form-item>
+            <a-form-item field="type" :label="t('storage.type')">
+              <a-select v-model="updateStorageForm.type" placeholder="请选择存储类型" allow-clear>
+                <a-option :value="0">本地存储</a-option>
+                <a-option :value="1">OneDrive</a-option>
+                <a-option value="1" disabled>更多存储支持中</a-option>
+              </a-select>
+            </a-form-item>
+            <a-form-item field="remark" :label="t('storage.remark')">
+              <a-textarea v-model="updateStorageForm.remark" placeholder="请输入备注" allow-clear auto-size :max-length="{ length: 200, errorOnly: true }" show-word-limit />
+            </a-form-item>
+          </a-form>
+          <!-- TODO key 列表增加 -->
+          配置列表更新还在开发中...
+          <!-- TODO 表单校验 -->
+        </a-col>
+        <a-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6"></a-col>
+      </a-row>
     </a-card>
   </div>
 </template>
