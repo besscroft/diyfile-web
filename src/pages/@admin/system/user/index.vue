@@ -78,7 +78,7 @@ useUserPage('')
     <a-card hoverable :style="{ height: '100%' }" :title="t('menu.system.user')">
       <template #extra>
         <a-space>
-          <a-dropdown>
+          <a-dropdown trigger="hover">
             <a-button>{{ t('button.role') }}</a-button>
             <template #content>
               <a-doption @click="useUserPage('')">所有用户</a-doption>
@@ -102,7 +102,7 @@ useUserPage('')
         <a-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6" :key="item.id" v-for="item in dataList">
           <a-card :title="item.name" :style="{ height: '320px' }" hoverable>
             <template #extra>
-              <a-dropdown>
+              <a-dropdown trigger="hover">
                 <a-button type="primary">{{ t('table.Optional') }}</a-button>
                 <template #content>
                   <a-doption @click="router.push({ path: `/@admin/system/user/${encodeURIComponent(item.username)}`, params: { username: item.username } })">{{ t('button.detail') }}</a-doption>

@@ -16,7 +16,7 @@ const { t } = useI18n()
     }"
   >
     <a-card hoverable :style="{ width: '100%', height: '100%', marginBottom: '16px' }" :title="t('menu.system.setting')">
-      <a-row class="wrapper">
+      <a-row class="wrapper mx-auto max-w-screen-sm">
         <a-col :span="24">
           <a-tabs default-active-key="1" type="rounded">
             <a-tab-pane key="1" :title="t('setting.base')">

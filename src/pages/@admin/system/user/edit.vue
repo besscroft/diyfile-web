@@ -87,7 +87,14 @@ onMounted(() => {
               <a-input v-model="updateUserRuleForm.avatar" placeholder="头像地址" allow-clear />
             </a-form-item>
             <a-form-item field="role" :label="t('user.role')" required>
-              <a-select v-model="updateUserRuleForm.role" :placeholder="t('tip.rolePh')" allow-clear>
+              <a-select v-if="updateUserRuleForm.role === 'platform-super-admin'" v-model="updateUserRuleForm.role" :placeholder="t('tip.rolePh')" disabled>
+                <a-option value="platform-super-admin" disabled>超级管理员</a-option>
+                <a-option value="platform-admin">平台管理员</a-option>
+                <a-option value="platform-self-provisioner">平台运维员</a-option>
+                <a-option value="platform-view">平台观察员</a-option>
+                <a-option value="platform-visitor">游客</a-option>
+              </a-select>
+              <a-select v-else v-model="updateUserRuleForm.role" :placeholder="t('tip.rolePh')" allow-clear>
                 <a-option value="platform-super-admin" disabled>超级管理员</a-option>
                 <a-option value="platform-admin">平台管理员</a-option>
                 <a-option value="platform-self-provisioner">平台运维员</a-option>

@@ -16,17 +16,11 @@ export namespace Storage {
     /** 存储配置名称 */
     name: string | undefined
     /** 存储配置键 */
-    key: string | undefined
+    config_key: string | undefined
     /** 存储配置值 */
-    value: number | undefined
+    config_value: string | undefined
     /** 存储配置描述 */
     description: string | undefined
-  }
-
-  /** 存储启用状态更改请求参数 */
-  export interface ChangeStorageStatusRequestData {
-    storageId: number
-    status: boolean
   }
 
   /** 新增存储请求参数 */
@@ -34,11 +28,11 @@ export namespace Storage {
     /** 存储名称 */
     name: string | undefined
     /** 存储类型：0->本地存储；1->OneDrive */
-    type: string | undefined
+    type: number | undefined
     /** 备注 */
     remark: string | undefined
     /** 存储配置列表 */
-    configList: Array<StorageConfig> | unknown
+    configList: Array<StorageConfig> | unknown | undefined
   }
 
   /** 更新存储请求参数 */

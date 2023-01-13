@@ -66,7 +66,7 @@ onMounted(() => {
   if (!user.title) {
     getSiteTitle().then((res) => {
       if (res.code === 200) {
-        user.setTitle(res.data)
+        user.setTitle(res.data.toString())
       }
     })
   }

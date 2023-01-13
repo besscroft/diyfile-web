@@ -81,7 +81,7 @@ handleStoragePage(-1)
     <a-card hoverable :style="{ height: '100%' }" :title="t('menu.setting.storage')">
       <template #extra>
         <a-space>
-          <a-dropdown>
+          <a-dropdown trigger="hover">
             <a-button>{{ t('button.type') }}</a-button>
             <template #content>
               <!-- 存储类型：0->本地存储；1->OneDrive -->
@@ -104,7 +104,7 @@ handleStoragePage(-1)
         <a-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6" :key="item.id" v-for="item in dataList">
           <a-card :style="{ height: '300px' }" :title="item.name" hoverable>
             <template #extra>
-              <a-dropdown>
+              <a-dropdown trigger="hover">
                 <a-button type="primary">{{ t('table.Optional') }}</a-button>
                 <template #content>
                   <a-doption @click="router.push({ path: `/@admin/setting/storage/${encodeURIComponent(item.id)}`, params: { id: item.id } })">{{ t('button.detail') }}</a-doption>

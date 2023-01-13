@@ -4,11 +4,9 @@ const { t } = useI18n()
 // 开发者信息
 const devList = ref<Array<Object>>([
   {
-    background: 'https://p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/a20012a2d4d5b9db43dfc6a01fe508c0.png~tplv-uwbnlip3yd-webp.webp',
-    description: '只要不失去你的崇高，整个世界都会向你敞开。',
     avatar: 'https://besscroft.com/uploads/avatar.jpeg',
     name: 'Bess Croft',
-    job: '开发者',
+    job: 'Full Stack Developer',
   },
 ])
 </script>
@@ -24,49 +22,39 @@ const devList = ref<Array<Object>>([
     }"
   >
     <a-card hoverable :style="{ height: '100%' }" :title="t('menu.system.about')">
-      <div class="flex-auto">
-        <a-typography>
-          <a-typography-paragraph>
-            一款好看的文件交互管理。
-          </a-typography-paragraph>
-        </a-typography>
-        <div class="flex flex-wrap" style="justify-content: center;">
-          <a-card v-for="item in devList" :key="item" class="flex-initial w-64 m-1" hoverable>
-            <template #actions>
-              <span class="icon-hover"> <IconThumbUp /> </span>
-              <span class="icon-hover"> <IconShareInternal /> </span>
-              <span class="icon-hover"> <IconMore /> </span>
-            </template>
-            <template #cover>
-              <div
-                :style="{
-                  height: '204px',
-                  overflow: 'hidden',
-                }"
-              >
-                <img
-                  :style="{ width: '100%', transform: 'translateY(-20px)' }"
-                  alt="background"
-                  :src="item.background"
-                >
-              </div>
-            </template>
-            <a-card-meta :title="item.job" :description="item.description">
-              <template #avatar>
-                <div
-                  :style="{ display: 'flex', alignItems: 'center', color: '#1D2129' }"
-                >
-                  <a-avatar :size="40" :style="{ marginRight: '8px' }">
-                    <img
-                      alt="avatar"
-                      :src="item.avatar"
-                    >
-                  </a-avatar>
-                  <a-typography-text>{{ item.name }}</a-typography-text>
-                </div>
-              </template>
-            </a-card-meta>
-          </a-card>
+      <div class="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
+        <div class="max-w-xl mb-10 md:mx-auto sm:text-center lg:max-w-2xl md:mb-12">
+          <div>
+            <p class="inline-block px-3 py-px mb-4 text-xs font-semibold tracking-wider text-teal-900 uppercase rounded-full bg-teal-accent-400">
+              Xanadu Team
+            </p>
+          </div>
+          <h2 class="max-w-lg mb-6 font-sans text-3xl font-bold leading-none tracking-tight text-gray-900 sm:text-4xl md:mx-auto">
+            <span class="relative inline-block">
+              <svg viewBox="0 0 52 24" fill="currentColor" class="absolute top-0 left-0 z-0 hidden w-32 -mt-8 -ml-20 text-blue-gray-100 lg:w-32 lg:-ml-28 lg:-mt-10 sm:block">
+                <defs>
+                  <pattern id="247432cb-6e6c-4bec-9766-564ed7c230dc" x="0" y="0" width=".135" height=".30">
+                    <circle cx="1" cy="1" r=".7"></circle>
+                  </pattern>
+                </defs>
+                <rect fill="url(#247432cb-6e6c-4bec-9766-564ed7c230dc)" width="52" height="24"></rect>
+              </svg>
+              <span class="relative">Welcome</span>
+            </span>
+            our talented team of professionals
+          </h2>
+          <p class="text-base text-gray-700 md:text-lg">
+            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque rem aperiam, eaque ipsa quae.
+          </p>
+        </div>
+        <div class="grid gap-10 row-gap-8 mx-auto sm:row-gap-10 lg:max-w-screen-lg sm:grid-cols-2 lg:grid-cols-3">
+          <div class="flex" v-for="item in devList" :key="item">
+            <img class="object-cover w-20 h-20 mr-4 rounded-full shadow" :src="`${item.avatar}` + '?auto=compress&amp;cs=tinysrgb&amp;dpr=3&amp;h=750&amp;w=1260'" alt="Person" />
+            <div class="flex flex-col justify-center">
+              <p class="text-lg font-bold">{{ item.name }}</p>
+              <p class="text-sm text-gray-800">{{ item.job }}</p>
+            </div>
+          </div>
         </div>
       </div>
     </a-card>

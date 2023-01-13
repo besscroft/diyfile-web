@@ -2,6 +2,8 @@
 import { Message } from '@arco-design/web-vue'
 import { storageAdd } from '~/api/modules/storage'
 import type { Storage } from '~/api/interface/storage'
+import Local from '~/pages/@admin/setting/storage/add/local.vue'
+import OneDrive from '~/pages/@admin/setting/storage/add/oneDrive.vue'
 
 const router = useRouter()
 const { t } = useI18n()
@@ -10,11 +12,20 @@ const addStorageForm = reactive<Storage.AddStorageRequestData>({
   /** 存储名称 */
   name: '',
   /** 存储类型 */
-  type: '',
+  type: undefined,
   /** 备注 */
   remark: '',
-  configList: undefined,
+  configList: [],
 })
+
+const handleInput = (list: Array<Storage.StorageConfig>) => {
+  addStorageForm.configList = []
+  addStorageForm.configList = list
+}
+
+const handleChange = () => {
+  addStorageForm.configList = []
+}
 
 const handleSubmit = () => {
   storageAdd(addStorageForm).then((res) => {
@@ -52,15 +63,18 @@ const handleSubmit = () => {
               <a-input v-model="addStorageForm.name" placeholder="请输入用户名" :max-length="{ length: 20, errorOnly: true }" show-word-limit allow-clear />
             </a-form-item>
             <a-form-item field="type" :label="t('storage.type')">
-              <a-select v-model="addStorageForm.type" placeholder="请选择存储类型" allow-clear>
+              <a-select v-model="addStorageForm.type" placeholder="请选择存储类型" @change="handleChange" allow-clear>
                 <a-option :value="0">本地存储</a-option>
                 <a-option :value="1">OneDrive</a-option>
-                <a-option value="1" disabled>更多存储支持中</a-option>
+                <a-option :value="99" disabled>更多存储支持中</a-option>
               </a-select>
             </a-form-item>
+            <Local v-if="addStorageForm.type === 0" :value="addStorageForm" />
+            <OneDrive v-if="addStorageForm.type === 1" @handleInput="handleInput" :value="addStorageForm" />
             <a-form-item field="remark" :label="t('storage.remark')">
               <a-textarea v-model="addStorageForm.remark" placeholder="请输入备注" allow-clear auto-size :max-length="{ length: 200, errorOnly: true }" show-word-limit />
             </a-form-item>
+            {{ addStorageForm }}
           </a-form>
           <!-- TODO key 列表增加 -->
           配置列表新增还在开发中...
