@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Message } from '@arco-design/web-vue'
-import { storageDelete, storagePage } from '~/api/modules/storage'
+import type { Storage } from '~/api/interface/storage'
+import { storageDelete, storagePage, storageUpdateStatus } from '~/api/modules/storage'
 import useDevice from '~/hooks/device'
 
 const router = useRouter()
@@ -15,6 +16,12 @@ const data = reactive({
     pageSize: 10,
     type: null as any,
   },
+})
+const updateStorageStatusData = reactive<Storage.UpdateStorageStatusRequestData>({
+  /** 存储id */
+  storageId: undefined,
+  /** 启用状态 */
+  status: undefined,
 })
 
 const handleStoragePage = (type: number) => {
@@ -43,6 +50,19 @@ const handleStorageDelete = (storageId: number) => {
       handleStoragePage(-1)
     }
   })
+}
+
+const handleStorageUpdateStatus = (storageId: number, status: number) => {
+  updateStorageStatusData.storageId = storageId
+  updateStorageStatusData.status = status
+  storageUpdateStatus(updateStorageStatusData).then((res) => {
+    if (res.code === 200) {
+      Message.success(res.message)
+      handleStoragePage(-1)
+    }
+  })
+  updateStorageStatusData.storageId = undefined
+  updateStorageStatusData.status = undefined
 }
 
 handleStoragePage(-1)
@@ -115,8 +135,48 @@ handleStoragePage(-1)
                   <a-space>
                     <a-tag v-if="item.type === 0" color="cyan">本地存储</a-tag>
                     <a-tag v-else-if="item.type === 1" color="cyan">OneDrive</a-tag>
-                    <a-tag v-if="item.enable === 1" color="green">启用</a-tag>
-                    <a-tag v-else color="red">禁用</a-tag>
+                    <a-popconfirm v-if="item.enable === 1" content="确定要禁用吗?" type="warning" :onOk="() => handleStorageUpdateStatus(item.id, 0)">
+                      <span
+                        class="inline-flex items-center justify-center rounded-full bg-emerald-100 px-2.5 py-0.5 text-emerald-700"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="currentColor"
+                          class="-ml-1 mr-1.5 h-4 w-4"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
+                        </svg>
+                        <p class="whitespace-nowrap text-sm">启用</p>
+                      </span>
+                    </a-popconfirm>
+                    <a-popconfirm v-else content="确定要启用吗?" type="warning" :onOk="() => handleStorageUpdateStatus(item.id, 1)">
+                      <span
+                        class="inline-flex items-center justify-center rounded-full bg-red-100 px-2.5 py-0.5 text-red-700"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="currentColor"
+                          class="-ml-1 mr-1.5 h-4 w-4"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"
+                          />
+                        </svg>
+                        <p class="whitespace-nowrap text-sm">禁用</p>
+                      </span>
+                    </a-popconfirm>
                   </a-space>
                 </div>
               </template>

@@ -89,7 +89,7 @@ handServerInfo()
               <a-list-item><icon-subscribe />OneDrive 支持</a-list-item>
               <a-list-item><icon-subscribe />多元化存储支持</a-list-item>
               <a-list-item><icon-subscribe />多平台部署支持</a-list-item>
-              <a-list-item><icon-subscribe />对接更多存储/驱动</a-list-item>
+              <a-list-item><icon-subscribe />对接更多存储</a-list-item>
             </a-list>
           </a-card>
         </div>

@@ -1,8 +1,8 @@
 export namespace User {
   /** 用户启用状态更改请求参数 */
   export interface ChangeUserStatusRequestData {
-    userId: number
-    status: boolean
+    userId: number | undefined
+    status: number | undefined
   }
 
   /** 新增用户请求参数 */

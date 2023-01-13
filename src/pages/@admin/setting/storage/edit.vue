@@ -66,7 +66,7 @@ onMounted(() => {
         <a-col :xs="22" :sm="12" :md="12" :lg="12" :xl="12" :xxl="12">
           <a-form :model="updateStorageForm" layout="vertical">
             <a-form-item field="name" :label="t('storage.name')" required>
-              <a-input v-model="updateStorageForm.name" placeholder="请输入驱动名称" :max-length="{ length: 20, errorOnly: true }" show-word-limit allow-clear />
+              <a-input v-model="updateStorageForm.name" placeholder="请输入存储名称" :max-length="{ length: 20, errorOnly: true }" show-word-limit allow-clear />
             </a-form-item>
             <a-form-item field="type" :label="t('storage.type')">
               <a-select v-model="updateStorageForm.type" placeholder="请选择存储类型" allow-clear>

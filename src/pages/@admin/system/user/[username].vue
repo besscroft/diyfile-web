@@ -50,6 +50,7 @@ useDetail()
           <descriptions-item label="更新者">{{ detail.updater }}</descriptions-item>
           <descriptions-item label="创建时间">{{ detail.createTime }}</descriptions-item>
           <descriptions-item label="更新时间">{{ detail.updateTime }}</descriptions-item>
+          <descriptions-item label="最近登录时间">{{ detail.loginTime }}</descriptions-item>
           <descriptions-item label="帐号启用状态">
             <template #default>
               <a-tag v-if="detail.status === 1" size="small" color="#168cff">启用</a-tag>

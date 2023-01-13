@@ -1,4 +1,12 @@
 export namespace Storage {
+  /** 存储启用状态更新请求参数 */
+  export interface UpdateStorageStatusRequestData {
+    /** 存储id */
+    storageId: number | undefined
+    /** 启用状态 */
+    status: number | undefined
+  }
+
   /** 存储配置参数 */
   export interface StorageConfig {
     /** 存储配置 id */

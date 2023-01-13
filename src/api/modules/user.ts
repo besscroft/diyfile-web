@@ -16,6 +16,7 @@ enum Api {
   UserAdd = '/user/add',
   UserUpdate = '/user/update',
   GetUserById = '/user/getUser',
+  UserUpdateStatus = '/user/updateStatus',
 }
 
 /** 用户登录接口 */
@@ -61,4 +62,9 @@ export const userUpdate = (data: User.UpdateUserRequestData) => {
 /** 获取用户 */
 export const getUserById = (userId: number) => {
   return http.get<Result>(`${API_URL + Api.GetUserById}/${userId}`)
+}
+
+/** 用户可用状态更新 */
+export const userStatusUpdate = (data: User.ChangeUserStatusRequestData) => {
+  return http.put<Result>(API_URL + Api.UserUpdateStatus, data)
 }

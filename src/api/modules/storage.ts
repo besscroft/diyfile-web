@@ -12,29 +12,35 @@ enum Api {
   StorageAdd = '/storage/add',
   StorageUpdate = '/storage/update',
   StorageInfo = '/storage/info',
+  StorageUpdateStatus = '/storage/updateStatus',
 }
 
-/** 驱动分页列表 */
+/** 存储分页列表 */
 export const storagePage = (params: ReqPage) => {
   return http.get<PageResultData>(API_URL + Api.StoragePage, params)
 }
 
-/** 驱动删除接口 */
+/** 存储删除接口 */
 export const storageDelete = (storageId: number) => {
   return http.delete<Result>(`${API_URL + Api.StorageDelete}/${storageId}`)
 }
 
-/** 驱动详情接口 */
+/** 存储详情接口 */
 export const storageInfo = (storageId: number) => {
   return http.get<Result>(`${API_URL + Api.StorageInfo}/${storageId}`)
 }
 
-/** 驱动新增接口 */
+/** 存储新增接口 */
 export const storageAdd = (data: Storage.AddStorageRequestData) => {
   return http.post(API_URL + Api.StorageAdd, data)
 }
 
-/** 驱动更新接口 */
+/** 存储更新接口 */
 export const storageUpdate = (data: Storage.UpdateStorageRequestData) => {
   return http.put(API_URL + Api.StorageUpdate, data)
+}
+
+/** 存储更新状态接口 */
+export const storageUpdateStatus = (data: Storage.UpdateStorageStatusRequestData) => {
+  return http.put(API_URL + Api.StorageUpdateStatus, data)
 }

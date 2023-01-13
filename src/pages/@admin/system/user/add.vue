@@ -71,7 +71,7 @@ const handleEmailSearch = (value: string) => {
         <a-col :xs="22" :sm="12" :md="12" :lg="12" :xl="12" :xxl="12">
           <a-form :model="addUserRuleForm" layout="vertical">
             <a-form-item field="username" :label="t('user.username')" required>
-              <a-input v-model="addUserRuleForm.username" placeholder="请输入驱动名称" :max-length="{ length: 20, errorOnly: true }" show-word-limit allow-clear />
+              <a-input v-model="addUserRuleForm.username" placeholder="请输入存储名称" :max-length="{ length: 20, errorOnly: true }" show-word-limit allow-clear />
             </a-form-item>
             <a-form-item field="password" :label="t('user.password')" required>
               <a-input-password v-model="addUserRuleForm.password" placeholder="请输入密码" :max-length="{ length: 20, errorOnly: true }" show-word-limit allow-clear />
