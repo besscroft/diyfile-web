@@ -92,15 +92,13 @@ onMounted(() => {
     <a-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" :xxl="8">
       <div class="avatar-container">
         <a-space size="large">
-          <button class="icon-btn mx-2 !outline-none" :title="t('button.toggle_dark')" @click="toggleTheme">
+          <button class="icon-btn !outline-none" :title="t('button.toggle_dark')" @click="toggleTheme">
             <div i="carbon-sun dark:carbon-moon" />
           </button>
           <a-dropdown>
-            <a-button shape="circle" aria-label="language">
-              <template #icon>
-                <icon-language />
-              </template>
-            </a-button>
+            <a class="icon-btn">
+              <div i-carbon-language />
+            </a>
             <template #content>
               <a-doption @click="toggleLocales('zh-CN')">简体中文</a-doption>
               <a-doption @click="toggleLocales('en')">English</a-doption>
