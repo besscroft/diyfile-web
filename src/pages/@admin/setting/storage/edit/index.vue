@@ -2,6 +2,8 @@
 import { Message } from '@arco-design/web-vue'
 import { storageInfo, storageUpdate } from '~/api/modules/storage'
 import type { Storage } from '~/api/interface/storage'
+import Local from '~/pages/@admin/setting/storage/edit/local.vue'
+import OneDrive from '~/pages/@admin/setting/storage/edit/oneDrive.vue'
 
 const router = useRouter()
 const { t } = useI18n()
@@ -16,8 +18,13 @@ const updateStorageForm = reactive<Storage.UpdateStorageRequestData>({
   /** 备注 */
   remark: '',
   enable: undefined,
-  configList: undefined,
+  configList: [],
 })
+
+const handleInput = (list: Array<Storage.StorageConfig>) => {
+  updateStorageForm.configList = []
+  updateStorageForm.configList = list
+}
 
 const handleSubmit = () => {
   storageUpdate(updateStorageForm).then((res) => {
@@ -69,18 +76,17 @@ onMounted(() => {
               <a-input v-model="updateStorageForm.name" placeholder="请输入存储名称" :max-length="{ length: 20, errorOnly: true }" show-word-limit allow-clear />
             </a-form-item>
             <a-form-item field="type" :label="t('storage.type')">
-              <a-select v-model="updateStorageForm.type" placeholder="请选择存储类型" allow-clear>
+              <a-select v-model="updateStorageForm.type" placeholder="请选择存储类型" disabled>
                 <a-option :value="0">本地存储</a-option>
                 <a-option :value="1">OneDrive</a-option>
-                <a-option value="1" disabled>更多存储支持中</a-option>
               </a-select>
             </a-form-item>
+            <Local v-if="updateStorageForm.type === 0" />
+            <OneDrive v-if="updateStorageForm.type === 1" @handleInput="handleInput" :value="updateStorageForm.configList" />
             <a-form-item field="remark" :label="t('storage.remark')">
               <a-textarea v-model="updateStorageForm.remark" placeholder="请输入备注" allow-clear auto-size :max-length="{ length: 200, errorOnly: true }" show-word-limit />
             </a-form-item>
           </a-form>
-          <!-- TODO key 列表增加 -->
-          配置列表更新还在开发中...
           <!-- TODO 表单校验 -->
         </a-col>
         <a-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6"></a-col>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Storage } from '~/api/interface/storage'
 
+const configList = defineProps(['value'])
 const emit = defineEmits(['handleInput'])
 const { t } = useI18n()
 
@@ -37,7 +38,7 @@ const redirect_uri = ref<Storage.StorageConfig>({
   configValue: '',
   description: 'OneDrive 重定向 URI',
 })
-const mount_path = ref<Storage.StorageConfig>({
+const mount_path = ref({
   id: undefined,
   storageId: undefined,
   name: '挂载路径',
@@ -55,6 +56,22 @@ const handleInput = () => {
   list.value.push(mount_path.value)
   emit('handleInput', list.value)
 }
+
+onMounted(() => {
+  for (const item of configList.value) {
+    if (item.configKey === 'client_id') {
+      client_id.value = item
+    } else if (item.configKey === 'client_secret') {
+      client_secret.value = item
+    } else if (item.configKey === 'refresh_token') {
+      refresh_token.value = item
+    } else if (item.configKey === 'redirect_uri') {
+      redirect_uri.value = item
+    } else if (item.configKey === 'mount_path') {
+      mount_path.value = item
+    }
+  }
+})
 </script>
 
 <template>
@@ -88,8 +105,3 @@ const handleInput = () => {
 <style scoped>
 
 </style>
-
-<route lang="yaml">
-meta:
-  layout: admin
-</route>

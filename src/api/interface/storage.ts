@@ -16,9 +16,9 @@ export namespace Storage {
     /** 存储配置名称 */
     name: string | undefined
     /** 存储配置键 */
-    config_key: string | undefined
+    configKey: string | undefined
     /** 存储配置值 */
-    config_value: string | undefined
+    configValue: string | undefined
     /** 存储配置描述 */
     description: string | undefined
   }

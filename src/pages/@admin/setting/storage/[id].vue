@@ -60,9 +60,18 @@ useDetail()
           <descriptions-item label="创建时间">{{ detail.createTime }}</descriptions-item>
           <descriptions-item label="更新时间">{{ detail.updateTime }}</descriptions-item>
           <descriptions-item label="备注">{{ detail.remark }}</descriptions-item>
-          <!-- TODO 配置列表展示 -->
         </a-descriptions>
-        配置列表展示还在开发中...
+        <a-list>
+          <template #header>
+            配置列表
+          </template>
+          <a-list-item v-for="item in detail.configList" :key="item.id">
+            <a-list-item-meta
+              :title="item.name"
+              :description="item.configValue"
+            />
+          </a-list-item>
+        </a-list>
       </a-space>
     </a-card>
   </div>

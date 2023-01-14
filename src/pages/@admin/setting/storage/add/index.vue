@@ -60,24 +60,21 @@ const handleSubmit = () => {
         <a-col :xs="22" :sm="12" :md="12" :lg="12" :xl="12" :xxl="12">
           <a-form :model="addStorageForm" layout="vertical">
             <a-form-item field="name" :label="t('storage.name')" required>
-              <a-input v-model="addStorageForm.name" placeholder="请输入用户名" :max-length="{ length: 20, errorOnly: true }" show-word-limit allow-clear />
+              <a-input v-model="addStorageForm.name" placeholder="请输入存储名称" :max-length="{ length: 20, errorOnly: true }" show-word-limit allow-clear />
             </a-form-item>
-            <a-form-item field="type" :label="t('storage.type')">
+            <a-form-item field="type" :label="t('storage.type')" required>
               <a-select v-model="addStorageForm.type" placeholder="请选择存储类型" @change="handleChange" allow-clear>
                 <a-option :value="0">本地存储</a-option>
                 <a-option :value="1">OneDrive</a-option>
                 <a-option :value="99" disabled>更多存储支持中</a-option>
               </a-select>
             </a-form-item>
-            <Local v-if="addStorageForm.type === 0" :value="addStorageForm" />
+            <Local v-if="addStorageForm.type === 0" />
             <OneDrive v-if="addStorageForm.type === 1" @handleInput="handleInput" :value="addStorageForm" />
             <a-form-item field="remark" :label="t('storage.remark')">
               <a-textarea v-model="addStorageForm.remark" placeholder="请输入备注" allow-clear auto-size :max-length="{ length: 200, errorOnly: true }" show-word-limit />
             </a-form-item>
-            {{ addStorageForm }}
           </a-form>
-          <!-- TODO key 列表增加 -->
-          配置列表新增还在开发中...
           <!-- TODO 表单校验 -->
         </a-col>
         <a-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6"></a-col>
