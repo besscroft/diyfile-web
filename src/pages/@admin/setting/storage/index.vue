@@ -137,7 +137,7 @@ handleStoragePage(-1)
                     <a-tag v-else-if="item.type === 1" color="cyan">OneDrive</a-tag>
                     <a-popconfirm v-if="item.enable === 1" content="确定要禁用吗?" type="warning" :onOk="() => handleStorageUpdateStatus(item.id, 0)">
                       <span
-                        class="inline-flex items-center justify-center rounded-full bg-emerald-100 px-2.5 py-0.5 text-emerald-700"
+                        class="inline-flex items-center justify-center rounded-full bg-emerald-100 px-2.5 py-0.5 text-emerald-700 cursor-pointer"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -158,7 +158,7 @@ handleStoragePage(-1)
                     </a-popconfirm>
                     <a-popconfirm v-else content="确定要启用吗?" type="warning" :onOk="() => handleStorageUpdateStatus(item.id, 1)">
                       <span
-                        class="inline-flex items-center justify-center rounded-full bg-red-100 px-2.5 py-0.5 text-red-700"
+                        class="inline-flex items-center justify-center rounded-full bg-red-100 px-2.5 py-0.5 text-red-700 cursor-pointer"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -187,7 +187,7 @@ handleStoragePage(-1)
           <a-card
             hoverable
             :style="{ height: '300px' }"
-            class="flex items-center justify-center"
+            class="flex items-center justify-center cursor-pointer"
             @click="router.push('/@admin/setting/storage/add')"
           >
             <a-result>

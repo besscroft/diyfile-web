@@ -80,7 +80,7 @@ onMounted(() => {
           <a-button type="primary" html-type="submit" @click="handleSubmit(formRef)">{{ t('button.submit') }}</a-button>
         </a-space>
       </template>
-      <icon-arrow-left @click="router.back()"/>
+      <icon-arrow-left @click="router.back()" class="cursor-pointer"/>
       <br/>
       <a-row>
         <a-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6"></a-col>

@@ -76,7 +76,7 @@ onMounted(() => {
 <template>
   <a-row class="grid-demo">
     <a-col class="title-container" :xs="8" :sm="8" :md="8" :lg="8" :xl="8" :xxl="8">
-      <div v-if="props.value || isMobile" @click="routerPage('/')">
+      <div v-if="props.value || isMobile" @click="routerPage('/')" class="cursor-pointer">
         {{ user.title || 'Xanadu' }}
       </div>
       <div v-else>
@@ -109,12 +109,13 @@ onMounted(() => {
           <a-dropdown>
             <a-avatar :size="40" v-if="avatar">
               <img
+                class="cursor-pointer"
                 alt="avatar"
                 :src="avatar"
               />
             </a-avatar>
             <a-avatar v-else :style="{ backgroundColor: '#FBC3CB' }">
-              <IconUser />
+              <IconUser class="cursor-pointer" />
             </a-avatar>
             <template #content>
               <div v-if="username">
