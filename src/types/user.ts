@@ -16,4 +16,6 @@ export interface UserStore {
   theme: string
   /** 网站标题 */
   title: string
+  /** 备案信息 */
+  beian: string
 }

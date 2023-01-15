@@ -20,6 +20,8 @@ export const useUserStore = defineStore('user', {
     theme: '',
     // 网站标题
     title: '',
+    // 备案信息
+    beian: '',
   }),
   actions: {
     /** 设置用户名称 */
@@ -53,6 +55,10 @@ export const useUserStore = defineStore('user', {
     /** 设置网站标题 */
     setTitle(title: string) {
       this.title = title
+    },
+    /** 设置备案信息 */
+    setBeian(beian: string) {
+      this.beian = beian
     },
   },
   persist: piniaPersistConfig('user'),

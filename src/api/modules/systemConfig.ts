@@ -1,4 +1,5 @@
 import { API_URL } from '../../../config/config'
+import type { SystemConfig } from '~/api/interface/systemConfig'
 import type { Result } from '~/api/interface'
 import http from '~/api'
 
@@ -10,6 +11,7 @@ enum Api {
   GetSiteTitle = '/systemConfig/getSiteTitle',
   GetSiteConfig = '/systemConfig/getSiteConfig',
   GetBeian = '/systemConfig/getBeian',
+  UpdateConfig = '/systemConfig/updateConfig',
 }
 
 /** 获取系统配置 */
@@ -30,4 +32,9 @@ export const getSiteConfig = () => {
 /** 获取备案信息 */
 export const getBeian = () => {
   return http.get<Result>(API_URL + Api.GetBeian)
+}
+
+/** 更新系统配置 */
+export const updateConfig = (data: SystemConfig.UpdateConfigData) => {
+  return http.put<Result>(API_URL + Api.UpdateConfig, data)
 }
