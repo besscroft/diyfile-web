@@ -81,7 +81,7 @@ onMounted(() => {
                 <a-option :value="1">OneDrive</a-option>
               </a-select>
             </a-form-item>
-            <Local v-if="updateStorageForm.type === 0" />
+            <Local v-if="updateStorageForm.type === 0" @handleInput="handleInput" :value="updateStorageForm.configList" />
             <OneDrive v-if="updateStorageForm.type === 1" @handleInput="handleInput" :value="updateStorageForm.configList" />
             <a-form-item field="remark" :label="t('storage.remark')">
               <a-textarea v-model="updateStorageForm.remark" placeholder="请输入备注" allow-clear auto-size :max-length="{ length: 200, errorOnly: true }" show-word-limit />

@@ -57,7 +57,7 @@ const handleInput = () => {
   emit('handleInput', list.value)
 }
 
-onMounted(() => {
+onBeforeMount(() => {
   for (const item of configList.value) {
     if (item.configKey === 'client_id') {
       client_id.value = item

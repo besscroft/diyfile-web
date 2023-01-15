@@ -69,8 +69,8 @@ const handleSubmit = () => {
                 <a-option :value="99" disabled>更多存储支持中</a-option>
               </a-select>
             </a-form-item>
-            <Local v-if="addStorageForm.type === 0" />
-            <OneDrive v-if="addStorageForm.type === 1" @handleInput="handleInput" :value="addStorageForm" />
+            <Local v-if="addStorageForm.type === 0" @handleInput="handleInput" />
+            <OneDrive v-if="addStorageForm.type === 1" @handleInput="handleInput" />
             <a-form-item field="remark" :label="t('storage.remark')">
               <a-textarea v-model="addStorageForm.remark" placeholder="请输入备注" allow-clear auto-size :max-length="{ length: 200, errorOnly: true }" show-word-limit />
             </a-form-item>
