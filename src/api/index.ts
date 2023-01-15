@@ -4,6 +4,7 @@ import { Message } from '@arco-design/web-vue'
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import { AxiosCanceler } from './helper/axiosCancel'
+import App from '~/App.vue'
 import type { Result } from '~/api/interface'
 import { ResultEnum } from '~/enums/httpEnum'
 import { checkStatus } from '~/api/helper/checkStatus'
@@ -14,10 +15,11 @@ import { checkStatus } from '~/api/helper/checkStatus'
  * https://github.com/vuejs/pinia/discussions/664#discussioncomment-1329898
  * https://pinia.vuejs.org/core-concepts/outside-component-usage.html#single-page-applications
  */
+const app = createApp(App)
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
+app.use(pinia)
 const user = useUserStore(pinia)
-const router = useRouter()
 const axiosCanceler = new AxiosCanceler()
 
 const config = {
@@ -45,6 +47,7 @@ class RequestHttp {
         // 将当前请求添加到 pending 中
         axiosCanceler.addPending(config)
         // 如果当前请求不需要显示 loading,在 api 服务中通过指定的第三个参数: { headers: { noLoading: true } }来控制不显示loading
+        // eslint-disable-next-line no-unused-expressions
         config.headers!.noLoading
         const token = `Bearer ${user.token}`
         return { ...config, headers: { ...config.headers, authorization: token } }
@@ -66,12 +69,16 @@ class RequestHttp {
         // https://stackoverflow.com/questions/3297048/403-forbidden-vs-401-unauthorized-http-responses
         // 登陆失效（code == 401）
         if (data.code === ResultEnum.UNAUTHORIZED) {
+          Message.error(data.message)
           user.setToken('')
-          router.replace('/@login')
+          user.setUserName('')
+          user.setAvatar('')
+          window.location.href = '/@login'
           return Promise.reject(data)
         }
         // 没有权限（code == 403）
         if (data.code === ResultEnum.FORBIDDEN) {
+          Message.error(data.message)
           return Promise.reject(data)
         }
         // 全局错误信息拦截（防止下载文件得时候返回数据流，没有code，直接报错）
@@ -94,7 +101,7 @@ class RequestHttp {
         }
         // 服务器结果都没有返回(可能服务器错误可能客户端断网)，断网处理:可以跳转到断网页面
         if (!window.navigator.onLine) {
-          router.replace('/500')
+          window.location.href = '/500'
         }
         return Promise.reject(error)
       },
