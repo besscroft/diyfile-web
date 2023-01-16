@@ -24,6 +24,7 @@ button:
   submit: 提交
   role: 角色
   type: 存储类型
+  pwd: 密码修改
 intro:
   desc: 固执己见的 Vite 项目模板
   dynamic-route: 动态路由演示
@@ -41,8 +42,10 @@ tip:
   progress: 开发进度
   account: 账号
   password: 密码
+  passwordNew: 新密码
   accountPh: 请输入账号
   passwordPh: 请输入密码
+  passwordNewPh: 请输入新密码
   isRememberMe: 记住我
   cardTitle: 请填写信息
   rolePh: 请选择角色

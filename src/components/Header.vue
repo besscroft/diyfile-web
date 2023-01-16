@@ -49,6 +49,7 @@ const loginOut = () => {
   user.setAvatar('')
   user.setTokenHead('')
   user.setRefreshToken('')
+  localStorage.setItem('Xanadu-token', '')
   router.push('/')
 }
 

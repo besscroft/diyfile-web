@@ -17,6 +17,7 @@ enum Api {
   UserUpdate = '/user/update',
   GetUserById = '/user/getUser',
   UserUpdateStatus = '/user/updateStatus',
+  UserUpdatePassword = '/user/updatePassword',
 }
 
 /** 用户登录接口 */
@@ -67,4 +68,9 @@ export const getUserById = (userId: number) => {
 /** 用户可用状态更新 */
 export const userStatusUpdate = (data: User.ChangeUserStatusRequestData) => {
   return http.put<Result>(API_URL + Api.UserUpdateStatus, data)
+}
+
+/** 用户密码更新 */
+export const userPasswordUpdate = (data: User.UpdatePasswordData) => {
+  return http.put<Result>(API_URL + Api.UserUpdatePassword, data)
 }

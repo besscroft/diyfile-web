@@ -24,6 +24,7 @@ button:
   submit: Submit
   role: Role
   type: Type
+  pwd: Update Password
 intro:
   desc: Opinionated Vite Starter Template
   dynamic-route: Demo of dynamic route
@@ -41,8 +42,10 @@ tip:
   progress: dev progress
   account: Account
   password: Password
+  passwordNew: New Password
   accountPh: please enter account
   passwordPh: please enter password
+  passwordNewPh: please enter new password
   isRememberMe: Remember Me
   cardTitle: Please fill in the information.
   rolePh: Please select a role.

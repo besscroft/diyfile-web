@@ -20,6 +20,7 @@ const handleSubmit = () => {
       user.setUserName('')
       user.setAvatar('')
       user.setToken(token)
+      localStorage.setItem('Xanadu-token', token)
       Notification.success({
         title: 'Success',
         content: '登录成功!',

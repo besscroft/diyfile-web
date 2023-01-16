@@ -24,6 +24,7 @@ button:
   submit: 送信
   role: 役割
   type: ストレージタイプ
+  pwd: パスワードを変更する
 intro:
   desc: 固執された Vite スターターテンプレート
   dynamic-route: 動的ルートのデモ
@@ -40,8 +41,10 @@ tip:
   progress: 開発進捗
   account: アカウント
   password: パスワード
+  passwordNew: パスワードを入力してください
   accountPh: アカウントを入力してください
   passwordPh: パスワードを入力してください
+  passwordNewPh: 新しいパスワードを入力してください
   isRememberMe: 覚えて
   cardTitle: 情報を記入してください
   rolePh: 役割を選択してください
