@@ -23,7 +23,7 @@ const router = useRouter()
 
         <div class="mt-8 flex flex-wrap justify-center gap-4">
           <a
-            v-if="user.userName"
+            v-if="user.token"
             class="block w-full rounded bg-red-600 px-12 py-3 text-sm font-medium text-white shadow hover:bg-red-700 focus:outline-none focus:ring active:bg-red-500 sm:w-auto"
             @click="router.push('/@admin')"
           >

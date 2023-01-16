@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Notification } from '@arco-design/web-vue'
 import type { Login } from '~/api/interface'
-import { loginApi } from '~/api/modules/user'
+import { getInfo, loginApi } from '~/api/modules/user'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -14,16 +14,26 @@ const loginForm = reactive<Login.ReqLoginForm>({
 })
 
 const handleSubmit = () => {
-  loginApi(loginForm).then((res) => {
+  loginApi(loginForm).then(async (res) => {
     if (res.code === 200) {
-      user.setToken(res.data.tokenValue)
-      router.push('/@admin')
+      const token = res.data.tokenValue
+      user.setUserName('')
+      user.setAvatar('')
+      user.setToken(token)
       Notification.success({
         title: 'Success',
         content: '登录成功!',
         closable: true,
         duration: 2000,
       })
+      await getInfo().then((res) => {
+        if (res.code !== 200) {
+          window.location.href = '/@login'
+        }
+        user.setUserName(res.data.userName)
+        user.setAvatar(res.data.avatar)
+      })
+      window.location.href = '/'
     }
   })
 }
