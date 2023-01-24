@@ -1,52 +1,122 @@
 <script setup lang="ts">
+import { Message } from '@arco-design/web-vue'
+import { getDefaultItem } from '~/api/modules/file'
+import useDevice from '~/hooks/device'
+
+const { isMobile } = useDevice()
 const { t } = useI18n()
 const user = useUserStore()
 const router = useRouter()
+const dataList = ref()
+const loading = ref<boolean>(false)
+
+const handleDefault = () => {
+  loading.value = true
+  getDefaultItem().then((res) => {
+    if (res.code === 200) {
+      dataList.value = res.data
+      loading.value = false
+    }
+  })
+}
+
+const handleShare = () => {
+  Message.info('还没写！')
+}
+
+onBeforeMount(() => {
+  handleDefault()
+})
 </script>
 
 <template>
-  <section>
-    <div
-      class="mx-auto max-w-screen-xl px-4 py-32 lg:flex lg:items-center"
-    >
-      <div class="mx-auto max-w-xl text-center">
-        <h1 class="text-3xl font-extrabold sm:text-5xl">
-          Xanadu
-          <strong class="font-extrabold text-red-700 sm:block">
-            一款好看的文件交互管理。
-          </strong>
-        </h1>
+  <div
+    :style="{
+      boxSizing: 'border-box',
+      width: '100%',
+      padding: '12px',
+      height: '100%',
+      backgroundColor: 'var(--color-fill-2)',
+    }"
+  >
+    <a-row :gutter="20" :style="{ marginBottom: '20px' }">
+      <a-col :xs="1" :sm="2" :md="2" :lg="3" :xl="4" :xxl="4">
+      </a-col>
+      <a-col :xs="22" :sm="20" :md="20" :lg="18" :xl="16" :xxl="16">
+        <a-tag color="gray">
+          <template #icon>
+            <icon-branch />
+          </template>
+          {{ t('home.fileTips') }}
+        </a-tag>
+        <a-card :bordered="false" :style="{ width: '100%' }">
+          <a-table v-if="isMobile" :data="dataList" style="margin-top: 12px" :loading="loading">
+            <template #columns>
+              <a-table-column title="文件名">
+                <template #cell="{ record }">
+                  {{ record.name }}
+                </template>
+              </a-table-column>
+              <a-table-column title="操作">
+                <template #cell="{ record }">
+                  <a-space :size="4">
+                    <a-button v-if="record.type === 'file'" type="primary">
+                      <template #icon>
+                        <a className="cursor-pointer rounded px-1.5 py-1 hover:bg-gray-300 dark:hover:bg-gray-600" :href="record.url">
+                          <icon-download />
+                        </a>
+                      </template>
+                    </a-button>
+                    <a-button type="primary">
+                      <template #icon>
+                        <icon-share-alt @click="handleShare" />
+                      </template>
+                    </a-button>
+                  </a-space>
+                </template>
+              </a-table-column>
+            </template>
+          </a-table>
+          <a-table v-else :data="dataList" style="margin-top: 30px" :loading="loading">
+            <template #columns>
+              <a-table-column title="文件名">
+                <template #cell="{ record }">
+                  {{ record.name }}
+                </template>
+              </a-table-column>
+              <a-table-column title="最后修改时间" data-index="lastModifiedDateTime"></a-table-column>
+              <a-table-column title="文件大小">
+                <template #cell="{ record }">
+                  {{ (record.size / 1000 / 1000).toFixed(2) }} MB
+                </template>
+              </a-table-column>
+              <a-table-column title="操作">
+                <template #cell="{ record }">
+                  <a-space :size="4">
+                    <a-button v-if="record.type === 'file'" type="primary">
+                      <template #icon>
+                        <a className="cursor-pointer rounded px-1.5 py-1 hover:bg-gray-300 dark:hover:bg-gray-600" :href="record.url">
+                          <icon-download />
+                        </a>
+                      </template>
+                    </a-button>
+                    <a-button v-else type="primary">
+                      <template #icon>
+                        <icon-share-alt @click="handleShare" />
+                      </template>
+                    </a-button>
+                  </a-space>
+                </template>
+              </a-table-column>
+            </template>
+          </a-table>
+        </a-card>
+      </a-col>
+      <a-col :xs="1" :sm="2" :md="2" :lg="3" :xl="4" :xxl="4">
 
-        <p class="mt-4 sm:text-xl sm:leading-relaxed">
-          🧪 Working in Progress. 积极开发、错误修复和增强功能！
-        </p>
-
-        <div class="mt-8 flex flex-wrap justify-center gap-4">
-          <a
-            v-if="user.token"
-            class="block w-full rounded bg-red-600 px-12 py-3 text-sm font-medium text-white shadow hover:bg-red-700 focus:outline-none focus:ring active:bg-red-500 sm:w-auto"
-            @click="router.push('/@admin')"
-          >
-            Get Started
-          </a>
-          <a
-            v-else
-            class="block w-full rounded bg-red-600 px-12 py-3 text-sm font-medium text-white shadow hover:bg-red-700 focus:outline-none focus:ring active:bg-red-500 sm:w-auto"
-            @click="router.push('/@login')"
-          >
-            Get Started
-          </a>
-
-          <a
-            class="block w-full rounded px-12 py-3 text-sm font-medium text-red-600 shadow hover:text-red-700 focus:outline-none focus:ring active:text-red-500 sm:w-auto"
-            href="https://docs.besscroft.com/"
-          >
-            Learn More
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
+      </a-col>
+    </a-row>
+  </div>
 </template>
 
 <route lang="yaml">
