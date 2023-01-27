@@ -31,7 +31,7 @@ export const storageInfo = (storageId: number) => {
 }
 
 /** 存储新增接口 */
-export const storageAdd = (data: Storage.AddStorageRequestData) => {
+export const storageAdd = (data: Storage.AddStorageRequestData | any) => {
   return http.post(API_URL + Api.StorageAdd, data)
 }
 

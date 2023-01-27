@@ -35,12 +35,6 @@ const routerPage = (val: string) => {
             </template>
             <template #default>{{ t('menu.setting.storage') }}</template>
           </a-doption>
-          <a-doption @click="routerPage('2_1')">
-            <template #icon>
-              <icon-thunderbolt />
-            </template>
-            <template #default>{{ t('menu.setting.cdn') }}</template>
-          </a-doption>
         </template>
       </a-dropdown>
     </a-col>

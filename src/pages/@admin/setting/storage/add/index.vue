@@ -1,54 +1,6 @@
 <script setup lang="ts">
-import type { FormInstance } from '@arco-design/web-vue'
-import { Message } from '@arco-design/web-vue'
-import { storageAdd } from '~/api/modules/storage'
-import type { Storage } from '~/api/interface/storage'
-import Local from '~/pages/@admin/setting/storage/add/local.vue'
-import OneDrive from '~/pages/@admin/setting/storage/add/oneDrive.vue'
-
 const router = useRouter()
 const { t } = useI18n()
-const formRef = ref<FormInstance>()
-const formRules = reactive({
-  name: [{ required: true, message: '请输入存储名称', trigger: 'blur' }],
-})
-const validate = ref<boolean>(false)
-
-const addStorageForm = reactive<Storage.AddStorageRequestData>({
-  /** 存储名称 */
-  name: '',
-  /** 存储类型 */
-  type: undefined,
-  /** 备注 */
-  remark: '',
-  configList: [],
-})
-
-const handleInput = (list: Array<Storage.StorageConfig>) => {
-  addStorageForm.configList = []
-  addStorageForm.configList = list
-}
-
-const handleChange = () => {
-  addStorageForm.configList = []
-}
-
-const handleValid = (flag: boolean) => {
-  validate.value = flag
-}
-
-const handleSubmit = (formEl: FormInstance) => {
-  formEl.validate((valid) => {
-    if ((!valid && validate.value)) {
-      storageAdd(addStorageForm).then((res) => {
-        if (res.code === 200) {
-          Message.info(res.message)
-          router.push('/@admin/setting/storage')
-        }
-      })
-    }
-  })
-}
 </script>
 
 <template>
@@ -62,34 +14,17 @@ const handleSubmit = (formEl: FormInstance) => {
     }"
   >
     <a-card hoverable :style="{ height: '100%', padding: '0.25rem' }" :title="t('tip.cardTitle')">
-      <template #extra>
-        <a-space>
-          <a-button type="primary" @click="handleSubmit(formRef)">{{ t('button.submit') }}</a-button>
-        </a-space>
-      </template>
       <icon-arrow-left @click="router.back()" class="cursor-pointer"/>
       <br/>
       <a-row>
         <a-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6"></a-col>
         <a-col :xs="22" :sm="12" :md="12" :lg="12" :xl="12" :xxl="12">
-          <a-form ref="formRef" :rules="formRules" :model="addStorageForm" layout="vertical">
-            <a-form-item field="name" :label="t('storage.name')" required>
-              <a-input v-model="addStorageForm.name" placeholder="请输入存储名称" :max-length="{ length: 20, errorOnly: true }" show-word-limit allow-clear />
-            </a-form-item>
-            <a-form-item field="type" :label="t('storage.type')" required>
-              <a-select v-model="addStorageForm.type" placeholder="请选择存储类型" @change="handleChange" allow-clear>
-                <a-option :value="0">本地存储</a-option>
-                <a-option :value="1">OneDrive</a-option>
-                <a-option :value="99" disabled>更多存储支持中</a-option>
-              </a-select>
-            </a-form-item>
-            <Local v-if="addStorageForm.type === 0" @handleInput="handleInput" @handleValid="handleValid" />
-            <OneDrive v-if="addStorageForm.type === 1" @handleInput="handleInput" @handleValid="handleValid" />
-            <a-form-item field="remark" :label="t('storage.remark')">
-              <a-textarea v-model="addStorageForm.remark" placeholder="请输入备注" allow-clear auto-size :max-length="{ length: 200, errorOnly: true }" show-word-limit />
-            </a-form-item>
-          </a-form>
-          <!-- TODO 表单校验 -->
+          <br />
+          <a-space direction="vertical" fill>
+            <a-button type="primary" long @click="router.push({ path: '/@admin/setting/storage/add/local', query: { type: 0 } })">本地存储</a-button>
+            <a-button type="primary" long @click="router.push({ path: '/@admin/setting/storage/add/oneDrive', query: { type: 1 } })">OneDrive</a-button>
+            <a-button type="primary" long disabled>更多存储支持中...</a-button>
+          </a-space>
         </a-col>
         <a-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6"></a-col>
       </a-row>

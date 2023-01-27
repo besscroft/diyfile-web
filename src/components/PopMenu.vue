@@ -26,9 +26,6 @@ const routerPage = (val: string) => {
       <a-menu-item key="2_0" @click="routerPage('2_0')"><icon-save />
         {{ t('menu.setting.storage') }}
       </a-menu-item>
-      <a-menu-item key="2_1" @click="routerPage('2_1')"><icon-thunderbolt />
-        {{ t('menu.setting.cdn') }}
-      </a-menu-item>
     </a-sub-menu>
     <a-sub-menu key="3">
       <template #icon><icon-settings /></template>
