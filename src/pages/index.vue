@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Message } from '@arco-design/web-vue'
-import { getDefaultItem } from '~/api/modules/file'
+import { getDefaultStorage } from '~/api/modules/file'
 import useDevice from '~/hooks/device'
 
 const { isMobile } = useDevice()
@@ -10,22 +10,16 @@ const router = useRouter()
 const dataList = ref()
 const loading = ref<boolean>(false)
 
-const handleDefault = () => {
-  loading.value = true
-  getDefaultItem().then((res) => {
-    if (res.code === 200) {
-      dataList.value = res.data
-      loading.value = false
-    }
-  })
-}
-
 const handleShare = () => {
   Message.info('还没写！')
 }
 
 onBeforeMount(() => {
-  handleDefault()
+  getDefaultStorage().then((res) => {
+    if (res.code === 200) {
+      router.push({ path: `/${res.data.storageKey}` })
+    }
+  })
 })
 </script>
 
@@ -53,60 +47,19 @@ onBeforeMount(() => {
           <a-table v-if="isMobile" :data="dataList" style="margin-top: 12px" :loading="loading">
             <template #columns>
               <a-table-column title="文件名">
-                <template #cell="{ record }">
-                  {{ record.name }}
-                </template>
               </a-table-column>
               <a-table-column title="操作">
-                <template #cell="{ record }">
-                  <a-space :size="4">
-                    <a-button v-if="record.type === 'file'" type="primary">
-                      <template #icon>
-                        <a className="cursor-pointer rounded px-1.5 py-1 hover:bg-gray-300 dark:hover:bg-gray-600" :href="record.url">
-                          <icon-download />
-                        </a>
-                      </template>
-                    </a-button>
-                    <a-button type="primary">
-                      <template #icon>
-                        <icon-share-alt @click="handleShare" />
-                      </template>
-                    </a-button>
-                  </a-space>
-                </template>
               </a-table-column>
             </template>
           </a-table>
           <a-table v-else :data="dataList" style="margin-top: 30px" :loading="loading">
             <template #columns>
               <a-table-column title="文件名">
-                <template #cell="{ record }">
-                  {{ record.name }}
-                </template>
               </a-table-column>
               <a-table-column title="最后修改时间" data-index="lastModifiedDateTime"></a-table-column>
               <a-table-column title="文件大小">
-                <template #cell="{ record }">
-                  {{ (record.size / 1000 / 1000).toFixed(2) }} MB
-                </template>
               </a-table-column>
               <a-table-column title="操作">
-                <template #cell="{ record }">
-                  <a-space :size="4">
-                    <a-button v-if="record.type === 'file'" type="primary">
-                      <template #icon>
-                        <a className="cursor-pointer rounded px-1.5 py-1 hover:bg-gray-300 dark:hover:bg-gray-600" :href="record.url">
-                          <icon-download />
-                        </a>
-                      </template>
-                    </a-button>
-                    <a-button v-else type="primary">
-                      <template #icon>
-                        <icon-share-alt @click="handleShare" />
-                      </template>
-                    </a-button>
-                  </a-space>
-                </template>
               </a-table-column>
             </template>
           </a-table>
