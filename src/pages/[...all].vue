@@ -21,19 +21,37 @@ const handleItemByKey = (storageKey: string, folderPath: string) => {
   })
 }
 
+const handleFolder = (path: string) => {
+  const currentPath = router.currentRoute.value.path
+  const uri = `${currentPath}/${encodeURIComponent(path)}`
+  router.push({ path: uri })
+}
+
 const handleShare = () => {
   Message.info('还没写！')
 }
 
-onBeforeMount(() => {
+const handleRouter = () => {
   const key = router.currentRoute.value.params.all[0]
   storageKey.value = key
-  const path = router.currentRoute.value.path.match(/od(\S*)/)
-  if (path) {
-    handleItemByKey(key, path[1])
+  const uri = router.currentRoute.value.path.match(/od(\S*)/)
+  if (uri) {
+    handleItemByKey(key, uri[1])
   } else {
     handleItemByKey(key, '/')
   }
+}
+
+watch(() => {
+  return router.currentRoute.value.path
+}, (path) => {
+  if (path !== '/' && !path.startsWith('/@')) {
+    handleRouter()
+  }
+})
+
+onMounted(() => {
+  handleRouter()
 })
 </script>
 
@@ -89,7 +107,17 @@ onBeforeMount(() => {
             <template #columns>
               <a-table-column title="文件名">
                 <template #cell="{ record }">
-                  {{ record.name }}
+                  <a-button type="text" v-if="record.type !== 'file'" @click="handleFolder(record.name)">
+                    <template #icon>
+                      <icon-folder />
+                    </template>
+                    <!-- Use the default slot to avoid extra spaces -->
+                    <template #default>{{ record.name }}</template>
+                  </a-button>
+                  <a-button type="text" v-else @click="handleShare">
+                    <!-- Use the default slot to avoid extra spaces -->
+                    <template #default>{{ record.name }}</template>
+                  </a-button>
                 </template>
               </a-table-column>
               <a-table-column title="最后修改时间" data-index="lastModifiedDateTime"></a-table-column>
