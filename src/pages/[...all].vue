@@ -13,7 +13,7 @@ const loading = ref<boolean>(false)
 const routes = ref<Array<any>>([
   {
     path: '/',
-    label: '/',
+    label: 'Home',
   },
 ])
 
@@ -49,34 +49,41 @@ const handleRouter = () => {
   }
 }
 
+const handleRouterChange = (uri: any) => {
+  if (uri) {
+    routes.value = []
+    routes.value.push({
+      path: '/',
+      label: 'Home',
+    })
+    const item = router.currentRoute.value.params.all.length - 1
+    for (let i = 0; i < item; i++) {
+      let currentPath = '/od'
+      for (let j = 0; j < i + 1; j++) {
+        currentPath += `/${router.currentRoute.value.params.all[j + 1]}`
+      }
+      routes.value.push({
+        path: decodeURIComponent(currentPath),
+        label: decodeURIComponent(router.currentRoute.value.params.all[i + 1]),
+      })
+    }
+  }
+}
+
 watch(() => {
   return router.currentRoute.value.path
 }, (path) => {
   if (path !== '/' && !path.startsWith('/@')) {
     const uri = path.match(new RegExp(`/${storageKey.value}(\S*)/`))
-    if (uri) {
-      routes.value = []
-      routes.value.push({
-        path: '/',
-        label: '/',
-      })
-      const item = router.currentRoute.value.params.all.length - 1
-      for (let i = 0; i < item; i++) {
-        let currentPath = '/od'
-        for (let j = 0; j < i + 1; j++) {
-          currentPath += `/${router.currentRoute.value.params.all[j + 1]}`
-        }
-        routes.value.push({
-          path: decodeURIComponent(currentPath),
-          label: decodeURIComponent(router.currentRoute.value.params.all[i + 1]),
-        })
-      }
-    }
+    handleRouterChange(uri)
     handleRouter()
   }
 })
 
 onMounted(() => {
+  const path = router.currentRoute.value.path.toString()
+  const uri = path.slice(`/${storageKey.value}`.length, path.length)
+  handleRouterChange(uri)
   handleRouter()
 })
 </script>
@@ -99,34 +106,43 @@ onMounted(() => {
           <template #icon>
             <icon-branch />
           </template>
-          {{ t('home.fileTips') }}
-        </a-tag>
-        <a-card :bordered="false" :style="{ width: '100%' }">
-          <a-breadcrumb :routes="routes">
+          <a-breadcrumb :routes="routes" :max-count="3">
             <template #item-render="{ route }">
               <a-link @click="router.push(route.path)">
                 {{route.label}}
               </a-link>
             </template>
           </a-breadcrumb>
-          <a-table v-if="isMobile" :data="dataList" style="margin-top: 12px" :loading="loading">
+        </a-tag>
+        <a-card :bordered="false" :style="{ width: '100%' }">
+          <a-table v-if="isMobile" :data="dataList" style="margin-top: 8px" :loading="loading">
             <template #columns>
-              <a-table-column title="文件名">
+              <a-table-column :title="t('table.index.fileName')">
                 <template #cell="{ record }">
-                  {{ record.name }}
+                  <a-button type="text" v-if="record.type !== 'file'" @click="handleFolder(record.name)" size="mini">
+                    <template #icon>
+                      <icon-folder />
+                    </template>
+                    <!-- Use the default slot to avoid extra spaces -->
+                    <template #default>{{ record.name.length > 18 ? `${record.name.substring(0, 18)}...` : record.name }}</template>
+                  </a-button>
+                  <a-button type="text" v-else @click="handleShare" size="mini">
+                    <!-- Use the default slot to avoid extra spaces -->
+                    <template #default>{{ record.name.length > 15 ? `${record.name.substring(0, 15)}...` : record.name }}</template>
+                  </a-button>
                 </template>
               </a-table-column>
-              <a-table-column title="操作">
+              <a-table-column :title="t('table.Optional')" fixed="right">
                 <template #cell="{ record }">
                   <a-space :size="4">
-                    <a-button v-if="record.type === 'file'" type="primary">
+                    <a-button v-if="record.type === 'file'" type="outline" size="mini">
                       <template #icon>
                         <a className="cursor-pointer rounded px-1.5 py-1 hover:bg-gray-300 dark:hover:bg-gray-600" :href="record.url">
                           <icon-download />
                         </a>
                       </template>
                     </a-button>
-                    <a-button type="primary">
+                    <a-button type="outline" size="mini">
                       <template #icon>
                         <icon-share-alt @click="handleShare" />
                       </template>
@@ -136,9 +152,9 @@ onMounted(() => {
               </a-table-column>
             </template>
           </a-table>
-          <a-table v-else :data="dataList" style="margin-top: 30px" :loading="loading">
+          <a-table v-else :data="dataList" style="margin-top: 10px" :loading="loading">
             <template #columns>
-              <a-table-column title="文件名">
+              <a-table-column :title="t('table.index.fileName')">
                 <template #cell="{ record }">
                   <a-button type="text" v-if="record.type !== 'file'" @click="handleFolder(record.name)">
                     <template #icon>
@@ -153,23 +169,23 @@ onMounted(() => {
                   </a-button>
                 </template>
               </a-table-column>
-              <a-table-column title="最后修改时间" data-index="lastModifiedDateTime"></a-table-column>
-              <a-table-column title="文件大小">
+              <a-table-column :title="t('table.index.time')" data-index="lastModifiedDateTime"></a-table-column>
+              <a-table-column :title="t('table.index.fileSize')">
                 <template #cell="{ record }">
                   {{ (record.size / 1000 / 1000).toFixed(2) }} MB
                 </template>
               </a-table-column>
-              <a-table-column title="操作">
+              <a-table-column :title="t('table.Optional')" fixed="right">
                 <template #cell="{ record }">
                   <a-space :size="4">
-                    <a-button v-if="record.type === 'file'" type="primary">
+                    <a-button v-if="record.type === 'file'" type="outline" size="small">
                       <template #icon>
                         <a className="cursor-pointer rounded px-1.5 py-1 hover:bg-gray-300 dark:hover:bg-gray-600" :href="record.url">
                           <icon-download />
                         </a>
                       </template>
                     </a-button>
-                    <a-button v-else type="primary">
+                    <a-button v-else type="outline" size="small">
                       <template #icon>
                         <icon-share-alt @click="handleShare" />
                       </template>

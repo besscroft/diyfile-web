@@ -74,6 +74,10 @@ table:
     role: 役割
     avatar: アバター
     loginTime: ログイン時間
+  index:
+    fileName: ファイル名
+    fileSize: ファイルサイズ
+    time: 時間
 user:
   username: ユーザー名
   password: パスワード

@@ -75,6 +75,10 @@ table:
     role: role
     avatar: avatar
     loginTime: loginTime
+  index:
+    fileName: fileName
+    fileSize: fileSize
+    time: lastModifiedDateTime
 user:
   username: Username
   password: Password

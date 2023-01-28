@@ -75,6 +75,10 @@ table:
     role: 角色
     avatar: 头像
     loginTime: 登录时间
+  index:
+    fileName: 文件名
+    fileSize: 文件大小
+    time: 最后修改时间
 user:
   username: 用户名
   password: 密码
