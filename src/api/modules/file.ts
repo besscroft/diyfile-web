@@ -19,7 +19,7 @@ export const getFileItem = (storageId: number, folderPath: string) => {
 
 /** 获取文件列表 */
 export const getFileItemByKey = (storageKey: string, folderPath: string) => {
-  return http.get<Result>(API_URL + Api.getFileItemByKey, { storageKey, folderPath })
+  return http.post<Result>(API_URL + Api.getFileItemByKey, { storageKey, folderPath })
 }
 
 /** 获取默认文件列表 */

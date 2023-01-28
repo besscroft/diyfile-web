@@ -30,7 +30,7 @@ const onMenuCollapse = () => {
       <Header @onMenuCollapse="onMenuCollapse" @toggleTheme="toggleTheme" :value="props" />
     </a-layout-header>
     <a-layout>
-      <a-layout-content>
+      <a-layout-content style="margin-bottom: 56px;">
         <RouterView />
       </a-layout-content>
     </a-layout>
