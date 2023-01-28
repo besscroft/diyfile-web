@@ -37,7 +37,7 @@ export const createApp = ViteSSG(
       ctx.router.beforeEach(async (to, from, next) => {
         axiosCanceler.removeAllPending()
         const user = useUserStore()
-        if (to.path === '/' || to.path === '/@login' || to.path === '/@about') {
+        if (to.path === '/' || to.path === '/@login' || to.path === '/@about' || !to.path.startsWith('/@admin')) {
           return next()
         }
         if (!user.token) {
