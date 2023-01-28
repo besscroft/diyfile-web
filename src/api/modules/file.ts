@@ -10,6 +10,7 @@ enum Api {
   getFileItemByKey = '/file/getItemByKey',
   getDefaultItem = '/file/defaultItem',
   getDefaultStorage = '/file/defaultStorage',
+  getFileInfo = '/file/getFileInfo',
 }
 
 /** 获取文件列表 */
@@ -30,4 +31,9 @@ export const getDefaultItem = () => {
 /** 获取默认存储 */
 export const getDefaultStorage = () => {
   return http.get<Result>(API_URL + Api.getDefaultStorage)
+}
+
+/** 获取文件信息 */
+export const getFileInfo = (storageKey: string, filePath: string) => {
+  return http.post<Result>(API_URL + Api.getFileInfo, { storageKey, filePath })
 }

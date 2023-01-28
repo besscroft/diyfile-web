@@ -33,7 +33,9 @@ const handleFolder = (path: string) => {
   router.push({ path: uri })
 }
 
-const handleShare = () => {
+const handleShare = (name: string) => {
+  const path = router.currentRoute.value.path.toString()
+  const uri = path.slice(`/${storageKey.value}`.length, path.length)
   Message.info('还没写！')
 }
 
@@ -115,6 +117,7 @@ onMounted(() => {
           </a-breadcrumb>
         </a-tag>
         <a-card :bordered="false" :style="{ width: '100%' }">
+          <!-- 移动端列表 -->
           <a-table v-if="isMobile" :data="dataList" style="margin-top: 8px" :loading="loading">
             <template #columns>
               <a-table-column :title="t('table.index.fileName')">
@@ -126,7 +129,7 @@ onMounted(() => {
                     <!-- Use the default slot to avoid extra spaces -->
                     <template #default>{{ record.name.length > 18 ? `${record.name.substring(0, 18)}...` : record.name }}</template>
                   </a-button>
-                  <a-button type="text" v-else @click="handleShare" size="mini">
+                  <a-button type="text" v-else @click="handleShare(record.name)" size="mini">
                     <!-- Use the default slot to avoid extra spaces -->
                     <template #default>{{ record.name.length > 15 ? `${record.name.substring(0, 15)}...` : record.name }}</template>
                   </a-button>
@@ -152,6 +155,7 @@ onMounted(() => {
               </a-table-column>
             </template>
           </a-table>
+          <!-- PC 端列表 -->
           <a-table v-else :data="dataList" style="margin-top: 10px" :loading="loading">
             <template #columns>
               <a-table-column :title="t('table.index.fileName')">
@@ -163,7 +167,7 @@ onMounted(() => {
                     <!-- Use the default slot to avoid extra spaces -->
                     <template #default>{{ record.name }}</template>
                   </a-button>
-                  <a-button type="text" v-else @click="handleShare">
+                  <a-button type="text" v-else @click="handleShare(record.name)">
                     <!-- Use the default slot to avoid extra spaces -->
                     <template #default>{{ record.name }}</template>
                   </a-button>
