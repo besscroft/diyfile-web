@@ -10,6 +10,12 @@ const router = useRouter()
 const storageKey = ref()
 const dataList = ref()
 const loading = ref<boolean>(false)
+const routes = ref<Array<any>>([
+  {
+    path: '/',
+    label: '/',
+  },
+])
 
 const handleItemByKey = (storageKey: string, folderPath: string) => {
   loading.value = true
@@ -34,9 +40,10 @@ const handleShare = () => {
 const handleRouter = () => {
   const key = router.currentRoute.value.params.all[0]
   storageKey.value = key
-  const uri = router.currentRoute.value.path.match(/od(\S*)/)
+  const path = router.currentRoute.value.path.toString()
+  const uri = path.slice(`/${storageKey.value}`.length, path.length)
   if (uri) {
-    handleItemByKey(key, uri[1])
+    handleItemByKey(key, uri)
   } else {
     handleItemByKey(key, '/')
   }
@@ -46,6 +53,25 @@ watch(() => {
   return router.currentRoute.value.path
 }, (path) => {
   if (path !== '/' && !path.startsWith('/@')) {
+    const uri = path.match(new RegExp(`/${storageKey.value}(\S*)/`))
+    if (uri) {
+      routes.value = []
+      routes.value.push({
+        path: '/',
+        label: '/',
+      })
+      const item = router.currentRoute.value.params.all.length - 1
+      for (let i = 0; i < item; i++) {
+        let currentPath = '/od'
+        for (let j = 0; j < i + 1; j++) {
+          currentPath += `/${router.currentRoute.value.params.all[j + 1]}`
+        }
+        routes.value.push({
+          path: decodeURIComponent(currentPath),
+          label: decodeURIComponent(router.currentRoute.value.params.all[i + 1]),
+        })
+      }
+    }
     handleRouter()
   }
 })
@@ -76,6 +102,13 @@ onMounted(() => {
           {{ t('home.fileTips') }}
         </a-tag>
         <a-card :bordered="false" :style="{ width: '100%' }">
+          <a-breadcrumb :routes="routes">
+            <template #item-render="{ route }">
+              <a-link @click="router.push(route.path)">
+                {{route.label}}
+              </a-link>
+            </template>
+          </a-breadcrumb>
           <a-table v-if="isMobile" :data="dataList" style="margin-top: 12px" :loading="loading">
             <template #columns>
               <a-table-column title="文件名">
