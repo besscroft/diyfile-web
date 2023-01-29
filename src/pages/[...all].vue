@@ -42,10 +42,12 @@ const handleShare = (name: string) => {
 }
 
 const handleFile = (key: string, uri: string) => {
+  loading.value = true
   getFileInfo(key, uri).then((res) => {
     if (res.code === 200) {
       console.log(res.data)
       fileInfo.value = res.data
+      loading.value = false
     }
   })
 }
