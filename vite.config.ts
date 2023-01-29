@@ -31,10 +31,10 @@ export default defineConfig({
     cors: true,
     // 代理跨域
     proxy: {
-      '/xanadu': {
+      '/@api': {
         target: 'http://localhost:8080',
         changeOrigin: true,
-        rewrite: path => path.replace(/^\/xanadu/, ''),
+        rewrite: path => path.replace(/^\/@api/, ''),
       },
     },
   },

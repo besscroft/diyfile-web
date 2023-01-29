@@ -51,7 +51,7 @@ class RequestHttp {
         config.headers!.noLoading
         const tokenValue = user.token || localStorage.getItem('Xanadu-token')
         const token = `Bearer ${tokenValue}`
-        return { ...config, headers: { ...config.headers, authorization: token } }
+        return { ...config, headers: { ...config.headers, Authorization: token } }
       },
       (error: AxiosError) => {
         return Promise.reject(error)

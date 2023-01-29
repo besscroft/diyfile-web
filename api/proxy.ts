@@ -4,7 +4,7 @@ const apiProxy = createProxyMiddleware({
   target: 'https://api.besscroft.com/xanadu',
   changeOrigin: true,
   pathRewrite: {
-    '^/xanadu/': '/',
+    '^/@api/': '/',
   },
 })
 

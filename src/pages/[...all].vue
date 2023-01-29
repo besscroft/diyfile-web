@@ -37,7 +37,7 @@ const handleFolder = (path: string) => {
 const handleShare = (name: string) => {
   const path = router.currentRoute.value.path.toString()
   const uri = path.slice(`/${storageKey.value}`.length, path.length)
-  // `${uri}/${encodeURIComponent(name)}`
+  console.log(`${uri}/${encodeURIComponent(name)}`)
   Message.info('还没写！')
 }
 
