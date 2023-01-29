@@ -35,17 +35,18 @@ const handleFolder = (path: string) => {
 }
 
 const handleShare = (name: string) => {
-  const path = router.currentRoute.value.path.toString()
-  const uri = path.slice(`/${storageKey.value}`.length, path.length)
-  console.log(`${uri}/${encodeURIComponent(name)}`)
   Message.info('还没写！')
 }
 
-const handleFile = (key: string, uri: string) => {
+const clickFile = (name: string) => {
+  const path = router.currentRoute.value.path.toString()
+  router.push(`${path}/${encodeURIComponent(name)}`)
+}
+
+const handleFile = (key: string, uri: string | any) => {
   loading.value = true
   getFileInfo(key, uri).then((res) => {
     if (res.code === 200) {
-      console.log(res.data)
       fileInfo.value = res.data
       loading.value = false
     }
@@ -89,9 +90,17 @@ watch(() => {
   return router.currentRoute.value.path
 }, (path) => {
   if (path !== '/' && !path.startsWith('/@')) {
+    const params = router.currentRoute.value.params
     const uri = path.match(new RegExp(`/${storageKey.value}(\S*)/`))
-    handleRouterChange(uri)
-    handleRouter()
+    if (params.all[params.all.length - 1].includes('.')) {
+      // 包含 . 的可能是文件
+      handleRouterChange(path)
+      handleFile(storageKey.value, path)
+    } else {
+      // 不包含 . 的可能是文件夹
+      handleRouterChange(uri)
+      handleRouter()
+    }
   }
 })
 
@@ -155,7 +164,7 @@ onMounted(() => {
                     <!-- Use the default slot to avoid extra spaces -->
                     <template #default>{{ record.name.length > 18 ? `${record.name.substring(0, 18)}...` : record.name }}</template>
                   </a-button>
-                  <a-button type="text" v-else @click="handleShare(record.name)" size="mini">
+                  <a-button type="text" v-else @click="clickFile(record.name)" size="mini">
                     <!-- Use the default slot to avoid extra spaces -->
                     <template #default>{{ record.name.length > 15 ? `${record.name.substring(0, 15)}...` : record.name }}</template>
                   </a-button>
@@ -193,7 +202,7 @@ onMounted(() => {
                     <!-- Use the default slot to avoid extra spaces -->
                     <template #default>{{ record.name }}</template>
                   </a-button>
-                  <a-button type="text" v-else @click="handleShare(record.name)">
+                  <a-button type="text" v-else @click="clickFile(record.name)">
                     <!-- Use the default slot to avoid extra spaces -->
                     <template #default>{{ record.name }}</template>
                   </a-button>
