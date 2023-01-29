@@ -1,7 +1,7 @@
 {
   "rewrites": [
     {
-      "source": "/xanadu/(.*)",
+      "source": "/@api/(.*)",
       "destination": "/api/proxy"
     }
   ]
