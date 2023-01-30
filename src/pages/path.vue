@@ -125,14 +125,19 @@ watch(() => {
 onMounted(() => {
   const path = router.currentRoute.value.params.path
   const key = router.currentRoute.value.params.storageKey
-  console.log(path, key)
-  const uri = path.toString().slice(`/${key}`.length, path.toString().length)
-  if (path.length > 0 && path[path.length - 1].includes('.')) {
-    // 包含 . 的可能是文件
-    handleRouterChange(key, path)
-    handleFile(key, uri)
-  } else {
-    // 不包含 . 的可能是文件夹
+  try {
+    const fullPath = router.currentRoute.value.path
+    const uri = fullPath.slice(`/${key}`.length, fullPath.length)
+    if (path.length > 0 && path[path.length - 1].includes('.')) {
+      // 包含 . 的可能是文件
+      handleRouterChange(key, path)
+      handleFile(key, uri)
+    } else {
+      // 不包含 . 的可能是文件夹
+      handleRouterChange(key, path)
+      handleRouter()
+    }
+  } catch (e) {
     handleRouterChange(key, path)
     handleRouter()
   }
