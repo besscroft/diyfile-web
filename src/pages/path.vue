@@ -164,11 +164,11 @@ onMounted(() => {
           </a-breadcrumb>
         </a-tag>
         <a-card :bordered="false" :style="{ width: '100%' }">
-          <a-skeleton v-if="loading" :animation="true">
-            <a-space direction="vertical" :style="{ width: '100%' }" size="large">
-              <a-skeleton-line :rows="10" />
-            </a-space>
-          </a-skeleton>
+          <a-spin v-if="loading" :size="32" class="flex justify-center">
+            <template #icon>
+              <icon-sync />
+            </template>
+          </a-spin>
           <!-- 移动端列表 -->
           <a-table v-else-if="isMobile && !loading && !fileInfo && dataList" :data="dataList" style="margin-top: 8px">
             <template #columns>
