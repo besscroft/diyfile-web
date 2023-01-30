@@ -43,11 +43,7 @@ const toggleLocales = (item: any) => {
 const loginOut = () => {
   username.value = ''
   avatar.value = ''
-  user.setToken('')
-  user.setUserName('')
-  user.setAvatar('')
-  user.setTokenHead('')
-  user.setRefreshToken('')
+  localStorage.setItem('user', '')
   localStorage.setItem('Xanadu-token', '')
   router.push('/')
 }

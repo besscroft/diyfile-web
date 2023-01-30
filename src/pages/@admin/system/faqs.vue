@@ -102,7 +102,7 @@ const { t } = useI18n()
 
           <p class="px-4 mt-4 leading-relaxed text-gray-700">
             目前打算采用容器化部署，并且是前后端分离部署。当然，我们也支持前后端一起部署的方式，不过这种方式不推荐，而且我也懒得写文件支持。<br />
-            不过，前端可以部署在 CloudFlare、Vercel、Netlify 等 CDN 上，后端可以部署在任何支持容器的地方。
+            不过，前端已经支持部署在 CloudFlare、Vercel 等 Edge Network 上，当然 Nginx 也是没问题的，后端可以部署在任何支持容器的地方。方便用户白嫖部署，是我们的开发目标之一！
           </p>
         </details>
 
@@ -131,7 +131,7 @@ const { t } = useI18n()
           </summary>
 
           <p class="px-4 mt-4 leading-relaxed text-gray-700">
-            我们决定支持本地文件管理，但前提是您部署的方式支持！
+            目前已支持 OneDrive，其它将在后续开发中跟进。我们决定支持本地文件管理，但前提是您部署的方式支持！
           </p>
         </details>
 
@@ -162,6 +162,36 @@ const { t } = useI18n()
           <p class="px-4 mt-4 leading-relaxed text-gray-700">
             我们决定在开发完成、并且经过测试后进行<b>开源</b>！我们承诺程序<b>永久免费</b>，只对服务收费，比如收费部署、收费维护、收费咨询等！但是我们仍然会提供<b>完善的文档</b>供您阅读！
             也就是说，您<b>永远都不需要花钱</b>即可像使用其它开源软件那样使用本程序，当然您如果愿意打赏一杯咖啡那就再好不过了！
+          </p>
+        </details>
+
+        <details class="group [&_summary::-webkit-details-marker]:hidden">
+          <summary
+            class="flex items-center justify-between p-4 rounded-lg cursor-pointer bg-gray-50"
+          >
+            <h2 class="font-medium text-gray-900">
+              你打算支持哪些功能？
+            </h2>
+
+            <svg
+              class="ml-1.5 h-5 w-5 flex-shrink-0 transition duration-300 group-open:-rotate-180"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </summary>
+
+          <p class="px-4 mt-4 leading-relaxed text-gray-700">
+            后台管理功能如您所见，还在逐步新增中，我们会根据用户的需求进行开发，如果您有什么好的建议，欢迎分享给我们！
+            首页文件列表和预览，将慢慢完善，目前只写了视频预览，其它的预览将在后续开发中跟进！
           </p>
         </details>
       </div>

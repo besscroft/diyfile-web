@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { Notification } from '@arco-design/web-vue'
+import {Message, Notification} from '@arco-design/web-vue'
 import type { Login } from '~/api/interface'
 import { getInfo, loginApi } from '~/api/modules/user'
 
 const { t } = useI18n()
 const router = useRouter()
 const user = useUserStore()
+const { isMobile } = useDevice()
 
 const loginForm = reactive<Login.ReqLoginForm>({
   username: '',
@@ -21,12 +22,16 @@ const handleSubmit = () => {
       user.setAvatar('')
       user.setToken(token)
       localStorage.setItem('Xanadu-token', token)
-      Notification.success({
-        title: 'Success',
-        content: '登录成功!',
-        closable: true,
-        duration: 2000,
-      })
+      if (isMobile) {
+        Message.success('登录成功!')
+      } else {
+        Notification.success({
+          title: 'Success',
+          content: '登录成功!',
+          closable: true,
+          duration: 2000,
+        })
+      }
       await getInfo().then((res) => {
         if (res.code !== 200) {
           window.location.href = '/@login'
@@ -55,7 +60,7 @@ const handleSubmit = () => {
         </a-checkbox>
       </a-form-item>
       <a-form-item>
-        账号/密码：xanadu/666666
+        观察员账号/密码：view/666666
       </a-form-item>
       <a-form-item>
         <a-button type="primary" html-type="submit">{{ t('button.login') }}</a-button>
