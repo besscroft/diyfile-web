@@ -20,7 +20,7 @@ const routes = ref<Array<any>>([
 ])
 
 /** 获取文件列表 */
-const handleItemByKey = (storageKey: string, folderPath: string) => {
+const handleItemByKey = (storageKey: string | any, folderPath: string | any) => {
   loading.value = true
   getFileItemByKey(storageKey, folderPath).then((res) => {
     if (res.code === 200) {
@@ -50,7 +50,7 @@ const clickFile = (name: string) => {
 }
 
 /** 处理文件路由 */
-const handleFile = (key: string, uri: string | any) => {
+const handleFile = (key: string | any, uri: string | any) => {
   loading.value = true
   getFileInfo(key, uri).then((res) => {
     if (res.code === 200) {
@@ -63,7 +63,7 @@ const handleFile = (key: string, uri: string | any) => {
 
 /** 处理文件夹路由 */
 const handleRouter = () => {
-  const key = router.currentRoute.value.params.all[0]
+  const key = router.currentRoute.value.params.storageKey
   storageKey.value = key
   const path = router.currentRoute.value.path.toString()
   const uri = path.slice(`/${storageKey.value}`.length, path.length)
@@ -75,23 +75,22 @@ const handleRouter = () => {
 }
 
 /** 路由变化 */
-const handleRouterChange = (uri: any) => {
-  const key = router.currentRoute.value.params.all[0]
+const handleRouterChange = (key: any, uri: any) => {
   if (uri) {
     routes.value = []
     routes.value.push({
       path: `/${key}`,
       label: 'Home',
     })
-    const item = router.currentRoute.value.params.all.length - 1
+    const item = router.currentRoute.value.params.path.length
     for (let i = 0; i < item; i++) {
       let currentPath = '/od'
       for (let j = 0; j < i + 1; j++) {
-        currentPath += `/${router.currentRoute.value.params.all[j + 1]}`
+        currentPath += `/${router.currentRoute.value.params.path[j]}`
       }
       routes.value.push({
         path: decodeURIComponent(currentPath),
-        label: decodeURIComponent(router.currentRoute.value.params.all[i + 1]),
+        label: decodeURIComponent(router.currentRoute.value.params.path[i]),
       })
     }
   } else {
@@ -107,17 +106,16 @@ const handleRouterChange = (uri: any) => {
 watch(() => {
   return router.currentRoute.value.path
 }, (path) => {
-  const key = router.currentRoute.value.params.all[0]
+  const key = storageKey.value
   if (path !== '/' && !path.startsWith('/@')) {
-    const params = router.currentRoute.value.params
-    const uri = path.match(new RegExp(`/${storageKey.value}(\S*)/`))
-    if (params.all[params.all.length - 1].includes('.')) {
+    const params = path.slice(((path.lastIndexOf('/') - 1) >>> 0) + 2)
+    if (params && params.includes('.')) {
       // 包含 . 的可能是文件
-      handleRouterChange(path)
+      handleRouterChange(key, path)
       handleFile(storageKey.value, path.slice(`/${key}`.length, path.length))
     } else {
       // 不包含 . 的可能是文件夹
-      handleRouterChange(path)
+      handleRouterChange(key, path)
       handleRouter()
     }
   }
@@ -125,17 +123,15 @@ watch(() => {
 
 /** 第一次进来 */
 onMounted(() => {
-  const params = router.currentRoute.value.params
-  const path = router.currentRoute.value.path.toString()
-  const key = router.currentRoute.value.params.all[0]
-  const uri = path.slice(`/${key}`.length, path.length)
-  if (params.all[params.all.length - 1].includes('.')) {
+  const path = router.currentRoute.value.params.path
+  const key = router.currentRoute.value.params.storageKey
+  if (path.includes('.')) {
     // 包含 . 的可能是文件
-    handleRouterChange(uri)
-    handleFile(key, uri)
+    handleRouterChange(key, path)
+    handleFile(key, path)
   } else {
     // 不包含 . 的可能是文件夹
-    handleRouterChange(uri)
+    handleRouterChange(key, path)
     handleRouter()
   }
 })

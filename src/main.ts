@@ -5,6 +5,7 @@ import ArcoVue from '@arco-design/web-vue'
 import ArcoVueIcon from '@arco-design/web-vue/es/icon'
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+import { createWebHistory } from 'vue-router'
 import App from './App.vue'
 import type { UserModule } from './types'
 import { AxiosCanceler } from '~/api/helper/axiosCancel'
@@ -19,13 +20,28 @@ import '@unocss/reset/tailwind.css'
 import './styles/main.css'
 import 'uno.css'
 
+generatedRoutes.push({
+  path: '/',
+  meta: {
+    layout: 'default',
+  },
+  component: () => import('~/pages/index.vue'),
+}, {
+  path: '/:storageKey/:path(.*)*',
+  meta: {
+    layout: 'default',
+  },
+  props: true,
+  component: () => import('~/pages/path.vue'),
+})
+
 const routes = setupLayouts(generatedRoutes)
 const axiosCanceler = new AxiosCanceler()
 
 // https://github.com/antfu/vite-ssg
 export const createApp = ViteSSG(
   App,
-  { routes, base: import.meta.env.BASE_URL },
+  { routes, history: createWebHistory(), base: import.meta.env.BASE_URL },
   (ctx) => {
     // install all modules under `modules/`
     Object.values(import.meta.glob<{ install: UserModule }>('./modules/*.ts', { eager: true }))
@@ -37,7 +53,7 @@ export const createApp = ViteSSG(
       ctx.router.beforeEach(async (to, from, next) => {
         axiosCanceler.removeAllPending()
         const user = useUserStore()
-        if (to.path === '/' || to.path === '/@login' || to.path === '/@about' || !to.path.startsWith('/@admin')) {
+        if (to.path === '/' || !to.path.startsWith('/@')) {
           return next()
         }
         if (!user.token) {
