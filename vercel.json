@@ -5,7 +5,7 @@
       "destination": "/api/proxy"
     },
     {
-      "source": "/((?!@).*)",
+      "source": "/(([^/@]+).*)",
       "destination": "/index.html"
     }
   ]
