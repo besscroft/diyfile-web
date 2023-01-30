@@ -125,6 +125,7 @@ watch(() => {
 onMounted(() => {
   const path = router.currentRoute.value.params.path
   const key = router.currentRoute.value.params.storageKey
+  console.log(path, key)
   const uri = path.toString().slice(`/${key}`.length, path.toString().length)
   if (path.length > 0 && path[path.length - 1].includes('.')) {
     // 包含 . 的可能是文件
