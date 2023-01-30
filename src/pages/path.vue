@@ -256,6 +256,7 @@ onMounted(() => {
           <ImagePreview v-else-if="!loading && fileInfo.type === 'file' && isImage(fileInfo.name)" :value="fileInfo" />
           <AudioPreview v-else-if="!loading && fileInfo.type === 'file' && isAudio(fileInfo.name)" :value="fileInfo" />
           <a-alert v-else-if="!loading && fileInfo.type === 'file'">这儿正在开发对文件的预览、下载、分享等处理！</a-alert>
+          <a-alert v-else>Oops！发生了意外情况，也许是网络不稳定、格式不支持或者出现了 Bug~</a-alert>
         </a-card>
       </a-col>
       <a-col :xs="1" :sm="2" :md="2" :lg="3" :xl="4" :xxl="4"></a-col>
