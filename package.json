@@ -17,11 +17,13 @@
   },
   "dependencies": {
     "@arco-themes/vue-sakura": "^0.0.2",
+    "@types/dplayer": "^1.25.2",
     "@types/ua-parser-js": "^0.7.36",
     "@unocss/reset": "^0.48.4",
     "@vueuse/core": "^9.11.0",
     "@vueuse/head": "^1.0.22",
     "axios": "^1.2.3",
+    "dplayer": "^1.27.1",
     "http-proxy-middleware": "^2.0.6",
     "nprogress": "^0.2.0",
     "pinia": "^2.0.29",

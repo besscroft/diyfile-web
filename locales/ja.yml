@@ -25,6 +25,7 @@ button:
   role: 役割
   type: ストレージタイプ
   pwd: パスワードを変更する
+  download: ダウンロード
 intro:
   desc: 固執された Vite スターターテンプレート
   dynamic-route: 動的ルートのデモ
@@ -66,7 +67,7 @@ tag:
   yes: はい
   no: しない
 table:
-  Optional: 操作する
+  Optional: 操作
   UserInfo: ユーザー情報
   StorageInfo: ストレージ情報
   user:

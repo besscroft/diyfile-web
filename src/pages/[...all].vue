@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Message } from '@arco-design/web-vue'
 import { getFileInfo, getFileItemByKey } from '~/api/modules/file'
+import { isAudio, isImage, isVideo } from '~/utils/FileUtil'
 
 const { isMobile } = useDevice()
 const { t } = useI18n()
@@ -254,6 +255,10 @@ onMounted(() => {
             </template>
           </a-table>
           <!-- 文件预览 -->
+          <!-- 视频预览 -->
+          <VideoPreview v-else-if="!loading && fileInfo.type === 'file' && isVideo(fileInfo.name)" :value="fileInfo" />
+          <ImagePreview v-else-if="!loading && fileInfo.type === 'file' && isImage(fileInfo.name)" :value="fileInfo" />
+          <AudioPreview v-else-if="!loading && fileInfo.type === 'file' && isAudio(fileInfo.name)" :value="fileInfo" />
           <a-alert v-else-if="!loading && fileInfo.type === 'file'">这儿正在开发对文件的预览、下载、分享等处理！</a-alert>
         </a-card>
       </a-col>

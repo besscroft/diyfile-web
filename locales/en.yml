@@ -25,6 +25,7 @@ button:
   role: Role
   type: Type
   pwd: Update Password
+  download: Download
 intro:
   desc: Opinionated Vite Starter Template
   dynamic-route: Demo of dynamic route

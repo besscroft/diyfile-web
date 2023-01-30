@@ -6,6 +6,7 @@ specifiers:
   '@arco-themes/vue-sakura': ^0.0.2
   '@iconify-json/carbon': ^1.1.13
   '@intlify/vite-plugin-vue-i18n': ^6.0.3
+  '@types/dplayer': ^1.25.2
   '@types/markdown-it-link-attributes': ^3.0.1
   '@types/nprogress': ^0.2.0
   '@types/qs': ^6.9.7
@@ -20,6 +21,7 @@ specifiers:
   critters: ^0.0.16
   cross-env: ^7.0.3
   cypress: ^12.3.0
+  dplayer: ^1.27.1
   eslint: ^8.32.0
   eslint-plugin-cypress: ^2.12.1
   http-proxy-middleware: ^2.0.6
@@ -58,11 +60,13 @@ specifiers:
 
 dependencies:
   '@arco-themes/vue-sakura': 0.0.2_5ogcmqlvcv7dl5g76mkxhsxyt4
+  '@types/dplayer': 1.25.2
   '@types/ua-parser-js': 0.7.36
   '@unocss/reset': 0.48.4
   '@vueuse/core': 9.11.0_vue@3.2.45
   '@vueuse/head': 1.0.22_vue@3.2.45
   axios: 1.2.3
+  dplayer: 1.27.1
   http-proxy-middleware: 2.0.6
   nprogress: 0.2.0
   pinia: 2.0.29_prq2uz4lho2pwp6irk4cfkrxwu
@@ -2216,6 +2220,10 @@ packages:
       '@types/ms': 0.7.31
     dev: true
 
+  /@types/dplayer/1.25.2:
+    resolution: {integrity: sha512-bkTVZkK3Vi7N7eX2FUBnqKhCjTaeRLkhvY8H6zolatbSTtjPPdxyUzhE3C29sIBYRRq1kQHSduFgCHKg5VF3Jw==}
+    dev: false
+
   /@types/estree/0.0.39:
     resolution: {integrity: sha512-EYNwp3bU+98cpU4lAWYYL7Zz+2gryWH1qbdDTidVd6hkiR6weksdbMadyXKXNPEkQFhXM+hVO9ZygomHXp+AIw==}
     dev: true
@@ -3428,6 +3436,10 @@ packages:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
     dev: true
 
+  /balloon-css/1.2.0:
+    resolution: {integrity: sha512-urXwkHgwp6GsXVF+it01485Z2Cj4pnW02ICnM0TemOlkKmCNnDLmyy+ZZiRXBpwldUXO+aRNr7Hdia4CBvXJ5A==}
+    dev: false
+
   /base64-js/1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
     dev: true
@@ -4279,6 +4291,16 @@ packages:
       domelementtype: 2.3.0
       domhandler: 5.0.3
     dev: true
+
+  /dplayer/1.27.1:
+    resolution: {integrity: sha512-2laBMXs5V1B9zPwJ7eAIw/OBo+Xjvy03i4GHTk3Cg+IWbrq8rKMFO0fFr6ClAYotYOCcFGOvaJDkOZcgKllsCA==}
+    dependencies:
+      axios: 1.2.3
+      balloon-css: 1.2.0
+      promise-polyfill: 8.3.0
+    transitivePeerDependencies:
+      - debug
+    dev: false
 
   /duplexer/0.1.2:
     resolution: {integrity: sha512-jtD6YG370ZCIi/9GTaJKQxWTZD045+4R4hTk/x1UyoqadyJ9x9CgSi1RlVDQF8U2sxLLSnFkCaMihqljHIWgMg==}
@@ -7380,6 +7402,10 @@ packages:
       bluebird:
         optional: true
     dev: true
+
+  /promise-polyfill/8.3.0:
+    resolution: {integrity: sha512-H5oELycFml5yto/atYqmjyigJoAo3+OXwolYiH7OfQuYlAqhxNvTfiNMbV9hsC6Yp83yE5r2KTVmtrG6R9i6Pg==}
+    dev: false
 
   /promise-retry/2.0.1:
     resolution: {integrity: sha512-y+WKFlBR8BGXnsNlIHFGPZmyDf3DFMoLhaflAnyZgV6rG6xu+JwesTo2Q9R6XwYmtmwAFCkAk3e35jEdoeh/3g==}

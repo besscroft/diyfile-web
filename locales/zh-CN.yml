@@ -25,6 +25,7 @@ button:
   role: 角色
   type: 存储类型
   pwd: 密码修改
+  download: 下载
 intro:
   desc: 固执己见的 Vite 项目模板
   dynamic-route: 动态路由演示
