@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { isDark } from '~/composables/dark'
-import useDevice from '~/hooks/device'
 
 const router = useRouter()
 const { isMobile } = useDevice()

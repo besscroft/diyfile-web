@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { getSiteTitle } from '~/api/modules/systemConfig'
-import useDevice from '~/hooks/device'
 import { isDark } from '~/composables/dark'
 
 // 路由状态

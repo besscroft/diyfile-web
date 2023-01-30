@@ -2,7 +2,6 @@
 import { Message } from '@arco-design/web-vue'
 import type { Storage } from '~/api/interface/storage'
 import { storageDelete, storagePage, storageUpdateStatus } from '~/api/modules/storage'
-import useDevice from '~/hooks/device'
 
 const router = useRouter()
 const { t } = useI18n()

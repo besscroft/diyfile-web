@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { Message } from '@arco-design/web-vue'
 import { getFileInfo, getFileItemByKey } from '~/api/modules/file'
-import useDevice from '~/hooks/device'
 
 const { isMobile } = useDevice()
 const { t } = useI18n()
@@ -11,6 +10,7 @@ const storageKey = ref()
 const dataList = ref()
 const fileInfo = ref()
 const loading = ref<boolean>(true)
+// 面包屑路由
 const routes = ref<Array<any>>([
   {
     path: '/',
@@ -18,41 +18,49 @@ const routes = ref<Array<any>>([
   },
 ])
 
+/** 获取文件列表 */
 const handleItemByKey = (storageKey: string, folderPath: string) => {
   loading.value = true
   getFileItemByKey(storageKey, folderPath).then((res) => {
     if (res.code === 200) {
+      fileInfo.value = null
       dataList.value = res.data
       loading.value = false
     }
   })
 }
 
+/** 文件夹点击事件 */
 const handleFolder = (path: string) => {
   const currentPath = router.currentRoute.value.path
   const uri = `${currentPath}/${encodeURIComponent(path)}`
   router.push({ path: uri })
 }
 
+/** 文件分享事件 */
 const handleShare = (name: string) => {
   Message.info('还没写！')
 }
 
+/** 文件点击事件 */
 const clickFile = (name: string) => {
   const path = router.currentRoute.value.path.toString()
   router.push(`${path}/${encodeURIComponent(name)}`)
 }
 
+/** 处理文件路由 */
 const handleFile = (key: string, uri: string | any) => {
   loading.value = true
   getFileInfo(key, uri).then((res) => {
     if (res.code === 200) {
+      dataList.value = null
       fileInfo.value = res.data
       loading.value = false
     }
   })
 }
 
+/** 处理文件夹路由 */
 const handleRouter = () => {
   const key = router.currentRoute.value.params.all[0]
   storageKey.value = key
@@ -65,6 +73,7 @@ const handleRouter = () => {
   }
 }
 
+/** 路由变化 */
 const handleRouterChange = (uri: any) => {
   const key = router.currentRoute.value.params.all[0]
   if (uri) {
@@ -93,24 +102,27 @@ const handleRouterChange = (uri: any) => {
   }
 }
 
+/** 路由监听处理 */
 watch(() => {
   return router.currentRoute.value.path
 }, (path) => {
+  const key = router.currentRoute.value.params.all[0]
   if (path !== '/' && !path.startsWith('/@')) {
     const params = router.currentRoute.value.params
     const uri = path.match(new RegExp(`/${storageKey.value}(\S*)/`))
     if (params.all[params.all.length - 1].includes('.')) {
       // 包含 . 的可能是文件
       handleRouterChange(path)
-      handleFile(storageKey.value, path)
+      handleFile(storageKey.value, path.slice(`/${key}`.length, path.length))
     } else {
       // 不包含 . 的可能是文件夹
-      handleRouterChange(uri)
+      handleRouterChange(path)
       handleRouter()
     }
   }
 })
 
+/** 第一次进来 */
 onMounted(() => {
   const params = router.currentRoute.value.params
   const path = router.currentRoute.value.path.toString()
@@ -160,7 +172,7 @@ onMounted(() => {
             </a-space>
           </a-skeleton>
           <!-- 移动端列表 -->
-          <a-table v-else-if="isMobile && !loading && !fileInfo" :data="dataList" style="margin-top: 8px">
+          <a-table v-else-if="isMobile && !loading && !fileInfo && dataList" :data="dataList" style="margin-top: 8px">
             <template #columns>
               <a-table-column :title="t('table.index.fileName')">
                 <template #cell="{ record }">
@@ -198,7 +210,7 @@ onMounted(() => {
             </template>
           </a-table>
           <!-- PC 端列表 -->
-          <a-table v-else-if="!isMobile && !loading && !fileInfo" :data="dataList" style="margin-top: 10px">
+          <a-table v-else-if="!isMobile && !loading && !fileInfo && dataList" :data="dataList" style="margin-top: 10px">
             <template #columns>
               <a-table-column :title="t('table.index.fileName')">
                 <template #cell="{ record }">
@@ -241,7 +253,8 @@ onMounted(() => {
               </a-table-column>
             </template>
           </a-table>
-          <a-alert v-else-if="!loading && fileInfo">这儿正在开发对文件的预览、下载、分享等处理！</a-alert>
+          <!-- 文件预览 -->
+          <a-alert v-else-if="!loading && fileInfo.type === 'file'">这儿正在开发对文件的预览、下载、分享等处理！</a-alert>
         </a-card>
       </a-col>
       <a-col :xs="1" :sm="2" :md="2" :lg="3" :xl="4" :xxl="4"></a-col>

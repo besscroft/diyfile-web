@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { getDefaultStorage } from '~/api/modules/file'
-import useDevice from '~/hooks/device'
 
 const { isMobile } = useDevice()
 const { t } = useI18n()

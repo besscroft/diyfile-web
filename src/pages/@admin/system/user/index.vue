@@ -2,7 +2,6 @@
 import { Message } from '@arco-design/web-vue'
 import type { User } from '~/api/interface/user'
 import { userDelete, userPage, userStatusUpdate } from '~/api/modules/user'
-import useDevice from '~/hooks/device'
 
 const router = useRouter()
 const loading = ref<Boolean>(true)

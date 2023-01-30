@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import { getServerInfo } from '~/api/modules/monitor'
-import useDevice from '~/hooks/device'
 
 const router = useRouter()
 const { t } = useI18n()
