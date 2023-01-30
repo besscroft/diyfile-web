@@ -66,10 +66,11 @@ const handleRouter = () => {
 }
 
 const handleRouterChange = (uri: any) => {
+  const key = router.currentRoute.value.params.all[0]
   if (uri) {
     routes.value = []
     routes.value.push({
-      path: '/',
+      path: `/${key}`,
       label: 'Home',
     })
     const item = router.currentRoute.value.params.all.length - 1
@@ -83,6 +84,12 @@ const handleRouterChange = (uri: any) => {
         label: decodeURIComponent(router.currentRoute.value.params.all[i + 1]),
       })
     }
+  } else {
+    routes.value = []
+    routes.value.push({
+      path: `/${key}`,
+      label: 'Home',
+    })
   }
 }
 
