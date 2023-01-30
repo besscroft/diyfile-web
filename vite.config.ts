@@ -74,6 +74,7 @@ export default defineConfig({
       dirs: [
         'src/composables',
         'src/store',
+        'src/hooks',
       ],
       vueTemplate: true,
     }),
