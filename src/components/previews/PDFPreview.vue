@@ -3,7 +3,12 @@ const fileInfo = defineProps(['value'])
 const { text, copy, copied, isSupported } = useClipboard(fileInfo.value.url)
 const { t } = useI18n()
 
-const url = `https://mozilla.github.io/pdf.js/web/viewer.html?file=${fileInfo.value}`
+const url = ref<string>()
+
+onBeforeMount(() => {
+  // TODO 跨域问题
+  url.value = `https://mozilla.github.io/pdf.js/web/viewer.html?file=${fileInfo.value.url}`
+})
 </script>
 
 <template>
