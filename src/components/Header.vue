@@ -45,7 +45,7 @@ const loginOut = () => {
   avatar.value = ''
   localStorage.setItem('user', '')
   localStorage.setItem('Xanadu-token', '')
-  router.push('/')
+  window.location.href = '/'
 }
 
 onMounted(() => {

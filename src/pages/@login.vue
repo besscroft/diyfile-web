@@ -38,6 +38,7 @@ const handleSubmit = () => {
         }
         user.setUserName(res.data.userName)
         user.setAvatar(res.data.avatar)
+        user.setRoleCode(res.data.role)
       })
       window.location.href = '/'
     }

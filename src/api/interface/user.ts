@@ -45,6 +45,10 @@ export namespace User {
 
   /** 密码修改请求参数 */
   export interface UpdatePasswordData {
+    /** 用户 id */
+    userId: number | undefined
+    /** 是否是自己 */
+    isSelf: boolean
     /** 旧密码 */
     oldPassword: string
     /** 新密码 */

@@ -18,4 +18,6 @@ export interface UserStore {
   title: string
   /** 备案信息 */
   beian: string
+  /** 角色 Code */
+  roleCode: string
 }

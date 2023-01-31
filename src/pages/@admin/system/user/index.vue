@@ -4,6 +4,7 @@ import type { User } from '~/api/interface/user'
 import { userDelete, userPage, userStatusUpdate } from '~/api/modules/user'
 
 const router = useRouter()
+const user = useUserStore()
 const loading = ref<Boolean>(true)
 const { t } = useI18n()
 const { isMobile } = useDevice()
@@ -106,7 +107,7 @@ useUserPage('')
                 <template #content>
                   <a-doption @click="router.push({ path: `/@admin/system/user/${encodeURIComponent(item.username)}`, params: { username: item.username } })">{{ t('button.detail') }}</a-doption>
                   <a-doption @click="router.push({ path: '/@admin/system/user/edit', query: { id: item.id } })">{{ t('button.edit') }}</a-doption>
-                  <a-doption @click="router.push({ path: '/@admin/system/user/pwd', query: { id: item.id } })">{{ t('button.pwd') }}</a-doption>
+                  <a-doption v-if="user.roleCode === 'platform-super-admin'" @click="router.push({ path: '/@admin/system/user/pwd', query: { id: item.id } })">{{ t('button.pwd') }}</a-doption>
                 </template>
               </a-dropdown>
             </template>

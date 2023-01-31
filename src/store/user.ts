@@ -22,6 +22,8 @@ export const useUserStore = defineStore('user', {
     title: '',
     // 备案信息
     beian: '',
+    // 角色 Code
+    roleCode: '',
   }),
   actions: {
     /** 设置用户名称 */
@@ -59,6 +61,10 @@ export const useUserStore = defineStore('user', {
     /** 设置备案信息 */
     setBeian(beian: string) {
       this.beian = beian
+    },
+    /** 设置角色 Code */
+    setRoleCode(roleCode: string) {
+      this.roleCode = roleCode
     },
   },
   persist: piniaPersistConfig('user'),

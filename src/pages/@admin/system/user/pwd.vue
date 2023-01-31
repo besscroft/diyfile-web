@@ -7,6 +7,8 @@ const router = useRouter()
 const { t } = useI18n()
 
 const pwdForm = reactive<User.UpdatePasswordData>({
+  userId: undefined,
+  isSelf: false,
   oldPassword: '',
   newPassword: '',
 })
@@ -54,3 +56,8 @@ const handleSubmit = () => {
 <style scoped>
 
 </style>
+
+<route lang="yaml">
+meta:
+  layout: admin
+</route>
