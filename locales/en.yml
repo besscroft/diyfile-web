@@ -16,6 +16,7 @@ button:
   quit: quit
   login: login
   copy: Copy
+  copyUrl: Copy Url
   copyOk: Copy Success
   add: Add
   edit: Edit
