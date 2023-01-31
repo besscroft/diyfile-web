@@ -47,7 +47,7 @@ const routerPage = (val: string) => {
 <template>
   <a-layout style="height: 100%;">
     <a-layout-header>
-      <Header @onMenuCollapse="onMenuCollapse" @toggleTheme="toggleTheme" :value="props" />
+      <Header @toggleTheme="toggleTheme" :value="props" />
     </a-layout-header>
     <a-layout>
       <a-layout-sider
@@ -56,7 +56,7 @@ const routerPage = (val: string) => {
         :collapsed="menuStatus"
         v-if="!isMobile"
       >
-        <PopMenu @routerPage="routerPage"/>
+        <PopMenu @onMenuCollapse="onMenuCollapse" @routerPage="routerPage"/>
       </a-layout-sider>
       <a-layout-content v-if="isMobile" style="margin-bottom: 56px;">
         <RouterView />

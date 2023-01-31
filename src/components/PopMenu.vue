@@ -3,8 +3,13 @@ import { useI18n } from 'vue-i18n'
 
 // 菜单收缩按钮
 const props = defineProps(['value'])
-const emit = defineEmits(['routerPage'])
+const emit = defineEmits(['routerPage', 'onMenuCollapse'])
 const { t } = useI18n()
+
+const onMenuCollapse = () => {
+  console.log('onMenuCollapse')
+  emit('onMenuCollapse')
+}
 
 /** 点击菜单事件 */
 const routerPage = (val: string) => {
@@ -15,6 +20,8 @@ const routerPage = (val: string) => {
 <template>
   <a-menu
     :style="{ width: '100%', height: '100%' }"
+    show-collapse-button
+    @collapse="onMenuCollapse"
   >
     <a-menu-item key="1" @click="routerPage('admin')">
       <template #icon><icon-apps></icon-apps></template>

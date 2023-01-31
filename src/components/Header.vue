@@ -4,7 +4,7 @@ import { isDark } from '~/composables/dark'
 
 // 路由状态
 const props = defineProps(['value'])
-const emit = defineEmits(['toggleTheme', 'onMenuCollapse'])
+const emit = defineEmits(['toggleTheme'])
 const { t, locale } = useI18n()
 const router = useRouter()
 const user = useUserStore()
@@ -14,10 +14,6 @@ const avatar = ref<String>('')
 
 const toggleTheme = () => {
   emit('toggleTheme')
-}
-
-const onMenuCollapse = () => {
-  emit('onMenuCollapse')
 }
 
 /** 路由切换 */
@@ -72,13 +68,8 @@ onMounted(() => {
 <template>
   <a-row class="grid-demo">
     <a-col class="title-container" :xs="8" :sm="8" :md="8" :lg="8" :xl="8" :xxl="8">
-      <div v-if="props.value || isMobile" @click="routerPage('/')" class="cursor-pointer">
+      <div @click="routerPage('/')" class="cursor-pointer">
         {{ user.title || 'Xanadu' }}
-      </div>
-      <div v-else>
-        <a-button shape="circle" @click="onMenuCollapse">
-          <icon-list />
-        </a-button>
       </div>
     </a-col>
     <a-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" :xxl="8">
