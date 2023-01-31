@@ -5,20 +5,7 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <a-image
-    height="100%"
-    width="100%"
-    :src="fileInfo.value.url"
-    :title="fileInfo.value.name"
-    footerPosition="outer"
-    :preview-props="{
-      actionsLayout: ['rotateRight', 'zoomIn', 'zoomOut'],
-    }"
-  >
-    <template #loader>
-      <div class="loader-animate"/>
-    </template>
-  </a-image>
+  <a-alert type="warning">看起来没有针对当前文件格式的预览呢，不过您也可以直接下载！</a-alert>
   <a-divider orientation="left">{{ t('table.Optional') }}</a-divider>
   <a-space wrap>
     <a className="cursor-pointer rounded px-1.5 py-1 hover:bg-gray-300 dark:hover:bg-gray-600" :href="fileInfo.value.url">

@@ -8,6 +8,7 @@ specifiers:
   '@intlify/vite-plugin-vue-i18n': ^6.0.3
   '@types/dplayer': ^1.25.2
   '@types/markdown-it-link-attributes': ^3.0.1
+  '@types/marked': ^4.0.8
   '@types/nprogress': ^0.2.0
   '@types/qs': ^6.9.7
   '@types/ua-parser-js': ^0.7.36
@@ -28,6 +29,7 @@ specifiers:
   https-localhost: ^4.7.1
   markdown-it-link-attributes: ^4.0.1
   markdown-it-shiki: ^0.7.2
+  marked: ^4.2.12
   nprogress: ^0.2.0
   pinia: ^2.0.29
   pinia-plugin-persistedstate: ^3.0.2
@@ -61,6 +63,7 @@ specifiers:
 dependencies:
   '@arco-themes/vue-sakura': 0.0.2_5ogcmqlvcv7dl5g76mkxhsxyt4
   '@types/dplayer': 1.25.2
+  '@types/marked': 4.0.8
   '@types/ua-parser-js': 0.7.36
   '@unocss/reset': 0.48.4
   '@vueuse/core': 9.11.0_vue@3.2.45
@@ -68,6 +71,7 @@ dependencies:
   axios: 1.2.3
   dplayer: 1.27.1
   http-proxy-middleware: 2.0.6
+  marked: 4.2.12
   nprogress: 0.2.0
   pinia: 2.0.29_prq2uz4lho2pwp6irk4cfkrxwu
   pinia-plugin-persistedstate: 3.0.2_pinia@2.0.29
@@ -2262,6 +2266,10 @@ packages:
       '@types/linkify-it': 3.0.2
       '@types/mdurl': 1.0.2
     dev: true
+
+  /@types/marked/4.0.8:
+    resolution: {integrity: sha512-HVNzMT5QlWCOdeuBsgXP8EZzKUf0+AXzN+sLmjvaB3ZlLqO+e4u0uXrdw9ub69wBKFs+c6/pA4r9sy6cCDvImw==}
+    dev: false
 
   /@types/mdast/3.0.10:
     resolution: {integrity: sha512-W864tg/Osz1+9f4lrGTZpCSO5/z4608eUp19tbozkq2HJK6i3z1kT0H9tlADXuYIb1YYOBByU4Jsqkk75q48qA==}
@@ -6516,6 +6524,12 @@ packages:
       mdurl: 1.0.1
       uc.micro: 1.0.6
     dev: true
+
+  /marked/4.2.12:
+    resolution: {integrity: sha512-yr8hSKa3Fv4D3jdZmtMMPghgVt6TWbk86WQaWhDloQjRSQhMMYCAro7jP7VDJrjjdV8pxVxMssXS8B8Y5DZ5aw==}
+    engines: {node: '>= 12'}
+    hasBin: true
+    dev: false
 
   /mdast-util-from-markdown/0.8.5:
     resolution: {integrity: sha512-2hkTXtYYnr+NubD/g6KGBS/0mFmBcifAsI0yIWRiRo0PjVs6SSOSOdtzbp6kSGnShDN6G5aWZpKQ2lWRy27mWQ==}

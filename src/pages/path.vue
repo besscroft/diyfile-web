@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Message } from '@arco-design/web-vue'
 import { getFileInfo, getFileItemByKey } from '~/api/modules/file'
-import { isAudio, isImage, isVideo } from '~/utils/FileUtil'
+import { isAudio, isImage, isMarkdown, isPDF, isText, isVideo } from '~/utils/FileUtil'
 
 const { isMobile } = useDevice()
 const { t } = useI18n()
@@ -262,7 +262,10 @@ onMounted(() => {
           <VideoPreview v-else-if="!loading && fileInfo.type === 'file' && isVideo(fileInfo.name)" :value="fileInfo" />
           <ImagePreview v-else-if="!loading && fileInfo.type === 'file' && isImage(fileInfo.name)" :value="fileInfo" />
           <AudioPreview v-else-if="!loading && fileInfo.type === 'file' && isAudio(fileInfo.name)" :value="fileInfo" />
-          <a-alert v-else-if="!loading && fileInfo.type === 'file'">这儿正在开发对文件的预览、下载、分享等处理！</a-alert>
+          <MarkdownPreview v-else-if="!loading && fileInfo.type === 'file' && isMarkdown(fileInfo.name)" :value="fileInfo" />
+          <TextPreview v-else-if="!loading && fileInfo.type === 'file' && isText(fileInfo.name)" :value="fileInfo" />
+          <PDFPreview v-else-if="!loading && fileInfo.type === 'file' && isPDF(fileInfo.name)" :value="fileInfo" />
+          <OtherPreview v-else-if="!loading && fileInfo.type === 'file'" :value="fileInfo" />
           <a-alert v-else>Oops！发生了意外情况，也许是网络不稳定、格式不支持或者出现了 Bug~</a-alert>
         </a-card>
       </a-col>

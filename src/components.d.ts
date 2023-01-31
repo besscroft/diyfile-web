@@ -64,6 +64,7 @@ declare module '@vue/runtime-core' {
     ImagePreview: typeof import('./components/previews/ImagePreview.vue')['default']
     MarkdownPreview: typeof import('./components/previews/MarkdownPreview.vue')['default']
     MobileMenu: typeof import('./components/MobileMenu.vue')['default']
+    OtherPreview: typeof import('./components/previews/OtherPreview.vue')['default']
     PDFPreview: typeof import('./components/previews/PDFPreview.vue')['default']
     PopMenu: typeof import('./components/PopMenu.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
