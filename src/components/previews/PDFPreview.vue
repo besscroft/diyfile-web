@@ -2,10 +2,14 @@
 const fileInfo = defineProps(['value'])
 const { text, copy, copied, isSupported } = useClipboard(fileInfo.value.url)
 const { t } = useI18n()
+
+const url = `https://mozilla.github.io/pdf.js/web/viewer.html?file=${fileInfo.value}`
 </script>
 
 <template>
-  PDF 预览正在开发
+  <div className="w-full overflow-hidden rounded" :style="{ height: '90vh' }">
+  <iframe :src="url" frameBorder="0" width="100%" height="100%"></iframe>
+  </div>
   <a-divider orientation="left">{{ t('table.Optional') }}</a-divider>
   <a-space wrap>
     <a className="cursor-pointer rounded px-1.5 py-1 hover:bg-gray-300 dark:hover:bg-gray-600" :href="fileInfo.value.url">
