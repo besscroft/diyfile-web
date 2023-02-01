@@ -157,11 +157,11 @@ onMounted(() => {
     <a-row :gutter="20" :style="{ marginBottom: '20px' }">
       <a-col :xs="1" :sm="2" :md="2" :lg="3" :xl="4" :xxl="4"></a-col>
       <a-col :xs="22" :sm="20" :md="20" :lg="18" :xl="16" :xxl="16">
-        <a-tag color="gray" :style="{ 'overflow-x': 'auto', 'width': '100%' }">
+        <a-tag color="gray" id="breadcrumb-scrollbar" :style="{ 'overflow-x': 'auto', 'width': '100%', 'scrollbar-width': 'none', '-ms-overflow-style': 'none' }">
           <template #icon>
             <icon-branch />
           </template>
-          <a-breadcrumb :routes="routes" :max-count="3">
+          <a-breadcrumb :routes="routes" :max-count="3" class="no-scrollbar inline-flex items-center gap-1 overflow-x-scroll text-sm text-gray-600 dark:text-gray-300 md:gap-3">
             <template #item-render="{ route }">
               <a-link @click="router.push(route.path)">
                 {{route.label}}
@@ -273,6 +273,12 @@ onMounted(() => {
     </a-row>
   </div>
 </template>
+
+<style scoped>
+#breadcrumb-scrollbar ::-webkit-scrollbar {
+  display: none; /* Chrome Safari */
+}
+</style>
 
 <route lang="yaml">
 meta:
