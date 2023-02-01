@@ -75,6 +75,8 @@ onMounted(() => {
 
 <template>
   <div id="player"></div>
+  <a-divider></a-divider>
+  <a-alert :show-icon="false">正在播放：{{ fileInfo.value.name }}，如果无法播放，请确认您的设备支持当前格式解码！</a-alert>
   <a-divider orientation="left">{{ t('table.Optional') }}</a-divider>
   <a-space wrap>
     <a className="cursor-pointer rounded px-1.5 py-1 hover:bg-gray-300 dark:hover:bg-gray-600" :href="fileInfo.value.url">
