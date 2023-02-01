@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import APlayer from 'aplayer'
+import { getFileInfo } from '~/api/modules/file'
 
 const fileInfo = defineProps(['value'])
 const { text, copy, copied, isSupported } = useClipboard(fileInfo.value.url)
 const { t } = useI18n()
+const router = useRouter()
 
-const initPlayer = () => {
+const initPlayer = (cover: string) => {
   const url = fileInfo.value.url
   const ap = new APlayer({
     container: document.getElementById('player'),
@@ -25,13 +27,49 @@ const initPlayer = () => {
         name: fileInfo.value.name,
         url,
         theme: '#ebd0c2',
+        cover,
       },
     ],
   })
 }
 
-onBeforeMount(() => {
-  initPlayer()
+const handleImagePath = (): string => {
+  const item = router.currentRoute.value.params.path.length
+  let imagePath = ''
+  for (let i = 0; i < item; i++) {
+    for (let j = 0; j < i; j++) {
+      imagePath += `/${router.currentRoute.value.params.path[j]}`
+    }
+  }
+  imagePath += '/cover.jpg'
+  return imagePath
+}
+
+const handleImagePathPre = (): string => {
+  const item = router.currentRoute.value.params.path.length
+  let imagePath = ''
+  for (let i = 0; i < item - 1; i++) {
+    for (let j = 0; j < i; j++) {
+      imagePath += `/${router.currentRoute.value.params.path[j]}`
+    }
+  }
+  imagePath += '/cover.jpg'
+  return imagePath
+}
+
+onMounted(() => {
+  const key = router.currentRoute.value.params.storageKey.toString()
+  getFileInfo(key, handleImagePath()).then((res) => {
+    if (res.code === 200 && res.data.url) {
+      initPlayer(res.data.url)
+    } else {
+      getFileInfo(key, handleImagePathPre()).then((res) => {
+        if (res.code === 200) {
+          initPlayer(res.data.url)
+        }
+      })
+    }
+  })
 })
 </script>
 
