@@ -97,3 +97,4 @@ storage:
 setting:
   base: 基础配置
   web: 网站配置
+  user: 用户配置

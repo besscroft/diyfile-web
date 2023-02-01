@@ -7,7 +7,6 @@ const emit = defineEmits(['routerPage', 'onMenuCollapse'])
 const { t } = useI18n()
 
 const onMenuCollapse = () => {
-  console.log('onMenuCollapse')
   emit('onMenuCollapse')
 }
 

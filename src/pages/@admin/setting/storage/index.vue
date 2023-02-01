@@ -81,7 +81,7 @@ handleStoragePage(-1)
       <template #extra>
         <a-space>
           <a-dropdown trigger="hover">
-            <a-button>{{ t('button.type') }}</a-button>
+            <button type="button" class="inline-block px-6 py-2 border-2 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">{{ t('button.type') }}</button>
             <template #content>
               <!-- 存储类型：0->本地存储；1->OneDrive -->
               <a-doption @click="handleStoragePage()">所有类型</a-doption>
@@ -104,7 +104,7 @@ handleStoragePage(-1)
           <a-card :style="{ height: '300px' }" :title="item.name" hoverable>
             <template #extra>
               <a-dropdown trigger="hover">
-                <a-button type="primary">{{ t('table.Optional') }}</a-button>
+                <button type="button" class="inline-block px-6 py-2 border-2 border-blue-400 text-blue-400 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">{{ t('table.Optional') }}</button>
                 <template #content>
                   <a-doption @click="router.push({ path: `/@admin/setting/storage/${encodeURIComponent(item.id)}`, params: { id: item.id } })">{{ t('button.detail') }}</a-doption>
                   <a-doption v-if="item.type === 0" @click="router.push({ path: '/@admin/setting/storage/edit/local', query: { id: item.id } })">{{ t('button.edit') }}</a-doption>

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { getSiteTitle } from '~/api/modules/systemConfig'
-import { isDark } from '~/composables/dark'
 
 // 路由状态
 const props = defineProps(['value'])
@@ -8,7 +7,6 @@ const emit = defineEmits(['toggleTheme'])
 const { t, locale } = useI18n()
 const router = useRouter()
 const user = useUserStore()
-const { isMobile } = useDevice()
 const username = ref<String>('')
 const avatar = ref<String>('')
 

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { isDark } from '~/composables/dark'
-
 const router = useRouter()
 const props = ref<Boolean>(true)
 // 控制菜单收缩

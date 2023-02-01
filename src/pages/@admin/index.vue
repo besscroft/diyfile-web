@@ -43,7 +43,7 @@ handServerInfo()
     <a-card hoverable :style="{ height: '100%' }"  :title="t('menu.index')">
       <template #extra>
         <a-space>
-          <a-button @click="handServerInfo">
+          <a-button :loading="loading" @click="handServerInfo">
             <template #icon>
               <icon-sync />
             </template>
@@ -51,7 +51,7 @@ handServerInfo()
         </a-space>
       </template>
       <div class="flex flex-wrap flex-col sm:flex-row">
-        <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
+        <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[21rem] m-1">
           <a-card :loading="loading" title="运行信息" hoverable>
             <a-list>
               <a-list-item>服务器名称: {{ serverInfo.systemInfo.computerName }}</a-list-item>

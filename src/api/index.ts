@@ -70,7 +70,7 @@ class RequestHttp {
         // https://stackoverflow.com/questions/3297048/403-forbidden-vs-401-unauthorized-http-responses
         // 登陆失效（code == 401）
         if (data.code === ResultEnum.UNAUTHORIZED) {
-          Message.error(data.message)
+          Message.error('登陆已过期，请重新登陆！')
           user.setToken('')
           user.setUserName('')
           user.setAvatar('')

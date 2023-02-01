@@ -3,6 +3,7 @@ import { Message } from '@arco-design/web-vue'
 import { getFileInfo, getFileItemByKey } from '~/api/modules/file'
 import { isAudio, isImage, isMarkdown, isPDF, isText, isVideo } from '~/utils/FileUtil'
 
+const { text, copy, copied } = useClipboard()
 const { isMobile } = useDevice()
 const { t } = useI18n()
 const user = useUserStore()
@@ -39,8 +40,11 @@ const handleFolder = (path: string) => {
 }
 
 /** 文件分享事件 */
-const handleShare = (name: string) => {
-  Message.info('还没写！')
+const handleShare = (url: string) => {
+  copy(url)
+  if (copied) {
+    Message.info(t('button.copyOk'))
+  }
 }
 
 /** 文件点击事件 */
@@ -247,9 +251,9 @@ onMounted(() => {
                         </a>
                       </template>
                     </a-button>
-                    <a-button v-else type="outline" size="small">
+                    <a-button v-if="record.type === 'file'" type="outline" size="small">
                       <template #icon>
-                        <icon-share-alt @click="handleShare" />
+                        <icon-share-alt @click='handleShare(record.url)' />
                       </template>
                     </a-button>
                   </a-space>

@@ -97,3 +97,4 @@ storage:
 setting:
   base: Basic Config
   web: Site Config
+  user: User Config

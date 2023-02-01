@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { isDark } from '~/composables/dark'
-
 const router = useRouter()
 const { isMobile } = useDevice()
 const props = ref<Boolean>(false)

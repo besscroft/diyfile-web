@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Base from '~/pages/@admin/system/setting/base.vue'
+import User from '~/pages/@admin/system/setting/user.vue'
 import Web from '~/pages/@admin/system/setting/web.vue'
 
 const { t } = useI18n()
@@ -24,6 +25,9 @@ const { t } = useI18n()
             </a-tab-pane>
             <a-tab-pane key="2" :title="t('setting.web')">
               <Web />
+            </a-tab-pane>
+            <a-tab-pane key="3" :title="t('setting.user')">
+              <User />
             </a-tab-pane>
           </a-tabs>
         </a-col>

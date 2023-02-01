@@ -79,7 +79,7 @@ useUserPage('')
       <template #extra>
         <a-space>
           <a-dropdown trigger="hover">
-            <a-button>{{ t('button.role') }}</a-button>
+            <button type="button" class="inline-block px-6 py-2 border-2 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">{{ t('button.role') }}</button>
             <template #content>
               <a-doption @click="useUserPage('')">所有用户</a-doption>
               <a-doption @click="useUserPage('platform-admin')">平台管理员</a-doption>
@@ -103,7 +103,7 @@ useUserPage('')
           <a-card :title="item.name" :style="{ height: '320px' }" hoverable>
             <template #extra>
               <a-dropdown trigger="hover">
-                <a-button type="primary">{{ t('table.Optional') }}</a-button>
+                <button type="button" class="inline-block px-6 py-2 border-2 border-blue-400 text-blue-400 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">{{ t('table.Optional') }}</button>
                 <template #content>
                   <a-doption @click="router.push({ path: `/@admin/system/user/${encodeURIComponent(item.username)}`, params: { username: item.username } })">{{ t('button.detail') }}</a-doption>
                   <a-doption @click="router.push({ path: '/@admin/system/user/edit', query: { id: item.id } })">{{ t('button.edit') }}</a-doption>

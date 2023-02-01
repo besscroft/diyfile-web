@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import APlayer from 'aplayer'
 import { getFileInfo } from '~/api/modules/file'
+import {download} from "~/utils/ButtonUtil";
 
 const fileInfo = defineProps(['value'])
 const { text, copy, copied, isSupported } = useClipboard(fileInfo.value.url)
@@ -31,6 +32,10 @@ const initPlayer = (cover: string) => {
       },
     ],
   })
+}
+
+const handleDownload = (url: string) => {
+  download(url)
 }
 
 const handleImagePath = (): string => {
@@ -79,21 +84,15 @@ onMounted(() => {
   <a-alert :show-icon="false">正在播放：{{ fileInfo.value.name }}，如果无法播放，请确认您的设备支持当前格式解码！</a-alert>
   <a-divider orientation="left">{{ t('table.Optional') }}</a-divider>
   <a-space wrap>
-    <a className="cursor-pointer rounded px-1.5 py-1 hover:bg-gray-300 dark:hover:bg-gray-600" :href="fileInfo.value.url">
-      <a-button type="outline">
-        <template #icon>
-          <icon-download />
-        </template>
-        {{ t('button.download') }}
-      </a-button>
-    </a>
-    <a-button type="outline" @click='copy(fileInfo.value.url)'>
-      <template #icon>
-        <icon-copy />
-      </template>
-      {{ !copied ? t('button.copyUrl') : t('button.copyOk') }}
-    </a-button>
-    <a-button type="outline" disabled>其它操作开发中</a-button>
+    <button type="button" @click='handleDownload(fileInfo.value.url)' class="inline-block px-6 py-2 border-2 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+      <icon-download /> {{ t('button.download') }}
+    </button>
+    <button type="button" @click='copy(fileInfo.value.url)' class="inline-block px-6 py-2 border-2 border-blue-400 text-blue-400 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+      <icon-copy /> {{ !copied ? t('button.copyUrl') : t('button.copyOk') }}
+    </button>
+    <button type="button" class="cursor-not-allowed inline-block px-6 py-2 border-2 border-gray-200 text-gray-200 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+      其它操作开发中
+    </button>
   </a-space>
 </template>
 

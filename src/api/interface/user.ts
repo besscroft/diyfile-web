@@ -50,8 +50,8 @@ export namespace User {
     /** 是否是自己 */
     isSelf: boolean
     /** 旧密码 */
-    oldPassword: string
+    oldPassword: string | undefined
     /** 新密码 */
-    newPassword: string
+    newPassword: string | undefined
   }
 }

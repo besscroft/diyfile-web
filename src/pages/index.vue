@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import { getDefaultStorage } from '~/api/modules/file'
 
-const { isMobile } = useDevice()
 const { t } = useI18n()
 const user = useUserStore()
 const router = useRouter()
-const dataList = ref()
 const loading = ref<boolean>(true)
 const routes = ref<Array<any>>([
   {
@@ -19,6 +17,9 @@ onBeforeMount(() => {
     if (res.code === 200) {
       router.push({ path: `/${res.data.storageKey}` })
     }
+  }).catch((err) => {
+    console.log(err)
+    loading.value = false
   })
 })
 </script>
@@ -54,25 +55,9 @@ onBeforeMount(() => {
               <icon-sync />
             </template>
           </a-spin>
-          <a-table v-else-if="isMobile && !loading" :data="dataList" style="margin-top: 8px" :loading="loading">
-            <template #columns>
-              <a-table-column title="文件名">
-              </a-table-column>
-              <a-table-column title="操作">
-              </a-table-column>
-            </template>
-          </a-table>
-          <a-table v-else-if="!isMobile && !loading" style="margin-top: 10px" :loading="loading">
-            <template #columns>
-              <a-table-column title="文件名">
-              </a-table-column>
-              <a-table-column title="最后修改时间" data-index="lastModifiedDateTime"></a-table-column>
-              <a-table-column title="文件大小">
-              </a-table-column>
-              <a-table-column title="操作">
-              </a-table-column>
-            </template>
-          </a-table>
+          <a-empty v-else>
+            什么都没有呢！请登录后进入后台进行配置！
+          </a-empty>
         </a-card>
       </a-col>
       <a-col :xs="1" :sm="2" :md="2" :lg="3" :xl="4" :xxl="4"></a-col>
