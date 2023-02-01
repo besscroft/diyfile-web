@@ -16,6 +16,7 @@ import { getInfo } from '~/api/modules/user'
 // import '@arco-themes/vue-sakura/css/arco.css'
 // 默认皮肤
 import '@arco-design/web-vue/dist/arco.css'
+import 'aplayer/dist/APlayer.min.css'
 import '@unocss/reset/tailwind.css'
 import './styles/main.css'
 import 'uno.css'
