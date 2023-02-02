@@ -12,6 +12,7 @@ enum Api {
   GetSiteConfig = '/systemConfig/getSiteConfig',
   GetBeian = '/systemConfig/getBeian',
   UpdateConfig = '/systemConfig/updateConfig',
+  GetBarkId = '/systemConfig/getBarkId',
 }
 
 /** 获取系统配置 */
@@ -37,4 +38,9 @@ export const getBeian = () => {
 /** 更新系统配置 */
 export const updateConfig = (data: SystemConfig.UpdateConfigData) => {
   return http.put<Result>(API_URL + Api.UpdateConfig, data)
+}
+
+/** 获取 Bark 推送 id */
+export const getBarkId = () => {
+  return http.get<Result>(API_URL + Api.GetBarkId)
 }
