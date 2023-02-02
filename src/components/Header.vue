@@ -43,6 +43,7 @@ const loginOut = () => {
 }
 
 onMounted(() => {
+  console.log(router.currentRoute.value.path)
   username.value = user.userName
   avatar.value = user.avatar
   const localValue = localStorage.getItem('Xanadu-locale')
@@ -104,8 +105,8 @@ onMounted(() => {
             </a-avatar>
             <template #content>
               <div v-if="username">
-                <a-doption @click="routerPage('')">{{ props.value ? t('button.admin') : t('button.home') }}</a-doption>
-                <a-doption @click="routerPage('/@admin')" v-if="router.currentRoute.value.path !== '/@admin' && router.currentRoute.value.path !== '/'">{{ t('menu.index') }}</a-doption>
+                <a-doption @click="routerPage('/@admin')" v-if="!router.currentRoute.value.path.startsWith('/@') && router.currentRoute.value.path !== '/'">{{ t('menu.index') }}</a-doption>
+                <a-doption @click="routerPage('/')" v-else>{{t('button.home') }}</a-doption>
                 <a-doption @click="loginOut">{{ t('button.quit') }}</a-doption>
               </div>
               <div v-else>

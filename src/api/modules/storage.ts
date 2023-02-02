@@ -13,6 +13,7 @@ enum Api {
   StorageUpdate = '/storage/update',
   StorageInfo = '/storage/info',
   StorageUpdateStatus = '/storage/updateStatus',
+  StorageSetDefault = '/storage/setDefault',
 }
 
 /** 存储分页列表 */
@@ -43,4 +44,9 @@ export const storageUpdate = (data: Storage.UpdateStorageRequestData) => {
 /** 存储更新状态接口 */
 export const storageUpdateStatus = (data: Storage.UpdateStorageStatusRequestData) => {
   return http.put(API_URL + Api.StorageUpdateStatus, data)
+}
+
+/** 设置默认存储 */
+export const storageSetDefault = (storageId: number) => {
+  return http.put<Result>(`${API_URL + Api.StorageSetDefault}/${storageId}`)
 }

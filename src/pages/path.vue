@@ -27,8 +27,11 @@ const handleItemByKey = (storageKey: string | any, folderPath: string | any) => 
     if (res.code === 200) {
       fileInfo.value = null
       dataList.value = res.data
-      loading.value = false
     }
+    loading.value = false
+  }).catch((err) => {
+    console.log(err)
+    loading.value = false
   })
 }
 
@@ -60,8 +63,11 @@ const handleFile = (key: string | any, uri: string | any) => {
     if (res.code === 200) {
       dataList.value = null
       fileInfo.value = res.data
-      loading.value = false
     }
+    loading.value = false
+  }).catch((err) => {
+    console.log(err)
+    loading.value = false
   })
 }
 
@@ -263,13 +269,16 @@ onMounted(() => {
           </a-table>
           <!-- 文件预览 -->
           <!-- 视频预览 -->
-          <VideoPreview v-else-if="!loading && fileInfo.type === 'file' && isVideo(fileInfo.name)" :value="fileInfo" />
-          <ImagePreview v-else-if="!loading && fileInfo.type === 'file' && isImage(fileInfo.name)" :value="fileInfo" />
-          <AudioPreview v-else-if="!loading && fileInfo.type === 'file' && isAudio(fileInfo.name)" :value="fileInfo" />
-          <MarkdownPreview v-else-if="!loading && fileInfo.type === 'file' && isMarkdown(fileInfo.name)" :value="fileInfo" />
-          <TextPreview v-else-if="!loading && fileInfo.type === 'file' && isText(fileInfo.name)" :value="fileInfo" />
-          <PDFPreview v-else-if="!loading && fileInfo.type === 'file' && isPDF(fileInfo.name)" :value="fileInfo" />
-          <OtherPreview v-else-if="!loading && fileInfo.type === 'file'" :value="fileInfo" />
+          <VideoPreview v-else-if="!loading && fileInfo && isVideo(fileInfo.name)" :value="fileInfo" />
+          <ImagePreview v-else-if="!loading && fileInfo && isImage(fileInfo.name)" :value="fileInfo" />
+          <AudioPreview v-else-if="!loading && fileInfo && isAudio(fileInfo.name)" :value="fileInfo" />
+          <MarkdownPreview v-else-if="!loading && fileInfo && isMarkdown(fileInfo.name)" :value="fileInfo" />
+          <TextPreview v-else-if="!loading && fileInfo && isText(fileInfo.name)" :value="fileInfo" />
+          <PDFPreview v-else-if="!loading && fileInfo && isPDF(fileInfo.name)" :value="fileInfo" />
+          <OtherPreview v-else-if="!loading && fileInfo" :value="fileInfo" />
+          <a-empty v-else-if="!fileInfo && !dataList">
+            什么都没有呢！请登录后进入后台进行配置！
+          </a-empty>
           <a-alert v-else>Oops！发生了意外情况，也许是网络不稳定、格式不支持或者出现了 Bug~</a-alert>
         </a-card>
       </a-col>
