@@ -165,16 +165,16 @@ onMounted(() => {
     }"
   >
     <a-row :gutter="20" :style="{ marginBottom: '20px' }">
-      <a-col :xs="1" :sm="2" :md="2" :lg="3" :xl="4" :xxl="4"></a-col>
+      <a-col :xs="1" :sm="2" :md="2" :lg="3" :xl="4" :xxl="4" />
       <a-col :xs="22" :sm="20" :md="20" :lg="18" :xl="16" :xxl="16">
-        <a-tag color="gray" id="breadcrumb-scrollbar" :style="{ 'overflow-x': 'auto', 'width': '100%', 'scrollbar-width': 'none', '-ms-overflow-style': 'none' }">
+        <a-tag id="breadcrumb-scrollbar" color="gray" :style="{ 'overflow-x': 'auto', 'width': '100%', 'scrollbar-width': 'none', '-ms-overflow-style': 'none' }">
           <template #icon>
             <icon-branch />
           </template>
           <a-breadcrumb :routes="routes" :max-count="3" class="no-scrollbar inline-flex items-center gap-1 overflow-x-scroll text-sm text-gray-600 dark:text-gray-300 md:gap-3">
             <template #item-render="{ route }">
               <a-link @click="router.push(route.path)">
-                {{route.label}}
+                {{ route.label }}
               </a-link>
             </template>
           </a-breadcrumb>
@@ -186,62 +186,62 @@ onMounted(() => {
             </template>
           </a-spin>
           <!-- 移动端列表 -->
-          <a-table v-else-if="isMobile && !loading && !fileInfo && dataList" :data="dataList" style="margin-top: 8px">
+          <a-table
+            v-else-if="isMobile && !loading && !fileInfo && dataList"
+            :data="dataList"
+            :scrollbar="false"
+            :pagination="false"
+            style="margin-top: 8px"
+            @row-click="(record) => { record.type !== 'file' ? handleFolder(record.name) : clickFile(record.name) }"
+          >
             <template #columns>
-              <a-table-column :title="t('table.index.fileName')">
+              <a-table-column :title="t('table.index.fileName')" ellipsis>
                 <template #cell="{ record }">
-                  <a-button type="text" v-if="record.type !== 'file'" @click="handleFolder(record.name)" size="mini">
+                  <a-button v-if="record.type !== 'file'" type="text" size="mini">
                     <template #icon>
                       <icon-folder />
                     </template>
-                    <!-- Use the default slot to avoid extra spaces -->
-                    <template #default>{{ record.name.length > 18 ? `${record.name.substring(0, 18)}...` : record.name }}</template>
+                    <template #default>
+                      {{ record.name }}
+                    </template>
                   </a-button>
-                  <a-button type="text" v-else @click="clickFile(record.name)" size="mini">
-                    <!-- Use the default slot to avoid extra spaces -->
-                    <template #default>{{ record.name.length > 15 ? `${record.name.substring(0, 15)}...` : record.name }}</template>
+                  <a-button v-else type="text" size="mini">
+                    <template #default>
+                      {{ record.name }}
+                    </template>
                   </a-button>
-                </template>
-              </a-table-column>
-              <a-table-column :title="t('table.Optional')" fixed="right">
-                <template #cell="{ record }">
-                  <a-space :size="4">
-                    <a-button v-if="record.type === 'file'" type="outline" size="mini">
-                      <template #icon>
-                        <a className="cursor-pointer rounded px-1.5 py-1 hover:bg-gray-300 dark:hover:bg-gray-600" :href="record.url">
-                          <icon-download />
-                        </a>
-                      </template>
-                    </a-button>
-                    <a-button type="outline" size="mini">
-                      <template #icon>
-                        <icon-share-alt @click="handleShare" />
-                      </template>
-                    </a-button>
-                  </a-space>
                 </template>
               </a-table-column>
             </template>
           </a-table>
           <!-- PC 端列表 -->
-          <a-table v-else-if="!isMobile && !loading && !fileInfo && dataList" :data="dataList" style="margin-top: 10px">
+          <a-table
+            v-else-if="!isMobile && !loading && !fileInfo && dataList"
+            :data="dataList"
+            :scrollbar="false"
+            :pagination="false"
+            style="margin-top: 10px"
+            @row-click="(record) => { record.type !== 'file' ? handleFolder(record.name) : clickFile(record.name) }"
+          >
             <template #columns>
               <a-table-column :title="t('table.index.fileName')">
                 <template #cell="{ record }">
-                  <a-button type="text" v-if="record.type !== 'file'" @click="handleFolder(record.name)">
+                  <a-button v-if="record.type !== 'file'" type="text">
                     <template #icon>
                       <icon-folder />
                     </template>
-                    <!-- Use the default slot to avoid extra spaces -->
-                    <template #default>{{ record.name }}</template>
+                    <template #default>
+                      {{ record.name }}
+                    </template>
                   </a-button>
-                  <a-button type="text" v-else @click="clickFile(record.name)">
-                    <!-- Use the default slot to avoid extra spaces -->
-                    <template #default>{{ record.name }}</template>
+                  <a-button v-else type="text">
+                    <template #default>
+                      {{ record.name }}
+                    </template>
                   </a-button>
                 </template>
               </a-table-column>
-              <a-table-column :title="t('table.index.time')" data-index="lastModifiedDateTime"></a-table-column>
+              <a-table-column :title="t('table.index.time')" data-index="lastModifiedDateTime" />
               <a-table-column :title="t('table.index.fileSize')">
                 <template #cell="{ record }">
                   {{ (record.size / 1000 / 1000).toFixed(2) }} MB
@@ -259,7 +259,7 @@ onMounted(() => {
                     </a-button>
                     <a-button v-if="record.type === 'file'" type="outline" size="small">
                       <template #icon>
-                        <icon-share-alt @click='handleShare(record.url)' />
+                        <icon-share-alt @click="handleShare(record.url)" />
                       </template>
                     </a-button>
                   </a-space>
@@ -279,10 +279,12 @@ onMounted(() => {
           <a-empty v-else-if="!fileInfo && !dataList">
             什么都没有呢！请登录后进入后台进行配置！
           </a-empty>
-          <a-alert v-else>Oops！发生了意外情况，也许是网络不稳定、格式不支持或者出现了 Bug~</a-alert>
+          <a-alert v-else>
+            Oops！发生了意外情况，也许是网络不稳定、格式不支持或者出现了 Bug~
+          </a-alert>
         </a-card>
       </a-col>
-      <a-col :xs="1" :sm="2" :md="2" :lg="3" :xl="4" :xxl="4"></a-col>
+      <a-col :xs="1" :sm="2" :md="2" :lg="3" :xl="4" :xxl="4" />
     </a-row>
   </div>
 </template>

@@ -32,7 +32,7 @@ const onMenuCollapse = () => {
         <RouterView />
       </a-layout-content>
     </a-layout>
-    <a-layout-footer style="position: fixed; bottom: 0; width: 100%;">
+    <a-layout-footer style="position: fixed; bottom: 0; width: 100%; z-index: 999">
       <Footer />
     </a-layout-footer>
   </a-layout>
