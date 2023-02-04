@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {download} from "~/utils/ButtonUtil";
+import { download } from '~/utils/ButtonUtil'
 
 const fileInfo = defineProps(['value'])
 const { text, copy, copied, isSupported } = useClipboard(fileInfo.value.url)
