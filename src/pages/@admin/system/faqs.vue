@@ -54,7 +54,7 @@ const dataList = ref<Array<any>>([
   >
     <a-card hoverable :style="{ height: '100%' }" :title="t('menu.system.faqs')">
       <div class="space-y-4">
-        <details class="group [&_summary::-webkit-details-marker]:hidden" :open="item.id === 1" v-for="item in dataList" :key="item.id">
+        <details v-for="item in dataList" :key="item.id" class="group [&_summary::-webkit-details-marker]:hidden" :open="item.id === 1">
           <summary
             :class="isDark ? 'flex items-center justify-between p-4 rounded-lg cursor-pointer bg-gray-400' : 'flex items-center justify-between p-4 rounded-lg cursor-pointer bg-gray-50'"
           >

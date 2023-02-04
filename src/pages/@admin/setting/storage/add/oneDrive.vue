@@ -118,7 +118,7 @@ const handleSubmit = (formEl: FormInstance) => {
           <a-button type="primary" @click="handleSubmit(formRef)">{{ t('button.submit') }}</a-button>
         </a-space>
       </template>
-      <icon-arrow-left @click="router.back()" class="cursor-pointer"/>
+      <icon-arrow-left class="cursor-pointer" @click="router.back()"/>
       <br/>
       <a-row>
         <a-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6"></a-col>
@@ -128,7 +128,7 @@ const handleSubmit = (formEl: FormInstance) => {
               <a-input v-model="addStorageForm.name" placeholder="请输入存储名称" :max-length="{ length: 20, errorOnly: true }" show-word-limit allow-clear />
             </a-form-item>
             <a-form-item field="client_id" label="客户端ID" :help="client_id.description" required>
-              <a-textarea v-model="addStorageForm.client_id"  placeholder="请输入客户端ID" allow-clear auto-size show-word-limit/>
+              <a-textarea v-model="addStorageForm.client_id" placeholder="请输入客户端ID" allow-clear auto-size show-word-limit/>
             </a-form-item>
             <a-form-item field="client_secret" label="客户端机密" :help="client_secret.description" required>
               <a-textarea v-model="addStorageForm.client_secret" placeholder="请输入客户端机密" allow-clear auto-size show-word-limit/>

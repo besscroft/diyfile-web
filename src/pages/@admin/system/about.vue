@@ -48,7 +48,7 @@ const devList = ref<Array<Object>>([
           </p>
         </div>
         <div class="grid gap-10 row-gap-8 mx-auto sm:row-gap-10 lg:max-w-screen-lg sm:grid-cols-2 lg:grid-cols-3">
-          <div class="flex" v-for="item in devList" :key="item">
+          <div :key="item" v-for="item in devList" class="flex">
             <img class="object-cover w-20 h-20 mr-4 rounded-full shadow" :src="`${item.avatar}` + '?auto=compress&amp;cs=tinysrgb&amp;dpr=3&amp;h=750&amp;w=1260'" alt="Person" />
             <div class="flex flex-col justify-center">
               <p :class="isDark ? 'text-lg text-gray-100' : 'text-lg text-gray-800'">{{ item.name }}</p>

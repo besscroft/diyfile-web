@@ -64,7 +64,7 @@ const handleEmailSearch = (value: string) => {
           <a-button type="primary" @click="handleSubmit">{{ t('button.submit') }}</a-button>
         </a-space>
       </template>
-      <icon-arrow-left @click="router.back()" class="cursor-pointer"/>
+      <icon-arrow-left class="cursor-pointer" @click="router.back()"/>
       <br/>
       <a-row>
         <a-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6"></a-col>
@@ -89,7 +89,7 @@ const handleEmailSearch = (value: string) => {
               </a-select>
             </a-form-item>
             <a-form-item field="email" :label="t('user.email')">
-              <a-auto-complete :data="emailTipData" v-model="addUserRuleForm.email" @search="handleEmailSearch" placeholder="请输入邮箱" />
+              <a-auto-complete v-model="addUserRuleForm.email" :data="emailTipData" placeholder="请输入邮箱" @search="handleEmailSearch" />
             </a-form-item>
             <a-form-item field="name" :label="t('user.name')">
               <a-input v-model="addUserRuleForm.name" placeholder="请输入昵称" ::max-length="{ length: 20, errorOnly: true }" show-word-limit allow-clear />

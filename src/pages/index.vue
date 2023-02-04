@@ -44,7 +44,7 @@ onBeforeMount(() => {
           <a-breadcrumb :routes="routes" :max-count="3">
             <template #item-render="{ route }">
               <a-link @click="router.push(route.path)">
-                {{route.label}}
+                {{ route.label }}
               </a-link>
             </template>
           </a-breadcrumb>

@@ -64,7 +64,7 @@ const handleSubmit = () => {
         观察员账号/密码：view/666666
       </a-form-item>
       <a-form-item>
-        <button type="button" @click="handleSubmit" class="inline-block px-6 py-2 border-2 border-blue-400 text-blue-400 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">{{ t('button.login') }}</button>
+        <button type="button" class="inline-block px-6 py-2 border-2 border-blue-400 text-blue-400 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out" @click="handleSubmit">{{ t('button.login') }}</button>
       </a-form-item>
       <a-alert type="normal">
         <template #icon>

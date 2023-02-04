@@ -14,14 +14,14 @@ const { t } = useI18n()
     }"
   >
     <a-card hoverable :style="{ height: '100%', padding: '0.25rem' }" :title="t('tip.cardTitle')">
-      <icon-arrow-left @click="router.back()" class="cursor-pointer"/>
+      <icon-arrow-left class="cursor-pointer" @click="router.back()"/>
       <br/>
       <a-row>
         <a-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6"></a-col>
         <a-col :xs="22" :sm="12" :md="12" :lg="12" :xl="12" :xxl="12">
           <br />
           <a-space direction="vertical" fill>
-            <a-button type="primary" long @click="router.push({ path: '/@admin/setting/storage/add/local', query: { type: 0 } })" disabled>本地存储(开发中)</a-button>
+            <a-button type="primary" long disabled @click="router.push({ path: '/@admin/setting/storage/add/local', query: { type: 0 } })">本地存储(开发中)</a-button>
             <a-button type="primary" long @click="router.push({ path: '/@admin/setting/storage/add/oneDrive', query: { type: 1 } })">OneDrive</a-button>
             <a-button type="primary" long disabled>更多存储支持中...</a-button>
           </a-space>

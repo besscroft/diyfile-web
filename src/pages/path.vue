@@ -191,6 +191,7 @@ onMounted(() => {
             :data="dataList"
             :scrollbar="false"
             :pagination="false"
+            :bordered="false"
             style="margin-top: 8px"
             @row-click="(record) => { record.type !== 'file' ? handleFolder(record.name) : clickFile(record.name) }"
           >
@@ -208,6 +209,7 @@ onMounted(() => {
             :data="dataList"
             :scrollbar="false"
             :pagination="false"
+            :bordered="false"
             style="margin-top: 10px"
             @row-click="(record) => { record.type !== 'file' ? handleFolder(record.name) : clickFile(record.name) }"
           >

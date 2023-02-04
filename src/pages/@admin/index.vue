@@ -40,7 +40,7 @@ handServerInfo()
       backgroundColor: 'var(--color-fill-2)',
     }"
   >
-    <a-card hoverable :style="{ height: '100%' }"  :title="t('menu.index')">
+    <a-card hoverable :style="{ height: '100%' }" :title="t('menu.index')">
       <template #extra>
         <a-space>
           <a-button :loading="loading" @click="handServerInfo">

@@ -104,12 +104,12 @@ handleStoragePage(-1)
         <a-skeleton animation="animation">
           <a-space direction="vertical" :style="{ width: '100%' }" size="large">
             <a-skeleton-line v-if="!isMobile" :rows="10" />
-            <a-skeleton-shape size="large" :key="index" v-for="index in 10" />
+            <a-skeleton-shape v-for="index in 10" :key="index" size="large" />
           </a-space>
         </a-skeleton>
       </a-space>
       <a-row v-else :gutter="[12, 10]">
-        <a-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6" :key="item.id" v-for="item in dataList">
+        <a-col v-for="item in dataList" :key="item.id" :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
           <a-card :style="{ height: '300px' }" :title="item.name" hoverable>
             <template #extra>
               <a-dropdown trigger="hover">
@@ -136,7 +136,7 @@ handleStoragePage(-1)
                 </a-popconfirm>
               </span>
             </template>
-            <a-card-meta >
+            <a-card-meta>
               <template #avatar>
                 <div
                   :style="{ display: 'flex', alignItems: 'center', color: '#1D2129' }"

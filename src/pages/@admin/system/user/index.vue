@@ -94,12 +94,12 @@ useUserPage('')
         <a-skeleton animation="animation">
           <a-space direction="vertical" :style="{ width: '100%' }" size="large">
             <a-skeleton-line v-if="!isMobile" :rows="10" />
-            <a-skeleton-shape size="large" :key="index" v-for="index in 10" />
+            <a-skeleton-shape v-for="index in 10" :key="index" size="large" />
           </a-space>
         </a-skeleton>
       </a-space>
       <a-row v-else :gutter="[12, 10]">
-        <a-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6" :key="item.id" v-for="item in dataList">
+        <a-col v-for="item in dataList" :key="item.id" :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
           <a-card :title="item.name" :style="{ height: '320px' }" hoverable>
             <template #extra>
               <a-dropdown trigger="hover">
@@ -124,7 +124,7 @@ useUserPage('')
               </div>
             </template>
             <template #actions>
-              <span class="icon-hover" v-if="item.role !== 'platform-super-admin'">
+              <span v-if="item.role !== 'platform-super-admin'" class="icon-hover">
                 <a-popconfirm content="确定要删除吗?" type="warning" :onOk="() => handleUserDelete(item.id)">
                   <icon-delete />
                 </a-popconfirm>
@@ -136,11 +136,11 @@ useUserPage('')
                   :style="{ display: 'flex', alignItems: 'center', color: '#1D2129' }"
                 >
                   <a-space>
-                    <a-tag color="blue" v-if="item.role === 'platform-super-admin'">超级管理员</a-tag>
-                    <a-tag color="cyan" v-if="item.role === 'platform-admin'">平台管理员</a-tag>
-                    <a-tag color="orange" v-if="item.role === 'platform-self-provisioner'">平台运维员</a-tag>
-                    <a-tag color="lime" v-if="item.role === 'platform-view'">平台观察员</a-tag>
-                    <a-tag color="green" v-if="item.role === 'platform-visitor'">游客</a-tag>
+                    <a-tag v-if="item.role === 'platform-super-admin'" color="blue">超级管理员</a-tag>
+                    <a-tag v-if="item.role === 'platform-admin'" color="cyan">平台管理员</a-tag>
+                    <a-tag v-if="item.role === 'platform-self-provisioner'" color="orange">平台运维员</a-tag>
+                    <a-tag v-if="item.role === 'platform-view'" color="lime">平台观察员</a-tag>
+                    <a-tag v-if="item.role === 'platform-visitor'" color="green">游客</a-tag>
                     <span
                       v-if="item.role === 'platform-super-admin' && item.status === 1"
                       class="inline-flex items-center justify-center rounded-full bg-emerald-100 px-2.5 py-0.5 text-emerald-700"
