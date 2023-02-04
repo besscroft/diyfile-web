@@ -197,19 +197,7 @@ onMounted(() => {
             <template #columns>
               <a-table-column :title="t('table.index.fileName')" ellipsis>
                 <template #cell="{ record }">
-                  <a-button v-if="record.type !== 'file'" type="text" size="mini">
-                    <template #icon>
-                      <icon-folder />
-                    </template>
-                    <template #default>
-                      {{ record.name }}
-                    </template>
-                  </a-button>
-                  <a-button v-else type="text" size="mini">
-                    <template #default>
-                      {{ record.name }}
-                    </template>
-                  </a-button>
+                  <icon-folder v-if="record.type !== 'file'" /> {{ record.name }}
                 </template>
               </a-table-column>
             </template>
@@ -226,19 +214,7 @@ onMounted(() => {
             <template #columns>
               <a-table-column :title="t('table.index.fileName')">
                 <template #cell="{ record }">
-                  <a-button v-if="record.type !== 'file'" type="text">
-                    <template #icon>
-                      <icon-folder />
-                    </template>
-                    <template #default>
-                      {{ record.name }}
-                    </template>
-                  </a-button>
-                  <a-button v-else type="text">
-                    <template #default>
-                      {{ record.name }}
-                    </template>
-                  </a-button>
+                  <icon-folder v-if="record.type !== 'file'" /> {{ record.name }}
                 </template>
               </a-table-column>
               <a-table-column :title="t('table.index.time')" data-index="lastModifiedDateTime" />

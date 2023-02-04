@@ -21,7 +21,7 @@ const handleDocumentRender = () => {
   pageCount.value = pdfRef.value.pageCount
 }
 
-onBeforeMount(() => {
+onMounted(() => {
   pdfSource.value = fileInfo.value.url
 })
 </script>
@@ -80,12 +80,14 @@ onBeforeMount(() => {
       </div>
     </template>
   </a-space>
+  <a-divider></a-divider>
   <VuePdfEmbed
     ref="pdfRef"
     :source="pdfSource"
     :page="page"
     @rendered="handleDocumentRender"
   />
+  <a-divider></a-divider>
   <template v-if="!isLoading">
     <div class="inline-flex items-center justify-center gap-3">
       <a
