@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Message } from '@arco-design/web-vue'
 import { getFileInfo, getFileItemByKey } from '~/api/modules/file'
+import { download } from '~/utils/ButtonUtil'
 import { isAudio, isImage, isMarkdown, isPDF, isText, isVideo } from '~/utils/FileUtil'
 
 const { text, copy, copied } = useClipboard()
@@ -230,9 +231,7 @@ onMounted(() => {
                   <a-space :size="4">
                     <a-button v-if="record.type === 'file'" type="outline" size="small">
                       <template #icon>
-                        <a className="cursor-pointer rounded px-1.5 py-1 hover:bg-gray-300 dark:hover:bg-gray-600" :href="record.url">
-                          <icon-download />
-                        </a>
+                        <icon-download @click="download(record.url)" />
                       </template>
                     </a-button>
                     <a-button v-if="record.type === 'file'" type="outline" size="small">
