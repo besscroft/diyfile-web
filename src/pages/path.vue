@@ -199,6 +199,11 @@ onMounted(() => {
               <a-table-column :title="t('table.index.fileName')" ellipsis>
                 <template #cell="{ record }">
                   <icon-folder v-if="record.type !== 'file'" />
+                  <icon-file-image v-else-if="isImage(record.name)" />
+                  <icon-file-video v-else-if="isVideo(record.name)" />
+                  <icon-file-audio v-else-if="isAudio(record.name)" />
+                  <icon-file-pdf v-else-if="isPDF(record.name)" />
+                  <icon-file v-else />
                   <span class="cursor-pointer" @click="() => { record.type !== 'file' ? handleFolder(record.name) : clickFile(record.name) }">{{ record.name }}</span>
                 </template>
               </a-table-column>
@@ -217,6 +222,11 @@ onMounted(() => {
               <a-table-column :title="t('table.index.fileName')">
                 <template #cell="{ record }">
                   <icon-folder v-if="record.type !== 'file'" />
+                  <icon-file-image v-else-if="isImage(record.name)" />
+                  <icon-file-video v-else-if="isVideo(record.name)" />
+                  <icon-file-audio v-else-if="isAudio(record.name)" />
+                  <icon-file-pdf v-else-if="isPDF(record.name)" />
+                  <icon-file v-else />
                   <span class="cursor-pointer" @click="() => { record.type !== 'file' ? handleFolder(record.name) : clickFile(record.name) }">{{ record.name }}</span>
                 </template>
               </a-table-column>
@@ -229,16 +239,8 @@ onMounted(() => {
               <a-table-column :title="t('table.Optional')" fixed="right">
                 <template #cell="{ record }">
                   <a-space :size="4">
-                    <a-button v-if="record.type === 'file'" type="outline" size="small">
-                      <template #icon>
-                        <icon-download @click="download(record.url)" />
-                      </template>
-                    </a-button>
-                    <a-button v-if="record.type === 'file'" type="outline" size="small">
-                      <template #icon>
-                        <icon-share-alt @click="handleShare(record.url)" />
-                      </template>
-                    </a-button>
+                    <icon-download v-if="record.type === 'file'" class="cursor-pointer" @click="download(record.url)" />
+                    <icon-share-alt v-if="record.type === 'file'" class="cursor-pointer" @click="handleShare(record.url)" />
                   </a-space>
                 </template>
               </a-table-column>
