@@ -43,7 +43,6 @@ const loginOut = () => {
 }
 
 onMounted(() => {
-  console.log(router.currentRoute.value.path)
   username.value = user.userName
   avatar.value = user.avatar
   const localValue = localStorage.getItem('Xanadu-locale')
@@ -67,7 +66,7 @@ onMounted(() => {
 <template>
   <a-row class="grid-demo">
     <a-col class="title-container" :xs="8" :sm="8" :md="8" :lg="8" :xl="8" :xxl="8">
-      <div @click="routerPage('/')" class="cursor-pointer">
+      <div class="cursor-pointer" @click="routerPage('/')">
         {{ user.title || 'Xanadu' }}
       </div>
     </a-col>
@@ -91,9 +90,9 @@ onMounted(() => {
               <a-doption @click="toggleLocales('ja')">日本語</a-doption>
             </template>
           </a-dropdown>
-          <a-tag color="#FBC3CB" v-show="username">{{ username }}</a-tag>
+          <a-tag v-show="username" color="#FBC3CB">{{ username }}</a-tag>
           <a-dropdown>
-            <a-avatar :size="40" v-if="avatar">
+            <a-avatar v-if="avatar" :size="40">
               <img
                 class="cursor-pointer"
                 alt="avatar"
@@ -105,8 +104,8 @@ onMounted(() => {
             </a-avatar>
             <template #content>
               <div v-if="username">
-                <a-doption @click="routerPage('/@admin')" v-if="!router.currentRoute.value.path.startsWith('/@') && router.currentRoute.value.path !== '/'">{{ t('menu.index') }}</a-doption>
-                <a-doption @click="routerPage('/')" v-else>{{t('button.home') }}</a-doption>
+                <a-doption v-if="!router.currentRoute.value.path.startsWith('/@') && router.currentRoute.value.path !== '/'" @click="routerPage('/@admin')">{{ t('menu.index') }}</a-doption>
+                <a-doption v-else @click="routerPage('/')">{{ t('button.home') }}</a-doption>
                 <a-doption @click="loginOut">{{ t('button.quit') }}</a-doption>
               </div>
               <div v-else>

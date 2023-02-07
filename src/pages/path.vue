@@ -194,12 +194,12 @@ onMounted(() => {
             :pagination="false"
             :bordered="false"
             style="margin-top: 8px"
-            @row-click="(record) => { record.type !== 'file' ? handleFolder(record.name) : clickFile(record.name) }"
           >
             <template #columns>
               <a-table-column :title="t('table.index.fileName')" ellipsis>
                 <template #cell="{ record }">
-                  <icon-folder v-if="record.type !== 'file'" /> {{ record.name }}
+                  <icon-folder v-if="record.type !== 'file'" />
+                  <span class="cursor-pointer" @click="() => { record.type !== 'file' ? handleFolder(record.name) : clickFile(record.name) }">{{ record.name }}</span>
                 </template>
               </a-table-column>
             </template>
@@ -212,12 +212,12 @@ onMounted(() => {
             :pagination="false"
             :bordered="false"
             style="margin-top: 10px"
-            @row-click="(record) => { record.type !== 'file' ? handleFolder(record.name) : clickFile(record.name) }"
           >
             <template #columns>
               <a-table-column :title="t('table.index.fileName')">
                 <template #cell="{ record }">
-                  <icon-folder v-if="record.type !== 'file'" /> {{ record.name }}
+                  <icon-folder v-if="record.type !== 'file'" />
+                  <span class="cursor-pointer" @click="() => { record.type !== 'file' ? handleFolder(record.name) : clickFile(record.name) }">{{ record.name }}</span>
                 </template>
               </a-table-column>
               <a-table-column :title="t('table.index.time')" data-index="lastModifiedDateTime" />
