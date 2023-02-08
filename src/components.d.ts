@@ -59,6 +59,7 @@ declare module '@vue/runtime-core' {
     ATypographyParagraph: typeof import('@arco-design/web-vue')['TypographyParagraph']
     ATypographyText: typeof import('@arco-design/web-vue')['TypographyText']
     AudioPreview: typeof import('./components/previews/AudioPreview.vue')['default']
+    AUpload: typeof import('@arco-design/web-vue')['Upload']
     Footer: typeof import('./components/Footer.vue')['default']
     Header: typeof import('./components/Header.vue')['default']
     ImagePreview: typeof import('./components/previews/ImagePreview.vue')['default']

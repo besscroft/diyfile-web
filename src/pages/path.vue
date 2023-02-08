@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Message } from '@arco-design/web-vue'
-import { getFileInfo, getFileItemByKey } from '~/api/modules/file'
+import { getFileInfo, getFileItemByKey, getUploadUrl } from '~/api/modules/file'
+import { getEnableStorage } from '~/api/modules/storage'
 import { download } from '~/utils/ButtonUtil'
 import { isAudio, isImage, isMarkdown, isPDF, isText, isVideo } from '~/utils/FileUtil'
 
@@ -13,6 +14,9 @@ const storageKey = ref()
 const dataList = ref()
 const fileInfo = ref()
 const loading = ref<boolean>(true)
+const uploadView = ref<boolean>(false)
+const storageList = ref()
+const storageName = ref<string>()
 // 面包屑路由
 const routes = ref<Array<any>>([
   {
@@ -20,6 +24,68 @@ const routes = ref<Array<any>>([
     label: 'Home',
   },
 ])
+
+/** 获取所有可用存储并处理 */
+const handleEnableStorage = () => {
+  getEnableStorage().then((res) => {
+    if (res.code === 200) {
+      for (const resKey in res.data) {
+        if (res.data[resKey].storageKey === storageKey.value) {
+          storageName.value = res.data[resKey].name
+        }
+      }
+      storageList.value = res.data
+    }
+  })
+}
+
+/** 选择框发生变化 */
+const handleSelectChange = (name: string, value: string) => {
+  fileInfo.value = null
+  dataList.value = null
+  uploadView.value = false
+  storageName.value = name
+  router.push(`/${value}`)
+  console.log(value)
+}
+
+/** 自定义上传请求 */
+const onRequestUpload = (option: any) => {
+  const { onProgress, onError, onSuccess, fileItem, name } = option
+  const fullPath = router.currentRoute.value.fullPath
+  const uri = fullPath.slice(`/${storageKey.value}`.length, fullPath.length) + encodeURIComponent(name)
+  getUploadUrl(storageKey.value, uri).then((res) => {
+    if (res.code === 200) {
+      console.log(res.data)
+      const xhr = new XMLHttpRequest()
+      if (xhr.upload) {
+        xhr.upload.onprogress = function (event) {
+          let percent
+          if (event.total > 0) {
+            // 0 ~ 1
+            percent = event.loaded / event.total
+          }
+          onProgress(percent, event)
+        }
+      }
+      xhr.onerror = function error(e) {
+        onError(e)
+      }
+      xhr.onload = function onload() {
+        if (xhr.status < 200 || xhr.status >= 300) {
+          return onError(xhr.responseText)
+        }
+        onSuccess(xhr.response)
+      }
+
+      const formData = new FormData()
+      formData.append(name || 'file', fileItem.file)
+      xhr.open('post', res.data, true)
+      xhr.send(formData)
+      xhr.abort()
+    }
+  })
+}
 
 /** 获取文件列表 */
 const handleItemByKey = (storageKey: string | any, folderPath: string | any) => {
@@ -136,6 +202,7 @@ watch(() => {
 onMounted(() => {
   const path = router.currentRoute.value.params.path
   const key = router.currentRoute.value.params.storageKey
+  handleEnableStorage()
   try {
     const fullPath = router.currentRoute.value.path
     const uri = fullPath.slice(`/${key}`.length, fullPath.length)
@@ -181,6 +248,10 @@ onMounted(() => {
           </a-breadcrumb>
         </a-tag>
         <a-card :bordered="false" :style="{ width: '100%' }">
+          <a-upload
+            v-if="!loading && uploadView"
+            :custom-request="(option) => onRequestUpload(option)"
+            draggable />
           <a-spin v-if="loading" :size="32" class="flex justify-center">
             <template #icon>
               <icon-sync />
@@ -263,7 +334,27 @@ onMounted(() => {
           </a-alert>
         </a-card>
       </a-col>
-      <a-col :xs="1" :sm="2" :md="2" :lg="3" :xl="4" :xxl="4" />
+      <a-col :xs="1" :sm="2" :md="2" :lg="3" :xl="4" :xxl="4">
+        <a-space v-if="!loading && storageList && !isMobile" direction="vertical" fill>
+          <a-dropdown>
+            <a-button type="outline" long>
+              <template #icon>
+                <icon-cloud />
+              </template>
+              {{ storageName }}
+            </a-button>
+            <template #content>
+              <a-doption v-for="item in storageList" :key="item.name" @click="handleSelectChange(item.name, item.storageKey)">{{ item.name }}</a-doption>
+            </template>
+          </a-dropdown>
+          <a-button v-if="user.token" type="outline" long @click="uploadView = true">
+            <template #icon>
+              <icon-upload />
+            </template>
+            上传
+          </a-button>
+        </a-space>
+      </a-col>
     </a-row>
   </div>
 </template>
