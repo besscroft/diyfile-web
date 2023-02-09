@@ -4,6 +4,7 @@ import { getFileInfo, getFileItemByKey, getUploadUrl } from '~/api/modules/file'
 import { getEnableStorage } from '~/api/modules/storage'
 import { download } from '~/utils/ButtonUtil'
 import { isAudio, isImage, isMarkdown, isPDF, isText, isVideo } from '~/utils/FileUtil'
+import { uploadOneDrive } from '~/utils/uploadFileUtil'
 
 const { text, copy, copied } = useClipboard()
 const { isMobile } = useDevice()
@@ -46,43 +47,21 @@ const handleSelectChange = (name: string, value: string) => {
   uploadView.value = false
   storageName.value = name
   router.push(`/${value}`)
-  console.log(value)
 }
 
 /** 自定义上传请求 */
 const onRequestUpload = (option: any) => {
-  const { onProgress, onError, onSuccess, fileItem, name } = option
+  const { fileItem } = option
   const fullPath = router.currentRoute.value.fullPath
-  const uri = fullPath.slice(`/${storageKey.value}`.length, fullPath.length) + encodeURIComponent(name)
+  let uri = ''
+  if (`/${storageKey.value}` !== fullPath) {
+    uri = `${fullPath.slice(`/${storageKey.value}`.length, fullPath.length)}/${encodeURIComponent(fileItem.name)}`
+  } else {
+    uri = `/${encodeURIComponent(fileItem.name)}`
+  }
   getUploadUrl(storageKey.value, uri).then((res) => {
-    if (res.code === 200) {
-      console.log(res.data)
-      const xhr = new XMLHttpRequest()
-      if (xhr.upload) {
-        xhr.upload.onprogress = function (event) {
-          let percent
-          if (event.total > 0) {
-            // 0 ~ 1
-            percent = event.loaded / event.total
-          }
-          onProgress(percent, event)
-        }
-      }
-      xhr.onerror = function error(e) {
-        onError(e)
-      }
-      xhr.onload = function onload() {
-        if (xhr.status < 200 || xhr.status >= 300) {
-          return onError(xhr.responseText)
-        }
-        onSuccess(xhr.response)
-      }
-
-      const formData = new FormData()
-      formData.append(name || 'file', fileItem.file)
-      xhr.open('post', res.data, true)
-      xhr.send(formData)
-      xhr.abort()
+    if (res.code === 200 && typeof res.data == 'string') {
+      uploadOneDrive(fileItem.file, res.data, option)
     }
   })
 }
@@ -251,7 +230,8 @@ onMounted(() => {
           <a-upload
             v-if="!loading && uploadView"
             :custom-request="(option) => onRequestUpload(option)"
-            draggable />
+            draggable
+          />
           <a-spin v-if="loading" :size="32" class="flex justify-center">
             <template #icon>
               <icon-sync />
@@ -344,7 +324,9 @@ onMounted(() => {
               {{ storageName }}
             </a-button>
             <template #content>
-              <a-doption v-for="item in storageList" :key="item.name" @click="handleSelectChange(item.name, item.storageKey)">{{ item.name }}</a-doption>
+              <a-doption v-for="item in storageList" :key="item.name" @click="handleSelectChange(item.name, item.storageKey)">
+                {{ item.name }}
+              </a-doption>
             </template>
           </a-dropdown>
           <a-button v-if="user.token" type="outline" long @click="uploadView = true">
