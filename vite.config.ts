@@ -126,8 +126,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'safari-pinned-tab.svg'],
       manifest: {
-        name: 'Xanadu',
-        short_name: 'Xanadu',
+        name: 'DiyFile',
+        short_name: 'DiyDile',
         theme_color: '#ffffff',
         icons: [
           {

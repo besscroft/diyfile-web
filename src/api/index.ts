@@ -49,7 +49,7 @@ class RequestHttp {
         // 如果当前请求不需要显示 loading,在 api 服务中通过指定的第三个参数: { headers: { noLoading: true } }来控制不显示loading
         // eslint-disable-next-line no-unused-expressions
         config.headers!.noLoading
-        const tokenValue = user.token || localStorage.getItem('Xanadu-token')
+        const tokenValue = user.token || localStorage.getItem('diyfile-token')
         const token = `Bearer ${tokenValue}`
         return { ...config, headers: { ...config.headers, Authorization: token } }
       },

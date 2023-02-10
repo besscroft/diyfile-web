@@ -4,9 +4,9 @@ const user = useUserStore()
 // you can use this to manipulate the document head in any components,
 // they will be rendered correctly in the html results with vite-ssg
 useHead({
-  title: user.title || 'Xanadu',
+  title: user.title || 'DiyFile',
   meta: [
-    { name: 'Xanadu', content: '一款好看的文件交互管理' },
+    { name: 'DiyFile', content: '一款好看的在线文件列表程序，使用 Spring Boot 3 和 Vue 驱动🚀' },
     {
       name: 'theme-color',
       content: computed(() => isDark.value ? '#00aba9' : '#ffffff'),

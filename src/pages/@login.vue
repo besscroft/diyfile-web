@@ -21,7 +21,7 @@ const handleSubmit = () => {
       user.setUserName('')
       user.setAvatar('')
       user.setToken(token)
-      localStorage.setItem('Xanadu-token', token)
+      localStorage.setItem('diyfile-token', token)
       if (isMobile) {
         Message.success('登录成功!')
       } else {

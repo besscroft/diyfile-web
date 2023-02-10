@@ -22,7 +22,7 @@ import './styles/main.css'
 import 'uno.css'
 
 /* global */
-console.log(`${'\n'} %c Xanadu v0.0.1 %c https://github.com/besscroft/Xanadu ${'\n'}${'\n'}`, 'color: #fadfa3; background: #030307; padding:5px 0;', 'background: #fadfa3; padding:5px 0;')
+console.log(`${'\n'} %c DiyFile v0.1.2 %c https://github.com/besscroft/diyfile ${'\n'}${'\n'}`, 'color: #fadfa3; background: #030307; padding:5px 0;', 'background: #fadfa3; padding:5px 0;')
 
 generatedRoutes.push({
   path: '/',

@@ -30,7 +30,7 @@ const routerPage = (val: string) => {
 /** 切换语言 */
 const toggleLocales = (item: any) => {
   locale.value = item
-  localStorage.setItem('Xanadu-locale', item)
+  localStorage.setItem('diyfile-locale', item)
 }
 
 /** 退出登录 */
@@ -38,15 +38,15 @@ const loginOut = () => {
   username.value = ''
   avatar.value = ''
   localStorage.setItem('user', '')
-  localStorage.setItem('Xanadu-token', '')
+  localStorage.setItem('diyfile-token', '')
   window.location.href = '/'
 }
 
 onMounted(() => {
   username.value = user.userName
   avatar.value = user.avatar
-  const localValue = localStorage.getItem('Xanadu-locale')
-  const localTheme = localStorage.getItem('Xanadu-theme')
+  const localValue = localStorage.getItem('diyfile-locale')
+  const localTheme = localStorage.getItem('diyfile-theme')
   if (localValue) {
     locale.value = localValue
   } else {
@@ -67,7 +67,7 @@ onMounted(() => {
   <a-row class="grid-demo">
     <a-col class="title-container" :xs="8" :sm="8" :md="8" :lg="8" :xl="8" :xxl="8">
       <div class="cursor-pointer" @click="routerPage('/')">
-        {{ user.title || 'Xanadu' }}
+        {{ user.title || 'DiyFile' }}
       </div>
     </a-col>
     <a-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" :xxl="8">

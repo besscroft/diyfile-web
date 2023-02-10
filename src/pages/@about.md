@@ -12,7 +12,7 @@ title: About
 
 ```js
 // syntax highlighting example
-function xanadu() {
+function diyfile() {
   const foo = 'bar'
   console.log(foo)
 }
