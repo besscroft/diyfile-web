@@ -14,6 +14,7 @@ const pwdForm = reactive<User.UpdatePasswordData>({
 })
 
 const handleSubmit = () => {
+  pwdForm.userId = Number(router.currentRoute.value.query.id)
   userPasswordUpdate(pwdForm).then((res) => {
     if (res.code === 200) {
       Message.info(res.message)
