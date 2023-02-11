@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Message } from '@arco-design/web-vue'
-import { getFileInfo, getFileItemByKey, getUploadUrl } from '~/api/modules/file'
+import { deleteFile, getFileInfo, getFileItemByKey, getUploadUrl } from '~/api/modules/file'
 import { getEnableStorage } from '~/api/modules/storage'
 import { download } from '~/utils/ButtonUtil'
 import { isAudio, isImage, isMarkdown, isPDF, isText, isVideo } from '~/utils/FileUtil'
@@ -128,6 +128,17 @@ const handleRouter = () => {
   } else {
     handleItemByKey(key, '/')
   }
+}
+
+/** 删除文件 */
+const handleDelete = (option: any) => {
+  const url = `${option.path}/${encodeURIComponent(option.name)}`
+  deleteFile(storageKey.value, url).then((res) => {
+    if (res.code === 200) {
+      Message.success(res.message)
+      handleRouter()
+    }
+  })
 }
 
 /** 路由变化 */
@@ -292,6 +303,9 @@ onMounted(() => {
                   <a-space :size="4">
                     <icon-download v-if="record.type === 'file'" class="cursor-pointer" @click="download(record.url)" />
                     <icon-share-alt v-if="record.type === 'file'" class="cursor-pointer" @click="handleShare(record.url)" />
+                    <a-popconfirm content="确定要删除吗?" type="warning" :onOk="() => handleDelete(record)">
+                      <icon-delete v-if="record.type === 'file'" class="cursor-pointer" />
+                    </a-popconfirm>
                   </a-space>
                 </template>
               </a-table-column>

@@ -12,6 +12,7 @@ enum Api {
   getDefaultStorage = '/file/defaultStorage',
   getFileInfo = '/file/getFileInfo',
   getUploadUrl = '/file/getUploadUrl',
+  deleteFile = '/file/deleteFile',
 }
 
 /** 获取文件列表 */
@@ -42,4 +43,9 @@ export const getFileInfo = (storageKey: string, filePath: string) => {
 /** 获取上传地址 */
 export const getUploadUrl = (storageKey: string, path: string) => {
   return http.post<Result>(API_URL + Api.getUploadUrl, { storageKey, path })
+}
+
+/** 删除文件 */
+export const deleteFile = (storageKey: string, path: string) => {
+  return http.post<Result>(API_URL + Api.deleteFile, { storageKey, path })
 }
