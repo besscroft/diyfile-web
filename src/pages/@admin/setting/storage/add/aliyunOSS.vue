@@ -14,33 +14,66 @@ const addStorageForm = reactive({
   storageKey: '',
   /** 备注 */
   remark: '',
+  endpoint: '',
+  accessKeyId: '',
+  accessKeySecret: '',
   mount_path: '',
 })
 const addStorageData = ref<Storage.AddStorageRequestData>({
   /** 存储名称 */
   name: '',
+  /** 存储类型 */
+  type: 1,
   /** 存储 key */
   storageKey: '',
-  /** 存储类型 */
-  type: 0,
   /** 备注 */
   remark: '',
   configList: [],
 })
 
 const list = ref<Array<Storage.StorageConfig>>([])
+const endpoint = ref<Storage.StorageConfig>({
+  id: undefined,
+  storageId: undefined,
+  name: 'Endpoint',
+  configKey: 'endpoint',
+  configValue: '',
+  description: '填写Bucket所在地域对应的Endpoint。以华东1（杭州）为例，Endpoint填写为https://oss-cn-hangzhou.aliyuncs.com。',
+})
+const accessKeyId = ref<Storage.StorageConfig>({
+  id: undefined,
+  storageId: undefined,
+  name: 'AccessKeyId',
+  configKey: 'accessKeyId',
+  configValue: '',
+  description: '阿里云账号AccessKey ID，阿里云账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM用户进行API访问或日常运维，请登录RAM控制台创建RAM用户。',
+})
+const accessKeySecret = ref<Storage.StorageConfig>({
+  id: undefined,
+  storageId: undefined,
+  name: 'AccessKeySecret',
+  configKey: 'accessKeySecret',
+  configValue: '',
+  description: '阿里云账号AccessKey Secret，阿里云账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM用户进行API访问或日常运维，请登录RAM控制台创建RAM用户。',
+})
 const mount_path = ref<Storage.StorageConfig>({
   id: undefined,
   storageId: undefined,
   name: '挂载路径',
   configKey: 'mount_path',
   configValue: '',
-  description: '本地存储挂载路径',
+  description: '阿里云 OSS 挂载路径',
 })
 
 const handleFormData = () => {
   list.value = []
+  endpoint.value.configValue = addStorageForm.endpoint
+  accessKeyId.value.configValue = addStorageForm.accessKeyId
+  accessKeySecret.value.configValue = addStorageForm.accessKeySecret
   mount_path.value.configValue = addStorageForm.mount_path
+  list.value.push(endpoint.value)
+  list.value.push(accessKeyId.value)
+  list.value.push(accessKeySecret.value)
   list.value.push(mount_path.value)
   addStorageData.value.configList = list.value
 }
@@ -92,6 +125,15 @@ const handleSubmit = (formEl: FormInstance) => {
             <a-form-item field="storageKey" label="storageKey" required>
               <a-input v-model="addStorageForm.storageKey" placeholder="请输入 storageKey" :max-length="{ length: 20, errorOnly: true }" show-word-limit allow-clear />
             </a-form-item>
+            <a-form-item field="endpoint" label="Endpoint" :help="endpoint.description" required>
+              <a-textarea v-model="addStorageForm.endpoint" placeholder="请输入Bucket 地域的 Endpoint" allow-clear auto-size show-word-limit/>
+            </a-form-item>
+            <a-form-item field="accessKeyId" label="AccessKeyId" :help="accessKeyId.description" required>
+              <a-textarea v-model="addStorageForm.accessKeyId" placeholder="请输入 AccessKeyId" allow-clear auto-size show-word-limit/>
+            </a-form-item>
+            <a-form-item field="accessKeySecret" label="AccessKeySecret" :help="accessKeySecret.description" required>
+              <a-textarea v-model="addStorageForm.accessKeySecret" placeholder="请输入 AccessKeySecret" allow-clear auto-size show-word-limit/>
+            </a-form-item>
             <a-form-item field="mount_path" label="挂载路径" :help="mount_path.description" required>
               <a-textarea v-model="addStorageForm.mount_path" placeholder="请输入挂载路径" allow-clear auto-size show-word-limit/>
             </a-form-item>
@@ -102,6 +144,7 @@ const handleSubmit = (formEl: FormInstance) => {
         </a-col>
         <a-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6"></a-col>
       </a-row>
+      开发中
     </a-card>
   </div>
 </template>
