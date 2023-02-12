@@ -49,6 +49,7 @@ useDetail()
               <a-tag v-if="detail.type === 1" size="small" color="cyan">OneDrive</a-tag>
             </template>
           </descriptions-item>
+          <descriptions-item label="存储 Key">{{ detail.storageKey }}</descriptions-item>
           <descriptions-item label="存储启用状态">
             <template #default>
               <a-tag v-if="detail.enable === 1" size="small" color="green">启用</a-tag>

@@ -43,6 +43,8 @@ export namespace Storage {
     id: number | undefined
     /** 存储名称 */
     name: string | undefined
+    /** 存储 key */
+    storageKey: string | undefined
     /** 存储类型：0->本地存储；1->OneDrive */
     type: number | undefined
     /** 存储启用状态：0->禁用；1->启用 */
