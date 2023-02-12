@@ -10,6 +10,8 @@ const formRef = ref<FormInstance>()
 const addStorageForm = reactive({
   /** 存储名称 */
   name: '',
+  /** 存储 key */
+  storageKey: '',
   /** 备注 */
   remark: '',
   client_id: '',
@@ -23,6 +25,8 @@ const addStorageData = ref<Storage.AddStorageRequestData>({
   name: '',
   /** 存储类型 */
   type: 1,
+  /** 存储 key */
+  storageKey: '',
   /** 备注 */
   remark: '',
   configList: [],
@@ -89,6 +93,7 @@ const handleSubmit = (formEl: FormInstance) => {
   formEl.validate((valid) => {
     if ((!valid)) {
       addStorageData.value.name = addStorageForm.name
+      addStorageData.value.storageKey = addStorageForm.storageKey
       addStorageData.value.remark = addStorageForm.remark
       handleFormData()
       storageAdd(addStorageData.value).then((res) => {
@@ -126,6 +131,9 @@ const handleSubmit = (formEl: FormInstance) => {
           <a-form ref="formRef" :model="addStorageForm" layout="vertical">
             <a-form-item field="name" :label="t('storage.name')" required>
               <a-input v-model="addStorageForm.name" placeholder="请输入存储名称" :max-length="{ length: 20, errorOnly: true }" show-word-limit allow-clear />
+            </a-form-item>
+            <a-form-item field="storageKey" label="storageKey" required>
+              <a-input v-model="addStorageForm.storageKey" placeholder="请输入 storageKey" :max-length="{ length: 20, errorOnly: true }" show-word-limit allow-clear />
             </a-form-item>
             <a-form-item field="client_id" label="客户端ID" :help="client_id.description" required>
               <a-textarea v-model="addStorageForm.client_id" placeholder="请输入客户端ID" allow-clear auto-size show-word-limit/>

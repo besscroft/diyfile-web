@@ -29,6 +29,8 @@ export namespace Storage {
     name: string | undefined
     /** 存储类型：0->本地存储；1->OneDrive */
     type: number | undefined
+    /** 存储 key */
+    storageKey: string | undefined
     /** 备注 */
     remark: string | undefined
     /** 存储配置列表 */
