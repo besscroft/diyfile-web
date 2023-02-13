@@ -16,6 +16,7 @@ declare module '@vue/runtime-core' {
     ACardMeta: typeof import('@arco-design/web-vue')['CardMeta']
     ACol: typeof import('@arco-design/web-vue')['Col']
     ADescriptions: typeof import('@arco-design/web-vue')['Descriptions']
+    ADgroup: typeof import('@arco-design/web-vue')['Dgroup']
     ADivider: typeof import('@arco-design/web-vue')['Divider']
     ADoption: typeof import('@arco-design/web-vue')['Doption']
     ADrawer: typeof import('@arco-design/web-vue')['Drawer']

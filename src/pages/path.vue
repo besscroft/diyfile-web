@@ -42,11 +42,13 @@ const handleEnableStorage = () => {
 
 /** 选择框发生变化 */
 const handleSelectChange = (name: string, value: string) => {
-  fileInfo.value = null
-  dataList.value = null
-  uploadView.value = false
-  storageName.value = name
-  router.push(`/${value}`)
+  if (value !== storageKey.value) {
+    fileInfo.value = null
+    dataList.value = null
+    uploadView.value = false
+    storageName.value = name
+    router.push(`/${value}`)
+  }
 }
 
 /** 自定义上传请求 */
@@ -225,18 +227,38 @@ onMounted(() => {
     <a-row :gutter="20" :style="{ marginBottom: '20px' }">
       <a-col :xs="1" :sm="2" :md="2" :lg="3" :xl="4" :xxl="4" />
       <a-col :xs="22" :sm="20" :md="20" :lg="18" :xl="16" :xxl="16">
-        <a-tag id="breadcrumb-scrollbar" color="gray" :style="{ 'overflow-x': 'auto', 'width': '100%', 'scrollbar-width': 'none', '-ms-overflow-style': 'none' }">
-          <template #icon>
-            <icon-branch />
-          </template>
-          <a-breadcrumb :routes="routes" :max-count="3" class="no-scrollbar inline-flex items-center gap-1 overflow-x-scroll text-sm text-gray-600 dark:text-gray-300 md:gap-3">
-            <template #item-render="{ route }">
-              <a-link @click="router.push(route.path)">
-                {{ route.label }}
-              </a-link>
+        <nav className="mb-4 flex items-center justify-between pl-1">
+          <a-tag id="breadcrumb-scrollbar" color="gray" :style="{ 'overflow-x': 'auto', 'width': '100%', 'scrollbar-width': 'none', '-ms-overflow-style': 'none' }">
+            <template #icon>
+              <icon-branch />
             </template>
-          </a-breadcrumb>
-        </a-tag>
+            <a-breadcrumb :routes="routes" :max-count="3" class="no-scrollbar inline-flex items-center gap-1 overflow-x-scroll text-sm text-gray-600 dark:text-gray-300 md:gap-3">
+              <template #item-render="{ route }">
+                <a-link @click="router.push(route.path)">
+                  {{ route.label }}
+                </a-link>
+              </template>
+            </a-breadcrumb>
+          </a-tag>
+          <a-dropdown>
+            <icon-down class="cursor-pointer mx-0.5" />
+            <template #content>
+              <a-dgroup title="操作">
+                <a-doption @click="uploadView = true">
+                  <template #icon>
+                    <icon-upload />
+                  </template>
+                  <template #default>上传</template>
+                </a-doption>
+              </a-dgroup>
+              <a-dgroup v-if="!loading && storageList" title="驱动列表">
+                <a-doption v-for="item in storageList" :key="item.name" @click="handleSelectChange(item.name, item.storageKey)">
+                  {{ item.name }}
+                </a-doption>
+              </a-dgroup>
+            </template>
+          </a-dropdown>
+        </nav>
         <a-card :bordered="false" :style="{ width: '100%' }">
           <a-upload
             v-if="!loading && uploadView"
@@ -255,7 +277,6 @@ onMounted(() => {
             :scrollbar="false"
             :pagination="false"
             :bordered="false"
-            style="margin-top: 8px"
           >
             <template #columns>
               <a-table-column :title="t('table.index.fileName')" ellipsis>
@@ -278,7 +299,6 @@ onMounted(() => {
             :scrollbar="false"
             :pagination="false"
             :bordered="false"
-            style="margin-top: 10px"
           >
             <template #columns>
               <a-table-column :title="t('table.index.fileName')">
@@ -328,29 +348,7 @@ onMounted(() => {
           </a-alert>
         </a-card>
       </a-col>
-      <a-col :xs="1" :sm="2" :md="2" :lg="3" :xl="4" :xxl="4">
-        <a-space v-if="!loading && storageList && !isMobile" direction="vertical" fill>
-          <a-dropdown>
-            <a-button type="outline" long>
-              <template #icon>
-                <icon-cloud />
-              </template>
-              {{ storageName }}
-            </a-button>
-            <template #content>
-              <a-doption v-for="item in storageList" :key="item.name" @click="handleSelectChange(item.name, item.storageKey)">
-                {{ item.name }}
-              </a-doption>
-            </template>
-          </a-dropdown>
-          <a-button v-if="user.token" type="outline" long @click="uploadView = true">
-            <template #icon>
-              <icon-upload />
-            </template>
-            上传
-          </a-button>
-        </a-space>
-      </a-col>
+      <a-col :xs="1" :sm="2" :md="2" :lg="3" :xl="4" :xxl="4" />
     </a-row>
   </div>
 </template>
