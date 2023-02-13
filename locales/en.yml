@@ -55,13 +55,12 @@ menu:
   index: Dashboard
   setting:
     index: Manage
-    cdn: CDN
+    backup: Backup
     storage: Storage
   system:
     index: System
     setting: Setting
     user: User
-    about: About
     faqs: FAQs
 message:
   error: Error

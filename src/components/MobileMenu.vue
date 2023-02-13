@@ -35,6 +35,12 @@ const routerPage = (val: string) => {
             </template>
             <template #default>{{ t('menu.setting.storage') }}</template>
           </a-doption>
+          <a-doption @click="routerPage('2_1')">
+            <template #icon>
+              <icon-send />
+            </template>
+            <template #default>{{ t('menu.setting.backup') }}</template>
+          </a-doption>
         </template>
       </a-dropdown>
     </a-col>
@@ -62,13 +68,7 @@ const routerPage = (val: string) => {
             </a-doption>
             <a-doption @click="routerPage('3_2')">
               <template #icon>
-                <icon-send />
-              </template>
-              <template #default>{{ t('menu.system.about') }}</template>
-            </a-doption>
-            <a-doption @click="routerPage('3_3')">
-              <template #icon>
-                <icon-question-circle-fill />
+                <icon-customer-service />
               </template>
               <template #default>{{ t('menu.system.faqs') }}</template>
             </a-doption>

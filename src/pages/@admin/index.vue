@@ -70,14 +70,11 @@ handServerInfo()
         </div>
         <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
           <a-card title="关于" hoverable>
-            <template #extra>
-              <a-button type="text" @click="router.push('/@admin/system/about')">More</a-button>
-            </template>
             🧪 Working in Progress
             <br />
-            一款好看的文件交互管理。
+            一款好看的在线文件列表程序，支持多种存储，支持多种部署方式。
             <br />
-            积极开发、错误修复和增强功能！
+            由 Spring Boot 3 和 Vue 驱动，积极开发、错误修复和增强功能！
           </a-card>
         </div>
         <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">

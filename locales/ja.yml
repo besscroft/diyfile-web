@@ -54,13 +54,12 @@ menu:
   index: コンソール
   setting:
     index: 構成
-    cdn: CDN
+    backup: バックアップ
     storage: ストレージ
   system:
     index: システム
     setting: 設定
     user: ユーザー
-    about: だいたい
     faqs: よくある質問
 message:
   error: 間違い

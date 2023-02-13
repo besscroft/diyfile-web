@@ -39,6 +39,11 @@ const dataList = ref<Array<any>>([
     content: '后台管理功能如您所见，还在逐步新增中，我们会根据用户的需求进行开发，如果您有什么好的建议，欢迎分享给我们！\n'
       + '            首页文件列表和预览，将慢慢完善，目前已支持视频播放、音频播放、图片预览、文本预览等，其它的预览将在后续开发中跟进！',
   },
+  {
+    id: 7,
+    title: '文档在哪儿？',
+    content: '您可以在<b><a href="https://doc.diyfile.besscroft.com/" target="_blank">DiyFile 文档</a></b>中查看，有问题的话欢迎反馈给我们！',
+  },
 ])
 </script>
 

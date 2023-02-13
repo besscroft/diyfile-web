@@ -55,13 +55,12 @@ menu:
   index: 控制台
   setting:
     index: 配置
-    cdn: CDN
+    backup: 备份
     storage: 存储
   system:
     index: 系统
     setting: 设置
     user: 用户
-    about: 关于
     faqs: 常见问题
 message:
   error: 错误
