@@ -82,7 +82,7 @@ handServerInfo()
             <a-list>
               <a-list-item><icon-subscribed />MySQL 存储适配</a-list-item>
               <a-list-item><icon-subscribed />基于 openJDK 17 的 SpringBoot3 开发</a-list-item>
-              <a-list-item><icon-subscribe />OneDrive 支持</a-list-item>
+              <a-list-item><icon-subscribed />OneDrive 支持</a-list-item>
               <a-list-item><icon-subscribe />多元化存储支持</a-list-item>
               <a-list-item><icon-subscribe />多平台部署支持</a-list-item>
               <a-list-item><icon-subscribe />对接更多存储</a-list-item>

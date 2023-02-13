@@ -29,7 +29,7 @@ onMounted(() => {
     <a-card :bordered="false" hoverable :style="{ height: '100%' }">
       <a-form layout="vertical">
         <a-form-item label="版本">
-          <a-input placeholder="v0.1.5" disabled>
+          <a-input placeholder="v0.1.6" disabled>
             <template #prefix>
               <icon-send />
             </template>
