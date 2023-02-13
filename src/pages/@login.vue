@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Message, Notification } from '@arco-design/web-vue'
+import { Message } from '@arco-design/web-vue'
 import type { Login } from '~/api/interface'
 import { getInfo, loginApi } from '~/api/modules/user'
 
@@ -21,16 +21,7 @@ const handleSubmit = () => {
       user.setAvatar('')
       user.setToken(token)
       localStorage.setItem('diyfile-token', token)
-      if (isMobile) {
-        Message.success('登录成功!')
-      } else {
-        Notification.success({
-          title: '恭喜你！',
-          content: '登录成功!',
-          closable: true,
-          duration: 2000,
-        })
-      }
+      Message.success('登录成功!')
       await getInfo().then((res) => {
         if (res.code !== 200) {
           window.location.href = '/@login'

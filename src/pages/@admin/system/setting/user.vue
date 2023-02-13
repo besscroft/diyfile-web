@@ -3,6 +3,7 @@ import { Message } from '@arco-design/web-vue'
 import type { User } from '~/api/interface/user'
 import { userPasswordUpdate } from '~/api/modules/user'
 
+const oldPwd = ref<string>()
 const pwd = ref<string>()
 const pwdForm = reactive<User.UpdatePasswordData>({
   userId: undefined,
@@ -12,9 +13,12 @@ const pwdForm = reactive<User.UpdatePasswordData>({
 })
 
 const handleUpdatePwd = () => {
+  pwdForm.oldPassword = oldPwd.value
   pwdForm.newPassword = pwd.value
   userPasswordUpdate(pwdForm).then((res) => {
     if (res.code === 200) {
+      oldPwd.value = ''
+      pwd.value = ''
       Message.info(res.message)
     }
   })
@@ -30,8 +34,15 @@ const handleUpdatePwd = () => {
   >
     <a-card :bordered="false" hoverable :style="{ height: '100%' }">
       <a-form layout="vertical">
+        <a-form-item label="请输入旧密码...">
+          <a-input v-model="oldPwd" allow-clear>
+            <template #prefix>
+              <icon-public />
+            </template>
+          </a-input>
+        </a-form-item>
         <a-form-item label="请输入新密码...">
-          <a-input-search v-model="pwd" search-button>
+          <a-input-search v-model="pwd" search-button allow-clear>
             <template #prefix>
               <icon-public />
             </template>

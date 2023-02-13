@@ -90,7 +90,12 @@ onMounted(() => {
               <a-doption @click="toggleLocales('ja')">日本語</a-doption>
             </template>
           </a-dropdown>
-          <a-tag v-show="username" color="#FBC3CB">{{ username }}</a-tag>
+          <span
+            v-show="username"
+            class="whitespace-nowrap rounded-full bg-purple-100 px-2.5 py-0.5 text-sm text-purple-700"
+          >
+            {{ username }}
+          </span>
           <a-dropdown>
             <a-avatar v-if="avatar" :size="40">
               <img

@@ -253,6 +253,10 @@ onMounted(() => {
               </a-dgroup>
               <a-dgroup v-if="!loading && storageList" title="驱动列表">
                 <a-doption v-for="item in storageList" :key="item.name" @click="handleSelectChange(item.name, item.storageKey)">
+                  <template #icon>
+                    <icon-check v-if="storageKey === item.storageKey" />
+                    <icon-cloud v-else />
+                  </template>
                   {{ item.name }}
                 </a-doption>
               </a-dgroup>
@@ -322,7 +326,7 @@ onMounted(() => {
                 <template #cell="{ record }">
                   <a-space :size="4">
                     <icon-download v-if="record.type === 'file'" class="cursor-pointer" @click="download(record.url)" />
-                    <icon-share-alt v-if="record.type === 'file'" class="cursor-pointer" @click="handleShare(record.url)" />
+                    <icon-copy v-if="record.type === 'file'" class="cursor-pointer" @click="handleShare(record.url)" />
                     <a-popconfirm content="确定要删除吗?" type="warning" :onOk="() => handleDelete(record)">
                       <icon-delete v-if="record.type === 'file'" class="cursor-pointer" />
                     </a-popconfirm>

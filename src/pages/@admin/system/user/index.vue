@@ -8,11 +8,16 @@ const user = useUserStore()
 const loading = ref<Boolean>(true)
 const { t } = useI18n()
 const { isMobile } = useDevice()
+const dataList = ref()
+const total = ref<number>()
+const pageNum = ref<number>(1)
+const pageSize = ref<number>(7)
+const roleFlag = ref<string>('')
 const data = reactive({
   form: {},
   queryParam: {
     pageNum: 1,
-    pageSize: 10,
+    pageSize: 7,
     role: '',
   },
 })
@@ -23,18 +28,21 @@ const updateUserStatusData = reactive<User.ChangeUserStatusRequestData>({
   status: undefined,
 })
 
-const dataList = ref()
-
 const useUserPage = (role: string) => {
   if (role) {
     data.queryParam.role = role
+    roleFlag.value = role.toString()
   } else {
     data.queryParam.role = ''
+    roleFlag.value = ''
   }
+  data.queryParam.pageNum = pageNum.value
+  data.queryParam.pageSize = pageSize.value
   loading.value = true
   userPage(data.queryParam).then((res) => {
     if (res.code === 200) {
       dataList.value = res.data.list
+      total.value = res.data.total
     }
     loading.value = false
   })
@@ -245,6 +253,14 @@ useUserPage('')
           </a-card>
         </a-col>
       </a-row>
+      <a-pagination
+        :total="total"
+        :page-size="pageSize"
+        :current="pageNum"
+        :show-total="true"
+        class="mt-4"
+        @change="(current) => { pageNum = current; useUserPage(roleFlag) }"
+      />
     </a-card>
   </div>
 </template>

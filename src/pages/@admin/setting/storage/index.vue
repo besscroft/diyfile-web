@@ -7,12 +7,16 @@ const router = useRouter()
 const { t } = useI18n()
 const { isMobile } = useDevice()
 const dataList = ref<Array<Object>>([])
+const total = ref<number>()
+const pageNum = ref<number>(1)
+const pageSize = ref<number>(7)
+const typeFlag = ref<any>()
 const loading = ref<Boolean>(true)
 const data = reactive({
   form: {},
   queryParam: {
     pageNum: 1,
-    pageSize: 10,
+    pageSize: 7,
     type: null as any,
   },
 })
@@ -26,13 +30,18 @@ const updateStorageStatusData = reactive<Storage.UpdateStorageStatusRequestData>
 const handleStoragePage = (type: number) => {
   if (type === -1) {
     data.queryParam.type = null
+    typeFlag.value = null
   } else {
     data.queryParam.type = type
+    typeFlag.value = type
   }
+  data.queryParam.pageNum = pageNum.value
+  data.queryParam.pageSize = pageSize.value
   loading.value = true
   storagePage(data.queryParam).then((res) => {
     if (res.code === 200) {
       dataList.value = res.data.list
+      total.value = res.data.total
     }
     loading.value = false
   })
@@ -211,22 +220,22 @@ handleStoragePage(-1)
                       v-else
                       class="inline-flex items-center justify-center rounded-full bg-emerald-100 px-2.5 py-0.5 text-emerald-700 cursor-pointer"
                     >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke-width="1.5"
-                          stroke="currentColor"
-                          class="-ml-1 mr-1.5 h-4 w-4"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                          />
-                        </svg>
-                        <p class="whitespace-nowrap text-sm">默认</p>
-                      </span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="-ml-1 mr-1.5 h-4 w-4"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                      <p class="whitespace-nowrap text-sm">默认</p>
+                    </span>
                   </a-space>
                 </div>
               </template>
@@ -248,6 +257,14 @@ handleStoragePage(-1)
           </a-card>
         </a-col>
       </a-row>
+      <a-pagination
+        :total="total"
+        :page-size="pageSize"
+        :current="pageNum"
+        :show-total="true"
+        class="mt-4"
+        @change="(current) => { pageNum = current; handleStoragePage(typeFlag) }"
+      />
     </a-card>
   </div>
 </template>
