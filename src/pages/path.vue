@@ -267,6 +267,7 @@ onMounted(() => {
           <a-upload
             v-if="!loading && uploadView"
             :custom-request="(option) => onRequestUpload(option)"
+            @success="() => { Message.success('上传成功！') }"
             draggable
           />
           <a-spin v-if="loading" :size="32" class="flex justify-center">

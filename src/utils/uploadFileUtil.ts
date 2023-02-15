@@ -3,11 +3,12 @@ import axios from 'axios'
 /** OneDrive 分片上传 */
 export const uploadOneDrive = async (file: File, uploadUrl: string, option: any) => {
   const { onProgress, onError, onSuccess } = option
-  let counter = 1
   let start = 0
   let end = 0
   const fileSize = file.size
-  const chunkFileSize = 104857599
+  const chunkFileSize = 10 * 1024 * 1024 // 分块大小
+  let uploadedChunks = 0 // 已上传块数
+  const chunks = Math.ceil(fileSize / chunkFileSize) // 总块数
   const uploadBlock = () => {
     // 计算每块的开始和结束位置
     if (start + chunkFileSize >= fileSize) {
@@ -15,7 +16,7 @@ export const uploadOneDrive = async (file: File, uploadUrl: string, option: any)
     } else {
       end = start + chunkFileSize
     }
-    // TODO 分片处理
+    // 分片处理
     const fileBlock = file.slice(start, end)
     axios.put(uploadUrl, fileBlock, {
       headers: {
@@ -27,14 +28,14 @@ export const uploadOneDrive = async (file: File, uploadUrl: string, option: any)
       onUploadProgress: (progressEvent) => {
         let percent
         if (progressEvent.total > 0) {
-          percent = progressEvent.loaded / progressEvent.total
+          percent = (uploadedChunks + progressEvent.loaded / progressEvent.total) / chunks
         }
         onProgress(percent, progressEvent)
       },
     }).then((res) => {
       if (res.status === 202) {
         start += chunkFileSize
-        counter = counter + 1
+        uploadedChunks = uploadedChunks + 1
         uploadBlock()
       } else if (res.status === 201 || res.status === 200) {
         console.log(res)
