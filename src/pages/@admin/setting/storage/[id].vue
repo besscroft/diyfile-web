@@ -47,6 +47,7 @@ useDetail()
             <template #default>
               <a-tag v-if="detail.type === 0" size="small" color="cyan">本地存储</a-tag>
               <a-tag v-if="detail.type === 1" size="small" color="cyan">OneDrive</a-tag>
+              <a-tag v-if="detail.type === 2" size="small" color="cyan">阿里云 OSS</a-tag>
             </template>
           </descriptions-item>
           <descriptions-item label="存储 Key">{{ detail.storageKey }}</descriptions-item>

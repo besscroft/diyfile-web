@@ -68,6 +68,8 @@ const handleStorageUpdateStatus = (storageId: number, status: number) => {
       Message.success(res.message)
       handleStoragePage(-1)
     }
+  }).catch((err) => {
+    Message.error(err.message)
   })
   updateStorageStatusData.storageId = undefined
   updateStorageStatusData.status = undefined
@@ -153,6 +155,7 @@ handleStoragePage(-1)
                   <a-space>
                     <a-tag v-if="item.type === 0" color="cyan">本地存储</a-tag>
                     <a-tag v-else-if="item.type === 1" color="cyan">OneDrive</a-tag>
+                    <a-tag v-else-if="item.type === 2" color="cyan">阿里云 OSS</a-tag>
                     <a-popconfirm v-if="item.enable === 1" content="确定要禁用吗?" type="warning" :onOk="() => handleStorageUpdateStatus(item.id, 0)">
                       <span
                         class="inline-flex items-center justify-center rounded-full bg-emerald-100 px-2.5 py-0.5 text-emerald-700 cursor-pointer"

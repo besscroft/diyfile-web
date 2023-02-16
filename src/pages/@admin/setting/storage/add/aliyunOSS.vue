@@ -17,13 +17,14 @@ const addStorageForm = reactive({
   endpoint: '',
   accessKeyId: '',
   accessKeySecret: '',
+  bucketName: '',
   mount_path: '',
 })
 const addStorageData = ref<Storage.AddStorageRequestData>({
   /** 存储名称 */
   name: '',
   /** 存储类型 */
-  type: 1,
+  type: 2,
   /** 存储 key */
   storageKey: '',
   /** 备注 */
@@ -56,6 +57,14 @@ const accessKeySecret = ref<Storage.StorageConfig>({
   configValue: '',
   description: '阿里云账号AccessKey Secret，阿里云账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM用户进行API访问或日常运维，请登录RAM控制台创建RAM用户。',
 })
+const bucketName = ref<Storage.StorageConfig>({
+  id: undefined,
+  storageId: undefined,
+  name: 'BucketName',
+  configKey: 'bucketName',
+  configValue: '',
+  description: '阿里云 OSS Bucket 名称',
+})
 const mount_path = ref<Storage.StorageConfig>({
   id: undefined,
   storageId: undefined,
@@ -80,20 +89,20 @@ const handleFormData = () => {
 
 const handleSubmit = (formEl: FormInstance) => {
   Message.info('开发中！')
-  // formEl.validate((valid) => {
-  //   if ((!valid)) {
-  //     addStorageData.value.name = addStorageForm.name
-  //     addStorageData.value.storageKey = addStorageForm.storageKey
-  //     addStorageData.value.remark = addStorageForm.remark
-  //     handleFormData()
-  //     storageAdd(addStorageData.value).then((res) => {
-  //       if (res.code === 200) {
-  //         Message.info(res.message)
-  //         router.push('/@admin/setting/storage')
-  //       }
-  //     })
-  //   }
-  // })
+  formEl.validate((valid) => {
+    if ((!valid)) {
+      addStorageData.value.name = addStorageForm.name
+      addStorageData.value.storageKey = addStorageForm.storageKey
+      addStorageData.value.remark = addStorageForm.remark
+      handleFormData()
+      storageAdd(addStorageData.value).then((res) => {
+        if (res.code === 200) {
+          Message.info(res.message)
+          router.push('/@admin/setting/storage')
+        }
+      })
+    }
+  })
 }
 </script>
 
@@ -124,6 +133,9 @@ const handleSubmit = (formEl: FormInstance) => {
             </a-form-item>
             <a-form-item field="storageKey" label="storageKey" required>
               <a-input v-model="addStorageForm.storageKey" placeholder="请输入 storageKey" :max-length="{ length: 20, errorOnly: true }" show-word-limit allow-clear />
+            </a-form-item>
+            <a-form-item field="bucketName" label="BucketName" :help="bucketName.description" required>
+              <a-textarea v-model="addStorageForm.bucketName" placeholder="阿里云 OSS Bucket 名称" allow-clear auto-size show-word-limit/>
             </a-form-item>
             <a-form-item field="endpoint" label="Endpoint" :help="endpoint.description" required>
               <a-textarea v-model="addStorageForm.endpoint" placeholder="请输入Bucket 地域的 Endpoint" allow-clear auto-size show-word-limit/>
