@@ -36,8 +36,8 @@ export const getDefaultStorage = () => {
 }
 
 /** 获取文件信息 */
-export const getFileInfo = (storageKey: string, filePath: string) => {
-  return http.post<Result>(API_URL + Api.getFileInfo, { storageKey, filePath })
+export const getFileInfo = (storageKey: string, filePath: string, fileName: string) => {
+  return http.post<Result>(API_URL + Api.getFileInfo, { storageKey, filePath, fileName })
 }
 
 /** 获取上传地址 */

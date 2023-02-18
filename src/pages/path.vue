@@ -105,9 +105,9 @@ const clickFile = (name: string) => {
 }
 
 /** 处理文件路由 */
-const handleFile = (key: string | any, uri: string | any) => {
+const handleFile = (key: string | any, uri: string | any, fileName: string) => {
   loading.value = true
-  getFileInfo(key, uri).then((res) => {
+  getFileInfo(key, uri, fileName).then((res) => {
     if (res.code === 200) {
       dataList.value = null
       fileInfo.value = res.data
@@ -115,6 +115,7 @@ const handleFile = (key: string | any, uri: string | any) => {
     loading.value = false
   }).catch((err) => {
     console.log(err)
+    dataList.value = null
     loading.value = false
   })
 }
@@ -181,7 +182,7 @@ watch(() => {
     if (params && params.includes('.')) {
       // 包含 . 的可能是文件
       handleRouterChange(key, path)
-      handleFile(storageKey.value, path.slice(`/${key}`.length, path.length))
+      handleFile(storageKey.value, path.slice(`/${key}`.length, path.length), path.substring(path.lastIndexOf('/') + 1))
     } else {
       // 不包含 . 的可能是文件夹
       handleRouterChange(key, path)
@@ -199,9 +200,10 @@ onMounted(() => {
     const fullPath = router.currentRoute.value.path
     const uri = fullPath.slice(`/${key}`.length, fullPath.length)
     if (path.length > 0 && path[path.length - 1].includes('.')) {
+      const fileName = fullPath.substring(fullPath.lastIndexOf('/') + 1)
       // 包含 . 的可能是文件
       handleRouterChange(key, path)
-      handleFile(key, uri)
+      handleFile(key, uri, fileName)
     } else {
       // 不包含 . 的可能是文件夹
       handleRouterChange(key, path)
