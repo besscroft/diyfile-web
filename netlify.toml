@@ -6,9 +6,15 @@
   command = "pnpm run build:vite"
 
 [[redirects]]
-  from = "/*"
+  from = "/(?!@api)/*"
   to = "/index.html"
   status = 200
+
+[[redirects]]
+  from = "/@api/*"
+  to = "/api/proxy"
+  status = 200
+  force = true
 
 [[headers]]
   for = "/manifest.webmanifest"
