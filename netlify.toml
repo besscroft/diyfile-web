@@ -14,7 +14,6 @@
   from = "/@api/*"
   to = "https://api.besscroft.com/@api"
   status = 200
-  force = true
 
 [[headers]]
   for = "/manifest.webmanifest"
