@@ -47,20 +47,20 @@ const handleFormData = () => {
 
 const handleSubmit = (formEl: FormInstance) => {
   Message.info('开发中！')
-  // formEl.validate((valid) => {
-  //   if ((!valid)) {
-  //     addStorageData.value.name = addStorageForm.name
-  //     addStorageData.value.storageKey = addStorageForm.storageKey
-  //     addStorageData.value.remark = addStorageForm.remark
-  //     handleFormData()
-  //     storageAdd(addStorageData.value).then((res) => {
-  //       if (res.code === 200) {
-  //         Message.info(res.message)
-  //         router.push('/@admin/setting/storage')
-  //       }
-  //     })
-  //   }
-  // })
+  formEl.validate((valid) => {
+    if ((!valid)) {
+      addStorageData.value.name = addStorageForm.name
+      addStorageData.value.storageKey = addStorageForm.storageKey
+      addStorageData.value.remark = addStorageForm.remark
+      handleFormData()
+      storageAdd(addStorageData.value).then((res) => {
+        if (res.code === 200) {
+          Message.info(res.message)
+          router.push('/@admin/setting/storage')
+        }
+      })
+    }
+  })
 }
 </script>
 

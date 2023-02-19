@@ -47,10 +47,6 @@ const handleStoragePage = (type: number) => {
   })
 }
 
-const handleStorageUpdate = () => {
-  Message.warning('还没写!')
-}
-
 const handleStorageDelete = (storageId: number) => {
   storageDelete(storageId).then((res) => {
     if (res.code === 200) {

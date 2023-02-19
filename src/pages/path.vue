@@ -268,10 +268,17 @@ onMounted(() => {
         <a-card :bordered="false" :style="{ width: '100%' }">
           <a-upload
             v-if="!loading && uploadView"
-            :custom-request="(option) => onRequestUpload(option)"
+            :autoUpload="false"
+            :showRemoveButton="false"
+            :showCancelButton="false"
+            :showRetryButton="true"
+            :showPreviewButton="true"
+            :showLink="true"
+            :customRequest="(option) => onRequestUpload(option)"
             @success="() => { Message.success('上传成功！') }"
             draggable
-          />
+          >
+          </a-upload>
           <a-spin v-if="loading" :size="32" class="flex justify-center">
             <template #icon>
               <icon-sync />

@@ -9,3 +9,4 @@ node_modules
 *.log
 cypress/downloads
 vite.config.ts.*.mjs
+dist-*
