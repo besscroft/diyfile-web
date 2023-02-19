@@ -11,9 +11,10 @@
   status = 200
 
 [[redirects]]
-  from = "/(?!@api)/*"
+  from = "/*"
   to = "/index.html"
   status = 200
+  conditions = { not = [ { path = "/@api/*" } ] }
 
 [[headers]]
   for = "/manifest.webmanifest"
