@@ -12,7 +12,7 @@
 
 [[redirects]]
   from = "/@api/*"
-  to = "https://api.besscroft.com:splat"
+  to = "https://api.besscroft.com/@api:splat"
   status = 200
   force = true
 
