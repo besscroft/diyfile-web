@@ -6,13 +6,13 @@
   command = "pnpm run build:vite"
 
 [[redirects]]
-  from = "/(?!@api)/*"
-  to = "/index.html"
+  from = "/@api/*"
+  to = "https://api.besscroft.com/:splat"
   status = 200
 
 [[redirects]]
-  from = "/@api/*"
-  to = "https://api.besscroft.com/*"
+  from = "/(?!@api)/*"
+  to = "/index.html"
   status = 200
 
 [[headers]]
