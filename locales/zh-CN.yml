@@ -57,6 +57,7 @@ menu:
     index: 配置
     backup: 备份
     storage: 存储
+    sync: 同步
   system:
     index: 系统
     setting: 设置

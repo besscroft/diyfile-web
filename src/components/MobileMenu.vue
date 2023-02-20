@@ -41,6 +41,12 @@ const routerPage = (val: string) => {
             </template>
             <template #default>{{ t('menu.setting.backup') }}</template>
           </a-doption>
+          <a-doption @click="routerPage('2_2')">
+            <template #icon>
+              <icon-send />
+            </template>
+            <template #default>{{ t('menu.setting.sync') }}</template>
+          </a-doption>
         </template>
       </a-dropdown>
     </a-col>

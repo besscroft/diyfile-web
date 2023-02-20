@@ -57,6 +57,7 @@ menu:
     index: Manage
     backup: Backup
     storage: Storage
+    sync: Sync
   system:
     index: System
     setting: Setting
