@@ -28,6 +28,8 @@ const routerPage = (val: string) => {
     router.push('/@admin/setting/storage')
   } else if (val === '2_1') {
     router.push('/@admin/setting/backup')
+  } else if (val === '2_2') {
+    router.push('/@admin/setting/sync')
   } else if (val === '3_0') {
     router.push('/@admin/system/setting')
   } else if (val === '3_1') {
