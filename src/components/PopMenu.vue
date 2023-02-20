@@ -31,7 +31,7 @@ const routerPage = (val: string) => {
       <template #title>{{ t('menu.setting.index') }}</template>
       <a-menu-item key="2_0" @click="routerPage('2_0')"><icon-save />{{ t('menu.setting.storage') }}</a-menu-item>
       <a-menu-item key="2_1" @click="routerPage('2_1')"><icon-send />{{ t('menu.setting.backup') }}</a-menu-item>
-      <a-menu-item key="2_2" @click="routerPage('2_2')"><icon-send />{{ t('menu.setting.sync') }}</a-menu-item>
+      <a-menu-item key="2_2" @click="routerPage('2_2')"><icon-sync />{{ t('menu.setting.sync') }}</a-menu-item>
     </a-sub-menu>
     <a-sub-menu key="3">
       <template #icon><icon-settings /></template>

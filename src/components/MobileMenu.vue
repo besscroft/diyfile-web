@@ -43,7 +43,7 @@ const routerPage = (val: string) => {
           </a-doption>
           <a-doption @click="routerPage('2_2')">
             <template #icon>
-              <icon-send />
+              <icon-sync />
             </template>
             <template #default>{{ t('menu.setting.sync') }}</template>
           </a-doption>
