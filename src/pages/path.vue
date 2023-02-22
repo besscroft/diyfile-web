@@ -195,6 +195,7 @@ watch(() => {
 onMounted(() => {
   const path = router.currentRoute.value.params.path
   const key = router.currentRoute.value.params.storageKey
+  // TODO 获取存储源类型
   handleEnableStorage()
   try {
     const fullPath = router.currentRoute.value.path

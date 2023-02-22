@@ -15,7 +15,11 @@ const routes = ref<Array<any>>([
 onBeforeMount(() => {
   getDefaultStorage().then((res) => {
     if (res.code === 200) {
-      router.push({ path: `/${res.data.storageKey}` })
+      if (res.data.storageKey) {
+        router.push({ path: `/${res.data.storageKey}` })
+      } else {
+        loading.value = false
+      }
     }
   }).catch((err) => {
     console.log(err)
