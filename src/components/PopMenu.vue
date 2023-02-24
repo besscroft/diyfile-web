@@ -23,7 +23,7 @@ const routerPage = (val: string) => {
     @collapse="onMenuCollapse"
   >
     <a-menu-item key="1" @click="routerPage('admin')">
-      <template #icon><icon-apps></icon-apps></template>
+      <template #icon><icon-apps /></template>
       {{ t('menu.index') }}
     </a-menu-item>
     <a-sub-menu key="2">

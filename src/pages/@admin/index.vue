@@ -71,9 +71,9 @@ handServerInfo()
         <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
           <a-card title="关于" hoverable>
             🧪 Working in Progress
-            <br />
+            <br>
             一款好看的在线文件列表程序，支持多种存储，支持多种部署方式。
-            <br />
+            <br>
             由 Spring Boot 3 和 Vue 驱动，积极开发、错误修复和增强功能！
           </a-card>
         </div>
@@ -108,15 +108,15 @@ handServerInfo()
     <a-drawer
       :visible="visible.value"
       placement="top"
+      :closable="false"
       @ok="handleOk"
       unmountOnClose
       hideCancel
-      :closable="false"
     >
       <template #title>
         Oops!
       </template>
-      <div>如你所见，还有诸多问题，所以还在闭源开发中，请耐心等待！如果你想一起参与，可联系我！</div>
+      <div>如你所见，还有诸多问题，积极修复中，请耐心等待！如果你想一起参与，可联系我！</div>
     </a-drawer>
   </div>
 </template>

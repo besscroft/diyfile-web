@@ -158,10 +158,10 @@ onBeforeMount(() => {
           <a-button type="primary" @click="handleSubmit(formRef)">{{ t('button.submit') }}</a-button>
         </a-space>
       </template>
-      <icon-arrow-left class="cursor-pointer" @click="router.back()"/>
-      <br/>
+      <icon-arrow-left class="cursor-pointer" @click="router.back()" />
+      <br>
       <a-row>
-        <a-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6"></a-col>
+        <a-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6" />
         <a-col :xs="22" :sm="12" :md="12" :lg="12" :xl="12" :xxl="12">
           <a-form ref="formRef" :model="updateStorageForm" layout="vertical">
             <a-form-item field="name" :label="t('storage.name')" required>
@@ -171,26 +171,26 @@ onBeforeMount(() => {
               <a-input v-model="updateStorageForm.storageKey" placeholder="请输入 storageKey" :max-length="{ length: 20, errorOnly: true }" show-word-limit allow-clear />
             </a-form-item>
             <a-form-item field="client_id" label="客户端ID" :help="client_id.description" required>
-              <a-textarea v-model="updateStorageForm.client_id" placeholder="请输入客户端ID" allow-clear auto-size show-word-limit/>
+              <a-textarea v-model="updateStorageForm.client_id" placeholder="请输入客户端ID" allow-clear auto-size show-word-limit />
             </a-form-item>
             <a-form-item field="client_secret" label="客户端机密" :help="client_secret.description" required>
-              <a-textarea v-model="updateStorageForm.client_secret" placeholder="请输入客户端机密" allow-clear auto-size show-word-limit/>
+              <a-textarea v-model="updateStorageForm.client_secret" placeholder="请输入客户端机密" allow-clear auto-size show-word-limit />
             </a-form-item>
             <a-form-item field="refresh_token" label="刷新令牌" :help="refresh_token.description" required>
-              <a-textarea v-model="updateStorageForm.refresh_token" placeholder="请输入刷新令牌" allow-clear auto-size show-word-limit/>
+              <a-textarea v-model="updateStorageForm.refresh_token" placeholder="请输入刷新令牌" allow-clear auto-size show-word-limit />
             </a-form-item>
             <a-form-item field="redirect_uri" label="重定向 URI" :help="redirect_uri.description" required>
-              <a-textarea v-model="updateStorageForm.redirect_uri" placeholder="请输入重定向 URI" allow-clear auto-size show-word-limit/>
+              <a-textarea v-model="updateStorageForm.redirect_uri" placeholder="请输入重定向 URI" allow-clear auto-size show-word-limit />
             </a-form-item>
             <a-form-item field="mount_path" label="挂载路径" :help="mount_path.description" required>
-              <a-textarea v-model="updateStorageForm.mount_path" placeholder="请输入挂载路径" allow-clear auto-size show-word-limit/>
+              <a-textarea v-model="updateStorageForm.mount_path" placeholder="请输入挂载路径" allow-clear auto-size show-word-limit />
             </a-form-item>
             <a-form-item field="remark" :label="t('storage.remark')">
               <a-textarea v-model="updateStorageForm.remark" placeholder="请输入备注" allow-clear auto-size :max-length="{ length: 200, errorOnly: true }" show-word-limit />
             </a-form-item>
           </a-form>
         </a-col>
-        <a-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6"></a-col>
+        <a-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6" />
       </a-row>
     </a-card>
   </div>

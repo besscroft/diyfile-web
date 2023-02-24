@@ -84,10 +84,9 @@ const dataList = ref<Array<any>>([
             </svg>
           </summary>
 
-          <p :class="isDark ? 'px-4 mt-4 leading-relaxed text-gray-100' : 'px-4 mt-4 leading-relaxed text-gray-700'" v-html="item.content"></p>
+          <p :class="isDark ? 'px-4 mt-4 leading-relaxed text-gray-100' : 'px-4 mt-4 leading-relaxed text-gray-700'" v-html="item.content" />
         </details>
       </div>
-
     </a-card>
   </div>
 </template>

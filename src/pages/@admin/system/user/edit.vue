@@ -77,10 +77,10 @@ onMounted(() => {
           <a-button type="primary" @click="handleSubmit">{{ t('button.submit') }}</a-button>
         </a-space>
       </template>
-      <icon-arrow-left class="cursor-pointer" @click="router.back()"/>
-      <br/>
+      <icon-arrow-left class="cursor-pointer" @click="router.back()" />
+      <br>
       <a-row>
-        <a-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6"></a-col>
+        <a-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6" />
         <a-col :xs="22" :sm="12" :md="12" :lg="12" :xl="12" :xxl="12">
           <a-form :model="updateUserRuleForm" layout="vertical">
             <a-form-item field="avatar" :label="t('user.avatar')">
@@ -119,9 +119,8 @@ onMounted(() => {
               <a-textarea v-model="updateUserRuleForm.remark" placeholder="请输入备注" allow-clear auto-size :max-length="{ length: 200, errorOnly: true }" show-word-limit />
             </a-form-item>
           </a-form>
-          <!-- TODO 表单校验 -->
         </a-col>
-        <a-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6"></a-col>
+        <a-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6" />
       </a-row>
     </a-card>
   </div>

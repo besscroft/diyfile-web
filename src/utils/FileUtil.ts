@@ -3,6 +3,11 @@ export const getRawExtension = (fileName: string): string => {
   return fileName.slice(((fileName.lastIndexOf('.') - 1) >>> 0) + 2).toLowerCase()
 }
 
+/** 获取文件名 */
+export const getFileName = (filePath: string): string => {
+  return filePath.substring(filePath.lastIndexOf('/') + 1)
+}
+
 /** 判断是否为 md 文件 */
 export const isMarkdown = (fileName: string): boolean => {
   const ext = getRawExtension(fileName)

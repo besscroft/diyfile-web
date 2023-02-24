@@ -25,7 +25,7 @@ const onMenuCollapse = () => {
 <template>
   <a-layout style="height: 100%;">
     <a-layout-header>
-      <Header @onMenuCollapse="onMenuCollapse" @toggleTheme="toggleTheme" :value="props" />
+      <Header :value="props" @onMenuCollapse="onMenuCollapse" @toggleTheme="toggleTheme" />
     </a-layout-header>
     <a-layout>
       <a-layout-content style="margin-bottom: 56px;">
