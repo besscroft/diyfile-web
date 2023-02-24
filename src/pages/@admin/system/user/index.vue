@@ -9,9 +9,11 @@ const loading = ref<Boolean>(true)
 const { t } = useI18n()
 const { isMobile } = useDevice()
 const dataList = ref()
-const total = ref<number>()
-const pageNum = ref<number>(1)
-const pageSize = ref<number>(7)
+const pageInfo = reactive({
+  total: 0,
+  pageNum: 1,
+  pageSize: 7,
+})
 const roleFlag = ref<string>('')
 const data = reactive({
   form: {},
@@ -36,13 +38,13 @@ const useUserPage = (role: string) => {
     data.queryParam.role = ''
     roleFlag.value = ''
   }
-  data.queryParam.pageNum = pageNum.value
-  data.queryParam.pageSize = pageSize.value
+  data.queryParam.pageNum = pageInfo.pageNum
+  data.queryParam.pageSize = pageInfo.pageSize
   loading.value = true
   userPage(data.queryParam).then((res) => {
     if (res.code === 200) {
+      pageInfo.total = res.data.total
       dataList.value = res.data.list
-      total.value = res.data.total
     }
     loading.value = false
   })
@@ -254,12 +256,12 @@ useUserPage('')
         </a-col>
       </a-row>
       <a-pagination
-        :total="total"
-        :page-size="pageSize"
-        :current="pageNum"
+        :total="pageInfo.total"
+        :page-size="pageInfo.pageSize"
+        :current="pageInfo.pageNum"
         :show-total="true"
         class="mt-4"
-        @change="(current) => { pageNum = current; useUserPage(roleFlag) }"
+        @change="(current) => { pageInfo.pageNum = current; useUserPage(roleFlag) }"
       />
     </a-card>
   </div>
