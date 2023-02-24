@@ -15,7 +15,11 @@ const routes = ref<Array<any>>([
 onBeforeMount(() => {
   getDefaultStorage().then((res) => {
     if (res.code === 200) {
-      router.push({ path: `/${res.data.storageKey}` })
+      if (res.data.storageKey) {
+        router.push({ path: `/${res.data.storageKey}` })
+      } else {
+        loading.value = false
+      }
     }
   }).catch((err) => {
     console.log(err)
@@ -35,7 +39,7 @@ onBeforeMount(() => {
     }"
   >
     <a-row :gutter="20" :style="{ marginBottom: '20px' }">
-      <a-col :xs="1" :sm="2" :md="2" :lg="3" :xl="4" :xxl="4"></a-col>
+      <a-col :xs="1" :sm="2" :md="2" :lg="3" :xl="4" :xxl="4" />
       <a-col :xs="22" :sm="20" :md="20" :lg="18" :xl="16" :xxl="16">
         <a-tag color="gray">
           <template #icon>
@@ -60,7 +64,7 @@ onBeforeMount(() => {
           </a-empty>
         </a-card>
       </a-col>
-      <a-col :xs="1" :sm="2" :md="2" :lg="3" :xl="4" :xxl="4"></a-col>
+      <a-col :xs="1" :sm="2" :md="2" :lg="3" :xl="4" :xxl="4" />
     </a-row>
   </div>
 </template>

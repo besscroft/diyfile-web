@@ -28,14 +28,16 @@ onMounted(() => {
 
 <template>
   <a-space wrap>
-    <template v-if="isLoading"> Loading... </template>
+    <template v-if="isLoading">
+      Loading...
+    </template>
 
     <template v-else>
       <div class="inline-flex items-center justify-center gap-3">
         <a
-          @click="page > 1 ? page-- : page"
           href="#"
           class="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-100"
+          @click="page > 1 ? page-- : page"
         >
           <span class="sr-only">Next Page</span>
           <svg
@@ -59,9 +61,9 @@ onMounted(() => {
         </p>
 
         <a
-          @click="page < pageCount ? page++ : page"
           href="#"
           class="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-100"
+          @click="page < pageCount ? page++ : page"
         >
           <span class="sr-only">Next Page</span>
           <svg
@@ -80,20 +82,20 @@ onMounted(() => {
       </div>
     </template>
   </a-space>
-  <a-divider></a-divider>
+  <a-divider />
   <VuePdfEmbed
     ref="pdfRef"
     :source="pdfSource"
     :page="page"
     @rendered="handleDocumentRender"
   />
-  <a-divider></a-divider>
+  <a-divider />
   <template v-if="!isLoading">
     <div class="inline-flex items-center justify-center gap-3">
       <a
-        @click="page > 1 ? page-- : page"
         href="#"
         class="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-100"
+        @click="page > 1 ? page-- : page"
       >
         <span class="sr-only">Next Page</span>
         <svg
@@ -117,9 +119,9 @@ onMounted(() => {
       </p>
 
       <a
-        @click="page < pageCount ? page++ : page"
         href="#"
         class="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-100"
+        @click="page < pageCount ? page++ : page"
       >
         <span class="sr-only">Next Page</span>
         <svg
@@ -137,12 +139,14 @@ onMounted(() => {
       </a>
     </div>
   </template>
-  <a-divider orientation="left">{{ t('table.Optional') }}</a-divider>
+  <a-divider orientation="left">
+    {{ t('table.Optional') }}
+  </a-divider>
   <a-space wrap>
-    <button type="button" @click='handleDownload(fileInfo.value.url)' class="inline-block px-6 py-2 border-2 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+    <button type="button" class="inline-block px-6 py-2 border-2 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out" @click="handleDownload(fileInfo.value.url)">
       <icon-download /> {{ t('button.download') }}
     </button>
-    <button type="button" @click='copy(fileInfo.value.url)' class="inline-block px-6 py-2 border-2 border-blue-400 text-blue-400 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+    <button type="button" class="inline-block px-6 py-2 border-2 border-blue-400 text-blue-400 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out" @click="copy(fileInfo.value.url)">
       <icon-copy /> {{ !copied ? t('button.copyUrl') : t('button.copyOk') }}
     </button>
     <button type="button" class="cursor-not-allowed inline-block px-6 py-2 border-2 border-gray-200 text-gray-200 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">

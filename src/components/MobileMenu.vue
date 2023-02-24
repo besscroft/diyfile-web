@@ -13,7 +13,7 @@ const routerPage = (val: string) => {
 <template>
   <a-row style="height: 56px; background-color: var(--color-bg-2); text-align: center;" class="items-center">
     <a-col :flex="4">
-      <a-button aria-label="dashboard" @click="routerPage('admin')" type="text">
+      <a-button aria-label="dashboard" type="text" @click="routerPage('admin')">
         <template #icon>
           <icon-apps />
         </template>

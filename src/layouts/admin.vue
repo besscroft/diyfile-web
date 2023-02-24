@@ -45,16 +45,16 @@ const routerPage = (val: string) => {
 <template>
   <a-layout style="height: 100%;">
     <a-layout-header>
-      <Header @toggleTheme="toggleTheme" :value="props" />
+      <Header :value="props" @toggleTheme="toggleTheme" />
     </a-layout-header>
     <a-layout>
       <a-layout-sider
+        v-if="!isMobile"
         hide-trigger
         collapsible
         :collapsed="menuStatus"
-        v-if="!isMobile"
       >
-        <PopMenu @onMenuCollapse="onMenuCollapse" @routerPage="routerPage"/>
+        <PopMenu @onMenuCollapse="onMenuCollapse" @routerPage="routerPage" />
       </a-layout-sider>
       <a-layout-content v-if="isMobile" style="margin-bottom: 56px;">
         <RouterView />

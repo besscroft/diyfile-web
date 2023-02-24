@@ -3,7 +3,7 @@ import { Message } from '@arco-design/web-vue'
 import { deleteFile, getFileInfo, getFileItemByKey, getUploadUrl } from '~/api/modules/file'
 import { getEnableStorage } from '~/api/modules/storage'
 import { download } from '~/utils/ButtonUtil'
-import { isAudio, isImage, isMarkdown, isPDF, isText, isVideo } from '~/utils/FileUtil'
+import { getFileName, isAudio, isImage, isMarkdown, isPDF, isText, isVideo } from '~/utils/FileUtil'
 import { uploadOneDrive } from '~/utils/uploadFileUtil'
 
 const { text, copy, copied } = useClipboard()
@@ -182,7 +182,7 @@ watch(() => {
     if (params && params.includes('.')) {
       // 包含 . 的可能是文件
       handleRouterChange(key, path)
-      handleFile(storageKey.value, path.slice(`/${key}`.length, path.length), path.substring(path.lastIndexOf('/') + 1))
+      handleFile(storageKey.value, path.slice(`/${key}`.length, path.length), getFileName(path))
     } else {
       // 不包含 . 的可能是文件夹
       handleRouterChange(key, path)
@@ -195,6 +195,7 @@ watch(() => {
 onMounted(() => {
   const path = router.currentRoute.value.params.path
   const key = router.currentRoute.value.params.storageKey
+  // TODO 获取存储源类型
   handleEnableStorage()
   try {
     const fullPath = router.currentRoute.value.path
@@ -277,8 +278,7 @@ onMounted(() => {
             :customRequest="(option) => onRequestUpload(option)"
             @success="() => { Message.success('上传成功！') }"
             draggable
-          >
-          </a-upload>
+          />
           <a-spin v-if="loading" :size="32" class="flex justify-center">
             <template #icon>
               <icon-sync />

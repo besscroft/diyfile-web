@@ -7,9 +7,11 @@ const router = useRouter()
 const { t } = useI18n()
 const { isMobile } = useDevice()
 const dataList = ref<Array<Object>>([])
-const total = ref<number>()
-const pageNum = ref<number>(1)
-const pageSize = ref<number>(7)
+const pageInfo = reactive({
+  total: 0,
+  pageNum: 1,
+  pageSize: 7,
+})
 const typeFlag = ref<any>()
 const loading = ref<Boolean>(true)
 const data = reactive({
@@ -35,13 +37,13 @@ const handleStoragePage = (type: number) => {
     data.queryParam.type = type
     typeFlag.value = type
   }
-  data.queryParam.pageNum = pageNum.value
-  data.queryParam.pageSize = pageSize.value
+  data.queryParam.pageNum = pageInfo.pageNum
+  data.queryParam.pageSize = pageInfo.pageSize
   loading.value = true
   storagePage(data.queryParam).then((res) => {
     if (res.code === 200) {
+      pageInfo.total = res.data.total
       dataList.value = res.data.list
-      total.value = res.data.total
     }
     loading.value = false
   })
@@ -257,12 +259,12 @@ handleStoragePage(-1)
         </a-col>
       </a-row>
       <a-pagination
-        :total="total"
-        :page-size="pageSize"
-        :current="pageNum"
+        :total="pageInfo.total"
+        :page-size="pageInfo.pageSize"
+        :current="pageInfo.pageNum"
         :show-total="true"
         class="mt-4"
-        @change="(current) => { pageNum = current; handleStoragePage(typeFlag) }"
+        @change="(current) => { pageInfo.pageNum = current; handleStoragePage(typeFlag) }"
       />
     </a-card>
   </div>

@@ -30,6 +30,7 @@ const routerPage = (val: string) => {
 /** 切换语言 */
 const toggleLocales = (item: any) => {
   locale.value = item
+  user.setLanguage(item)
   localStorage.setItem('diyfile-locale', item)
 }
 

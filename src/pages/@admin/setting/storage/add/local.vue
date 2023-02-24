@@ -80,10 +80,10 @@ const handleSubmit = (formEl: FormInstance) => {
           <a-button type="primary" @click="handleSubmit(formRef)">{{ t('button.submit') }}</a-button>
         </a-space>
       </template>
-      <icon-arrow-left class="cursor-pointer" @click="router.back()"/>
-      <br/>
+      <icon-arrow-left class="cursor-pointer" @click="router.back()" />
+      <br>
       <a-row>
-        <a-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6"></a-col>
+        <a-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6" />
         <a-col :xs="22" :sm="12" :md="12" :lg="12" :xl="12" :xxl="12">
           <a-form ref="formRef" :model="addStorageForm" layout="vertical">
             <a-form-item field="name" :label="t('storage.name')" required>
@@ -93,14 +93,14 @@ const handleSubmit = (formEl: FormInstance) => {
               <a-input v-model="addStorageForm.storageKey" placeholder="请输入 storageKey" :max-length="{ length: 20, errorOnly: true }" show-word-limit allow-clear />
             </a-form-item>
             <a-form-item field="mount_path" label="挂载路径" :help="mount_path.description" required>
-              <a-textarea v-model="addStorageForm.mount_path" placeholder="请输入挂载路径" allow-clear auto-size show-word-limit/>
+              <a-textarea v-model="addStorageForm.mount_path" placeholder="请输入挂载路径" allow-clear auto-size show-word-limit />
             </a-form-item>
             <a-form-item field="remark" :label="t('storage.remark')">
               <a-textarea v-model="addStorageForm.remark" placeholder="请输入备注" allow-clear auto-size :max-length="{ length: 200, errorOnly: true }" show-word-limit />
             </a-form-item>
           </a-form>
         </a-col>
-        <a-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6"></a-col>
+        <a-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6" />
       </a-row>
     </a-card>
   </div>
