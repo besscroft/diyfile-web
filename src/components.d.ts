@@ -63,6 +63,7 @@ declare module '@vue/runtime-core' {
     AudioPreview: typeof import('./components/previews/AudioPreview.vue')['default']
     AUpload: typeof import('@arco-design/web-vue')['Upload']
     Footer: typeof import('./components/Footer.vue')['default']
+    GoBack: typeof import('./components/GoBack.vue')['default']
     Header: typeof import('./components/Header.vue')['default']
     ImagePreview: typeof import('./components/previews/ImagePreview.vue')['default']
     MarkdownPreview: typeof import('./components/previews/MarkdownPreview.vue')['default']

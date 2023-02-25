@@ -11,7 +11,6 @@
     "preview": "vite preview",
     "preview-https": "serve dist",
     "test": "vitest",
-    "test:e2e": "cypress open",
     "test:unit": "vitest",
     "typecheck": "vue-tsc --noEmit",
     "up": "taze major -I"
@@ -53,7 +52,6 @@
     "@vue/test-utils": "^2.2.7",
     "critters": "^0.0.16",
     "cross-env": "^7.0.3",
-    "cypress": "^12.3.0",
     "eslint": "^8.32.0",
     "eslint-plugin-cypress": "^2.12.1",
     "https-localhost": "^4.7.1",

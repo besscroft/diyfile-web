@@ -10,7 +10,7 @@ const { isMobile } = useDevice()
 
 const loginForm = reactive<Login.ReqLoginForm>({
   username: '',
-  password: ''
+  password: '',
 })
 
 const handleSubmit = () => {

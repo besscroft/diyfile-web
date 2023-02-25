@@ -31,7 +31,7 @@ useDetail()
     }"
   >
     <a-card hoverable :style="{ height: '100%' }" :title="t('table.UserInfo')">
-      <icon-arrow-left class="cursor-pointer" @click="router.back()" /> {{ t('button.back') }}
+      <GoBack />
       <br>
       <a-space v-if="loading" direction="vertical" size="large" :style="{ width: '100%' }">
         <a-skeleton animation="animation">

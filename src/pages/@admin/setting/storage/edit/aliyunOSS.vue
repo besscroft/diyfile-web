@@ -155,7 +155,7 @@ onBeforeMount(() => {
           <a-button type="primary" @click="handleSubmit(formRef)">{{ t('button.submit') }}</a-button>
         </a-space>
       </template>
-      <icon-arrow-left class="cursor-pointer" @click="router.back()" />
+      <GoBack />
       <br>
       <a-row>
         <a-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6" />
@@ -189,7 +189,7 @@ onBeforeMount(() => {
         </a-col>
         <a-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6" />
       </a-row>
-      开发中
+      当心被刷流量，后续将支持 CloudFlare
     </a-card>
   </div>
 </template>

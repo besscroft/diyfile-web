@@ -12,6 +12,7 @@ enum Api {
   StorageAdd = '/storage/add',
   StorageUpdate = '/storage/update',
   StorageInfo = '/storage/info',
+  StorageInfoByKey = '/storage/infoByKey',
   StorageUpdateStatus = '/storage/updateStatus',
   StorageSetDefault = '/storage/setDefault',
   GetEnableStorage = '/storage/getEnableStorage',
@@ -30,6 +31,11 @@ export const storageDelete = (storageId: number) => {
 /** 存储详情接口 */
 export const storageInfo = (storageId: number) => {
   return http.get<Result>(`${API_URL + Api.StorageInfo}/${storageId}`)
+}
+
+/** 存储详情接口(不鉴权，脱敏处理) */
+export const storageInfoByStorageKey = (storageKey: string) => {
+  return http.get<Result>(`${API_URL + Api.StorageInfoByKey}/${storageKey}`)
 }
 
 /** 存储新增接口 */
