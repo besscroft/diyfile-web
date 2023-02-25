@@ -150,6 +150,7 @@ const handleRouter = () => {
 
 /** 删除文件 */
 const handleDelete = (option: any) => {
+  console.log(option)
   const url = `${option.path}/${encodeURIComponent(option.name)}`
   deleteFile(storageKey.value, url).then((res) => {
     if (res.code === 200) {
@@ -354,7 +355,7 @@ onMounted(() => {
                   <a-space :size="4">
                     <icon-download v-if="record.type === 'file'" class="cursor-pointer" @click="download(record.url)" />
                     <icon-copy v-if="record.type === 'file'" class="cursor-pointer" @click="handleShare(record.url)" />
-                    <a-popconfirm content="确定要删除吗?" type="warning" :on-ok="() => handleDelete(record)">
+                    <a-popconfirm content="确定要删除吗?" type="warning" :onOk="() => handleDelete(record)">
                       <icon-delete v-if="record.type === 'file'" class="cursor-pointer" />
                     </a-popconfirm>
                   </a-space>
