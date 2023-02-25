@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { Message } from '@arco-design/web-vue'
 import { deleteFile, getFileInfo, getFileItemByKey, getUploadUrl } from '~/api/modules/file'
-import { getEnableStorage } from '~/api/modules/storage'
+import { getEnableStorage, storageInfoByStorageKey } from '~/api/modules/storage'
+import type { Storage } from '~/types/storage'
 import { download } from '~/utils/ButtonUtil'
 import { getFileName, isAudio, isImage, isMarkdown, isPDF, isText, isVideo } from '~/utils/FileUtil'
 import { uploadOneDrive } from '~/utils/uploadFileUtil'
@@ -18,6 +19,7 @@ const loading = ref<boolean>(true)
 const uploadView = ref<boolean>(false)
 const storageList = ref()
 const storageName = ref<string>()
+const storageInfo = ref<Storage>()
 // 面包屑路由
 const routes = ref<Array<any>>([
   {
@@ -25,6 +27,17 @@ const routes = ref<Array<any>>([
     label: 'Home',
   },
 ])
+
+/** 获取存储信息 */
+const getStorageInfo = (key: string) => {
+  if (!storageInfo.value || storageInfo.value?.storageKey !== key) {
+    storageInfoByStorageKey(key).then((res) => {
+      if (res.code === 200) {
+        storageInfo.value = res.data
+      }
+    })
+  }
+}
 
 /** 获取所有可用存储并处理 */
 const handleEnableStorage = () => {
@@ -123,6 +136,7 @@ const handleFile = (key: string | any, uri: string | any, fileName: string) => {
 /** 处理文件夹路由 */
 const handleRouter = () => {
   const key = router.currentRoute.value.params.storageKey
+  getStorageInfo(key.toString())
   storageKey.value = key
   const path = router.currentRoute.value.path.toString()
   const uri = path.slice(`/${storageKey.value}`.length, path.length)
@@ -195,7 +209,7 @@ watch(() => {
 onMounted(() => {
   const path = router.currentRoute.value.params.path
   const key = router.currentRoute.value.params.storageKey
-  // TODO 获取存储源类型
+  getStorageInfo(key.toString())
   handleEnableStorage()
   try {
     const fullPath = router.currentRoute.value.path
@@ -246,12 +260,14 @@ onMounted(() => {
           <a-dropdown>
             <icon-down class="cursor-pointer mx-0.5" />
             <template #content>
-              <a-dgroup title="操作">
+              <a-dgroup v-if="!loading && storageInfo.type === 1" title="操作">
                 <a-doption @click="uploadView = true">
                   <template #icon>
                     <icon-upload />
                   </template>
-                  <template #default>上传</template>
+                  <template #default>
+                    上传
+                  </template>
                 </a-doption>
               </a-dgroup>
               <a-dgroup v-if="!loading && storageList" title="驱动列表">
@@ -269,15 +285,15 @@ onMounted(() => {
         <a-card :bordered="false" :style="{ width: '100%' }">
           <a-upload
             v-if="!loading && uploadView"
-            :autoUpload="false"
-            :showRemoveButton="false"
-            :showCancelButton="false"
-            :showRetryButton="true"
-            :showPreviewButton="true"
-            :showLink="true"
-            :customRequest="(option) => onRequestUpload(option)"
-            @success="() => { Message.success('上传成功！') }"
+            :auto-upload="false"
+            :show-remove-button="false"
+            :show-cancel-button="false"
+            :show-retry-button="true"
+            :show-preview-button="true"
+            :show-link="true"
+            :custom-request="(option) => onRequestUpload(option)"
             draggable
+            @success="() => { Message.success('上传成功！') }"
           />
           <a-spin v-if="loading" :size="32" class="flex justify-center">
             <template #icon>
@@ -337,7 +353,7 @@ onMounted(() => {
                   <a-space :size="4">
                     <icon-download v-if="record.type === 'file'" class="cursor-pointer" @click="download(record.url)" />
                     <icon-copy v-if="record.type === 'file'" class="cursor-pointer" @click="handleShare(record.url)" />
-                    <a-popconfirm content="确定要删除吗?" type="warning" :onOk="() => handleDelete(record)">
+                    <a-popconfirm content="确定要删除吗?" type="warning" :on-ok="() => handleDelete(record)">
                       <icon-delete v-if="record.type === 'file'" class="cursor-pointer" />
                     </a-popconfirm>
                   </a-space>
