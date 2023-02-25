@@ -123,8 +123,8 @@ const handleSubmit = (formEl: FormInstance) => {
           <a-button type="primary" @click="handleSubmit(formRef)">{{ t('button.submit') }}</a-button>
         </a-space>
       </template>
-      <icon-arrow-left class="cursor-pointer" @click="router.back()" />
-      <br />
+      <GoBack />
+      <br>
       <a-row>
         <a-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6" />
         <a-col :xs="22" :sm="12" :md="12" :lg="12" :xl="12" :xxl="12">

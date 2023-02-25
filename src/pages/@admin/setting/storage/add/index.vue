@@ -14,7 +14,7 @@ const { t } = useI18n()
     }"
   >
     <a-card hoverable :style="{ height: '100%', padding: '0.25rem' }" :title="t('tip.cardTitle')">
-      <icon-arrow-left class="cursor-pointer" @click="router.back()" />
+      <GoBack />
       <br>
       <a-row>
         <a-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6" />
