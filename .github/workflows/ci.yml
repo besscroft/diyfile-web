@@ -4,10 +4,12 @@ on:
   push:
     branches:
       - main
+      - dev
 
   pull_request:
     branches:
       - main
+      - dev
 
 jobs:
   test-e2e:
@@ -38,5 +40,5 @@ jobs:
         uses: cypress-io/github-action@v4
         with:
           install-command: echo
-          build: pnpm run build
+          build: pnpm run build:vite
           start: npx vite --port 3333
