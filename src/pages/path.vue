@@ -56,6 +56,7 @@ const handleEnableStorage = () => {
 /** 选择框发生变化 */
 const handleSelectChange = (name: string, value: string) => {
   if (value !== storageKey.value) {
+    storageKey.value = value
     fileInfo.value = null
     dataList.value = null
     uploadView.value = false
@@ -168,7 +169,7 @@ const handleRouterChange = (key: any, uri: any) => {
     })
     const item = router.currentRoute.value.params.path.length
     for (let i = 0; i < item; i++) {
-      let currentPath = '/od'
+      let currentPath = `/${key}`
       for (let j = 0; j < i + 1; j++) {
         currentPath += `/${router.currentRoute.value.params.path[j]}`
       }
@@ -190,13 +191,13 @@ const handleRouterChange = (key: any, uri: any) => {
 watch(() => {
   return router.currentRoute.value.path
 }, (path) => {
-  const key = storageKey.value
+  const key = router.currentRoute.value.params.storageKey
   if (path !== '/' && !path.startsWith('/@')) {
     const params = path.slice(((path.lastIndexOf('/') - 1) >>> 0) + 2)
     if (params && params.includes('.')) {
       // 包含 . 的可能是文件
       handleRouterChange(key, path)
-      handleFile(storageKey.value, path.slice(`/${key}`.length, path.length), getFileName(path))
+      handleFile(key, path.slice(`/${key}`.length, path.length), getFileName(path))
     } else {
       // 不包含 . 的可能是文件夹
       handleRouterChange(key, path)
