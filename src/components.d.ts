@@ -10,7 +10,6 @@ declare module '@vue/runtime-core' {
     AAlert: typeof import('@arco-design/web-vue')['Alert']
     AAutoComplete: typeof import('@arco-design/web-vue')['AutoComplete']
     AAvatar: typeof import('@arco-design/web-vue')['Avatar']
-    ABackTop: typeof import('@arco-design/web-vue')['BackTop']
     ABreadcrumb: typeof import('@arco-design/web-vue')['Breadcrumb']
     AButton: typeof import('@arco-design/web-vue')['Button']
     ACard: typeof import('@arco-design/web-vue')['Card']
