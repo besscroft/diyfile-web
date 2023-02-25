@@ -88,7 +88,6 @@ const handleFormData = () => {
 }
 
 const handleSubmit = (formEl: FormInstance) => {
-  Message.info('开发中！')
   formEl.validate((valid) => {
     if ((!valid)) {
       addStorageData.value.name = addStorageForm.name
@@ -156,7 +155,7 @@ const handleSubmit = (formEl: FormInstance) => {
         </a-col>
         <a-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6" />
       </a-row>
-      开发中
+      当心被刷流量，后续将支持 CloudFlare
     </a-card>
   </div>
 </template>

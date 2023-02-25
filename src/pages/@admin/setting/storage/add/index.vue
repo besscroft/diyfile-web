@@ -23,7 +23,7 @@ const { t } = useI18n()
           <a-space direction="vertical" fill>
             <a-button type="primary" long disabled @click="router.push({ path: '/@admin/setting/storage/add/local', query: { type: 0 } })">本地存储(开发中)</a-button>
             <a-button type="primary" long @click="router.push({ path: '/@admin/setting/storage/add/oneDrive', query: { type: 1 } })">OneDrive</a-button>
-            <a-button type="primary" long disabled @click="router.push({ path: '/@admin/setting/storage/add/aliyunOSS', query: { type: 2 } })">阿里云OSS(开发中)</a-button>
+            <a-button type="primary" long @click="router.push({ path: '/@admin/setting/storage/add/aliyunOSS', query: { type: 2 } })">阿里云OSS(当心被刷流量，后续将支持 CloudFlare)</a-button>
             <a-button type="primary" long disabled>更多存储支持中...</a-button>
           </a-space>
         </a-col>
