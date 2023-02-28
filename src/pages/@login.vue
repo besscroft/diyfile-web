@@ -32,6 +32,8 @@ const handleSubmit = () => {
       })
       window.location.href = '/'
     }
+  }).catch((err) => {
+    Message.error(err.message)
   })
 }
 </script>

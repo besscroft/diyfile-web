@@ -139,6 +139,9 @@ onMounted(() => {
       </a>
     </div>
   </template>
+  <a-alert :show-icon="false">
+    正在预览：{{ fileInfo.value.name }}
+  </a-alert>
   <a-divider orientation="left">
     {{ t('table.Optional') }}
   </a-divider>
