@@ -109,8 +109,8 @@ onMounted(() => {
               <IconUser class="cursor-pointer" />
             </a-avatar>
             <template #content>
-              <div v-if="username">
-                <a-doption v-if="!router.currentRoute.value.path.startsWith('/@') && router.currentRoute.value.path !== '/'" @click="routerPage('/@admin')">{{ t('menu.index') }}</a-doption>
+              <div v-if="user.token">
+                <a-doption v-if="!router.currentRoute.value.path.startsWith('/@')" @click="routerPage('/@admin')">{{ t('menu.index') }}</a-doption>
                 <a-doption v-else @click="routerPage('/')">{{ t('button.home') }}</a-doption>
                 <a-doption @click="loginOut">{{ t('button.quit') }}</a-doption>
               </div>
