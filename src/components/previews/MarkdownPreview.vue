@@ -23,6 +23,9 @@ onBeforeMount(() => {
 
 <template>
   <div v-html="contentHtml" />
+  <a-alert :show-icon="false">
+    正在预览：{{ fileInfo.value.name }}
+  </a-alert>
   <a-divider orientation="left">{{ t('table.Optional') }}</a-divider>
   <a-space wrap>
     <button type="button" class="inline-block px-6 py-2 border-2 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out" @click="handleDownload(fileInfo.value.url)">
