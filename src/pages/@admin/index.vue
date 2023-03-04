@@ -1,26 +1,33 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { getServerInfo } from '~/api/modules/monitor'
+import { getServerInfo, getTotalInfo } from '~/api/modules/monitor'
 
 const router = useRouter()
 const { t } = useI18n()
 const visible = ref<Boolean>(false)
-const loading = ref<Boolean>(true)
+const loadingServer = ref<Boolean>(true)
+const loadingTotal = ref<Boolean>(true)
 const serverInfo = ref()
-const { isMobile } = useDevice()
+const totalInfo = ref()
 
 const handServerInfo = () => {
-  loading.value = true
+  loadingServer.value = true
   getServerInfo().then((res) => {
     if (res.code === 200) {
       serverInfo.value = res.data
     }
-    loading.value = false
+    loadingServer.value = false
   })
 }
 
-const handleClick = () => {
-  visible.value = true
+const handTotalInfo = () => {
+  loadingTotal.value = true
+  getTotalInfo().then((res) => {
+    if (res.code === 200) {
+      totalInfo.value = res.data
+    }
+    loadingTotal.value = false
+  })
 }
 
 const handleOk = () => {
@@ -28,6 +35,7 @@ const handleOk = () => {
 }
 
 handServerInfo()
+handTotalInfo()
 </script>
 
 <template>
@@ -43,7 +51,7 @@ handServerInfo()
     <a-card hoverable :style="{ height: '100%' }" :title="t('menu.index')">
       <template #extra>
         <a-space>
-          <a-button :loading="loading" @click="handServerInfo">
+          <a-button :loading="loadingServer" @click="handServerInfo">
             <template #icon>
               <icon-sync />
             </template>
@@ -52,7 +60,7 @@ handServerInfo()
       </template>
       <div class="flex flex-wrap flex-col sm:flex-row">
         <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[21rem] m-1">
-          <a-card :loading="loading" title="运行信息" hoverable>
+          <a-card :loading="loadingServer" title="运行信息" hoverable>
             <a-list>
               <a-list-item>服务器名称: {{ serverInfo.systemInfo.computerName }}</a-list-item>
               <a-list-item>服务器IP: {{ serverInfo.systemInfo.computerIp }}</a-list-item>
@@ -63,18 +71,27 @@ handServerInfo()
               <a-list-item>已用内存: {{ (serverInfo.memoryInfo.used / 1024 / 1024).toFixed(2) }} MB</a-list-item>
               <a-list-item>剩余内存: {{ (serverInfo.memoryInfo.free / 1024 / 1024).toFixed(2) }} MB</a-list-item>
               <a-list-item>
-                使用率: {{ ((serverInfo.memoryInfo.used / 1024 / 1024).toFixed(2) / (serverInfo.memoryInfo.total / 1024 / 1024).toFixed(2) * 100).toFixed(2) }} %
+                <a-progress :percent="((serverInfo.memoryInfo.used / 1024 / 1024).toFixed(2) / (serverInfo.memoryInfo.total / 1024 / 1024).toFixed(2)).toFixed(2)">
+                  <template v-slot:text="scope" >
+                    内存使用率 {{scope.percent * 100}}%
+                  </template>
+                </a-progress>
               </a-list-item>
             </a-list>
           </a-card>
         </div>
         <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
-          <a-card title="关于" hoverable>
-            🧪 Working in Progress
-            <br>
-            一款好看的在线文件列表程序，支持多种存储，支持多种部署方式。
-            <br>
-            由 Spring Boot 3 和 Vue 驱动，积极开发、错误修复和增强功能！
+          <a-card :loading="loadingTotal" title="概览" hoverable>
+            <a-card title="用户数量" :bordered="false" :style="{ width: '100%' }">
+              <a-statistic title="用户总数" :value="totalInfo.userCount" show-group-separator />
+              <a-divider direction="vertical" />
+              <a-statistic title="禁用数量" :value="totalInfo.userDisableCount" show-group-separator />
+            </a-card>
+            <a-card title="存储数量" :bordered="false" :style="{ width: '100%' }">
+              <a-statistic title="存储总数" :value="totalInfo.storageCount" show-group-separator />
+              <a-divider direction="vertical" />
+              <a-statistic title="启用数量" :value="totalInfo.storageActiveCount" show-group-separator />
+            </a-card>
           </a-card>
         </div>
         <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
@@ -83,24 +100,20 @@ handServerInfo()
               <a-list-item><icon-subscribed />MySQL 存储适配</a-list-item>
               <a-list-item><icon-subscribed />基于 openJDK 17 的 SpringBoot3 开发</a-list-item>
               <a-list-item><icon-subscribed />OneDrive 支持</a-list-item>
-              <a-list-item><icon-subscribe />多元化存储支持</a-list-item>
-              <a-list-item><icon-subscribe />多平台部署支持</a-list-item>
+              <a-list-item><icon-subscribed />多元化存储支持</a-list-item>
+              <a-list-item><icon-subscribed />多平台部署支持</a-list-item>
               <a-list-item><icon-subscribe />前端用 Vuetify 3 重写</a-list-item>
+              <a-list-item><icon-github />更多请查看 issues 计划列表</a-list-item>
             </a-list>
           </a-card>
         </div>
         <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
-          <a-card title="Deployment Support" hoverable>
-            <a-list>
-              <a-list-item><icon-subscribed /><a-link href="https://vercel.com/">Vercel</a-link></a-list-item>
-              <a-list-item><icon-subscribed /><a-link href="https://www.netlify.com/">Netlify</a-link></a-list-item>
-              <a-list-item><icon-subscribe /><a-link href="https://workers.cloudflare.com/">CloudFlare</a-link></a-list-item>
-              <a-list-item><icon-subscribe /><a-link href="https://aws.amazon.com/lambda/">AWS Lambda</a-link></a-list-item>
-              <a-list-item><icon-subscribe /><a-link href="https://learn.microsoft.com/en-us/azure/static-web-apps/">Azure</a-link></a-list-item>
-              <a-list-item><icon-subscribed /><a-link href="https://docs.digitalocean.com/products/app-platform/">DigitalOcean</a-link></a-list-item>
-              <a-list-item><icon-subscribe /><a-link href="https://heroku.com/">Heroku</a-link></a-list-item>
-              <a-list-item><icon-subscribe /><a-link href="https://firebase.google.com/docs/hosting">Firebase</a-link></a-list-item>
-            </a-list>
+          <a-card title="支持" hoverable>
+            <a-divider orientation="left">提建议/问题反馈</a-divider>
+            欢迎通过 issues 提交建议或问题反馈，我们会尽快处理！
+            <a-divider orientation="left">技术支持</a-divider>
+            我提供免费技术支持，你可以通过邮邮件与我取得联系，非工作时间我会尽快回复。
+            Email: <a href="mailto:besscroft@foxmail.com"><b>旅行者</b></a>
           </a-card>
         </div>
       </div>

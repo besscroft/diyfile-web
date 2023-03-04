@@ -7,9 +7,15 @@ import http from '~/api'
  */
 enum Api {
   ServerInfo = '/monitor/serverInfo',
+  GetTotalInfo = '/monitor/getTotalInfo',
 }
 
-/** 获取用户信息 */
+/** 获取服务信息 */
 export const getServerInfo = () => {
   return http.get<Result>(API_URL + Api.ServerInfo)
+}
+
+/** 获取统计信息 */
+export const getTotalInfo = () => {
+  return http.get<Result>(API_URL + Api.GetTotalInfo)
 }
