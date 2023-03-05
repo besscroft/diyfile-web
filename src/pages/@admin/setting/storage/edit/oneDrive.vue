@@ -204,7 +204,7 @@ onBeforeMount(() => {
             <a-form-item field="mount_path" label="挂载路径" :help="mount_path.description" required>
               <a-textarea v-model="updateStorageForm.mount_path" placeholder="请输入挂载路径" allow-clear auto-size show-word-limit />
             </a-form-item>
-            <a-form-item field="proxy_url" label="代理地址" :help="proxy_url.description" required>
+            <a-form-item field="proxy_url" label="代理地址" :help="proxy_url.description">
               <a-textarea v-model="updateStorageForm.proxy_url" placeholder="请输入代理地址" allow-clear auto-size show-word-limit />
             </a-form-item>
             <a-form-item field="remark" :label="t('storage.remark')">
