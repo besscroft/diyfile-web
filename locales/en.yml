@@ -27,6 +27,7 @@ button:
   type: Type
   pwd: Update Password
   download: Download
+  proxyDownload: Proxy Download
 intro:
   desc: Opinionated Vite Starter Template
   dynamic-route: Demo of dynamic route

@@ -124,14 +124,19 @@ onBeforeMount(() => {
       for (const item of configList) {
         if (item.configKey === 'mount_path') {
           updateStorageForm.mount_path = item.configValue
+          mount_path.value = item
         } else if (item.configKey === 'endpoint') {
           updateStorageForm.endpoint = item.configValue
+          endpoint.value = item
         } else if (item.configKey === 'accessKeyId') {
           updateStorageForm.accessKeyId = item.configValue
+          accessKeyId.value = item
         } else if (item.configKey === 'accessKeySecret') {
           updateStorageForm.accessKeySecret = item.configValue
+          accessKeySecret.value = item
         } else if (item.configKey === 'bucketName') {
           updateStorageForm.bucketName = item.configValue
+          bucketName.value = item
         }
       }
     }

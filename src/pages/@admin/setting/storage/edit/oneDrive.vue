@@ -22,6 +22,7 @@ const updateStorageForm = reactive({
   refresh_token: '',
   redirect_uri: '',
   mount_path: '',
+  proxy_url: '',
 })
 const updateStorageData = ref<Storage.UpdateStorageRequestData>({
   /** 存储id */
@@ -79,6 +80,14 @@ const mount_path = ref({
   configValue: '',
   description: 'OneDrive 挂载路径',
 })
+const proxy_url = ref<Storage.StorageConfig>({
+  id: undefined,
+  storageId: undefined,
+  name: '代理地址',
+  configKey: 'proxy_url',
+  configValue: '',
+  description: 'Cloudflare 代理地址',
+})
 
 const handleFormData = () => {
   list.value = []
@@ -87,11 +96,13 @@ const handleFormData = () => {
   refresh_token.value.configValue = updateStorageForm.refresh_token
   redirect_uri.value.configValue = updateStorageForm.redirect_uri
   mount_path.value.configValue = updateStorageForm.mount_path
+  proxy_url.value.configValue = updateStorageForm.proxy_url
   list.value.push(client_id.value)
   list.value.push(client_secret.value)
   list.value.push(refresh_token.value)
   list.value.push(redirect_uri.value)
   list.value.push(mount_path.value)
+  list.value.push(proxy_url.value)
   updateStorageData.value.configList = list.value
 }
 
@@ -127,14 +138,22 @@ onBeforeMount(() => {
       for (const item of configList) {
         if (item.configKey === 'client_id') {
           updateStorageForm.client_id = item.configValue
+          client_id.value = item
         } else if (item.configKey === 'client_secret') {
           updateStorageForm.client_secret = item.configValue
+          client_secret.value = item
         } else if (item.configKey === 'refresh_token') {
           updateStorageForm.refresh_token = item.configValue
+          refresh_token.value = item
         } else if (item.configKey === 'redirect_uri') {
           updateStorageForm.redirect_uri = item.configValue
+          redirect_uri.value = item
         } else if (item.configKey === 'mount_path') {
           updateStorageForm.mount_path = item.configValue
+          mount_path.value = item
+        } else if (item.configKey === 'proxy_url') {
+          updateStorageForm.proxy_url = item.configValue
+          proxy_url.value = item
         }
       }
     }
@@ -184,6 +203,9 @@ onBeforeMount(() => {
             </a-form-item>
             <a-form-item field="mount_path" label="挂载路径" :help="mount_path.description" required>
               <a-textarea v-model="updateStorageForm.mount_path" placeholder="请输入挂载路径" allow-clear auto-size show-word-limit />
+            </a-form-item>
+            <a-form-item field="proxy_url" label="代理地址" :help="proxy_url.description" required>
+              <a-textarea v-model="updateStorageForm.proxy_url" placeholder="请输入代理地址" allow-clear auto-size show-word-limit />
             </a-form-item>
             <a-form-item field="remark" :label="t('storage.remark')">
               <a-textarea v-model="updateStorageForm.remark" placeholder="请输入备注" allow-clear auto-size :max-length="{ length: 200, errorOnly: true }" show-word-limit />
