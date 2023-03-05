@@ -11,19 +11,19 @@ const serverInfo = ref()
 const totalInfo = ref()
 
 const handServerInfo = async () => {
-  loadingServer.value = true
-  await getServerInfo().then((res) => {
-    if (res.code === 200) {
-      serverInfo.value = res.data
-    }
-    loadingServer.value = false
-  })
   loadingTotal.value = true
   await getTotalInfo().then((res) => {
     if (res.code === 200) {
       totalInfo.value = res.data
     }
     loadingTotal.value = false
+  })
+  loadingServer.value = true
+  await getServerInfo().then((res) => {
+    if (res.code === 200) {
+      serverInfo.value = res.data
+    }
+    loadingServer.value = false
   })
 }
 
