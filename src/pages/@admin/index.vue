@@ -10,19 +10,16 @@ const loadingTotal = ref<Boolean>(true)
 const serverInfo = ref()
 const totalInfo = ref()
 
-const handServerInfo = () => {
+const handServerInfo = async () => {
   loadingServer.value = true
-  getServerInfo().then((res) => {
+  await getServerInfo().then((res) => {
     if (res.code === 200) {
       serverInfo.value = res.data
     }
     loadingServer.value = false
   })
-}
-
-const handTotalInfo = () => {
   loadingTotal.value = true
-  getTotalInfo().then((res) => {
+  await getTotalInfo().then((res) => {
     if (res.code === 200) {
       totalInfo.value = res.data
     }
@@ -35,7 +32,6 @@ const handleOk = () => {
 }
 
 handServerInfo()
-handTotalInfo()
 </script>
 
 <template>

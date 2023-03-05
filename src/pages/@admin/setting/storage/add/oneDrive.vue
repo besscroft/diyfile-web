@@ -19,6 +19,7 @@ const addStorageForm = reactive({
   refresh_token: '',
   redirect_uri: '',
   mount_path: '',
+  proxy_url: '',
 })
 const addStorageData = ref<Storage.AddStorageRequestData>({
   /** 存储名称 */
@@ -73,6 +74,14 @@ const mount_path = ref<Storage.StorageConfig>({
   configValue: '',
   description: 'OneDrive 挂载路径',
 })
+const proxy_url = ref<Storage.StorageConfig>({
+  id: undefined,
+  storageId: undefined,
+  name: '代理地址',
+  configKey: 'proxy_url',
+  configValue: '',
+  description: 'Cloudflare 代理地址',
+})
 
 const handleFormData = () => {
   list.value = []
@@ -81,11 +90,13 @@ const handleFormData = () => {
   refresh_token.value.configValue = addStorageForm.refresh_token
   redirect_uri.value.configValue = addStorageForm.redirect_uri
   mount_path.value.configValue = addStorageForm.mount_path
+  proxy_url.value.configValue = addStorageForm.proxy_url
   list.value.push(client_id.value)
   list.value.push(client_secret.value)
   list.value.push(refresh_token.value)
   list.value.push(redirect_uri.value)
   list.value.push(mount_path.value)
+  list.value.push(proxy_url.value)
   addStorageData.value.configList = list.value
 }
 
@@ -149,6 +160,9 @@ const handleSubmit = (formEl: FormInstance) => {
             </a-form-item>
             <a-form-item field="mount_path" label="挂载路径" :help="mount_path.description" required>
               <a-textarea v-model="addStorageForm.mount_path" placeholder="请输入挂载路径" allow-clear auto-size show-word-limit />
+            </a-form-item>
+            <a-form-item field="proxy_url" label="代理地址" :help="proxy_url.description" required>
+              <a-textarea v-model="addStorageForm.proxy_url" placeholder="请输入代理地址" allow-clear auto-size show-word-limit />
             </a-form-item>
             <a-form-item field="remark" :label="t('storage.remark')">
               <a-textarea v-model="addStorageForm.remark" placeholder="请输入备注" allow-clear auto-size :max-length="{ length: 200, errorOnly: true }" show-word-limit />

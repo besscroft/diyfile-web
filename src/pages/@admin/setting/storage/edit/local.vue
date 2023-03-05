@@ -83,6 +83,7 @@ onBeforeMount(() => {
       for (const item of configList) {
         if (item.configKey === 'mount_path') {
           updateStorageForm.mount_path = item.configValue
+          mount_path.value = item
         }
       }
     }

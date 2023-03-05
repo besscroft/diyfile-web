@@ -27,6 +27,7 @@ button:
   type: ストレージタイプ
   pwd: パスワードを変更する
   download: ダウンロード
+  proxyDownload: プロキシダウンロード
 intro:
   desc: 固執された Vite スターターテンプレート
   dynamic-route: 動的ルートのデモ

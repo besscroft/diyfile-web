@@ -150,7 +150,6 @@ const handleRouter = () => {
 
 /** 删除文件 */
 const handleDelete = (option: any) => {
-  console.log(option)
   const url = `${option.path}/${encodeURIComponent(option.name)}`
   deleteFile(storageKey.value, url).then((res) => {
     if (res.code === 200) {
@@ -365,13 +364,13 @@ onMounted(() => {
           </a-table>
           <!-- 文件预览 -->
           <!-- 视频预览 -->
-          <VideoPreview v-else-if="!loading && fileInfo && isVideo(fileInfo.name)" :value="fileInfo" />
-          <ImagePreview v-else-if="!loading && fileInfo && isImage(fileInfo.name)" :value="fileInfo" />
-          <AudioPreview v-else-if="!loading && fileInfo && isAudio(fileInfo.name)" :value="fileInfo" />
-          <MarkdownPreview v-else-if="!loading && fileInfo && isMarkdown(fileInfo.name)" :value="fileInfo" />
-          <TextPreview v-else-if="!loading && fileInfo && isText(fileInfo.name)" :value="fileInfo" />
-          <PDFPreview v-else-if="!loading && fileInfo && isPDF(fileInfo.name)" :value="fileInfo" />
-          <OtherPreview v-else-if="!loading && fileInfo" :value="fileInfo" />
+          <VideoPreview v-else-if="!loading && fileInfo && isVideo(fileInfo.name)" :fileInfo="fileInfo" :storageInfo="storageInfo" />
+          <ImagePreview v-else-if="!loading && fileInfo && isImage(fileInfo.name)" :fileInfo="fileInfo" :storageInfo="storageInfo" />
+          <AudioPreview v-else-if="!loading && fileInfo && isAudio(fileInfo.name)" :fileInfo="fileInfo" :storageInfo="storageInfo" />
+          <MarkdownPreview v-else-if="!loading && fileInfo && isMarkdown(fileInfo.name)" :fileInfo="fileInfo" :storageInfo="storageInfo" />
+          <TextPreview v-else-if="!loading && fileInfo && isText(fileInfo.name)" :fileInfo="fileInfo" :storageInfo="storageInfo" />
+          <PDFPreview v-else-if="!loading && fileInfo && isPDF(fileInfo.name)" :fileInfo="fileInfo" :storageInfo="storageInfo" />
+          <OtherPreview v-else-if="!loading && fileInfo" :fileInfo="fileInfo" :storageInfo="storageInfo" />
           <a-empty v-else-if="!fileInfo && !dataList">
             什么都没有呢！请登录后进入后台进行配置！
           </a-empty>
