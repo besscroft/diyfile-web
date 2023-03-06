@@ -17,10 +17,11 @@ const props = defineProps({
 const { text, copy, copied, isSupported } = useClipboard(props.fileInfo.url)
 const { t } = useI18n()
 const router = useRouter()
+const url = props.fileInfo.url
+const ap = ref<APlayer>()
 
 const initPlayer = (cover: string) => {
-  const url = props.fileInfo.url
-  const ap = new APlayer({
+  ap.value = new APlayer({
     container: document.getElementById('player'),
     mini: false,
     autoplay: false,
@@ -86,6 +87,10 @@ onMounted(() => {
       })
     }
   })
+})
+
+onUnmounted(() => {
+  ap.value?.destroy()
 })
 </script>
 

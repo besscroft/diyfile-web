@@ -22,7 +22,7 @@ import './styles/main.css'
 import 'uno.css'
 
 /* global */
-console.log(`${'\n'} %c DiyFile v0.2.3 %c https://github.com/besscroft/diyfile ${'\n'}${'\n'}`, 'color: #fadfa3; background: #030307; padding:5px 0;', 'background: #fadfa3; padding:5px 0;')
+console.log(`${'\n'} %c DiyFile v0.3.0 %c https://github.com/besscroft/diyfile ${'\n'}${'\n'}`, 'color: #fadfa3; background: #030307; padding:5px 0;', 'background: #fadfa3; padding:5px 0;')
 
 generatedRoutes.push({
   path: '/',
