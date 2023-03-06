@@ -14,10 +14,11 @@ const props = defineProps({
 })
 const { text, copy, copied } = useClipboard(props.fileInfo.url)
 const { t } = useI18n()
+const dp = ref<DPlayer>()
 
 const initPlayer = () => {
   const url = props.fileInfo.url
-  const dp = new DPlayer({
+  dp.value = new DPlayer({
     container: document.getElementById('dplayer'),
     autoplay: false,
     theme: '#0093ff',
@@ -41,6 +42,10 @@ const handleDownload = (url: string) => {
 
 onMounted(() => {
   initPlayer()
+})
+
+onUnmounted(() => {
+  dp.value?.destroy()
 })
 </script>
 
