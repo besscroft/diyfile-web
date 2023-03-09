@@ -1,9 +1,13 @@
 <script setup lang="ts">
+import { Message, Modal } from '@arco-design/web-vue'
+import axios from 'axios'
+import { API_URL } from '../../../../../config/config'
+import { ResultEnum } from '~/enums/httpEnum'
 import { getBackupFile } from '~/api/modules/monitor'
 
 const router = useRouter()
 const { t } = useI18n()
-const { isMobile } = useDevice()
+const user = useUserStore()
 
 const handleBackupFile = () => {
   getBackupFile().then((res) => {
@@ -21,6 +25,53 @@ const handleBackupFile = () => {
     a.click()
     // 释放临时 URL
     URL.revokeObjectURL(url)
+  }).catch((err) => {
+    console.log(err)
+  })
+}
+
+const beforeUpload = (file: any) => {
+  return new Promise((resolve, reject) => {
+    Modal.confirm({
+      title: '确定要上传吗？',
+      content: `上传 ${file.name} 文件，系统配置将会覆盖，存储数据将会新增！`,
+      onOk: () => resolve(true),
+      onCancel: () => reject('cancel'),
+    })
+  })
+}
+
+const onRequestUpload = (option: any) => {
+  const { fileItem } = option
+  // 创建 FormData 对象
+  const formData = new FormData()
+  formData.append('file', fileItem.file)
+
+  // 发送 POST 请求上传文件
+  axios.post(`${API_URL}/monitor/restoreData`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      'Authorization': `Bearer ${user.token}`,
+    },
+  }).then((res) => {
+    console.log(res)
+    if (res.data.code === ResultEnum.SUCCESS) {
+      Message.success(res.data.message)
+      return Promise.resolve(res.data)
+    }
+    if (res.data.code === ResultEnum.UNAUTHORIZED) {
+      Message.error('登陆已过期，请重新登陆！')
+      user.setToken('')
+      user.setUserName('')
+      user.setAvatar('')
+      window.location.href = '/@login'
+      return Promise.reject(res.data)
+    }
+    // 没有权限（code == 403）
+    if (res.data.code === ResultEnum.FORBIDDEN) {
+      Message.error(res.data.message)
+      return Promise.reject(res.data)
+    }
   }).catch((err) => {
     console.log(err)
   })
@@ -45,9 +96,16 @@ const handleBackupFile = () => {
         <a-button type="outline" @click="handleBackupFile">
           {{ t('button.backup') }}
         </a-button>
-        <a-button type="outline" disabled>
+        <a-upload
+          type="outline"
+          accept=".json"
+          action="/"
+          @before-upload="beforeUpload"
+          :custom-request="(option) => onRequestUpload(option)"
+          :show-file-list="false"
+        >
           {{ t('button.restore') }}
-        </a-button>
+        </a-upload>
       </a-space>
     </a-card>
   </div>
