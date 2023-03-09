@@ -58,6 +58,8 @@ const handleSubmit = (formEl: FormInstance) => {
           Message.info(res.message)
           router.push('/@admin/setting/storage')
         }
+      }).catch((err) => {
+        Message.error(err.message)
       })
     }
   })
