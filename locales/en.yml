@@ -28,6 +28,8 @@ button:
   pwd: Update Password
   download: Download
   proxyDownload: Proxy Download
+  backup: Backup
+  restore: Restore
 intro:
   desc: Opinionated Vite Starter Template
   dynamic-route: Demo of dynamic route

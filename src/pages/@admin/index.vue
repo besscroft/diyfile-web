@@ -98,7 +98,8 @@ handServerInfo()
               <a-list-item><icon-subscribed />OneDrive 支持</a-list-item>
               <a-list-item><icon-subscribed />多元化存储支持</a-list-item>
               <a-list-item><icon-subscribed />多平台部署支持</a-list-item>
-              <a-list-item><icon-subscribe />前端用 Vuetify 3 重写</a-list-item>
+              <a-list-item><icon-subscribe />存储间同步功能</a-list-item>
+              <a-list-item><icon-subscribe />S3 API 支持</a-list-item>
               <a-list-item><icon-github />更多请查看 issues 计划列表</a-list-item>
             </a-list>
           </a-card>
