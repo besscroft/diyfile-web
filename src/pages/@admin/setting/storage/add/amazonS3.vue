@@ -2,11 +2,13 @@
 import { Message } from '@arco-design/web-vue'
 import type { FormInstance } from '@arco-design/web-vue'
 import type { Storage } from '~/api/interface/storage'
-import { storageAdd } from '~/api/modules/storage'
+import { getAwsRegions, storageAdd } from '~/api/modules/storage'
 
 const { t } = useI18n()
 const router = useRouter()
 const formRef = ref<FormInstance>()
+const loading = ref<boolean>(false)
+const regionList = ref<Array<String>>()
 const addStorageForm = reactive({
   /** 存储名称 */
   name: '',
@@ -118,6 +120,17 @@ const handleSubmit = (formEl: FormInstance) => {
     }
   })
 }
+
+onMounted(() => {
+  loading.value = true
+  getAwsRegions().then((res) => {
+    regionList.value = res.data
+    loading.value = false
+  }).catch((err) => {
+    Message.error(err.message)
+    loading.value = false
+  })
+})
 </script>
 
 <template>
@@ -151,8 +164,19 @@ const handleSubmit = (formEl: FormInstance) => {
             <a-form-item field="endpoint" label="Endpoint" :help="endpoint.description" required>
               <a-textarea v-model="addStorageForm.endpoint" placeholder="请输入Bucket 地域的 Endpoint" allow-clear auto-size show-word-limit />
             </a-form-item>
-            <a-form-item field="region" label="Region" :help="region.description" required>
-              <a-textarea v-model="addStorageForm.region" placeholder="请输入Bucket 地域的 Region" allow-clear auto-size show-word-limit />
+            <a-form-item field="region" label="Region" :help="region.description">
+              <a-select
+                placeholder="请选择 Bucket 地域的 Region"
+                :loading="loading"
+              >
+                <a-option
+                  v-for="region in regionList"
+                  :key="region"
+                  :label="region"
+                  :value="region"
+                  @click="() => { addStorageForm.region = region }"
+                />
+              </a-select>
             </a-form-item>
             <a-form-item field="accessKey" label="AccessKey" :help="accessKey.description" required>
               <a-textarea v-model="addStorageForm.accessKey" placeholder="请输入 AccessKey" allow-clear auto-size show-word-limit />

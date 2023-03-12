@@ -2,7 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@antfu/eslint-config': ^0.34.1
-  '@arco-design/web-vue': ^2.41.1
+  '@arco-design/web-vue': ^2.6.1
   '@arco-themes/vue-sakura': ^0.0.2
   '@iconify-json/carbon': ^1.1.13
   '@intlify/vite-plugin-vue-i18n': ^6.0.3
