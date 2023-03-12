@@ -15,8 +15,9 @@ const addStorageForm = reactive({
   /** 备注 */
   remark: '',
   endpoint: '',
-  accessKeyId: '',
-  accessKeySecret: '',
+  region: '',
+  accessKey: '',
+  secretKey: '',
   bucketName: '',
   mount_path: '',
 })
@@ -24,7 +25,7 @@ const addStorageData = ref<Storage.AddStorageRequestData>({
   /** 存储名称 */
   name: '',
   /** 存储类型 */
-  type: 2,
+  type: 3,
   /** 存储 key */
   storageKey: '',
   /** 备注 */
@@ -39,23 +40,31 @@ const endpoint = ref<Storage.StorageConfig>({
   name: 'Endpoint',
   configKey: 'endpoint',
   configValue: '',
-  description: '填写Bucket所在地域对应的Endpoint。以华东1（杭州）为例，Endpoint填写为https://oss-cn-hangzhou.aliyuncs.com。',
+  description: '填写Bucket所在地域对应的Endpoint。',
 })
-const accessKeyId = ref<Storage.StorageConfig>({
+const region = ref<Storage.StorageConfig>({
   id: undefined,
   storageId: undefined,
-  name: 'AccessKeyId',
-  configKey: 'accessKeyId',
+  name: 'Region',
+  configKey: 'region',
   configValue: '',
-  description: '阿里云账号AccessKey ID，阿里云账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM用户进行API访问或日常运维，请登录RAM控制台创建RAM用户。',
+  description: '填写Bucket所在地域对应的Region。',
 })
-const accessKeySecret = ref<Storage.StorageConfig>({
+const accessKey = ref<Storage.StorageConfig>({
   id: undefined,
   storageId: undefined,
-  name: 'AccessKeySecret',
-  configKey: 'accessKeySecret',
+  name: 'AccessKey',
+  configKey: 'accessKey',
   configValue: '',
-  description: '阿里云账号AccessKey Secret，阿里云账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM用户进行API访问或日常运维，请登录RAM控制台创建RAM用户。',
+  description: 'AWS 账号 AccessKey',
+})
+const secretKey = ref<Storage.StorageConfig>({
+  id: undefined,
+  storageId: undefined,
+  name: 'SecretKey',
+  configKey: 'secretKey',
+  configValue: '',
+  description: 'AWS 账号 SecretKey',
 })
 const bucketName = ref<Storage.StorageConfig>({
   id: undefined,
@@ -63,7 +72,7 @@ const bucketName = ref<Storage.StorageConfig>({
   name: 'BucketName',
   configKey: 'bucketName',
   configValue: '',
-  description: '阿里云 OSS Bucket 名称',
+  description: 'AWS S3 Bucket 名称',
 })
 const mount_path = ref<Storage.StorageConfig>({
   id: undefined,
@@ -71,18 +80,22 @@ const mount_path = ref<Storage.StorageConfig>({
   name: '挂载路径',
   configKey: 'mount_path',
   configValue: '',
-  description: '阿里云 OSS 挂载路径',
+  description: 'AWS S3 挂载路径',
 })
 
 const handleFormData = () => {
   list.value = []
   endpoint.value.configValue = addStorageForm.endpoint
-  accessKeyId.value.configValue = addStorageForm.accessKeyId
-  accessKeySecret.value.configValue = addStorageForm.accessKeySecret
+  region.value.configValue = addStorageForm.region
+  accessKey.value.configValue = addStorageForm.accessKey
+  secretKey.value.configValue = addStorageForm.secretKey
+  bucketName.value.configValue = addStorageForm.bucketName
   mount_path.value.configValue = addStorageForm.mount_path
   list.value.push(endpoint.value)
-  list.value.push(accessKeyId.value)
-  list.value.push(accessKeySecret.value)
+  list.value.push(region.value)
+  list.value.push(accessKey.value)
+  list.value.push(secretKey.value)
+  list.value.push(bucketName.value)
   list.value.push(mount_path.value)
   addStorageData.value.configList = list.value
 }
@@ -135,17 +148,20 @@ const handleSubmit = (formEl: FormInstance) => {
             <a-form-item field="storageKey" label="storageKey" required>
               <a-input v-model="addStorageForm.storageKey" placeholder="请输入 storageKey" :max-length="{ length: 20, errorOnly: true }" show-word-limit allow-clear />
             </a-form-item>
-            <a-form-item field="bucketName" label="BucketName" :help="bucketName.description" required>
-              <a-textarea v-model="addStorageForm.bucketName" placeholder="阿里云 OSS Bucket 名称" allow-clear auto-size show-word-limit />
-            </a-form-item>
             <a-form-item field="endpoint" label="Endpoint" :help="endpoint.description" required>
               <a-textarea v-model="addStorageForm.endpoint" placeholder="请输入Bucket 地域的 Endpoint" allow-clear auto-size show-word-limit />
             </a-form-item>
-            <a-form-item field="accessKeyId" label="AccessKeyId" :help="accessKeyId.description" required>
-              <a-textarea v-model="addStorageForm.accessKeyId" placeholder="请输入 AccessKeyId" allow-clear auto-size show-word-limit />
+            <a-form-item field="region" label="Region" :help="region.description" required>
+              <a-textarea v-model="addStorageForm.region" placeholder="请输入Bucket 地域的 Region" allow-clear auto-size show-word-limit />
             </a-form-item>
-            <a-form-item field="accessKeySecret" label="AccessKeySecret" :help="accessKeySecret.description" required>
-              <a-textarea v-model="addStorageForm.accessKeySecret" placeholder="请输入 AccessKeySecret" allow-clear auto-size show-word-limit />
+            <a-form-item field="accessKey" label="AccessKey" :help="accessKey.description" required>
+              <a-textarea v-model="addStorageForm.accessKey" placeholder="请输入 AccessKey" allow-clear auto-size show-word-limit />
+            </a-form-item>
+            <a-form-item field="secretKey" label="SecretKey" :help="secretKey.description" required>
+              <a-textarea v-model="addStorageForm.secretKey" placeholder="请输入 SecretKey" allow-clear auto-size show-word-limit />
+            </a-form-item>
+            <a-form-item field="bucketName" label="BucketName" :help="bucketName.description" required>
+              <a-textarea v-model="addStorageForm.bucketName" placeholder="AWS S3 Bucket 名称" allow-clear auto-size show-word-limit />
             </a-form-item>
             <a-form-item field="mount_path" label="挂载路径" :help="mount_path.description" required>
               <a-textarea v-model="addStorageForm.mount_path" placeholder="请输入挂载路径" allow-clear auto-size show-word-limit />
@@ -157,7 +173,6 @@ const handleSubmit = (formEl: FormInstance) => {
         </a-col>
         <a-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6" />
       </a-row>
-      当心被刷流量，后续将支持 CloudFlare。
       切勿以纯文本、代码存储库或代码形式存储访问密钥。
       不再需要时请禁用或删除访问密钥。
       启用最低权限。

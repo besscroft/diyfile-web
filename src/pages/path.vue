@@ -150,7 +150,13 @@ const handleRouter = () => {
 
 /** 删除文件 */
 const handleDelete = (option: any) => {
-  const url = `${option.path}/${encodeURIComponent(option.name)}`
+  let url
+  if (option.path === '/') {
+    // 如果 path 为 / 则不需要拼接多余的 /
+    url = `/${encodeURIComponent(option.name)}`
+  } else {
+    url = `${option.path}/${encodeURIComponent(option.name)}`
+  }
   deleteFile(storageKey.value, url).then((res) => {
     if (res.code === 200) {
       Message.success(res.message)

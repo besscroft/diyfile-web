@@ -17,22 +17,22 @@ const updateStorageForm = reactive({
   /** 备注 */
   remark: '',
   enable: undefined,
-  client_id: '',
-  client_secret: '',
-  refresh_token: '',
-  redirect_uri: '',
+  endpoint: '',
+  region: '',
+  accessKey: '',
+  secretKey: '',
+  bucketName: '',
   mount_path: '',
-  proxy_url: '',
 })
 const updateStorageData = ref<Storage.UpdateStorageRequestData>({
   /** 存储id */
   id: undefined,
   /** 存储名称 */
   name: '',
+  /** 存储类型 */
+  type: 2,
   /** 存储 key */
   storageKey: '',
-  /** 存储类型 */
-  type: 1,
   /** 备注 */
   remark: '',
   enable: undefined,
@@ -40,79 +40,78 @@ const updateStorageData = ref<Storage.UpdateStorageRequestData>({
 })
 
 const list = ref<Array<Storage.StorageConfig>>([])
-const client_id = ref<Storage.StorageConfig>({
+const endpoint = ref<Storage.StorageConfig>({
   id: undefined,
   storageId: undefined,
-  name: '客户端ID',
-  configKey: 'client_id',
+  name: 'Endpoint',
+  configKey: 'endpoint',
   configValue: '',
-  description: 'OneDrive 客户端ID',
+  description: '填写Bucket所在地域对应的Endpoint。',
 })
-const client_secret = ref<Storage.StorageConfig>({
+const region = ref<Storage.StorageConfig>({
   id: undefined,
   storageId: undefined,
-  name: '客户端机密',
-  configKey: 'client_secret',
+  name: 'Region',
+  configKey: 'region',
   configValue: '',
-  description: 'OneDrive 客户端机密',
+  description: '填写Bucket所在地域对应的Region。',
 })
-const refresh_token = ref<Storage.StorageConfig>({
+const accessKey = ref<Storage.StorageConfig>({
   id: undefined,
   storageId: undefined,
-  name: '刷新令牌',
-  configKey: 'refresh_token',
+  name: 'AccessKey',
+  configKey: 'accessKey',
   configValue: '',
-  description: 'OneDrive 刷新令牌',
+  description: 'AWS 账号 AccessKey',
 })
-const redirect_uri = ref<Storage.StorageConfig>({
+const secretKey = ref<Storage.StorageConfig>({
   id: undefined,
   storageId: undefined,
-  name: '重定向 URI',
-  configKey: 'redirect_uri',
+  name: 'SecretKey',
+  configKey: 'secretKey',
   configValue: '',
-  description: 'OneDrive 重定向 URI',
+  description: 'AWS 账号 SecretKey',
 })
-const mount_path = ref({
+const bucketName = ref<Storage.StorageConfig>({
+  id: undefined,
+  storageId: undefined,
+  name: 'BucketName',
+  configKey: 'bucketName',
+  configValue: '',
+  description: 'AWS S3 Bucket 名称',
+})
+const mount_path = ref<Storage.StorageConfig>({
   id: undefined,
   storageId: undefined,
   name: '挂载路径',
   configKey: 'mount_path',
   configValue: '',
-  description: 'OneDrive 挂载路径',
-})
-const proxy_url = ref<Storage.StorageConfig>({
-  id: undefined,
-  storageId: undefined,
-  name: '代理地址',
-  configKey: 'proxy_url',
-  configValue: '',
-  description: 'Cloudflare 代理地址',
+  description: 'AWS S3 挂载路径',
 })
 
 const handleFormData = () => {
   list.value = []
-  client_id.value.configValue = updateStorageForm.client_id
-  client_secret.value.configValue = updateStorageForm.client_secret
-  refresh_token.value.configValue = updateStorageForm.refresh_token
-  redirect_uri.value.configValue = updateStorageForm.redirect_uri
+  endpoint.value.configValue = updateStorageForm.endpoint
+  region.value.configValue = updateStorageForm.region
+  accessKey.value.configValue = updateStorageForm.accessKey
+  secretKey.value.configValue = updateStorageForm.secretKey
+  bucketName.value.configValue = updateStorageForm.bucketName
   mount_path.value.configValue = updateStorageForm.mount_path
-  proxy_url.value.configValue = updateStorageForm.proxy_url
-  list.value.push(client_id.value)
-  list.value.push(client_secret.value)
-  list.value.push(refresh_token.value)
-  list.value.push(redirect_uri.value)
+  list.value.push(endpoint.value)
+  list.value.push(region.value)
+  list.value.push(accessKey.value)
+  list.value.push(secretKey.value)
+  list.value.push(bucketName.value)
   list.value.push(mount_path.value)
-  list.value.push(proxy_url.value)
   updateStorageData.value.configList = list.value
 }
 
 const handleSubmit = (formEl: FormInstance) => {
+  Message.info('开发中！')
   formEl.validate((valid) => {
     if ((!valid)) {
-      updateStorageData.value.id = updateStorageForm.id
       updateStorageData.value.name = updateStorageForm.name
       updateStorageData.value.storageKey = updateStorageForm.storageKey
-      updateStorageData.value.enable = updateStorageForm.enable
       updateStorageData.value.remark = updateStorageForm.remark
       handleFormData()
       storageUpdate(updateStorageData.value).then((res) => {
@@ -138,24 +137,24 @@ onBeforeMount(() => {
       updateStorageForm.enable = res.data.enable
       const configList = res.data.configList
       for (const item of configList) {
-        if (item.configKey === 'client_id') {
-          updateStorageForm.client_id = item.configValue
-          client_id.value = item
-        } else if (item.configKey === 'client_secret') {
-          updateStorageForm.client_secret = item.configValue
-          client_secret.value = item
-        } else if (item.configKey === 'refresh_token') {
-          updateStorageForm.refresh_token = item.configValue
-          refresh_token.value = item
-        } else if (item.configKey === 'redirect_uri') {
-          updateStorageForm.redirect_uri = item.configValue
-          redirect_uri.value = item
-        } else if (item.configKey === 'mount_path') {
+        if (item.configKey === 'mount_path') {
           updateStorageForm.mount_path = item.configValue
           mount_path.value = item
-        } else if (item.configKey === 'proxy_url') {
-          updateStorageForm.proxy_url = item.configValue
-          proxy_url.value = item
+        } else if (item.configKey === 'endpoint') {
+          updateStorageForm.endpoint = item.configValue
+          endpoint.value = item
+        } else if (item.configKey === 'accessKey') {
+          updateStorageForm.accessKey = item.configValue
+          accessKey.value = item
+        } else if (item.configKey === 'secretKey') {
+          updateStorageForm.secretKey = item.configValue
+          secretKey.value = item
+        } else if (item.configKey === 'bucketName') {
+          updateStorageForm.bucketName = item.configValue
+          bucketName.value = item
+        } else if (item.configKey === 'region') {
+          updateStorageForm.region = item.configValue
+          region.value = item
         }
       }
     }
@@ -191,23 +190,23 @@ onBeforeMount(() => {
             <a-form-item field="storageKey" label="storageKey(不支持修改)" disabled>
               <a-input v-model="updateStorageForm.storageKey" />
             </a-form-item>
-            <a-form-item field="client_id" label="客户端ID" :help="client_id.description" required>
-              <a-textarea v-model="updateStorageForm.client_id" placeholder="请输入客户端ID" allow-clear auto-size show-word-limit />
+            <a-form-item field="endpoint" label="Endpoint" :help="endpoint.description" required>
+              <a-textarea v-model="updateStorageForm.endpoint" placeholder="请输入Bucket 地域的 Endpoint" allow-clear auto-size show-word-limit />
             </a-form-item>
-            <a-form-item field="client_secret" label="客户端机密" :help="client_secret.description" required>
-              <a-textarea v-model="updateStorageForm.client_secret" placeholder="请输入客户端机密" allow-clear auto-size show-word-limit />
+            <a-form-item field="region" label="Region" :help="region.description" required>
+              <a-textarea v-model="updateStorageForm.region" placeholder="请输入Bucket 地域的 Region" allow-clear auto-size show-word-limit />
             </a-form-item>
-            <a-form-item field="refresh_token" label="刷新令牌" :help="refresh_token.description" required>
-              <a-textarea v-model="updateStorageForm.refresh_token" placeholder="请输入刷新令牌" allow-clear auto-size show-word-limit />
+            <a-form-item field="accessKey" label="AccessKey" :help="accessKey.description" required>
+              <a-textarea v-model="updateStorageForm.accessKey" placeholder="请输入 AccessKey" allow-clear auto-size show-word-limit />
             </a-form-item>
-            <a-form-item field="redirect_uri" label="重定向 URI" :help="redirect_uri.description" required>
-              <a-textarea v-model="updateStorageForm.redirect_uri" placeholder="请输入重定向 URI" allow-clear auto-size show-word-limit />
+            <a-form-item field="secretKey" label="SecretKey" :help="secretKey.description" required>
+              <a-textarea v-model="updateStorageForm.secretKey" placeholder="请输入 SecretKey" allow-clear auto-size show-word-limit />
+            </a-form-item>
+            <a-form-item field="bucketName" label="BucketName" :help="bucketName.description" required>
+              <a-textarea v-model="updateStorageForm.bucketName" placeholder="AWS S3 Bucket 名称" allow-clear auto-size show-word-limit />
             </a-form-item>
             <a-form-item field="mount_path" label="挂载路径" :help="mount_path.description" required>
               <a-textarea v-model="updateStorageForm.mount_path" placeholder="请输入挂载路径" allow-clear auto-size show-word-limit />
-            </a-form-item>
-            <a-form-item field="proxy_url" label="代理地址" :help="proxy_url.description">
-              <a-textarea v-model="updateStorageForm.proxy_url" placeholder="请输入代理地址" allow-clear auto-size show-word-limit />
             </a-form-item>
             <a-form-item field="remark" :label="t('storage.remark')">
               <a-textarea v-model="updateStorageForm.remark" placeholder="请输入备注" allow-clear auto-size :max-length="{ length: 200, errorOnly: true }" show-word-limit />
@@ -216,6 +215,10 @@ onBeforeMount(() => {
         </a-col>
         <a-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6" />
       </a-row>
+      切勿以纯文本、代码存储库或代码形式存储访问密钥。
+      不再需要时请禁用或删除访问密钥。
+      启用最低权限。
+      定期轮换访问密钥。
     </a-card>
   </div>
 </template>

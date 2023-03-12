@@ -128,6 +128,7 @@ handleStoragePage(-1)
                   <a-doption v-if="item.type === 0" @click="router.push({ path: '/@admin/setting/storage/edit/local', query: { id: item.id } })">{{ t('button.edit') }}</a-doption>
                   <a-doption v-if="item.type === 1" @click="router.push({ path: '/@admin/setting/storage/edit/oneDrive', query: { id: item.id } })">{{ t('button.edit') }}</a-doption>
                   <a-doption v-if="item.type === 2" @click="router.push({ path: '/@admin/setting/storage/edit/aliyunOSS', query: { id: item.id } })">{{ t('button.edit') }}</a-doption>
+                  <a-doption v-if="item.type === 3" @click="router.push({ path: '/@admin/setting/storage/edit/amazonS3', query: { id: item.id } })">{{ t('button.edit') }}</a-doption>
                 </template>
               </a-dropdown>
             </template>
