@@ -44,7 +44,7 @@ handServerInfo()
       backgroundColor: 'var(--color-fill-2)',
     }"
   >
-    <a-card hoverable :style="{ height: '100%' }" :title="t('menu.index')">
+    <a-card hoverable :bordered="false" :style="{ height: '100%' }" :title="t('menu.index')">
       <template #extra>
         <a-space>
           <a-button :loading="loadingServer" @click="handServerInfo">
@@ -56,8 +56,8 @@ handServerInfo()
       </template>
       <div class="flex flex-wrap flex-col sm:flex-row">
         <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[21rem] m-1">
-          <a-card :loading="loadingServer" title="运行信息" hoverable>
-            <a-list>
+          <a-card :loading="loadingServer" :bordered="false" title="运行信息" hoverable>
+            <a-list :bordered="false">
               <a-list-item>服务器名称: {{ serverInfo.systemInfo.computerName }}</a-list-item>
               <a-list-item>服务器IP: {{ serverInfo.systemInfo.computerIp }}</a-list-item>
               <a-list-item>操作系统: {{ serverInfo.systemInfo.osName }}</a-list-item>
@@ -77,7 +77,7 @@ handServerInfo()
           </a-card>
         </div>
         <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
-          <a-card :loading="loadingTotal" title="概览" hoverable>
+          <a-card :loading="loadingTotal" :bordered="false" title="概览" hoverable>
             <a-card title="用户数量" :bordered="false" :style="{ width: '100%' }">
               <a-statistic title="用户总数" :value="totalInfo.userCount" show-group-separator />
               <a-divider direction="vertical" />
@@ -91,8 +91,8 @@ handServerInfo()
           </a-card>
         </div>
         <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
-          <a-card title="Todo List" hoverable>
-            <a-list>
+          <a-card title="Todo List" :bordered="false" hoverable>
+            <a-list :bordered="false">
               <a-list-item><icon-subscribed />MySQL 存储适配</a-list-item>
               <a-list-item><icon-subscribed />基于 openJDK 17 的 SpringBoot3 开发</a-list-item>
               <a-list-item><icon-subscribed />OneDrive 支持</a-list-item>
@@ -105,7 +105,7 @@ handServerInfo()
           </a-card>
         </div>
         <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
-          <a-card title="支持" hoverable>
+          <a-card title="支持" :bordered="false" hoverable>
             <a-divider orientation="left">提建议/问题反馈</a-divider>
             欢迎通过 issues 提交建议或问题反馈，我们会尽快处理！
             <a-divider orientation="left">技术支持</a-divider>
