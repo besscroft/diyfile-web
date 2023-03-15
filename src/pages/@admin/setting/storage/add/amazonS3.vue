@@ -164,19 +164,13 @@ onMounted(() => {
             <a-form-item field="endpoint" label="Endpoint" :help="endpoint.description" required>
               <a-textarea v-model="addStorageForm.endpoint" placeholder="请输入Bucket 地域的 Endpoint" allow-clear auto-size show-word-limit />
             </a-form-item>
-            <a-form-item field="region" label="Region" :help="region.description">
+            <a-form-item field="region" label="Region" :help="region.description" required>
               <a-select
                 placeholder="请选择 Bucket 地域的 Region"
                 :loading="loading"
-              >
-                <a-option
-                  v-for="region in regionList"
-                  :key="region"
-                  :label="region"
-                  :value="region"
-                  @click="() => { addStorageForm.region = region }"
-                />
-              </a-select>
+                v-model="addStorageForm.region"
+                :options="regionList"
+              />
             </a-form-item>
             <a-form-item field="accessKey" label="AccessKey" :help="accessKey.description" required>
               <a-textarea v-model="addStorageForm.accessKey" placeholder="请输入 AccessKey" allow-clear auto-size show-word-limit />

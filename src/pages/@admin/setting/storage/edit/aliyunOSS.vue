@@ -97,9 +97,11 @@ const handleSubmit = (formEl: FormInstance) => {
   Message.info('开发中！')
   formEl.validate((valid) => {
     if ((!valid)) {
+      updateStorageData.value.id = updateStorageForm.id
       updateStorageData.value.name = updateStorageForm.name
       updateStorageData.value.storageKey = updateStorageForm.storageKey
       updateStorageData.value.remark = updateStorageForm.remark
+      updateStorageData.value.enable = updateStorageForm.enable
       handleFormData()
       storageUpdate(updateStorageData.value).then((res) => {
         if (res.code === 200) {

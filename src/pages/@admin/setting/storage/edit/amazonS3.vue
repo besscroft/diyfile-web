@@ -2,7 +2,7 @@
 import { Message } from '@arco-design/web-vue'
 import type { FormInstance } from '@arco-design/web-vue'
 import type { Storage } from '~/api/interface/storage'
-import {getAwsRegions, storageInfo, storageUpdate} from '~/api/modules/storage'
+import { getAwsRegions, storageInfo, storageUpdate } from '~/api/modules/storage'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -32,7 +32,7 @@ const updateStorageData = ref<Storage.UpdateStorageRequestData>({
   /** 存储名称 */
   name: '',
   /** 存储类型 */
-  type: 2,
+  type: 3,
   /** 存储 key */
   storageKey: '',
   /** 备注 */
@@ -112,9 +112,11 @@ const handleSubmit = (formEl: FormInstance) => {
   Message.info('开发中！')
   formEl.validate((valid) => {
     if ((!valid)) {
+      updateStorageData.value.id = updateStorageForm.id
       updateStorageData.value.name = updateStorageForm.name
       updateStorageData.value.storageKey = updateStorageForm.storageKey
       updateStorageData.value.remark = updateStorageForm.remark
+      updateStorageData.value.enable = updateStorageForm.enable
       handleFormData()
       storageUpdate(updateStorageData.value).then((res) => {
         if (res.code === 200) {
@@ -207,11 +209,9 @@ onBeforeMount(() => {
               <a-select
                 placeholder="请选择 Bucket 地域的 Region"
                 :loading="loading"
-              >
-                <a-option v-for="region in regionList" :key="region" :label="region" :value="region" @click="() => { updateStorageForm.region = region }">
-                  {{ region }}
-                </a-option>
-              </a-select>
+                v-model="updateStorageForm.region"
+                :options="regionList"
+              />
             </a-form-item>
             <a-form-item field="accessKey" label="AccessKey" :help="accessKey.description" required>
               <a-textarea v-model="updateStorageForm.accessKey" placeholder="请输入 AccessKey" allow-clear auto-size show-word-limit />
