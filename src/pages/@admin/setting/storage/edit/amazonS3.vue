@@ -109,7 +109,6 @@ const handleFormData = () => {
 }
 
 const handleSubmit = (formEl: FormInstance) => {
-  Message.info('开发中！')
   formEl.validate((valid) => {
     if ((!valid)) {
       updateStorageData.value.id = updateStorageForm.id
