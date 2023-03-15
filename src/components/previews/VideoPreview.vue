@@ -53,7 +53,7 @@ onUnmounted(() => {
   <div id="dplayer" />
   <a-divider />
   <a-alert :show-icon="false">
-    正在预览：{{ props.fileInfo.name }}，如果格式不支持，请切换浏览器或者编码器！
+    正在预览：{{ decodeURIComponent(props.fileInfo.name) }}，如果格式不支持，请切换浏览器或者编码器！
   </a-alert>
   <a-divider orientation="left">{{ t('table.Optional') }}</a-divider>
   <a-space wrap>

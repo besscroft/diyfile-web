@@ -98,7 +98,7 @@ onUnmounted(() => {
   <div id="player" />
   <a-divider />
   <a-alert :show-icon="false">
-    正在播放：{{ props.fileInfo.name }}，如果无法播放，请确认您的设备支持当前格式解码！
+    正在播放：{{ decodeURIComponent(props.fileInfo.name) }}，如果无法播放，请确认您的设备支持当前格式解码！
   </a-alert>
   <a-divider orientation="left">
     {{ t('table.Optional') }}
