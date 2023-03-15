@@ -33,7 +33,7 @@ onBeforeMount(() => {
 <template>
   <div v-html="contentHtml" />
   <a-alert :show-icon="false">
-    正在预览：{{ props.fileInfo.name }}
+    正在预览：{{ decodeURIComponent(props.fileInfo.name) }}
   </a-alert>
   <a-divider orientation="left">{{ t('table.Optional') }}</a-divider>
   <a-space wrap>

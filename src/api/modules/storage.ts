@@ -16,6 +16,7 @@ enum Api {
   StorageUpdateStatus = '/storage/updateStatus',
   StorageSetDefault = '/storage/setDefault',
   GetEnableStorage = '/storage/getEnableStorage',
+  GetAwsRegions = '/storage/getAwsRegions',
 }
 
 /** 存储分页列表 */
@@ -61,4 +62,9 @@ export const storageSetDefault = (storageId: number) => {
 /** 获取可用存储 */
 export const getEnableStorage = () => {
   return http.get<Result>(API_URL + Api.GetEnableStorage)
+}
+
+/** 获取 aws 区域列表 */
+export const getAwsRegions = () => {
+  return http.get<Result>(API_URL + Api.GetAwsRegions)
 }

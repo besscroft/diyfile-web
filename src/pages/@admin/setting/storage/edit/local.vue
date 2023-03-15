@@ -119,7 +119,7 @@ onBeforeMount(() => {
               <a-input v-model="updateStorageForm.name" placeholder="请输入存储名称" :max-length="{ length: 20, errorOnly: true }" show-word-limit allow-clear />
             </a-form-item>
             <a-form-item field="storageKey" label="storageKey(不支持修改)" disabled>
-              <a-input v-model="updateStorageForm.storageKey" placeholder="请输入 storageKey" :max-length="{ length: 20, errorOnly: true }" show-word-limit allow-clear />
+              <a-input v-model="updateStorageForm.storageKey" />
             </a-form-item>
             <a-form-item field="mount_path" label="挂载路径" :help="mount_path.description" required>
               <a-textarea v-model="updateStorageForm.mount_path" placeholder="请输入挂载路径" allow-clear auto-size show-word-limit />

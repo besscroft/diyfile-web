@@ -97,9 +97,11 @@ const handleSubmit = (formEl: FormInstance) => {
   Message.info('开发中！')
   formEl.validate((valid) => {
     if ((!valid)) {
+      updateStorageData.value.id = updateStorageForm.id
       updateStorageData.value.name = updateStorageForm.name
       updateStorageData.value.storageKey = updateStorageForm.storageKey
       updateStorageData.value.remark = updateStorageForm.remark
+      updateStorageData.value.enable = updateStorageForm.enable
       handleFormData()
       storageUpdate(updateStorageData.value).then((res) => {
         if (res.code === 200) {
@@ -171,8 +173,8 @@ onBeforeMount(() => {
             <a-form-item field="name" :label="t('storage.name')" required>
               <a-input v-model="updateStorageForm.name" placeholder="请输入存储名称" :max-length="{ length: 20, errorOnly: true }" show-word-limit allow-clear />
             </a-form-item>
-            <a-form-item field="storageKey" label="storageKey" required>
-              <a-input v-model="updateStorageForm.storageKey" placeholder="请输入 storageKey" :max-length="{ length: 20, errorOnly: true }" show-word-limit allow-clear />
+            <a-form-item field="storageKey" label="storageKey(不支持修改)" disabled>
+              <a-input v-model="updateStorageForm.storageKey" />
             </a-form-item>
             <a-form-item field="bucketName" label="BucketName" :help="bucketName.description" required>
               <a-textarea v-model="updateStorageForm.bucketName" placeholder="阿里云 OSS Bucket 名称" allow-clear auto-size show-word-limit />
@@ -196,7 +198,11 @@ onBeforeMount(() => {
         </a-col>
         <a-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6" />
       </a-row>
-      当心被刷流量，后续将支持 CloudFlare
+      当心被刷流量，后续将支持 CloudFlare。
+      切勿以纯文本、代码存储库或代码形式存储访问密钥。
+      不再需要时请禁用或删除访问密钥。
+      启用最低权限。
+      定期轮换访问密钥。
     </a-card>
   </div>
 </template>
