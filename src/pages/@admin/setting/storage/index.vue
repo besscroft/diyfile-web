@@ -2,6 +2,7 @@
 import { Message } from '@arco-design/web-vue'
 import type { Storage } from '~/api/interface/storage'
 import { storageDelete, storagePage, storageSetDefault, storageUpdateStatus } from '~/api/modules/storage'
+import { ResultEnum } from '~/enums/httpEnum'
 
 const router = useRouter()
 const { t } = useI18n()
@@ -41,7 +42,7 @@ const handleStoragePage = (type: number) => {
   data.queryParam.pageSize = pageInfo.pageSize
   loading.value = true
   storagePage(data.queryParam).then((res) => {
-    if (res.code === 200) {
+    if (res.code === ResultEnum.SUCCESS) {
       pageInfo.total = res.data.total
       dataList.value = res.data.list
     }
@@ -51,7 +52,7 @@ const handleStoragePage = (type: number) => {
 
 const handleStorageDelete = (storageId: number) => {
   storageDelete(storageId).then((res) => {
-    if (res.code === 200) {
+    if (res.code === ResultEnum.SUCCESS) {
       Message.success('删除成功!')
       handleStoragePage(-1)
     }
@@ -62,7 +63,7 @@ const handleStorageUpdateStatus = (storageId: number, status: number) => {
   updateStorageStatusData.storageId = storageId
   updateStorageStatusData.status = status
   storageUpdateStatus(updateStorageStatusData).then((res) => {
-    if (res.code === 200) {
+    if (res.code === ResultEnum.SUCCESS) {
       Message.success(res.message)
       handleStoragePage(-1)
     }
@@ -75,7 +76,7 @@ const handleStorageUpdateStatus = (storageId: number, status: number) => {
 
 const handleStorageDefault = (storageId: number) => {
   storageSetDefault(storageId).then((res) => {
-    if (res.code === 200) {
+    if (res.code === ResultEnum.SUCCESS) {
       Message.success(res.message)
       handleStoragePage(-1)
     }

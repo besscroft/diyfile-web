@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { GetUserInfoByUserName } from '~/api/modules/user'
+import { ResultEnum } from '~/enums/httpEnum'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -10,7 +11,7 @@ const useDetail = () => {
   loading.value = true
   const username = router.currentRoute.value.params.username
   GetUserInfoByUserName(username).then((res) => {
-    if (res.code === 200) {
+    if (res.code === ResultEnum.SUCCESS) {
       detail.value = res.data
     }
     loading.value = false

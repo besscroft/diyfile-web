@@ -3,6 +3,7 @@ import { Message } from '@arco-design/web-vue'
 import type { FormInstance } from '@arco-design/web-vue'
 import type { Storage } from '~/api/interface/storage'
 import { storageInfo, storageUpdate } from '~/api/modules/storage'
+import { ResultEnum } from '~/enums/httpEnum'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -116,7 +117,7 @@ const handleSubmit = (formEl: FormInstance) => {
       updateStorageData.value.remark = updateStorageForm.remark
       handleFormData()
       storageUpdate(updateStorageData.value).then((res) => {
-        if (res.code === 200) {
+        if (res.code === ResultEnum.SUCCESS) {
           Message.info(res.message)
           router.push('/@admin/setting/storage')
         }
@@ -130,7 +131,7 @@ const handleSubmit = (formEl: FormInstance) => {
 onBeforeMount(() => {
   const id = Number(router.currentRoute.value.query.id)
   storageInfo(id).then((res) => {
-    if (res.code === 200) {
+    if (res.code === ResultEnum.SUCCESS) {
       updateStorageForm.id = res.data.id
       updateStorageForm.name = res.data.name
       updateStorageForm.storageKey = res.data.storageKey

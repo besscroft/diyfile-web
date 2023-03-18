@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import { getServerInfo, getTotalInfo } from '~/api/modules/monitor'
+import { ResultEnum } from '~/enums/httpEnum'
 
 const router = useRouter()
 const { t } = useI18n()
@@ -13,14 +14,14 @@ const totalInfo = ref()
 const handServerInfo = async () => {
   loadingTotal.value = true
   await getTotalInfo().then((res) => {
-    if (res.code === 200) {
+    if (res.code === ResultEnum.SUCCESS) {
       totalInfo.value = res.data
     }
     loadingTotal.value = false
   })
   loadingServer.value = true
   await getServerInfo().then((res) => {
-    if (res.code === 200) {
+    if (res.code === ResultEnum.SUCCESS) {
       serverInfo.value = res.data
     }
     loadingServer.value = false

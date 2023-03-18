@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { Message } from '@arco-design/web-vue'
 import { getSiteConfig, updateConfig } from '~/api/modules/systemConfig'
+import { ResultEnum } from '~/enums/httpEnum'
 
 const user = useUserStore()
 const dataMap = ref({})
 
 const handleUpdateSiteConfig = (configKey: string, configValue: string) => {
   updateConfig({ configKey, configValue }).then((res) => {
-    if (res.code === 200) {
+    if (res.code === ResultEnum.SUCCESS) {
       Message.success(res.message)
       if (configKey === 'beian') {
         user.setBeian(configValue)

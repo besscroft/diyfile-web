@@ -8,6 +8,7 @@ import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import { createWebHistory } from 'vue-router'
 import App from './App.vue'
 import type { UserModule } from './types'
+import { ResultEnum } from '~/enums/httpEnum'
 import { AxiosCanceler } from '~/api/helper/axiosCancel'
 import generatedRoutes from '~pages'
 import { getInfo } from '~/api/modules/user'
@@ -22,7 +23,7 @@ import './styles/main.css'
 import 'uno.css'
 
 /* global */
-console.log(`${'\n'} %c DiyFile v0.3.1 %c https://github.com/besscroft/diyfile ${'\n'}${'\n'}`, 'color: #fadfa3; background: #030307; padding:5px 0;', 'background: #fadfa3; padding:5px 0;')
+console.log(`${'\n'} %c DiyFile v0.3.2 %c https://github.com/besscroft/diyfile ${'\n'}${'\n'}`, 'color: #fadfa3; background: #030307; padding:5px 0;', 'background: #fadfa3; padding:5px 0;')
 
 generatedRoutes.push({
   path: '/',
@@ -65,7 +66,7 @@ export const createApp = ViteSSG(
         }
         if (!user.userName) {
           await getInfo().then((res) => {
-            if (res.code !== 200) {
+            if (res.code !== ResultEnum.SUCCESS) {
               return next({ path: '/@login', replace: true })
             }
             user.setUserName(res.data.userName)

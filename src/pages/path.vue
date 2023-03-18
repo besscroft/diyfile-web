@@ -2,6 +2,7 @@
 import { Message } from '@arco-design/web-vue'
 import { deleteFile, getFileInfo, getFileItemByKey, getUploadUrl } from '~/api/modules/file'
 import { getEnableStorage, storageInfoByStorageKey } from '~/api/modules/storage'
+import { ResultEnum } from '~/enums/httpEnum'
 import type { Storage } from '~/types/storage'
 import { download } from '~/utils/ButtonUtil'
 import { getFileName, isAudio, isImage, isMarkdown, isPDF, isText, isVideo } from '~/utils/FileUtil'
@@ -32,7 +33,7 @@ const routes = ref<Array<any>>([
 const getStorageInfo = (key: string) => {
   if (!storageInfo.value || storageInfo.value?.storageKey !== key) {
     storageInfoByStorageKey(key).then((res) => {
-      if (res.code === 200) {
+      if (res.code === ResultEnum.SUCCESS) {
         storageInfo.value = res.data
       }
     })
@@ -42,7 +43,7 @@ const getStorageInfo = (key: string) => {
 /** 获取所有可用存储并处理 */
 const handleEnableStorage = () => {
   getEnableStorage().then((res) => {
-    if (res.code === 200) {
+    if (res.code === ResultEnum.SUCCESS && Array.isArray(res.data)) {
       for (const resKey in res.data) {
         if (res.data[resKey].storageKey === storageKey.value) {
           storageName.value = res.data[resKey].name
@@ -76,7 +77,7 @@ const onRequestUpload = (option: any) => {
     uri = `/${encodeURIComponent(fileItem.name)}`
   }
   getUploadUrl(storageKey.value, uri).then((res) => {
-    if (res.code === 200 && typeof res.data == 'string') {
+    if (res.code === ResultEnum.SUCCESS && typeof res.data == 'string') {
       uploadOneDrive(fileItem.file, res.data, option)
     }
   })
@@ -86,7 +87,7 @@ const onRequestUpload = (option: any) => {
 const handleItemByKey = (storageKey: string | any, folderPath: string | any) => {
   loading.value = true
   getFileItemByKey(storageKey, folderPath).then((res) => {
-    if (res.code === 200) {
+    if (res.code === ResultEnum.SUCCESS) {
       fileInfo.value = null
       dataList.value = res.data
     }
@@ -122,7 +123,7 @@ const clickFile = (name: string) => {
 const handleFile = (key: string | any, uri: string | any, fileName: string) => {
   loading.value = true
   getFileInfo(key, uri, fileName).then((res) => {
-    if (res.code === 200) {
+    if (res.code === ResultEnum.SUCCESS) {
       dataList.value = null
       fileInfo.value = res.data
     }
@@ -158,7 +159,7 @@ const handleDelete = (option: any) => {
     url = `${option.path}/${encodeURIComponent(option.name)}`
   }
   deleteFile(storageKey.value, url).then((res) => {
-    if (res.code === 200) {
+    if (res.code === ResultEnum.SUCCESS) {
       Message.success(res.message)
       handleRouter()
     }

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import APlayer from 'aplayer'
 import { getFileInfo } from '~/api/modules/file'
+import { ResultEnum } from '~/enums/httpEnum'
 import { download } from '~/utils/ButtonUtil'
 import { getFileName } from '~/utils/FileUtil'
 
@@ -77,11 +78,11 @@ onMounted(() => {
   const key = router.currentRoute.value.params.storageKey.toString()
   const path = router.currentRoute.value.path
   getFileInfo(key, handleImagePath(), getFileName(path)).then((res) => {
-    if (res.code === 200 && res.data.url) {
+    if (res.code === ResultEnum.SUCCESS && res.data.url) {
       initPlayer(res.data.url)
     } else {
       getFileInfo(key, handleImagePathPre(), getFileName(path)).then((res) => {
-        if (res.code === 200) {
+        if (res.code === ResultEnum.SUCCESS) {
           initPlayer(res.data.url)
         }
       })
