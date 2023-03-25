@@ -2,6 +2,7 @@
 import { Message } from '@arco-design/web-vue'
 import type { User } from '~/api/interface/user'
 import { userAdd } from '~/api/modules/user'
+import { ResultEnum } from '~/enums/httpEnum'
 
 const router = useRouter()
 const { t } = useI18n()
@@ -28,7 +29,7 @@ const addUserRuleForm = reactive<User.AddUserRequestData>({
 
 const handleSubmit = () => {
   userAdd(addUserRuleForm).then((res) => {
-    if (res.code === 200) {
+    if (res.code === ResultEnum.SUCCESS) {
       Message.info(res.message)
       router.push('/@admin/system/user')
     }

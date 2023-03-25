@@ -3,6 +3,7 @@ import { Message } from '@arco-design/web-vue'
 import type { FormInstance } from '@arco-design/web-vue'
 import type { Storage } from '~/api/interface/storage'
 import { getAwsRegions, storageInfo, storageUpdate } from '~/api/modules/storage'
+import { ResultEnum } from '~/enums/httpEnum'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -118,7 +119,7 @@ const handleSubmit = (formEl: FormInstance) => {
       updateStorageData.value.enable = updateStorageForm.enable
       handleFormData()
       storageUpdate(updateStorageData.value).then((res) => {
-        if (res.code === 200) {
+        if (res.code === ResultEnum.SUCCESS) {
           Message.info(res.message)
           router.push('/@admin/setting/storage')
         }
@@ -132,7 +133,7 @@ const handleSubmit = (formEl: FormInstance) => {
 onBeforeMount(() => {
   const id = Number(router.currentRoute.value.query.id)
   storageInfo(id).then((res) => {
-    if (res.code === 200) {
+    if (res.code === ResultEnum.SUCCESS) {
       updateStorageForm.id = res.data.id
       updateStorageForm.name = res.data.name
       updateStorageForm.storageKey = res.data.storageKey
@@ -164,7 +165,9 @@ onBeforeMount(() => {
   })
   loading.value = true
   getAwsRegions().then((res) => {
-    regionList.value = res.data
+    if (res.code === ResultEnum.SUCCESS && Array.isArray(res.data)) {
+      regionList.value = res.data
+    }
     loading.value = false
   }).catch((err) => {
     Message.error(err.message)

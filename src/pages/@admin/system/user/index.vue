@@ -2,6 +2,7 @@
 import { Message } from '@arco-design/web-vue'
 import type { User } from '~/api/interface/user'
 import { userDelete, userPage, userStatusUpdate } from '~/api/modules/user'
+import { ResultEnum } from '~/enums/httpEnum'
 
 const router = useRouter()
 const user = useUserStore()
@@ -42,7 +43,7 @@ const useUserPage = (role: string) => {
   data.queryParam.pageSize = pageInfo.pageSize
   loading.value = true
   userPage(data.queryParam).then((res) => {
-    if (res.code === 200) {
+    if (res.code === ResultEnum.SUCCESS) {
       pageInfo.total = res.data.total
       dataList.value = res.data.list
     }
@@ -52,7 +53,7 @@ const useUserPage = (role: string) => {
 
 const handleUserDelete = (id: number) => {
   userDelete(id).then((res) => {
-    if (res.code === 200) {
+    if (res.code === ResultEnum.SUCCESS) {
       Message.info(res.message)
       useUserPage('')
     }
@@ -63,7 +64,7 @@ const handleUserStatusUpdate = (id: number, status: number) => {
   updateUserStatusData.userId = id
   updateUserStatusData.status = status
   userStatusUpdate(updateUserStatusData).then((res) => {
-    if (res.code === 200) {
+    if (res.code === ResultEnum.SUCCESS) {
       Message.success(res.message)
       useUserPage('')
     }

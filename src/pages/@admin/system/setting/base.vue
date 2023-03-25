@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { Message } from '@arco-design/web-vue'
 import { getBarkId, updateConfig } from '~/api/modules/systemConfig'
+import { ResultEnum } from '~/enums/httpEnum'
 
 const barkId = ref()
 
 const handleUpdateBarkId = (barkId: string) => {
   updateConfig({ configKey: 'barkId', configValue: barkId }).then((res) => {
-    if (res.code === 200) {
+    if (res.code === ResultEnum.SUCCESS) {
       Message.success(res.message)
     }
   })

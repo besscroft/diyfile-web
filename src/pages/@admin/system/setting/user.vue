@@ -2,6 +2,7 @@
 import { Message } from '@arco-design/web-vue'
 import type { User } from '~/api/interface/user'
 import { userPasswordUpdate } from '~/api/modules/user'
+import { ResultEnum } from '~/enums/httpEnum'
 
 const oldPwd = ref<string>()
 const pwd = ref<string>()
@@ -16,7 +17,7 @@ const handleUpdatePwd = () => {
   pwdForm.oldPassword = oldPwd.value
   pwdForm.newPassword = pwd.value
   userPasswordUpdate(pwdForm).then((res) => {
-    if (res.code === 200) {
+    if (res.code === ResultEnum.SUCCESS) {
       oldPwd.value = ''
       pwd.value = ''
       Message.info(res.message)

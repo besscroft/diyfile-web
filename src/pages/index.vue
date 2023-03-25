@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { getDefaultStorage } from '~/api/modules/file'
+import { ResultEnum } from '~/enums/httpEnum'
 
 const { t } = useI18n()
 const user = useUserStore()
@@ -14,7 +15,7 @@ const routes = ref<Array<any>>([
 
 onBeforeMount(() => {
   getDefaultStorage().then((res) => {
-    if (res.code === 200) {
+    if (res.code === ResultEnum.SUCCESS) {
       if (res.data.storageKey) {
         router.push({ path: `/${res.data.storageKey}` })
       } else {

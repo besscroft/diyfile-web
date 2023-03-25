@@ -2,6 +2,7 @@
 import { Message } from '@arco-design/web-vue'
 import type { Login } from '~/api/interface'
 import { getInfo, loginApi } from '~/api/modules/user'
+import { ResultEnum } from '~/enums/httpEnum'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -15,7 +16,7 @@ const loginForm = reactive<Login.ReqLoginForm>({
 
 const handleSubmit = () => {
   loginApi(loginForm).then(async (res) => {
-    if (res.code === 200) {
+    if (res.code === ResultEnum.SUCCESS) {
       const token = res.data.tokenValue
       user.setUserName('')
       user.setAvatar('')
@@ -23,7 +24,7 @@ const handleSubmit = () => {
       localStorage.setItem('diyfile-token', token)
       Message.success('登录成功!')
       await getInfo().then((res) => {
-        if (res.code !== 200) {
+        if (res.code !== ResultEnum.SUCCESS) {
           window.location.href = '/@login'
         }
         user.setUserName(res.data.userName)

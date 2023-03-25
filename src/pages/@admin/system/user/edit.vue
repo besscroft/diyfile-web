@@ -2,6 +2,7 @@
 import { Message } from '@arco-design/web-vue'
 import type { User } from '~/api/interface/user'
 import { getUserById, userUpdate } from '~/api/modules/user'
+import { ResultEnum } from '~/enums/httpEnum'
 
 const router = useRouter()
 const { t } = useI18n()
@@ -26,7 +27,7 @@ const updateUserRuleForm = reactive<User.UpdateUserRequestData>({
 
 const handleSubmit = () => {
   userUpdate(updateUserRuleForm).then((res) => {
-    if (res.code === 200) {
+    if (res.code === ResultEnum.SUCCESS) {
       Message.info(res.message)
       router.push('/@admin/system/user')
     }
@@ -48,7 +49,7 @@ const handleEmailSearch = (value: string) => {
 onMounted(() => {
   const id = Number(router.currentRoute.value.query.id)
   getUserById(id).then((res) => {
-    if (res.code === 200) {
+    if (res.code === ResultEnum.SUCCESS) {
       updateUserRuleForm.id = res.data.id
       updateUserRuleForm.avatar = res.data.avatar
       updateUserRuleForm.role = res.data.role

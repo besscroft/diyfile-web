@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { ResultEnum } from '~/enums/httpEnum'
 
 /** OneDrive 分片上传 */
 export const uploadOneDrive = async (file: File, uploadUrl: string, option: any) => {
@@ -37,7 +38,7 @@ export const uploadOneDrive = async (file: File, uploadUrl: string, option: any)
         start += chunkFileSize
         uploadedChunks = uploadedChunks + 1
         uploadBlock()
-      } else if (res.status === 201 || res.status === 200) {
+      } else if (res.status === 201 || res.status === ResultEnum.SUCCESS) {
         console.log(res)
         onSuccess(res)
       }

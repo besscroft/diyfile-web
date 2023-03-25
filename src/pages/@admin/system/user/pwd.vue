@@ -2,6 +2,7 @@
 import { Message } from '@arco-design/web-vue'
 import type { User } from '~/api/interface/user'
 import { userPasswordUpdate } from '~/api/modules/user'
+import { ResultEnum } from '~/enums/httpEnum'
 
 const router = useRouter()
 const { t } = useI18n()
@@ -16,7 +17,7 @@ const pwdForm = reactive<User.UpdatePasswordData>({
 const handleSubmit = () => {
   pwdForm.userId = Number(router.currentRoute.value.query.id)
   userPasswordUpdate(pwdForm).then((res) => {
-    if (res.code === 200) {
+    if (res.code === ResultEnum.SUCCESS) {
       Message.info(res.message)
       router.push('/@admin/system/user')
     }
