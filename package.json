@@ -14,8 +14,7 @@
     "test:e2e": "cypress open",
     "test:unit": "vitest",
     "typecheck": "vue-tsc --noEmit",
-    "up": "taze major -I",
-    "postinstall": "npx simple-git-hooks"
+    "up": "taze major -I"
   },
   "dependencies": {
     "@unocss/reset": "^0.50.6",
@@ -31,7 +30,8 @@
     "vue": "^3.2.47",
     "vue-demi": "^0.13.11",
     "vue-i18n": "^9.2.2",
-    "vue-router": "^4.1.6"
+    "vue-router": "^4.1.6",
+    "vuetify": "^3.1.11"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.37.0",
@@ -55,7 +55,6 @@
     "markdown-it-shiki": "^0.8.0",
     "pnpm": "^7.30.0",
     "shiki": "^0.14.1",
-    "simple-git-hooks": "^2.8.1",
     "taze": "^0.9.1",
     "typescript": "^4.9.5",
     "unocss": "^0.50.6",
@@ -74,11 +73,5 @@
     "vite-ssg-sitemap": "^0.4.3",
     "vitest": "^0.29.3",
     "vue-tsc": "^1.2.0"
-  },
-  "simple-git-hooks": {
-    "pre-commit": "pnpm lint-staged"
-  },
-  "lint-staged": {
-    "*": "eslint --fix"
   }
 }

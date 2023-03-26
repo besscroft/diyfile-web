@@ -1,18 +1,22 @@
 import { ViteSSG } from 'vite-ssg'
 import { setupLayouts } from 'virtual:generated-layouts'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+import { createPinia } from 'pinia'
+import { createWebHistory } from 'vue-router'
+import * as components from 'vuetify/components'
+import * as directives from 'vuetify/directives'
+import { createVuetify } from 'vuetify'
 import App from './App.vue'
 import type { UserModule } from './types'
 import generatedRoutes from '~pages'
+import 'vuetify/styles'
 
 import '@unocss/reset/tailwind.css'
 import './styles/main.css'
 import 'uno.css'
 import { AxiosCanceler } from '~/api/helper/axiosCancel'
-import { createWebHistory } from 'vue-router'
 import { ResultEnum } from '~/enums/httpEnum'
 import { getInfo } from '~/api/modules/user'
-import { createPinia } from 'pinia'
-import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
 /* global */
 console.log(`${'\n'} %c DiyFile v0.4.0 %c https://github.com/besscroft/diyfile ${'\n'}${'\n'}`, 'color: #fadfa3; background: #030307; padding:5px 0;', 'background: #fadfa3; padding:5px 0;')
@@ -35,6 +39,12 @@ generatedRoutes.push({
 const routes = setupLayouts(generatedRoutes)
 const axiosCanceler = new AxiosCanceler()
 
+// 全量引入，后面改成自动导入
+const vuetify = createVuetify({
+  components,
+  directives,
+})
+
 // https://github.com/antfu/vite-ssg
 export const createApp = ViteSSG(
   App,
@@ -45,7 +55,7 @@ export const createApp = ViteSSG(
       .forEach(i => i.install?.(ctx))
     const pinia = createPinia()
     pinia.use(piniaPluginPersistedstate)
-    ctx.app.use(pinia)
+    ctx.app.use(pinia).use(vuetify)
     if (ctx.isClient) {
       ctx.router.beforeEach(async (to, from, next) => {
         axiosCanceler.removeAllPending()
