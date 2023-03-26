@@ -1,33 +1,73 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
+import piniaPersistConfig from '~/config/piniaPersist'
+import type { UserStore } from '~/types/user'
 
-export const useUserStore = defineStore('user', () => {
-  /**
-   * Current name of the user.
-   */
-  const savedName = ref('')
-  const previousNames = ref(new Set<string>())
-
-  const usedNames = computed(() => Array.from(previousNames.value))
-  const otherNames = computed(() => usedNames.value.filter(name => name !== savedName.value))
-
-  /**
-   * Changes the current name of the user and saves the one that was used
-   * before.
-   *
-   * @param name - new name to set
-   */
-  function setNewName(name: string) {
-    if (savedName.value)
-      previousNames.value.add(savedName.value)
-
-    savedName.value = name
-  }
-
-  return {
-    setNewName,
-    otherNames,
-    savedName,
-  }
+export const useUserStore = defineStore('user', {
+  state: (): UserStore => ({
+    // token
+    token: '',
+    // token 前缀
+    tokenHead: '',
+    // 刷新 token
+    refreshToken: '',
+    // 用户名称
+    userName: '',
+    // 头像
+    avatar: '',
+    // i18n 语言
+    language: '',
+    // 暗黑模式
+    theme: '',
+    // 网站标题
+    title: '',
+    // 备案信息
+    beian: '',
+    // 角色 Code
+    roleCode: '',
+  }),
+  actions: {
+    /** 设置用户名称 */
+    setUserName(name: string) {
+      this.userName = name
+    },
+    /** 设置 token */
+    setToken(token: string) {
+      this.token = token
+    },
+    /** 设置 token 前缀 */
+    setTokenHead(tokenHead: string) {
+      this.tokenHead = tokenHead
+    },
+    /** 设置刷新 token */
+    setRefreshToken(refreshToken: string) {
+      this.refreshToken = refreshToken
+    },
+    /** 设置头像 */
+    setAvatar(avatar: string) {
+      this.avatar = avatar
+    },
+    /** 设置 i18n 语言 */
+    setLanguage(language: string) {
+      this.language = language
+    },
+    /** 设置暗黑模式 */
+    setTheme(theme: string) {
+      this.theme = theme
+    },
+    /** 设置网站标题 */
+    setTitle(title: string) {
+      this.title = title
+    },
+    /** 设置备案信息 */
+    setBeian(beian: string) {
+      this.beian = beian
+    },
+    /** 设置角色 Code */
+    setRoleCode(roleCode: string) {
+      this.roleCode = roleCode
+    },
+  },
+  persist: piniaPersistConfig('user'),
 })
 
 if (import.meta.hot)

@@ -16,11 +16,26 @@ import LinkAttributes from 'markdown-it-link-attributes'
 import Unocss from 'unocss/vite'
 import Shiki from 'markdown-it-shiki'
 import VueMacros from 'unplugin-vue-macros/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
 export default defineConfig({
   resolve: {
     alias: {
       '~/': `${path.resolve(__dirname, 'src')}/`,
+    },
+  },
+
+  server: {
+    // 服务器主机名，如果允许外部访问，可设置为 '0.0.0.0'
+    host: '0.0.0.0',
+    cors: true,
+    // 代理跨域
+    proxy: {
+      '/@api': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/@api/, ''),
+      },
     },
   },
 
@@ -46,6 +61,7 @@ export default defineConfig({
 
     // https://github.com/antfu/unplugin-auto-import
     AutoImport({
+      resolvers: [ElementPlusResolver()],
       imports: [
         'vue',
         'vue-router',
@@ -64,6 +80,7 @@ export default defineConfig({
 
     // https://github.com/antfu/unplugin-vue-components
     Components({
+      resolvers: [ElementPlusResolver()],
       // allow auto load markdown components under `./src/components/`
       extensions: ['vue', 'md'],
       // allow auto import and register components used in markdown

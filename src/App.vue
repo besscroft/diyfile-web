@@ -1,11 +1,12 @@
 <script setup lang="ts">
+const user = useUserStore()
 // https://github.com/vueuse/head
 // you can use this to manipulate the document head in any components,
 // they will be rendered correctly in the html results with vite-ssg
 useHead({
-  title: 'Vitesse',
+  title: user.title || 'DiyFile',
   meta: [
-    { name: 'description', content: 'Opinionated Vite Starter Template' },
+    { name: 'DiyFile', content: '一款好看的在线文件列表程序，使用 Spring Boot 3 和 Vue 驱动🚀' },
     {
       name: 'theme-color',
       content: computed(() => isDark.value ? '#00aba9' : '#ffffff'),
