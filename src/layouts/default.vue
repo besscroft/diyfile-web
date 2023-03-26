@@ -1,9 +1,27 @@
+<script setup lang="ts">
+const router = useRouter()
+const props = ref<Boolean>(true)
+// 控制菜单收缩
+const menuStatus = ref<Boolean>(true)
+
+const toggleTheme = () => {
+  if (isDark.value) {
+    // 恢复亮色主题
+    document.body.removeAttribute('arco-theme')
+    localStorage.setItem('diyfile-theme', 'light')
+  } else {
+    // 设置为暗黑主题
+    document.body.setAttribute('arco-theme', 'dark')
+    localStorage.setItem('diyfile-theme', 'dark')
+  }
+  toggleDark()
+}
+
+const onMenuCollapse = () => {
+  menuStatus.value = !menuStatus.value
+}
+</script>
+
 <template>
-  <main class="px-4 py-10 text-center text-gray-700 dark:text-gray-200">
-    <RouterView />
-    <TheFooter />
-    <div class="mt-5 mx-auto text-center opacity-75 dark:opacity-50 text-sm">
-      [Default Layout]
-    </div>
-  </main>
+  6
 </template>

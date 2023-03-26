@@ -1,7 +1,4 @@
 <script setup lang="ts">
-defineOptions({
-  name: 'IndexPage',
-})
 const user = useUserStore()
 
 const router = useRouter()
@@ -10,7 +7,81 @@ const { t } = useI18n()
 </script>
 
 <template>
-  6
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
+  <el-button>Default</el-button><br/>
 </template>
 
 <route lang="yaml">

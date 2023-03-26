@@ -1,13 +1,16 @@
-<template>
+<script setup lang="ts">
+const user = useUserStore()
 
-</template>
+const router = useRouter()
 
-<script>
-export default {
-  name: "path"
-}
+const { t } = useI18n()
 </script>
 
-<style scoped>
+<template>
+  6
+</template>
 
-</style>
+<route lang="yaml">
+meta:
+  layout: admin
+</route>

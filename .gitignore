@@ -8,3 +8,5 @@ node_modules
 .idea/
 *.log
 cypress/downloads
+vite.config.ts.*.mjs
+dist-*
