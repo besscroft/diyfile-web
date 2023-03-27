@@ -12,5 +12,5 @@ const { t } = useI18n()
 
 <route lang="yaml">
 meta:
-  layout: admin
+  layout: default
 </route>

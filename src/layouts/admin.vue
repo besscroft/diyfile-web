@@ -1,25 +1,16 @@
 <script setup lang="ts">
 const router = useRouter()
 const { isMobile } = useDevice()
-const props = ref<Boolean>(false)
-// 控制菜单收缩
-const menuStatus = ref<Boolean>(false)
 
 const toggleTheme = () => {
   if (isDark.value) {
     // 恢复亮色主题
-    document.body.removeAttribute('arco-theme')
     localStorage.setItem('diyfile-theme', 'light')
   } else {
     // 设置为暗黑主题
-    document.body.setAttribute('arco-theme', 'dark')
     localStorage.setItem('diyfile-theme', 'dark')
   }
   toggleDark()
-}
-
-const onMenuCollapse = () => {
-  menuStatus.value = !menuStatus.value
 }
 
 /** 路由切换 */
@@ -44,16 +35,16 @@ const routerPage = (val: string) => {
 
 <template>
   <el-container class="w-full h-full">
-    <el-header class="diyfile-header">
+    <el-header class="w-full" style="border-bottom: 1px solid #e0e0e0;">
       <Header />
     </el-header>
     <el-container v-if="!isMobile" style="height: calc(100% - 60px)">
-      <PopMenu class="w-48 h-full" />
+      <PopMenu class="w-48 h-full" @routerPage="routerPage" style="border-right: 1px solid #e0e0e0;" />
       <el-container>
         <el-main style="height: calc(100% - 60px)">
           <RouterView />
         </el-main>
-        <el-footer>
+        <el-footer style="border-top: 1px solid #e0e0e0;">
           <Footer />
         </el-footer>
       </el-container>
@@ -72,7 +63,5 @@ const routerPage = (val: string) => {
 </template>
 
 <style>
-.diyfile-header {
-  --el-header-padding: 0px;
-}
+
 </style>

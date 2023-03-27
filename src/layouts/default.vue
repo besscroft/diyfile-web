@@ -16,12 +16,22 @@ const toggleTheme = () => {
   }
   toggleDark()
 }
-
-const onMenuCollapse = () => {
-  menuStatus.value = !menuStatus.value
-}
 </script>
 
 <template>
-  6
+  <el-container class="w-full h-full">
+    <el-header class="w-full" style="border-bottom: 1px solid #e0e0e0;">
+      <Header />
+    </el-header>
+    <el-container style="height: calc(100% - 60px)">
+      <el-container>
+        <el-main style="height: calc(100% - 60px)">
+          <RouterView />
+        </el-main>
+        <el-footer style="border-top: 1px solid #e0e0e0;">
+          <Footer />
+        </el-footer>
+      </el-container>
+    </el-container>
+  </el-container>
 </template>
