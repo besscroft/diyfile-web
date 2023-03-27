@@ -4,6 +4,6 @@ import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 import { loadFonts } from '~/plugins/webfontloader'
 
-await loadFonts()
+loadFonts()
 
 export default createVuetify()
