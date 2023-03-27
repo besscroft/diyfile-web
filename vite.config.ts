@@ -1,8 +1,8 @@
 import path from 'node:path'
 import { defineConfig } from 'vite'
-// import Preview from 'vite-plugin-vue-component-preview'
 import Vue from '@vitejs/plugin-vue'
 import Pages from 'vite-plugin-pages'
+import vuetify from 'vite-plugin-vuetify'
 import generateSitemap from 'vite-ssg-sitemap'
 import Layouts from 'vite-plugin-vue-layouts'
 import Components from 'unplugin-vue-components/vite'
@@ -40,8 +40,6 @@ export default defineConfig({
   },
 
   plugins: [
-    // Preview(),
-
     VueMacros({
       plugins: {
         vue: Vue({
@@ -161,6 +159,8 @@ export default defineConfig({
     Inspector({
       toggleButtonVisibility: 'never',
     }),
+
+    vuetify({ autoImport: true }),
   ],
 
   // https://github.com/vitest-dev/vitest

@@ -3,11 +3,9 @@ import { setupLayouts } from 'virtual:generated-layouts'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import { createPinia } from 'pinia'
 import { createWebHistory } from 'vue-router'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
-import { createVuetify } from 'vuetify'
 import App from './App.vue'
 import type { UserModule } from './types'
+import vuetify from '~/plugins/vuetify'
 import generatedRoutes from '~pages'
 import 'vuetify/styles'
 
@@ -38,12 +36,6 @@ generatedRoutes.push({
 
 const routes = setupLayouts(generatedRoutes)
 const axiosCanceler = new AxiosCanceler()
-
-// 全量引入，后面改成自动导入
-const vuetify = createVuetify({
-  components,
-  directives,
-})
 
 // https://github.com/antfu/vite-ssg
 export const createApp = ViteSSG(
