@@ -9,7 +9,7 @@ const router = useRouter()
 const user = useUserStore()
 const username = ref<String>('')
 const avatar = ref<String>('')
-const menuStatus = ref<Boolean>(false)
+const { isMobile } = useDevice()
 
 const toggleTheme = () => {
   emit('toggleTheme')
@@ -71,132 +71,71 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="mx-auto max-w-screen-xl px-4 py-2 sm:px-6 lg:px-8">
-    <div class="flex items-center sm:justify-between sm:gap-4">
-      <div class="relative hidden sm:block">
-        <label class="sr-only" for="search"> Search </label>
-
-        <input
-          class="h-10 w-full rounded-lg border-none bg-white pl-4 pr-10 text-sm shadow-sm sm:w-56"
-          id="search"
-          type="search"
-          placeholder="Search website..."
-        />
-
-        <button
-          type="button"
-          class="absolute top-1/2 right-1 -translate-y-1/2 rounded-md bg-gray-50 p-2 text-gray-600 transition hover:text-gray-700"
+  <el-row :gutter="20" class="h-full w-full flex justify-center items-center">
+    <el-col :span="4">
+      <span class="cursor-pointer inline-block h-10 w-32 rounded-lg" @click="routerPage('/')">
+        <img
+          src="/diyfile.png"
+          :class="!isMobile ? 'transform scale-100' : 'transform scale-75'"
+          alt="logo"
         >
-          <span class="sr-only">Search</span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-4 w-4"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-            />
-          </svg>
-        </button>
+      </span>
+    </el-col>
+    <el-col :span="16">
+      <div v-if="!isMobile" class="flex gap-4 justify-center items-center">
+        <a
+          href="https://doc.diyfile.besscroft.com/"
+          target="_blank"
+          class="block shrink-0 rounded-lg bg-white p-2.5 text-gray-600 shadow-sm hover:text-gray-700"
+        >
+          <v-icon icon="explore" />
+        </a>
+        <a
+          href="https://github.com/besscroft/diyfile"
+          target="_blank"
+          class="block shrink-0 rounded-lg bg-white p-2.5 text-gray-600 shadow-sm hover:text-gray-700"
+        >
+          <v-icon icon="question_answer" />
+        </a>
       </div>
-
-      <div
-        class="flex flex-1 items-center justify-between gap-8 sm:justify-end"
-      >
-        <div class="flex gap-4">
-          <button
-            type="button"
-            class="block shrink-0 rounded-lg bg-white p-2.5 text-gray-600 shadow-sm hover:text-gray-700 sm:hidden"
-          >
-            <span class="sr-only">Search</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
-            </svg>
-          </button>
-
-          <a
-            href="https://doc.diyfile.besscroft.com/"
-            target="_blank"
-            class="block shrink-0 rounded-lg bg-white p-2.5 text-gray-600 shadow-sm hover:text-gray-700"
-          >
-            <v-icon icon="explore"></v-icon>
-          </a>
-
-          <a
-            href="https://github.com/besscroft/diyfile"
-            target="_blank"
-            class="block shrink-0 rounded-lg bg-white p-2.5 text-gray-600 shadow-sm hover:text-gray-700"
-          >
-            <v-icon icon="question_answer"></v-icon>
-          </a>
-        </div>
-
-        <button
-          v-if="user.userName"
-          type="button"
-          class="group flex shrink-0 items-center rounded-lg transition"
-        >
-          <img
-            alt="Man"
+    </el-col>
+    <el-col :span="4">
+      <div class="avatar-container">
+        <el-dropdown v-if="user.userName">
+          <el-avatar
+            alt="avatar"
             :src="user.avatar"
-            class="h-10 w-10 rounded-full object-cover"
           />
-
-          <p class="ml-2 hidden text-left text-xs sm:block">
-            <strong class="block font-medium">{{ user.userName }}</strong>
-
-            <span class="text-gray-500">{{ user.roleCode }}</span>
-          </p>
-
-          <v-menu
-            open-on-hover
-          >
-            <template v-slot:activator="{ props }">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="ml-4 hidden h-5 w-5 text-gray-500 transition group-hover:text-gray-700 sm:block"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                @click="clickHandle"
-                v-bind="props"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-            </template>
-
-            <v-list>
-              <v-list-item>
-                <v-list-item-title v-if="!router.currentRoute.value.path.startsWith('/@')" @click="routerPage('/@admin')">{{ t('menu.index') }}</v-list-item-title>
-                <v-list-item-title v-else @click="routerPage('/')">{{ t('button.home') }}</v-list-item-title>
-                <v-list-item-title v-if="user.token" @click="loginOut">{{ t('button.quit') }}</v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-        </button>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item v-if="!router.currentRoute.value.path.startsWith('/@')" @click="routerPage('/@admin')">
+                {{ t('menu.index') }}
+              </el-dropdown-item>
+              <el-dropdown-item v-else @click="routerPage('/')">
+                {{ t('button.home') }}
+              </el-dropdown-item>
+              <el-dropdown-item v-if="user.token" @click="loginOut">
+                {{ t('button.quit') }}
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
         <v-btn v-else prepend-icon="login" @click="routerPage('/@login')">
           {{ t('button.login') }}
         </v-btn>
       </div>
-    </div>
-  </div>
+    </el-col>
+  </el-row>
 </template>
+
+<style scoped>
+.avatar-container {
+  height: 60px;
+  line-height: 60px;
+  margin-right: -24px;
+  display: flex;
+  justify-content: flex-end;
+  /** 垂直居中 */
+  align-items: center;
+}
+</style>

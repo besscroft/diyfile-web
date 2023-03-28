@@ -100,6 +100,7 @@ const handleSubmit = () => {
                 />
               </svg>
             </span>
+            预览账号：view/666666
           </div>
         </div>
 
