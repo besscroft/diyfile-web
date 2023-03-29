@@ -1,14 +1,19 @@
 <script setup lang="ts">
+import { useTheme } from 'vuetify'
+
 const router = useRouter()
 const { isMobile } = useDevice()
+const theme = useTheme()
 
 const toggleTheme = () => {
   if (isDark.value) {
     // 恢复亮色主题
     localStorage.setItem('diyfile-theme', 'light')
+    theme.global.name.value = 'light'
   } else {
     // 设置为暗黑主题
     localStorage.setItem('diyfile-theme', 'dark')
+    theme.global.name.value = 'dark'
   }
   toggleDark()
 }
@@ -36,10 +41,10 @@ const routerPage = (val: string) => {
 <template>
   <el-container class="w-full h-full">
     <el-header class="w-full" style="border-bottom: 1px solid #e0e0e0;">
-      <Header />
+      <Header @toggleTheme="toggleTheme" />
     </el-header>
     <el-container v-if="!isMobile" style="height: calc(100% - 60px)">
-      <PopMenu class="w-48 h-full" @routerPage="routerPage" style="border-right: 1px solid #e0e0e0;" />
+      <PopMenu class="w-48 h-full" style="border-right: 1px solid #e0e0e0;" @routerPage="routerPage" />
       <el-container>
         <el-main style="height: calc(100% - 60px)">
           <RouterView />
@@ -61,7 +66,3 @@ const routerPage = (val: string) => {
     </el-container>
   </el-container>
 </template>
-
-<style>
-
-</style>

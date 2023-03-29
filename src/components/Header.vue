@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useTheme } from 'vuetify'
 import { getSiteTitle } from '~/api/modules/systemConfig'
 
 // 路由状态
@@ -10,6 +11,7 @@ const user = useUserStore()
 const username = ref<String>('')
 const avatar = ref<String>('')
 const { isMobile } = useDevice()
+const theme = useTheme()
 
 const toggleTheme = () => {
   emit('toggleTheme')
@@ -44,11 +46,6 @@ const loginOut = () => {
   window.location.href = '/'
 }
 
-const clickHandle = () => {
-  console.log('点击了')
-  // menuStatus.value = !menuStatus.value
-}
-
 onMounted(() => {
   username.value = user.userName
   avatar.value = user.avatar
@@ -59,7 +56,7 @@ onMounted(() => {
   } else {
     locale.value = 'zh-CN'
   }
-  localTheme === 'dark' || isDark.value ? document.body.setAttribute('arco-theme', 'dark') : document.body.removeAttribute('arco-theme')
+  localTheme === 'dark' || isDark.value ? theme.global.name.value = 'dark' : theme.global.name.value = 'light'
   if (!user.title) {
     getSiteTitle().then((res) => {
       if (res.code === 200) {
@@ -83,24 +80,21 @@ onMounted(() => {
     </el-col>
     <el-col :span="16">
       <div v-if="!isMobile" class="flex gap-4 justify-center items-center">
-        <a
-          href="https://doc.diyfile.besscroft.com/"
-          target="_blank"
-          class="block shrink-0 rounded-lg bg-white p-2.5 text-gray-600 shadow-sm hover:text-gray-700"
-        >
-          <v-icon icon="explore" />
-        </a>
-        <a
-          href="https://github.com/besscroft/diyfile"
-          target="_blank"
-          class="block shrink-0 rounded-lg bg-white p-2.5 text-gray-600 shadow-sm hover:text-gray-700"
-        >
-          <v-icon icon="question_answer" />
-        </a>
       </div>
     </el-col>
     <el-col :span="4">
       <div class="avatar-container">
+        <el-dropdown>
+          <v-btn size="small" icon="translate"></v-btn>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item @click="toggleLocales('zh-CN')"> 简体中文 </el-dropdown-item>
+              <el-dropdown-item @click="toggleLocales('en')"> English </el-dropdown-item>
+              <el-dropdown-item @click="toggleLocales('ja')"> 日本語 </el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
+        <v-btn class="mx-2" size="small" :icon="isDark ? 'dark_mode' : 'light_mode'" @click="toggleTheme"></v-btn>
         <el-dropdown v-if="user.userName">
           <el-avatar
             alt="avatar"
