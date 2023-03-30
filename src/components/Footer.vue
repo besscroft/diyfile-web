@@ -16,5 +16,5 @@ onMounted(() => {
 </script>
 
 <template>
-  6，这里是页脚，还没写！
+  6，这里是页脚，还没写！移动端底部菜单也还没写！
 </template>

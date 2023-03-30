@@ -85,7 +85,7 @@ onMounted(() => {
     <el-col :span="4">
       <div class="avatar-container">
         <el-dropdown>
-          <v-btn size="small" icon="translate"></v-btn>
+          <v-btn variant="text" size="small" icon="translate"></v-btn>
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item @click="toggleLocales('zh-CN')"> 简体中文 </el-dropdown-item>
@@ -94,7 +94,7 @@ onMounted(() => {
             </el-dropdown-menu>
           </template>
         </el-dropdown>
-        <v-btn class="mx-2" size="small" :icon="isDark ? 'dark_mode' : 'light_mode'" @click="toggleTheme"></v-btn>
+        <v-btn variant="text" class="mx-2" size="small" :icon="isDark ? 'dark_mode' : 'light_mode'" @click="toggleTheme"></v-btn>
         <el-dropdown v-if="user.userName">
           <el-avatar
             alt="avatar"

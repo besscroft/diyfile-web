@@ -46,7 +46,7 @@ const routerPage = (val: string) => {
     <el-container v-if="!isMobile" style="height: calc(100% - 60px)">
       <PopMenu class="w-48 h-full" style="border-right: 1px solid #e0e0e0;" @routerPage="routerPage" />
       <el-container>
-        <el-main style="height: calc(100% - 60px)">
+        <el-main :style="isDark ? 'height: calc(100% - 60px); background: #a6a9ad; --el-main-padding: 0.5rem;' : 'height: calc(100% - 60px); background: #f8f8f8; --el-main-padding: 0.5rem;'">
           <RouterView />
         </el-main>
         <el-footer style="border-top: 1px solid #e0e0e0;">

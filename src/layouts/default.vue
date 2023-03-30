@@ -1,18 +1,18 @@
 <script setup lang="ts">
+import { useTheme } from 'vuetify'
+
 const router = useRouter()
-const props = ref<Boolean>(true)
-// 控制菜单收缩
-const menuStatus = ref<Boolean>(true)
+const theme = useTheme()
 
 const toggleTheme = () => {
   if (isDark.value) {
     // 恢复亮色主题
-    document.body.removeAttribute('arco-theme')
     localStorage.setItem('diyfile-theme', 'light')
+    theme.global.name.value = 'light'
   } else {
     // 设置为暗黑主题
-    document.body.setAttribute('arco-theme', 'dark')
     localStorage.setItem('diyfile-theme', 'dark')
+    theme.global.name.value = 'dark'
   }
   toggleDark()
 }
@@ -21,7 +21,7 @@ const toggleTheme = () => {
 <template>
   <el-container class="w-full h-full">
     <el-header class="w-full" style="border-bottom: 1px solid #e0e0e0;">
-      <Header />
+      <Header @toggleTheme="toggleTheme" />
     </el-header>
     <el-container style="height: calc(100% - 60px)">
       <el-container>
