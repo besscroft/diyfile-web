@@ -16,5 +16,7 @@ onMounted(() => {
 </script>
 
 <template>
-  6，这里是页脚，还没写！移动端底部菜单也还没写！
+  <div class="h-full flex text-center justify-center items-center">
+    Made with ❤ by Bess Croft.
+  </div>
 </template>
