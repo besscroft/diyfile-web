@@ -29,6 +29,15 @@ html.dark {
   height: 2px;
 }
 
+::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.5rem;
+}
+
 .el-card__header {
   padding: 0 !important;
+}
+
+.el-card__body {
+  padding: 0.5rem !important;
 }

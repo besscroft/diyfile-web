@@ -44,7 +44,9 @@ const routerPage = (val: string) => {
       <Header @toggleTheme="toggleTheme" />
     </el-header>
     <el-container v-if="!isMobile" style="height: calc(100% - 60px)">
-      <PopMenu class="w-48 h-full" style="border-right: 1px solid #f8f8f8;" @routerPage="routerPage" />
+      <el-aside class="w-48 h-full" style="border-right: 1px solid #f8f8f8;">
+        <PopMenu class="h-full" @routerPage="routerPage" />
+      </el-aside>
       <el-container>
         <el-main :style="isDark ? 'height: calc(100% - 60px); background: #121212; --el-main-padding: 0.5rem;' : 'height: calc(100% - 60px); background: #f8f8f8; --el-main-padding: 0.5rem;'">
           <RouterView />

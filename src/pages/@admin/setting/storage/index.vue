@@ -3,13 +3,11 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <el-card class="box-card" :style="{ height: '100%', padding: '0.5rem' }" shadow="never">
+  <el-card class="box-card h-full w-full overflow-auto" shadow="never">
     <template #header>
-      <div style="display: flex; justify-content: space-between;">
-        <span>{{ t('menu.setting.storage') }}</span>
-        <div style="display: flex">
-          <el-button style="margin-left: auto" class="button" text>Operation button</el-button>
-        </div>
+      <div class="flex justify-space-between align-center">
+        <span class="mx-1">{{ t('menu.system.user') }}</span>
+        <el-button style="margin-left: auto" class="button" text>Operation button</el-button>
       </div>
     </template>
     存储管理
