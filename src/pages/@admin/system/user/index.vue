@@ -77,7 +77,7 @@ useUserPage('')
 </script>
 
 <template>
-  <el-card class="my-1" shadow="never">
+  <el-card :body-style="{ padding: '0.25rem' }" class="my-1" shadow="never">
     <el-page-header @back="router.back()">
       <template #content>
         <div class="flex items-center">
@@ -91,10 +91,10 @@ useUserPage('')
       </template>
     </el-page-header>
   </el-card>
-  <el-card class="box-card overflow-auto" style="height: calc(100% - 4rem)" shadow="never">
+  <el-card :body-style="{ padding: '0px' }" class="box-card overflow-auto" style="height: calc(100% - 4rem); -ms-overflow-style: none;" shadow="never">
     <el-row :gutter="[12, 10]">
       <el-col v-for="item in dataList" :key="item.id" :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
-        <el-card class="box-card ma-1 h-80">
+        <el-card :body-style="{ padding: '0.25rem' }" class="box-card mx-1 my-0.5 h-80">
           <template #header>
             <div class="flex justify-space-between align-center">
               <span class="mx-1">{{ item.name }}</span>
@@ -103,23 +103,24 @@ useUserPage('')
           </template>
           <v-card
             variant="text"
-            class="h-full w-full"
+            class="flex h-68 flex-col"
+            style="display: flex"
           >
-            <div class="flex justify-center">
+            <div class="justify-center">
               <img
                 class="rounded-full mt-1 w-14 h-14 mx-auto"
                 alt="avatar"
                 :src="item.avatar"
               />
+              {{ item.remark }}
             </div>
-            {{ item.remark }}
-            <v-card-actions>
+            <div class="mt-auto">
               <el-tag v-if="item.role === 'platform-super-admin'" class="mx-1" effect="dark" round >超级管理员</el-tag>
               <el-tag v-if="item.role === 'platform-admin'" class="mx-1" effect="dark" round >平台管理员</el-tag>
               <el-tag v-if="item.role === 'platform-self-provisioner'" class="mx-1" effect="dark" round >平台运维员</el-tag>
               <el-tag v-if="item.role === 'platform-view'" class="mx-1" effect="dark" round >平台观察员</el-tag>
               <el-tag v-if="item.role === 'platform-visitor'" class="mx-1" effect="dark" round >游客</el-tag>
-            </v-card-actions>
+            </div>
           </v-card>
         </el-card>
       </el-col>

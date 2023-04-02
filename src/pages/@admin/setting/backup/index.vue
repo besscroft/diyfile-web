@@ -4,7 +4,7 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <el-card class="my-1" shadow="never">
+  <el-card :body-style="{ padding: '0.25rem' }" class="my-1" shadow="never">
     <el-page-header @back="router.back()">
       <template #content>
         <div class="flex items-center">
@@ -18,7 +18,7 @@ const { t } = useI18n()
       </template>
     </el-page-header>
   </el-card>
-  <el-card class="box-card h-full w-full overflow-auto" style="height: calc(100% - 4rem)" shadow="never">
+  <el-card :body-style="{ padding: '0px' }" class="box-card h-full w-full overflow-auto" style="height: calc(100% - 4rem); -ms-overflow-style: none;" shadow="never">
     备份设置
   </el-card>
 </template>
