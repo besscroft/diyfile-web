@@ -14,7 +14,7 @@ const dataList = ref()
 const pageInfo = reactive({
   total: 0,
   pageNum: 1,
-  pageSize: 7,
+  pageSize: 8,
 })
 const roleFlag = ref<string>('')
 const data = reactive({
@@ -87,6 +87,7 @@ useUserPage('')
       </template>
       <template #extra>
         <div class="flex items-center">
+          <v-btn prepend-icon="person_add" variant="text" @click="router.push('/@admin/system/user/add')"> {{ t('button.add') }} </v-btn>
           <el-dropdown>
             <v-btn prepend-icon="group" variant="text"> {{ t('button.role') }} </v-btn>
             <template #dropdown>

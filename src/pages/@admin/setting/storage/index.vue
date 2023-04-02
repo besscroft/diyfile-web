@@ -97,8 +97,9 @@ handleStoragePage(-1)
       </template>
       <template #extra>
         <div class="flex items-center">
+          <v-btn prepend-icon="add_box" variant="text" @click="router.push('/@admin/setting/storage/add')"> {{ t('button.add') }} </v-btn>
           <el-dropdown>
-            <v-btn prepend-icon="dynamic_form" variant="text"> {{ t('button.role') }} </v-btn>
+            <v-btn prepend-icon="dynamic_form" variant="text"> {{ t('button.type') }} </v-btn>
             <template #dropdown>
               <el-dropdown-menu>
                 <!-- 存储类型：0->本地存储；1->OneDrive -->

@@ -18,6 +18,9 @@ const { t } = useI18n()
       </template>
     </el-page-header>
   </el-card>
+  <el-card :body-style="{ padding: '1rem' }" class="box-card overflow-auto no-scrollbar" style="height: calc(100% - 4rem); -ms-overflow-style: none;" shadow="never">
+    在写了在写了！
+  </el-card>
 </template>
 
 <style scoped>
