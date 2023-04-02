@@ -1,15 +1,24 @@
 <script setup lang="ts">
+const router = useRouter()
 const { t } = useI18n()
 </script>
 
 <template>
-  <el-card class="box-card h-full w-full overflow-auto" shadow="never">
-    <template #header>
-      <div class="flex justify-space-between align-center">
-        <span class="mx-1">{{ t('menu.index') }}</span>
-        <el-button style="margin-left: auto" class="button" text>Operation button</el-button>
-      </div>
-    </template>
+  <el-card class="my-1" shadow="never">
+    <el-page-header @back="router.back()">
+      <template #content>
+        <div class="flex items-center">
+          <span class="text-large font-600 mr-2"> {{ t('menu.index') }} </span>
+        </div>
+      </template>
+      <template #extra>
+        <div class="flex items-center">
+          <el-button type="primary" class="ml-2">Edit</el-button>
+        </div>
+      </template>
+    </el-page-header>
+  </el-card>
+  <el-card class="box-card h-full w-full overflow-auto" style="height: calc(100% - 4rem)" shadow="never">
     是可爱的控制台
   </el-card>
 </template>

@@ -20,7 +20,7 @@ const data = reactive({
   form: {},
   queryParam: {
     pageNum: 1,
-    pageSize: 7,
+    pageSize: 8,
     role: '',
   },
 })
@@ -77,13 +77,21 @@ useUserPage('')
 </script>
 
 <template>
-  <el-card class="box-card h-full overflow-auto" shadow="never">
-    <template #header>
-      <div class="flex justify-space-between align-center">
-        <span class="mx-1">{{ t('menu.system.user') }}</span>
-        <el-button style="margin-left: auto" class="button" text>Operation button</el-button>
-      </div>
-    </template>
+  <el-card class="my-1" shadow="never">
+    <el-page-header @back="router.back()">
+      <template #content>
+        <div class="flex items-center">
+          <span class="text-large font-600 mr-2"> {{ t('menu.system.user') }} </span>
+        </div>
+      </template>
+      <template #extra>
+        <div class="flex items-center">
+          <el-button type="primary" class="ml-2">Edit</el-button>
+        </div>
+      </template>
+    </el-page-header>
+  </el-card>
+  <el-card class="box-card overflow-auto" style="height: calc(100% - 4rem)" shadow="never">
     <el-row :gutter="[12, 10]">
       <el-col v-for="item in dataList" :key="item.id" :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
         <el-card class="box-card ma-1 h-80">
