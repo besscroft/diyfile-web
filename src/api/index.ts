@@ -2,12 +2,12 @@ import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } fro
 import axios from 'axios'
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+import { ElMessage } from 'element-plus'
 import { AxiosCanceler } from './helper/axiosCancel'
 import App from '~/App.vue'
 import type { Result } from '~/api/interface'
 import { ResultEnum } from '~/enums/httpEnum'
 import { checkStatus } from '~/api/helper/checkStatus'
-import { ElMessage } from 'element-plus'
 
 /**
  * pinia 错误使用说明示例
