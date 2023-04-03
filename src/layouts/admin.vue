@@ -40,18 +40,18 @@ const routerPage = (val: string) => {
 
 <template>
   <el-container class="w-full h-full">
-    <el-header class="w-full" style="border-bottom: 1px solid #f8f8f8;">
+    <el-header class="w-full" style="border-bottom: 1px solid var(--el-border-color-light);">
       <Header @toggleTheme="toggleTheme" />
     </el-header>
     <el-container v-if="!isMobile" style="height: calc(100% - 60px)">
-      <el-aside class="w-48 h-full" style="border-right: 1px solid #f8f8f8;">
+      <el-aside class="w-48 h-full" style="border-right: 1px solid var(--el-border-color-light);">
         <PopMenu class="h-full" @routerPage="routerPage" />
       </el-aside>
       <el-container>
         <el-main :style="isDark ? 'height: calc(100% - 60px); background: #121212; --el-main-padding: 0.5rem;' : 'height: calc(100% - 60px); background: #f8f8f8; --el-main-padding: 0.5rem;'">
           <RouterView />
         </el-main>
-        <el-footer style="border-top: 1px solid #f8f8f8;">
+        <el-footer style="border-top: 1px solid var(--el-border-color-light);">
           <Footer />
         </el-footer>
       </el-container>
@@ -61,7 +61,7 @@ const routerPage = (val: string) => {
         <el-main style="height: calc(100% - 60px)">
           <RouterView />
         </el-main>
-        <el-footer style="border-top: 1px solid #f8f8f8; text-align: center;" class="items-center">
+        <el-footer style="border-top: 1px solid var(--el-border-color-light); text-align: center;" class="items-center">
           <MobileMenu @routerPage="routerPage" />
         </el-footer>
       </el-container>

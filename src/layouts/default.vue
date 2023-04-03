@@ -20,7 +20,7 @@ const toggleTheme = () => {
 
 <template>
   <el-container class="w-full h-full">
-    <el-header class="w-full" style="border-bottom: 1px solid #f8f8f8;">
+    <el-header class="w-full" style="border-bottom: 1px solid var(--el-border-color-light);">
       <Header @toggleTheme="toggleTheme" />
     </el-header>
     <el-container style="height: calc(100% - 60px)">
@@ -28,7 +28,7 @@ const toggleTheme = () => {
         <el-main style="height: calc(100% - 60px)">
           <RouterView />
         </el-main>
-        <el-footer style="border-top: 1px solid #f8f8f8;">
+        <el-footer style="border-top: 1px solid var(--el-border-color-light);">
           <Footer />
         </el-footer>
       </el-container>

@@ -10,8 +10,16 @@ body,
 }
 
 html.dark {
-  background: #121212;
+  background: #16161A;
   color-scheme: dark;
+}
+
+html.dark .el-card {
+  --el-card-bg-color: #16161A !important;
+}
+
+.v-theme--dark {
+  background: #1F1F1F !important;
 }
 
 #nprogress {
