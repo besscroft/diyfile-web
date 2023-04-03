@@ -7,10 +7,10 @@ import { ResultEnum } from '~/enums/httpEnum'
 
 const router = useRouter()
 const { t } = useI18n()
-const { isMobile } = useDevice()
 const dataList = ref<Array<Object>>([])
 const pageInfo = reactive({
   total: 0,
+  totalPage: 0,
   pageNum: 1,
   pageSize: 8,
 })
@@ -45,6 +45,7 @@ const handleStoragePage = (type: number) => {
   storagePage(data.queryParam).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
       pageInfo.total = res.data.total
+      pageInfo.totalPage = res.data.totalPage
       dataList.value = res.data.list
     }
     loading.value = false
@@ -92,7 +93,7 @@ handleStoragePage(-1)
     <el-page-header @back="router.back()">
       <template #content>
         <div class="flex items-center">
-          <span class="text-large font-600 mr-2"> {{ t('menu.setting.storage') }} </span>
+          <span class="text-large font-400 mr-2"> {{ t('menu.setting.storage') }} </span>
         </div>
       </template>
       <template #extra>
@@ -282,6 +283,13 @@ handleStoragePage(-1)
         </el-card>
       </el-col>
     </el-row>
+    <el-pagination
+      v-model:current-page="pageInfo.pageNum"
+      :page-size="pageInfo.pageSize"
+      layout="total, prev, pager, next"
+      :total="pageInfo.total"
+      @current-change="(current) => { pageInfo.pageNum = current; useUserPage(roleFlag) }"
+    />
   </el-card>
 </template>
 

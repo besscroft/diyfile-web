@@ -26,7 +26,7 @@ useDetail()
     <el-page-header @back="router.back()">
       <template #content>
         <div class="flex items-center">
-          <span class="text-large font-600 mr-2"> {{ t('table.UserInfo') }} </span>
+          <span class="text-large font-400 mr-2"> {{ t('table.UserInfo') }} </span>
         </div>
       </template>
     </el-page-header>

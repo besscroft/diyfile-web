@@ -7,12 +7,12 @@ import { ResultEnum } from '~/enums/httpEnum'
 
 const router = useRouter()
 const user = useUserStore()
-const loading = ref<Boolean>(true)
+const loading = ref<boolean>(true)
 const { t } = useI18n()
-const { isMobile } = useDevice()
 const dataList = ref()
 const pageInfo = reactive({
   total: 0,
+  totalPage: 0,
   pageNum: 1,
   pageSize: 8,
 })
@@ -46,6 +46,7 @@ const useUserPage = (role: string) => {
   userPage(data.queryParam).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
       pageInfo.total = res.data.total
+      pageInfo.totalPage = res.data.totalPage
       dataList.value = res.data.list
     }
     loading.value = false
@@ -82,7 +83,7 @@ useUserPage('')
     <el-page-header @back="router.back()">
       <template #content>
         <div class="flex items-center">
-          <span class="text-large font-600 mr-2"> {{ t('menu.system.user') }} </span>
+          <span class="text-large font-400 mr-2"> {{ t('menu.system.user') }} </span>
         </div>
       </template>
       <template #extra>
@@ -273,6 +274,13 @@ useUserPage('')
         </el-card>
       </el-col>
     </el-row>
+    <el-pagination
+      v-model:current-page="pageInfo.pageNum"
+      :page-size="pageInfo.pageSize"
+      layout="total, prev, pager, next"
+      :total="pageInfo.total"
+      @current-change="(current) => { pageInfo.pageNum = current; useUserPage(roleFlag) }"
+    />
   </el-card>
 </template>
 

@@ -108,7 +108,7 @@ const handleSubmit = () => {
           @click="handleSubmit"
           class="block w-full rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white"
         >
-          Sign in
+          {{ t('button.login') }}
         </button>
       </div>
     </div>

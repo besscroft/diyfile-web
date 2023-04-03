@@ -8,7 +8,7 @@ const { t } = useI18n()
     <el-page-header @back="router.back()">
       <template #content>
         <div class="flex items-center">
-          <span class="text-large font-600 mr-2"> {{ t('tip.cardTitle') }} </span>
+          <span class="text-large font-400 mr-2"> {{ t('tip.cardTitle') }} </span>
         </div>
       </template>
       <template #extra>

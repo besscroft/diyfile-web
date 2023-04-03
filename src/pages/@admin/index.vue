@@ -54,7 +54,7 @@ setInterval(() => {
     <el-page-header @back="router.back()">
       <template #content>
         <div class="flex items-center">
-          <span class="text-large font-600 mr-2"> {{ t('menu.index') }} </span>
+          <span class="text-large font-400 mr-2"> {{ t('menu.index') }} </span>
         </div>
       </template>
       <template #extra>
@@ -68,6 +68,7 @@ setInterval(() => {
     <div class="flex flex-wrap flex-col sm:flex-row">
       <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
         <el-descriptions
+          v-loading="loadingServer"
           v-if="serverInfo"
           class="margin-top"
           title="服务器信息"
@@ -154,6 +155,7 @@ setInterval(() => {
       </div>
       <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
         <el-descriptions
+          v-loading="loadingTotal"
           v-if="totalInfo"
           class="margin-top"
           title="概览"
