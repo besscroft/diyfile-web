@@ -279,6 +279,7 @@ useUserPage('')
       :page-size="pageInfo.pageSize"
       layout="total, prev, pager, next"
       :total="pageInfo.total"
+      hide-on-single-page
       @current-change="(current) => { pageInfo.pageNum = current; useUserPage(roleFlag) }"
     />
   </el-card>

@@ -29,6 +29,7 @@ button:
   download: ダウンロード
   proxyDownload: プロキシダウンロード
   backup: バックアップ
+  selectFile: ファイルを選択
   restore: リストア
 intro:
   desc: 固執された Vite スターターテンプレート

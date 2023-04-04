@@ -288,7 +288,8 @@ handleStoragePage(-1)
       :page-size="pageInfo.pageSize"
       layout="total, prev, pager, next"
       :total="pageInfo.total"
-      @current-change="(current) => { pageInfo.pageNum = current; useUserPage(roleFlag) }"
+      hide-on-single-page
+      @current-change="(current) => { pageInfo.pageNum = current; handleStoragePage(roleFlag) }"
     />
   </el-card>
 </template>

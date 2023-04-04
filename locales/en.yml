@@ -29,6 +29,7 @@ button:
   download: Download
   proxyDownload: Proxy Download
   backup: Backup
+  selectFile: Select File
   restore: Restore
 intro:
   desc: Opinionated Vite Starter Template

@@ -29,6 +29,7 @@ button:
   download: 下载
   proxyDownload: 代理下载
   backup: 备份
+  selectFile: 选择文件
   restore: 恢复
 intro:
   desc: 固执己见的 Vite 项目模板
