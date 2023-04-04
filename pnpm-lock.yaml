@@ -20,7 +20,7 @@ specifiers:
   critters: ^0.0.16
   cross-env: ^7.0.3
   cypress: ^12.8.1
-  element-plus: ^2.3.1
+  element-plus: ^2.3.2
   eslint: ^8.36.0
   eslint-plugin-cypress: ^2.12.1
   http-proxy-middleware: ^2.0.6
@@ -67,7 +67,7 @@ dependencies:
   '@vueuse/core': 9.13.0_vue@3.2.47
   '@vueuse/head': 1.1.23_vue@3.2.47
   axios: 1.3.4
-  element-plus: 2.3.1_vue@3.2.47
+  element-plus: 2.3.2_vue@3.2.47
   http-proxy-middleware: 2.0.6
   nprogress: 0.2.0
   pinia: 2.0.33_hmuptsblhheur2tugfgucj7gc4
@@ -4474,8 +4474,8 @@ packages:
     resolution: {integrity: sha512-M8WEXFuKXMYMVr45fo8mq0wUrrJHheiKZf6BArTKk9ZBYCKJEOU5H8cdWgDT+qCVZf7Na4lVUaZsA+h6uA9+PA==}
     dev: true
 
-  /element-plus/2.3.1_vue@3.2.47:
-    resolution: {integrity: sha512-IBS7ic1mRyDXpOreRkredV4ByZSuax5HPb0zNOHm4qwKC4wm927yQv+Is0JbzxPzCW5zWaV4PLy9/Gl3E3v59w==}
+  /element-plus/2.3.2_vue@3.2.47:
+    resolution: {integrity: sha512-NIK0QckKKagdlMm3eLoVoD4Lkfj5ECzpZAxwrRLdm1Yi5qiTU9Guor33+IbIa52z4gHMuhMxgSVS2xAGmjLHsw==}
     peerDependencies:
       vue: ^3.2.0
     dependencies:

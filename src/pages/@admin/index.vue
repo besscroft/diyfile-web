@@ -1,4 +1,10 @@
 <script setup lang="ts">
+import {
+  ArrowRight,
+  CaretBottom,
+  CaretTop,
+  Warning,
+} from '@element-plus/icons-vue'
 import { getServerInfo, getTotalInfo } from '~/api/modules/monitor'
 import { ResultEnum } from '~/enums/httpEnum'
 
@@ -65,6 +71,153 @@ setInterval(() => {
     </el-page-header>
   </el-card>
   <el-card :body-style="{ padding: '0px' }" class="box-card h-full w-full overflow-auto" style="height: calc(100% - 4rem); -ms-overflow-style: none;" shadow="never">
+    <el-row v-if="serverInfo" :gutter="[12, 10]">
+      <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
+        <el-card :body-style="{ padding: '0.25rem' }" class="box-card mx-1 my-0.5 h-36" shadow="hover">
+          <div class="statistic-card flex h-full">
+            <el-statistic class="flex-grow" :value="`${(serverInfo.memoryInfo.total / 1024 / 1024 / 1024).toFixed(2)}GB`">
+              <template #title>
+                <div style="display: inline-flex; align-items: center">
+                  总内存
+                  <el-tooltip
+                    effect="dark"
+                    content="服务器总内存"
+                    placement="top"
+                  >
+                    <el-icon style="margin-left: 4px" :size="12">
+                      <Warning />
+                    </el-icon>
+                  </el-tooltip>
+                </div>
+              </template>
+            </el-statistic>
+            <el-statistic class="flex-grow ml-1" :value="`${(serverInfo.memoryInfo.used / 1024 / 1024 / 1024).toFixed(2)}GB`">
+              <template #title>
+                <div style="display: inline-flex; align-items: center">
+                  已用内存
+                  <el-tooltip
+                    effect="dark"
+                    content="服务器当前已使用内存"
+                    placement="top"
+                  >
+                    <el-icon style="margin-left: 4px" :size="12">
+                      <Warning />
+                    </el-icon>
+                  </el-tooltip>
+                </div>
+              </template>
+            </el-statistic>
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
+        <el-card :body-style="{ padding: '0.25rem' }" class="box-card  my-0.5 h-36" shadow="hover">
+          <div class="statistic-card flex h-full">
+            <el-statistic class="flex-grow" :value="`${(serverInfo.memoryInfo.free / 1024 / 1024 / 1024).toFixed(2)}GB`" title="New transactions today">
+              <template #title>
+                <div style="display: inline-flex; align-items: center">
+                  剩余内存
+                  <el-tooltip
+                    effect="dark"
+                    content="服务器当前可使用内存"
+                    placement="top"
+                  >
+                    <el-icon style="margin-left: 4px" :size="12">
+                      <Warning />
+                    </el-icon>
+                  </el-tooltip>
+                </div>
+              </template>
+            </el-statistic>
+            <el-progress
+              type="dashboard"
+              :percentage="((serverInfo.memoryInfo.used / 1024 / 1024).toFixed(2) / (serverInfo.memoryInfo.total / 1024 / 1024).toFixed(2)).toFixed(2) * 100"
+              :color="colors"
+            >
+              <template #default="{ percentage }">
+                <span class="percentage-value -ml-3">{{ percentage }} % </span>
+              </template>
+            </el-progress>
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
+        <el-card :body-style="{ padding: '0.25rem' }" class="box-card mx-1 my-0.5 h-36" shadow="hover">
+          <div class="statistic-card flex h-full">
+            <el-statistic class="flex-grow" :value="totalInfo.userCount">
+              <template #title>
+                <div style="display: inline-flex; align-items: center">
+                  用户总数
+                  <el-tooltip
+                    effect="dark"
+                    content="用户总数量"
+                    placement="top"
+                  >
+                    <el-icon style="margin-left: 4px" :size="12">
+                      <Warning />
+                    </el-icon>
+                  </el-tooltip>
+                </div>
+              </template>
+            </el-statistic>
+            <el-statistic class="flex-grow mx-1" :value="totalInfo.userDisableCount">
+              <template #title>
+                <div style="display: inline-flex; align-items: center">
+                  禁用数量
+                  <el-tooltip
+                    effect="dark"
+                    content="已经禁用的用户数量"
+                    placement="top"
+                  >
+                    <el-icon style="margin-left: 4px" :size="12">
+                      <Warning />
+                    </el-icon>
+                  </el-tooltip>
+                </div>
+              </template>
+            </el-statistic>
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
+        <el-card :body-style="{ padding: '0.25rem' }" class="box-card mx-1 my-0.5 h-36" shadow="hover">
+          <div class="statistic-card flex h-full">
+            <el-statistic class="flex-grow" :value="totalInfo.storageCount">
+              <template #title>
+                <div style="display: inline-flex; align-items: center">
+                  存储总数
+                  <el-tooltip
+                    effect="dark"
+                    content="存储总数量"
+                    placement="top"
+                  >
+                    <el-icon style="margin-left: 4px" :size="12">
+                      <Warning />
+                    </el-icon>
+                  </el-tooltip>
+                </div>
+              </template>
+            </el-statistic>
+            <el-statistic class="flex-grow mx-1" :value="totalInfo.storageActiveCount">
+              <template #title>
+                <div style="display: inline-flex; align-items: center">
+                  启用数量
+                  <el-tooltip
+                    effect="dark"
+                    content="启用的存储数量"
+                    placement="top"
+                  >
+                    <el-icon style="margin-left: 4px" :size="12">
+                      <Warning />
+                    </el-icon>
+                  </el-tooltip>
+                </div>
+              </template>
+            </el-statistic>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
     <div class="flex flex-wrap flex-col sm:flex-row">
       <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
         <el-descriptions
@@ -139,61 +292,6 @@ setInterval(() => {
             </template>
             {{ (serverInfo.memoryInfo.free / 1024 / 1024).toFixed(2) }} MB
           </el-descriptions-item>
-          <el-descriptions-item>
-            <template #label>
-              <div class="cell-item">
-                内存图表
-              </div>
-            </template>
-            <el-progress
-              type="dashboard"
-              :percentage="((serverInfo.memoryInfo.used / 1024 / 1024).toFixed(2) / (serverInfo.memoryInfo.total / 1024 / 1024).toFixed(2)).toFixed(2) * 100"
-              :color="colors"
-            />
-          </el-descriptions-item>
-        </el-descriptions>
-      </div>
-      <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
-        <el-descriptions
-          v-loading="loadingTotal"
-          v-if="totalInfo"
-          class="margin-top"
-          title="概览"
-          :column="2"
-          border
-        >
-          <el-descriptions-item>
-            <template #label>
-              <div class="cell-item">
-                用户总数
-              </div>
-            </template>
-            {{ totalInfo.userCount }}
-          </el-descriptions-item>
-          <el-descriptions-item>
-            <template #label>
-              <div class="cell-item">
-                禁用数量
-              </div>
-            </template>
-            {{ totalInfo.userDisableCount }}
-          </el-descriptions-item>
-          <el-descriptions-item>
-            <template #label>
-              <div class="cell-item">
-                存储总数
-              </div>
-            </template>
-            {{ totalInfo.storageCount }}
-          </el-descriptions-item>
-          <el-descriptions-item>
-            <template #label>
-              <div class="cell-item">
-                启用数量
-              </div>
-            </template>
-            {{ totalInfo.storageActiveCount }}
-          </el-descriptions-item>
         </el-descriptions>
       </div>
       <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
@@ -206,12 +304,27 @@ setInterval(() => {
       <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
         <el-divider content-position="left">...</el-divider>
       </div>
+      <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
+        <el-divider content-position="left">...</el-divider>
+      </div>
     </div>
   </el-card>
 </template>
 
 <style scoped>
+:global(h2#card-usage ~ .example .example-showcase) {
+  background-color: var(--el-fill-color) !important;
+}
 
+.el-statistic {
+  --el-statistic-content-font-size: 28px;
+}
+
+.statistic-card {
+  height: 100%;
+  padding: 16px;
+  border-radius: 4px;
+}
 </style>
 
 <route lang="yaml">
