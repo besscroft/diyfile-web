@@ -92,13 +92,15 @@ const onConfirmUpload = () => {
   </el-card>
   <el-card :body-style="{ padding: '0px' }" class="box-card h-full w-full overflow-auto" style="height: calc(100% - 4rem); -ms-overflow-style: none;" shadow="never">
     <div class="flex flex-col mx-2 my-2 ma-2">
-      <div class="ma-2 w-20"><v-btn prepend-icon="cloud_download" variant="text" @click="handleBackupFile">
+      <div class="ma-2 w-40">
+        <v-btn prepend-icon="cloud_download" variant="text" @click="handleBackupFile">
         {{ t('button.backup') }}
-      </v-btn></div>
-      <div class="ma-2 w-20">
+      </v-btn>
+      </div>
+      <div class="ma-2 w-40">
         <el-upload
+          class="w-20"
           ref="uploadRef"
-          class="upload-demo"
           :http-request="onRequestUpload"
           :auto-upload="false"
           accept=".json"
@@ -109,9 +111,11 @@ const onConfirmUpload = () => {
           </v-btn>
         </el-upload>
       </div>
-      <div class="ma-2 w-20"><v-btn prepend-icon="cloud_upload" variant="text" @click="dialogVisible = true">
+      <div class="ma-2 w-40">
+        <v-btn prepend-icon="cloud_upload" variant="text" @click="dialogVisible = true">
         {{ t('button.restore') }}
-      </v-btn></div>
+      </v-btn>
+      </div>
     </div>
   </el-card>
 
