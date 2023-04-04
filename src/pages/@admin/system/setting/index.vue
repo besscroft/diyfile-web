@@ -19,7 +19,14 @@ const { t } = useI18n()
     </el-page-header>
   </el-card>
   <el-card :body-style="{ padding: '0px' }" class="box-card h-full w-full overflow-auto" style="height: calc(100% - 4rem); -ms-overflow-style: none;" shadow="never">
-    系统设置
+    <v-tabs
+      color="deep-purple-accent-4"
+      align-tabs="center"
+    >
+      <v-tab :value="1">{{ t('setting.base') }}</v-tab>
+      <v-tab :value="2">{{ t('setting.web') }}</v-tab>
+      <v-tab :value="3">{{ t('setting.user') }}</v-tab>
+    </v-tabs>
   </el-card>
 </template>
 

@@ -88,10 +88,10 @@ const handleSubmit = (formEl: FormInstance | undefined) => {
           style="max-width: 460px"
         >
           <el-form-item :label="t('user.username')" prop="username" required>
-            <el-input v-model="addUserRuleForm.username" placeholder="请输入用户名称" maxlength="20" clearable />
+            <el-input v-model="addUserRuleForm.username" placeholder="请输入用户名称" maxlength="20" show-word-limit clearable />
           </el-form-item>
           <el-form-item :label="t('user.password')" prop="password" required>
-            <el-input v-model="addUserRuleForm.password" placeholder="请输入密码" maxlength="20" type="password" show-password clearable />
+            <el-input v-model="addUserRuleForm.password" placeholder="请输入密码" maxlength="20" type="password" show-password show-word-limit clearable />
           </el-form-item>
           <el-form-item :label="t('user.avatar')">
             <el-input v-model="addUserRuleForm.avatar" placeholder="头像地址" clearable />

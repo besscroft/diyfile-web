@@ -1,22 +1,15 @@
 <script setup lang="ts">
-import {
-  ArrowRight,
-  CaretBottom,
-  CaretTop,
-  Warning,
-} from '@element-plus/icons-vue'
+import { Warning } from '@element-plus/icons-vue'
 import { getServerInfo, getTotalInfo } from '~/api/modules/monitor'
 import { ResultEnum } from '~/enums/httpEnum'
 
 const router = useRouter()
 const { t } = useI18n()
-const visible = ref<Boolean>(false)
-const loadingServer = ref<Boolean>(true)
-const loadingTotal = ref<Boolean>(true)
+const loadingServer = ref<boolean>(true)
+const loadingTotal = ref<boolean>(true)
 const serverInfo = ref()
 const totalInfo = ref()
 
-const percentage = ref(0)
 const colors = [
   { color: '#f56c6c', percentage: 20 },
   { color: '#e6a23c', percentage: 40 },
@@ -42,17 +35,17 @@ const handServerInfo = async () => {
   })
 }
 
-const handleOk = () => {
-  visible.value = false
-}
-
 onBeforeMount(() => {
   handServerInfo()
 })
 
-setInterval(() => {
+const timer = setInterval(() => {
   handServerInfo()
 }, 5000)
+
+onUnmounted(() => {
+  clearInterval(timer)
+})
 </script>
 
 <template>
