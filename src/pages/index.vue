@@ -1,7 +1,17 @@
 <script setup lang="ts">
+import { getDefaultStorage } from '~/api/modules/file'
+import { ResultEnum } from '~/enums/httpEnum'
+
+const { t } = useI18n()
 const user = useUserStore()
 const router = useRouter()
-const { t } = useI18n()
+const loading = ref<boolean>(true)
+const routes = ref<Array<any>>([
+  {
+    href: '/',
+    title: 'Home',
+  },
+])
 
 const desserts = ref(
   [
@@ -15,33 +25,33 @@ const desserts = ref(
     },
   ],
 )
+
+onBeforeMount(() => {
+  getDefaultStorage().then((res) => {
+    if (res.code === ResultEnum.SUCCESS) {
+      if (res.data.storageKey) {
+        router.push({ path: `/${res.data.storageKey}` })
+      } else {
+        loading.value = false
+      }
+    }
+  }).catch((err) => {
+    console.log(err)
+    loading.value = false
+  })
+})
 </script>
 
 <template>
   <el-row :gutter="20">
     <el-col :xs="0" :sm="1" :md="1" :lg="3" :xl="4" :xxl="4"></el-col>
     <el-col :xs="24" :sm="22" :md="22" :lg="18" :xl="16" :xxl="16">
-      <v-table>
-        <thead>
-        <tr>
-          <th class="text-left">
-            {{ t('table.index.fileName') }}
-          </th>
-          <th class="text-left">
-            {{ t('table.index.fileSize') }}
-          </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr
-          v-for="item in desserts"
-          :key="item.name"
-        >
-          <td>{{ item.name }}</td>
-          <td>{{ item.size }}</td>
-        </tr>
-        </tbody>
-      </v-table>
+      <v-breadcrumbs :items="routes">
+        <template v-slot:prepend>
+          <v-icon size="small" icon="public"></v-icon>
+        </template>
+      </v-breadcrumbs>
+      什么都没有呢！请登录后进入后台进行配置！
     </el-col>
     <el-col :xs="0" :sm="1" :md="1" :lg="3" :xl="4" :xxl="4"></el-col>
   </el-row>
