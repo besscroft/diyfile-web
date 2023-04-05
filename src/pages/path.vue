@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ArrowDown, Check, MostlyCloudy } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import { deleteFile, getFileInfo, getFileItemByKey, getUploadUrl } from '~/api/modules/file'
 import { getEnableStorage, storageInfoByStorageKey } from '~/api/modules/storage'
@@ -240,11 +241,50 @@ onMounted(() => {
 </script>
 
 <template>
+  <nav
+    :style="isMobile ? { 'width': '100%', 'overflow-x': 'hidden !important' } : { 'width': '80%', 'overflow-x': 'hidden !important' }"
+    className="flex flex-row items-center mx-auto justify-between -mt-3"
+  >
+    <div class="flex no-scrollbar inline-flex items-center overflow-x-scroll">
+      <v-icon start icon="share" />
+      <v-chip
+        variant="text"
+        label
+        :style="isDark ? { 'overflow-x': 'auto', 'scrollbar-width': 'none', '-ms-overflow-style': 'none', 'background': '#16161A !important' } : { 'overflow-x': 'auto', 'scrollbar-width': 'none', '-ms-overflow-style': 'none', 'background': '#FFFFFF !important' }"
+        class="-ml-1"
+      >
+        <v-breadcrumbs
+          class="mx-auto text-sm"
+          :items="routes"
+          density="compact"
+        />
+      </v-chip>
+    </div>
+    <el-dropdown>
+      <span class="el-dropdown-link">
+        <el-icon class="mr-1 el-icon--right"><ArrowDown /></el-icon>
+      </span>
+      <template #dropdown>
+        <el-dropdown-menu>
+          <el-dropdown-item v-if="!loading && storageInfo.type === 1">上传</el-dropdown-item>
+          <el-dropdown-item
+            v-for="(item, index) in storageList"
+            :key="item.name"
+            :icon="storageKey === item.storageKey ? Check : MostlyCloudy"
+            :divided="index === 0 && !loading && storageInfo.type === 1"
+            @click="handleSelectChange(item.name, item.storageKey)"
+          >
+            {{ item.name }}
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </template>
+    </el-dropdown>
+  </nav>
   <el-table
     v-if="!loading && !fileInfo && dataList"
     :data="dataList"
-    :style="isMobile ? { 'width': '100%', 'overflow-x': 'hidden !important' } : { 'width': '80%', 'overflow-x': 'hidden !important' } "
-    height="100%"
+    :style="isMobile ? { 'width': '100%', 'overflow-x': 'hidden !important' } : { 'width': '80%', 'overflow-x': 'hidden !important' }"
+    height="97%"
     class="mx-auto"
     stripe
   >
@@ -270,19 +310,26 @@ onMounted(() => {
       </template>
     </el-table-column>
     <el-table-column
+      v-if="!isMobile"
       prop="lastModifiedDateTime"
       :label="t('table.index.time')"
-      width="200"
+      width="160"
     />
     <el-table-column
+      v-if="!isMobile"
       :label="t('table.index.fileSize')"
-      width="200"
+      width="120"
     >
       <template #default="scope">
         <span style="margin-left: 10px">{{ (scope.row.size / 1000 / 1000).toFixed(2) }} MB</span>
       </template>
     </el-table-column>
-    <el-table-column :label="t('table.Optional')" align="right" width="200">
+    <el-table-column
+      v-if="!isMobile"
+      :label="t('table.Optional')"
+      align="right"
+      width="100"
+    >
       <template #default="scope">
         <v-icon v-if="scope.row.type === 'file'" class="cursor-pointer" icon="download" @click="download(scope.row.url)" />
         <v-icon v-if="scope.row.type === 'file'" class="cursor-pointer" icon="content_copy" @click="handleShare(scope.row.url)" />

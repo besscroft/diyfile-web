@@ -44,3 +44,7 @@ html.dark .el-card {
 .el-card__header {
   padding: 0 !important;
 }
+
+.v-breadcrumbs {
+  padding: 0 !important;
+}
