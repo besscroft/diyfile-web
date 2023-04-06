@@ -49,7 +49,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <el-card :body-style="{ padding: '0.25rem' }" class="my-1" shadow="never">
+  <el-card :body-style="{ padding: '0.25rem' }" class="my-1 h-10" shadow="never">
     <el-page-header @back="router.back()">
       <template #content>
         <div class="flex items-center">

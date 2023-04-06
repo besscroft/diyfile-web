@@ -79,7 +79,7 @@ useUserPage('')
 </script>
 
 <template>
-  <el-card :body-style="{ padding: '0.25rem' }" class="my-1" shadow="never">
+  <el-card :body-style="{ padding: '0.25rem' }" class="my-1 h-10" shadow="never">
     <el-page-header @back="router.back()">
       <template #content>
         <div class="flex items-center">
@@ -88,9 +88,9 @@ useUserPage('')
       </template>
       <template #extra>
         <div class="flex items-center">
-          <v-btn prepend-icon="person_add" variant="text" @click="router.push('/@admin/system/user/add')"> {{ t('button.add') }} </v-btn>
+          <v-btn icon="person_add" variant="text" size="x-small" @click="router.push('/@admin/system/user/add')" />
           <el-dropdown>
-            <v-btn prepend-icon="group" variant="text"> {{ t('button.role') }} </v-btn>
+            <v-btn icon="group" variant="text" size="x-small" />
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item @click="useUserPage('')">所有用户</el-dropdown-item>

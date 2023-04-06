@@ -89,7 +89,7 @@ handleStoragePage(-1)
 </script>
 
 <template>
-  <el-card :body-style="{ padding: '0.25rem' }" class="my-1" shadow="never">
+  <el-card :body-style="{ padding: '0.25rem' }" class="my-1 h-10" shadow="never">
     <el-page-header @back="router.back()">
       <template #content>
         <div class="flex items-center">
@@ -98,9 +98,9 @@ handleStoragePage(-1)
       </template>
       <template #extra>
         <div class="flex items-center">
-          <v-btn prepend-icon="add_box" variant="text" @click="router.push('/@admin/setting/storage/add')"> {{ t('button.add') }} </v-btn>
+          <v-btn icon="add_box" variant="text" size="x-small" @click="router.push('/@admin/setting/storage/add')" />
           <el-dropdown>
-            <v-btn prepend-icon="dynamic_form" variant="text"> {{ t('button.type') }} </v-btn>
+            <v-btn icon="dynamic_form" variant="text" size="x-small" />
             <template #dropdown>
               <el-dropdown-menu>
                 <!-- 存储类型：0->本地存储；1->OneDrive -->
@@ -142,10 +142,10 @@ handleStoragePage(-1)
             class="flex h-68 flex-col"
             style="display: flex"
           >
-            <div class="justify-center">
-              <v-btn size="x-large" prepend-icon="settings_system_daydream" class="w-full" variant="text"></v-btn>
-              {{ item.remark }}
+            <div class="flex w-full">
+              <v-icon icon="storage" color="info" class="mt-3 mb-3 mx-auto" />
             </div>
+            {{ item.remark }}
             <div class="mt-auto">
               <div class="flex justify-space-between">
                 <div class="flex items-center justify-center">

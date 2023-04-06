@@ -4,7 +4,7 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <el-card :body-style="{ padding: '0.25rem' }" class="my-1" shadow="never">
+  <el-card :body-style="{ padding: '0.25rem' }" class="my-1 h-10" shadow="never">
     <el-page-header @back="router.back()">
       <template #content>
         <div class="flex items-center">
@@ -13,7 +13,7 @@ const { t } = useI18n()
       </template>
       <template #extra>
         <div class="flex items-center">
-          <el-button type="primary" class="ml-2">Edit</el-button>
+          <v-btn icon="done" variant="text" size="x-small" @click="handleSubmit(ruleFormRef)" />
         </div>
       </template>
     </el-page-header>
