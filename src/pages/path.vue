@@ -242,7 +242,7 @@ onMounted(() => {
 
 <template>
   <nav
-    :style="isMobile ? { 'width': '100%', 'overflow-x': 'hidden !important' } : { 'width': '80%', 'overflow-x': 'hidden !important' }"
+    :style="isMobile ? { 'width': '100%', 'overflow-x': 'hidden !important' } : { 'width': '66%', 'overflow-x': 'hidden !important' }"
     className="flex flex-row items-center mx-auto justify-between -mt-3"
   >
     <div class="flex no-scrollbar inline-flex items-center overflow-x-scroll">
@@ -283,7 +283,7 @@ onMounted(() => {
   <el-table
     v-if="!loading && !fileInfo && dataList"
     :data="dataList"
-    :style="isMobile ? { 'width': '100%', 'overflow-x': 'hidden !important' } : { 'width': '80%', 'overflow-x': 'hidden !important' }"
+    :style="isMobile ? { 'width': '100%', 'overflow-x': 'hidden !important' } : { 'width': '66%', 'overflow-x': 'hidden !important' }"
     height="97%"
     class="mx-auto"
     stripe
@@ -345,6 +345,15 @@ onMounted(() => {
       </template>
     </el-table-column>
   </el-table>
+  <v-card v-else class="mx-auto" :style="isMobile ? { width: '100%' } : { width: '66%' }">
+    <!-- 文件预览 -->
+    <VideoPreview
+      class="m-4"
+      v-if="!loading && fileInfo && isVideo(fileInfo.name)"
+      :fileInfo="fileInfo"
+      :storageInfo="storageInfo"
+    />
+  </v-card>
 </template>
 
 <route lang="yaml">
