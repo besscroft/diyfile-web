@@ -2,6 +2,8 @@ import path from 'node:path'
 import { defineConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
 import Pages from 'vite-plugin-pages'
+// vite.config.ts
+import ElementPlus from 'unplugin-element-plus/vite'
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 import generateSitemap from 'vite-ssg-sitemap'
 import Layouts from 'vite-plugin-vue-layouts'
@@ -40,6 +42,7 @@ export default defineConfig({
   },
 
   plugins: [
+    ElementPlus({}),
     VueMacros({
       plugins: {
         vue: Vue({
