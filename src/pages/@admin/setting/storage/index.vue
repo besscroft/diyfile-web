@@ -1,17 +1,18 @@
 <script setup lang="ts">
-import { Message } from '@arco-design/web-vue'
+import { ElMessage } from 'element-plus'
+import { Delete } from '@element-plus/icons-vue'
 import type { Storage } from '~/api/interface/storage'
 import { storageDelete, storagePage, storageSetDefault, storageUpdateStatus } from '~/api/modules/storage'
 import { ResultEnum } from '~/enums/httpEnum'
 
 const router = useRouter()
 const { t } = useI18n()
-const { isMobile } = useDevice()
 const dataList = ref<Array<Object>>([])
 const pageInfo = reactive({
   total: 0,
+  totalPage: 0,
   pageNum: 1,
-  pageSize: 7,
+  pageSize: 8,
 })
 const typeFlag = ref<any>()
 const loading = ref<Boolean>(true)
@@ -19,7 +20,7 @@ const data = reactive({
   form: {},
   queryParam: {
     pageNum: 1,
-    pageSize: 7,
+    pageSize: 8,
     type: null as any,
   },
 })
@@ -44,6 +45,7 @@ const handleStoragePage = (type: number) => {
   storagePage(data.queryParam).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
       pageInfo.total = res.data.total
+      pageInfo.totalPage = res.data.totalPage
       dataList.value = res.data.list
     }
     loading.value = false
@@ -53,7 +55,7 @@ const handleStoragePage = (type: number) => {
 const handleStorageDelete = (storageId: number) => {
   storageDelete(storageId).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
-      Message.success('删除成功!')
+      ElMessage.success('删除成功!')
       handleStoragePage(-1)
     }
   })
@@ -64,11 +66,11 @@ const handleStorageUpdateStatus = (storageId: number, status: number) => {
   updateStorageStatusData.status = status
   storageUpdateStatus(updateStorageStatusData).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
-      Message.success(res.message)
+      ElMessage.success(res.message)
       handleStoragePage(-1)
     }
   }).catch((err) => {
-    Message.error(err.message)
+    ElMessage.error(err.message)
   })
   updateStorageStatusData.storageId = undefined
   updateStorageStatusData.status = undefined
@@ -77,7 +79,7 @@ const handleStorageUpdateStatus = (storageId: number, status: number) => {
 const handleStorageDefault = (storageId: number) => {
   storageSetDefault(storageId).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
-      Message.success(res.message)
+      ElMessage.success(res.message)
       handleStoragePage(-1)
     }
   })
@@ -87,77 +89,79 @@ handleStoragePage(-1)
 </script>
 
 <template>
-  <div
-    :style="{
-      boxSizing: 'border-box',
-      width: '100%',
-      padding: '0.25rem',
-      height: '100%',
-      backgroundColor: 'var(--color-fill-2)',
-    }"
-  >
-    <a-card hoverable :style="{ height: '100%' }" :title="t('menu.setting.storage')">
-      <template #extra>
-        <a-space>
-          <a-dropdown trigger="hover">
-            <button type="button" class="inline-block px-6 py-2 border-2 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">{{ t('button.type') }}</button>
-            <template #content>
-              <!-- 存储类型：0->本地存储；1->OneDrive -->
-              <a-doption @click="handleStoragePage()">所有类型</a-doption>
-              <a-doption @click="handleStoragePage(0)">本地存储</a-doption>
-              <a-doption @click="handleStoragePage(1)">OneDrive</a-doption>
-            </template>
-          </a-dropdown>
-        </a-space>
+  <el-card :body-style="{ padding: '0.25rem' }" class="my-1 h-10" shadow="never">
+    <el-page-header @back="router.back()">
+      <template #content>
+        <div class="flex items-center">
+          <span class="text-large font-400 mr-2"> {{ t('menu.setting.storage') }} </span>
+        </div>
       </template>
-      <a-space v-if="loading" direction="vertical" size="large" :style="{ width: '100%' }">
-        <a-skeleton animation="animation">
-          <a-space direction="vertical" :style="{ width: '100%' }" size="large">
-            <a-skeleton-line v-if="!isMobile" :rows="10" />
-            <a-skeleton-shape v-for="index in 10" :key="index" size="large" />
-          </a-space>
-        </a-skeleton>
-      </a-space>
-      <a-row v-else :gutter="[12, 10]">
-        <a-col v-for="item in dataList" :key="item.id" :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
-          <a-card :style="{ height: '300px' }" :title="item.name" hoverable>
-            <template #extra>
-              <a-dropdown trigger="hover">
-                <button type="button" class="inline-block px-6 py-2 border-2 border-blue-400 text-blue-400 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">{{ t('table.Optional') }}</button>
-                <template #content>
-                  <a-doption @click="router.push({ path: `/@admin/setting/storage/${encodeURIComponent(item.id)}`, params: { id: item.id } })">{{ t('button.detail') }}</a-doption>
-                  <a-doption v-if="item.type === 0" @click="router.push({ path: '/@admin/setting/storage/edit/local', query: { id: item.id } })">{{ t('button.edit') }}</a-doption>
-                  <a-doption v-if="item.type === 1" @click="router.push({ path: '/@admin/setting/storage/edit/oneDrive', query: { id: item.id } })">{{ t('button.edit') }}</a-doption>
-                  <a-doption v-if="item.type === 2" @click="router.push({ path: '/@admin/setting/storage/edit/aliyunOSS', query: { id: item.id } })">{{ t('button.edit') }}</a-doption>
-                  <a-doption v-if="item.type === 3" @click="router.push({ path: '/@admin/setting/storage/edit/amazonS3', query: { id: item.id } })">{{ t('button.edit') }}</a-doption>
+      <template #extra>
+        <div class="flex items-center">
+          <v-btn icon="add_box" variant="text" size="x-small" @click="router.push('/@admin/setting/storage/add')" />
+          <el-dropdown>
+            <v-btn icon="dynamic_form" variant="text" size="x-small" />
+            <template #dropdown>
+              <el-dropdown-menu>
+                <!-- 存储类型：0->本地存储；1->OneDrive -->
+                <el-dropdown-item @click="handleStoragePage()">所有类型</el-dropdown-item>
+                <el-dropdown-item @click="handleStoragePage(0)" divided>本地存储</el-dropdown-item>
+                <el-dropdown-item @click="handleStoragePage(1)">OneDrive</el-dropdown-item>
+                <el-dropdown-item @click="handleStoragePage(2)">阿里云OSS</el-dropdown-item>
+                <el-dropdown-item @click="handleStoragePage(3)">Amazon S3</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+        </div>
+      </template>
+    </el-page-header>
+  </el-card>
+  <el-card :body-style="{ padding: '0px' }" class="box-card overflow-auto no-scrollbar" style="height: calc(100% - 4rem); -ms-overflow-style: none;" shadow="never">
+    <el-row :gutter="[12, 10]">
+      <el-col v-for="item in dataList" :key="item.id" :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
+        <el-card :body-style="{ padding: '0.25rem' }" class="box-card mx-1 my-0.5 h-80" shadow="hover">
+          <template #header>
+            <div class="flex justify-space-between align-center">
+              <span class="mx-1">{{ item.name }}</span>
+              <el-dropdown>
+                <v-btn prepend-icon="expand_more" variant="text"> {{ t('table.Optional') }} </v-btn>
+                <template #dropdown>
+                  <el-dropdown-menu>
+                    <el-dropdown-item @click="router.push({ path: `/@admin/setting/storage/${encodeURIComponent(item.id)}`, params: { id: item.id } })">{{ t('button.detail') }}</el-dropdown-item>
+                    <el-dropdown-item v-if="item.type === 0" @click="router.push({ path: '/@admin/setting/storage/edit/local', query: { id: item.id } })">{{ t('button.edit') }}</el-dropdown-item>
+                    <el-dropdown-item v-if="item.type === 1" @click="router.push({ path: '/@admin/setting/storage/edit/oneDrive', query: { id: item.id } })">{{ t('button.edit') }}</el-dropdown-item>
+                    <el-dropdown-item v-if="item.type === 2" @click="router.push({ path: '/@admin/setting/storage/edit/aliyunOSS', query: { id: item.id } })">{{ t('button.edit') }}</el-dropdown-item>
+                    <el-dropdown-item v-if="item.type === 3" @click="router.push({ path: '/@admin/setting/storage/edit/amazonS3', query: { id: item.id } })">{{ t('button.edit') }}</el-dropdown-item>
+                  </el-dropdown-menu>
                 </template>
-              </a-dropdown>
-            </template>
-            <template #cover>
-              <div class="h-46">
-                <icon-storage :style="{ 'margin-top': '12px', 'height': '36px', 'width': '100%' }" />
-                <a-typography-paragraph class="mt-4 ml-2 mr-2 mb-2">
-                  {{ item.remark }}
-                </a-typography-paragraph>
-              </div>
-            </template>
-            <template #actions>
-              <span class="icon-hover">
-                <a-popconfirm content="确定要删除吗?" type="warning" :onOk="() => handleStorageDelete(item.id)">
-                  <icon-delete />
-                </a-popconfirm>
-              </span>
-            </template>
-            <a-card-meta>
-              <template #avatar>
-                <div
-                  :style="{ display: 'flex', alignItems: 'center', color: '#1D2129' }"
-                >
-                  <a-space>
-                    <a-tag v-if="item.type === 0" color="cyan">本地存储</a-tag>
-                    <a-tag v-else-if="item.type === 1" color="cyan">OneDrive</a-tag>
-                    <a-tag v-else-if="item.type === 2" color="cyan">阿里云 OSS</a-tag>
-                    <a-popconfirm v-if="item.enable === 1" content="确定要禁用吗?" type="warning" :onOk="() => handleStorageUpdateStatus(item.id, 0)">
+              </el-dropdown>
+            </div>
+          </template>
+          <v-card
+            variant="text"
+            class="flex h-68 flex-col"
+            style="display: flex"
+          >
+            <div class="flex w-full">
+              <v-icon icon="storage" color="info" class="mt-3 mb-3 mx-auto" />
+            </div>
+            {{ item.remark }}
+            <div class="mt-auto">
+              <div class="flex justify-space-between">
+                <div class="flex items-center justify-center">
+                  <el-tag v-if="item.type === 0" class="mx-1" effect="dark" round>本地存储</el-tag>
+                  <el-tag v-else-if="item.type === 1" class="mx-1" effect="dark" round>OneDrive</el-tag>
+                  <el-tag v-else-if="item.type === 2" class="mx-1" effect="dark" round>阿里云 OSS</el-tag>
+                  <el-tag v-else-if="item.type === 3" class="mx-1" effect="dark" round>Amazon S3</el-tag>
+                  <el-popconfirm
+                    v-if="item.enable === 1"
+                    class="mx-1"
+                    confirm-button-text="确定"
+                    cancel-button-text="取消"
+                    title="确定要禁用吗?"
+                    @confirm="() => handleStorageUpdateStatus(item.id, 0)"
+                  >
+                    <template #reference>
                       <span
                         class="inline-flex items-center justify-center rounded-full bg-emerald-100 px-2.5 py-0.5 text-emerald-700 cursor-pointer"
                       >
@@ -177,8 +181,17 @@ handleStoragePage(-1)
                         </svg>
                         <p class="whitespace-nowrap text-sm">启用</p>
                       </span>
-                    </a-popconfirm>
-                    <a-popconfirm v-else content="确定要启用吗?" type="warning" :onOk="() => handleStorageUpdateStatus(item.id, 1)">
+                    </template>
+                  </el-popconfirm>
+                  <el-popconfirm
+                    v-else
+                    class="mx-1"
+                    confirm-button-text="确定"
+                    cancel-button-text="取消"
+                    title="确定要启用吗?"
+                    @confirm="() => handleStorageUpdateStatus(item.id, 1)"
+                  >
+                    <template #reference>
                       <span
                         class="inline-flex items-center justify-center rounded-full bg-red-100 px-2.5 py-0.5 text-red-700 cursor-pointer"
                       >
@@ -198,8 +211,17 @@ handleStoragePage(-1)
                         </svg>
                         <p class="whitespace-nowrap text-sm">禁用</p>
                       </span>
-                    </a-popconfirm>
-                    <a-popconfirm v-if="item.defaultStatus === 0" content="确定要设置默认吗?" type="warning" :onOk="() => handleStorageDefault(item.id)">
+                    </template>
+                  </el-popconfirm>
+                  <el-popconfirm
+                    v-if="item.defaultStatus === 0"
+                    class="mx-1"
+                    confirm-button-text="确定"
+                    cancel-button-text="取消"
+                    title="确定要设置默认吗?"
+                    @confirm="() => handleStorageDefault(item.id)"
+                  >
+                    <template #reference>
                       <span
                         class="inline-flex items-center justify-center rounded-full bg-red-100 px-2.5 py-0.5 text-red-700 cursor-pointer"
                       >
@@ -219,58 +241,57 @@ handleStoragePage(-1)
                         </svg>
                         <p class="whitespace-nowrap text-sm">非默认</p>
                       </span>
-                    </a-popconfirm>
-                    <span
-                      v-else
-                      class="inline-flex items-center justify-center rounded-full bg-emerald-100 px-2.5 py-0.5 text-emerald-700 cursor-pointer"
+                    </template>
+                  </el-popconfirm>
+                  <span
+                    v-else
+                    class="inline-flex items-center justify-center rounded-full bg-emerald-100 px-2.5 py-0.5 text-emerald-700 cursor-pointer mx-1"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="-ml-1 mr-1.5 h-4 w-4"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        class="-ml-1 mr-1.5 h-4 w-4"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                      </svg>
-                      <p class="whitespace-nowrap text-sm">默认</p>
-                    </span>
-                  </a-space>
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                    <p class="whitespace-nowrap text-sm">默认</p>
+                  </span>
                 </div>
-              </template>
-            </a-card-meta>
-          </a-card>
-        </a-col>
-        <a-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
-          <a-card
-            hoverable
-            :style="{ height: '300px' }"
-            class="flex items-center justify-center cursor-pointer"
-            @click="router.push('/@admin/setting/storage/add')"
-          >
-            <a-result>
-              <template #icon>
-                <icon-plus style="font-size: 20px" />
-              </template>
-            </a-result>
-          </a-card>
-        </a-col>
-      </a-row>
-      <a-pagination
-        :total="pageInfo.total"
-        :page-size="pageInfo.pageSize"
-        :current="pageInfo.pageNum"
-        :show-total="true"
-        class="mt-4"
-        @change="(current) => { pageInfo.pageNum = current; handleStoragePage(typeFlag) }"
-      />
-    </a-card>
-  </div>
+                <span class="icon-hover">
+                  <el-popconfirm
+                    confirm-button-text="确定"
+                    cancel-button-text="取消"
+                    :icon="Delete"
+                    title="确定要删除吗?"
+                    @confirm="() => handleStorageDelete(item.id)"
+                  >
+                    <template #reference>
+                      <el-button type="warning" :icon="Delete" link circle />
+                    </template>
+                  </el-popconfirm>
+                </span>
+              </div>
+            </div>
+          </v-card>
+        </el-card>
+      </el-col>
+    </el-row>
+    <el-pagination
+      v-model:current-page="pageInfo.pageNum"
+      :page-size="pageInfo.pageSize"
+      layout="total, prev, pager, next"
+      :total="pageInfo.total"
+      hide-on-single-page
+      @current-change="(current) => { pageInfo.pageNum = current; handleStoragePage(roleFlag) }"
+    />
+  </el-card>
 </template>
 
 <style scoped>

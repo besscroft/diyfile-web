@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useTheme } from 'vuetify'
 import { getSiteTitle } from '~/api/modules/systemConfig'
 
 // 路由状态
@@ -9,6 +10,8 @@ const router = useRouter()
 const user = useUserStore()
 const username = ref<String>('')
 const avatar = ref<String>('')
+const { isMobile } = useDevice()
+const theme = useTheme()
 
 const toggleTheme = () => {
   emit('toggleTheme')
@@ -53,7 +56,7 @@ onMounted(() => {
   } else {
     locale.value = 'zh-CN'
   }
-  localTheme === 'dark' || isDark.value ? document.body.setAttribute('arco-theme', 'dark') : document.body.removeAttribute('arco-theme')
+  localTheme === 'dark' || isDark.value ? theme.global.name.value = 'dark' : theme.global.name.value = 'light'
   if (!user.title) {
     getSiteTitle().then((res) => {
       if (res.code === 200) {
@@ -65,93 +68,68 @@ onMounted(() => {
 </script>
 
 <template>
-  <a-row class="grid-demo">
-    <a-col class="title-container" :xs="8" :sm="8" :md="8" :lg="8" :xl="8" :xxl="8">
-      <div class="cursor-pointer" @click="routerPage('/')">
-        {{ user.title || 'DiyFile' }}
+  <el-row :gutter="20" class="h-full w-full flex justify-center items-center">
+    <el-col :span="4">
+      <span class="cursor-pointer inline-block h-10 w-32 rounded-lg" @click="routerPage('/')">
+        <img
+          src="/diyfile.png"
+          :class="!isMobile ? 'transform scale-100' : 'transform scale-75'"
+          alt="logo"
+        >
+      </span>
+    </el-col>
+    <el-col :span="16">
+      <div v-if="!isMobile" class="flex gap-4 justify-center items-center">
       </div>
-    </a-col>
-    <a-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" :xxl="8">
-      <div class="content-container">
-      </div>
-    </a-col>
-    <a-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" :xxl="8">
+    </el-col>
+    <el-col :span="4">
       <div class="avatar-container">
-        <a-space size="large">
-          <button class="icon-btn !outline-none" :title="t('button.toggle_dark')" @click="toggleTheme">
-            <div i="carbon-sun dark:carbon-moon" />
-          </button>
-          <a-dropdown>
-            <a class="icon-btn">
-              <div i-carbon-language />
-            </a>
-            <template #content>
-              <a-doption @click="toggleLocales('zh-CN')">简体中文</a-doption>
-              <a-doption @click="toggleLocales('en')">English</a-doption>
-              <a-doption @click="toggleLocales('ja')">日本語</a-doption>
-            </template>
-          </a-dropdown>
-          <span
-            v-show="username"
-            class="whitespace-nowrap rounded-full bg-purple-100 px-2.5 py-0.5 text-sm text-purple-700"
-          >
-            {{ username }}
-          </span>
-          <a-dropdown>
-            <a-avatar v-if="avatar" :size="40">
-              <img
-                class="cursor-pointer"
-                alt="avatar"
-                :src="avatar"
-              />
-            </a-avatar>
-            <a-avatar v-else :style="{ backgroundColor: '#FBC3CB' }">
-              <IconUser class="cursor-pointer" />
-            </a-avatar>
-            <template #content>
-              <div v-if="user.token">
-                <a-doption v-if="!router.currentRoute.value.path.startsWith('/@')" @click="routerPage('/@admin')">{{ t('menu.index') }}</a-doption>
-                <a-doption v-else @click="routerPage('/')">{{ t('button.home') }}</a-doption>
-                <a-doption @click="loginOut">{{ t('button.quit') }}</a-doption>
-              </div>
-              <div v-else>
-                <a-doption v-if="!props" @click="routerPage('/')">{{ t('button.home') }}</a-doption>
-                <a-doption @click="routerPage('/@login')">{{ t('button.login') }}</a-doption>
-              </div>
-            </template>
-          </a-dropdown>
-        </a-space>
+        <el-dropdown>
+          <v-btn variant="text" size="small" icon="translate"></v-btn>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item @click="toggleLocales('zh-CN')"> 简体中文 </el-dropdown-item>
+              <el-dropdown-item @click="toggleLocales('en')"> English </el-dropdown-item>
+              <el-dropdown-item @click="toggleLocales('ja')"> 日本語 </el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
+        <v-btn variant="text" class="mx-2" size="small" :icon="isDark ? 'dark_mode' : 'light_mode'" @click="toggleTheme"></v-btn>
+        <el-dropdown v-if="user.userName">
+          <el-avatar
+            alt="avatar"
+            :src="user.avatar"
+          />
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item v-if="!router.currentRoute.value.path.startsWith('/@')" @click="routerPage('/@admin')">
+                {{ t('menu.index') }}
+              </el-dropdown-item>
+              <el-dropdown-item v-else @click="routerPage('/')">
+                {{ t('button.home') }}
+              </el-dropdown-item>
+              <el-dropdown-item v-if="user.token" @click="loginOut">
+                {{ t('button.quit') }}
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
+        <v-btn v-else prepend-icon="login" @click="routerPage('/@login')">
+          {{ t('button.login') }}
+        </v-btn>
       </div>
-    </a-col>
-  </a-row>
+    </el-col>
+  </el-row>
 </template>
 
 <style scoped>
-.grid-demo {
-  background-color: var(--color-bg-2);
-  border-bottom: 1px solid var(--color-border);
-}
-
 .avatar-container {
   height: 60px;
   line-height: 60px;
-  padding-right: 16px;
+  margin-right: -24px;
   display: flex;
   justify-content: flex-end;
-}
-
-.title-container {
-  display: flex;
-  justify-content: flex-start;
-  height: 60px;
-  padding-left: 8px;
-  line-height: 60px;
-}
-
-.content-container {
-  display: flex;
-  justify-content: center;
-  height: 60px;
-  line-height: 60px;
+  /** 垂直居中 */
+  align-items: center;
 }
 </style>

@@ -29,6 +29,7 @@ button:
   download: 下载
   proxyDownload: 代理下载
   backup: 备份
+  selectFile: 选择文件
   restore: 恢复
 intro:
   desc: 固执己见的 Vite 项目模板
@@ -101,3 +102,6 @@ setting:
   base: 基础配置
   web: 网站配置
   user: 用户配置
+header:
+  docs: 文档
+  github: Github

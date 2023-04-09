@@ -18,9 +18,7 @@
 
 [DiyFile 的文档](https://doc.diyfile.besscroft.com/) ，在这里你可以找到大部分问题的解答。
 
-## 部署
-
-略
+> 注：Arco-Design 版本在 v0.3.2 及之前的版本中，从 v0.4.0 版本开始，采用 Element Plus + Vuetify3 重构。
 
 ### 代码贡献
 

@@ -29,6 +29,7 @@ button:
   download: ダウンロード
   proxyDownload: プロキシダウンロード
   backup: バックアップ
+  selectFile: ファイルを選択
   restore: リストア
 intro:
   desc: 固執された Vite スターターテンプレート
@@ -100,3 +101,6 @@ setting:
   base: 基本構成
   web: Webサイト構成
   user: ユーザー構成
+header:
+  docs: ドキュメント
+  github: Github

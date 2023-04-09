@@ -6,11 +6,20 @@ body,
   height: 100%;
   margin: 0;
   padding: 0;
+  overflow-y: hidden;
 }
 
 html.dark {
-  background: #121212;
+  background: #16161A;
   color-scheme: dark;
+}
+
+html.dark .el-card {
+  --el-card-bg-color: #16161A !important;
+}
+
+.v-theme--dark {
+  background: #1F1F1F !important;
 }
 
 #nprogress {
@@ -26,4 +35,16 @@ html.dark {
   left: 0;
   width: 100%;
   height: 2px;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.el-card__header {
+  padding: 0 !important;
+}
+
+.v-breadcrumbs {
+  padding: 0 !important;
 }

@@ -1,46 +1,34 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 
-// 菜单收缩按钮
-const props = defineProps(['value'])
-const emit = defineEmits(['routerPage', 'onMenuCollapse'])
+const emit = defineEmits(['routerPage'])
 const { t } = useI18n()
-
-const onMenuCollapse = () => {
-  emit('onMenuCollapse')
-}
+const router = useRouter()
+const activeItem = ref<string>('')
 
 /** 点击菜单事件 */
 const routerPage = (val: string) => {
   emit('routerPage', val)
 }
+
+watch(router.currentRoute, (val) => {
+  activeItem.value = val.path
+})
+
+onMounted(() => {
+  activeItem.value = router.currentRoute.value.path
+})
 </script>
 
 <template>
-  <a-menu
-    :style="{ width: '100%', height: '100%' }"
-    show-collapse-button
-    @collapse="onMenuCollapse"
-  >
-    <a-menu-item key="1" @click="routerPage('admin')">
-      <template #icon><icon-apps /></template>
-      {{ t('menu.index') }}
-    </a-menu-item>
-    <a-sub-menu key="2">
-      <template #icon><icon-storage /></template>
-      <template #title>{{ t('menu.setting.index') }}</template>
-      <a-menu-item key="2_0" @click="routerPage('2_0')"><icon-save />{{ t('menu.setting.storage') }}</a-menu-item>
-      <a-menu-item key="2_1" @click="routerPage('2_1')"><icon-send />{{ t('menu.setting.backup') }}</a-menu-item>
-      <a-menu-item key="2_2" @click="routerPage('2_2')"><icon-sync />{{ t('menu.setting.sync') }}</a-menu-item>
-    </a-sub-menu>
-    <a-sub-menu key="3">
-      <template #icon><icon-settings /></template>
-      <template #title>{{ t('menu.system.index') }}</template>
-      <a-menu-item key="3_0" @click="routerPage('3_0')"><icon-tool />{{ t('menu.system.setting') }}</a-menu-item>
-      <a-menu-item key="3_1" @click="routerPage('3_1')"><icon-user-group />{{ t('menu.system.user') }}</a-menu-item>
-      <a-menu-item key="3_2" @click="routerPage('3_2')"><icon-customer-service />{{ t('menu.system.faqs') }}</a-menu-item>
-    </a-sub-menu>
-  </a-menu>
+  <v-list nav>
+    <v-list-item :active="activeItem === '/@admin'" prepend-icon="dashboard" :title="t('menu.index')" @click="routerPage('admin')"></v-list-item>
+    <v-list-item :active="activeItem === '/@admin/setting/storage'" prepend-icon="dns" :title="t('menu.setting.storage')" @click="routerPage('2_0')"></v-list-item>
+    <v-list-item :active="activeItem === '/@admin/setting/backup'" prepend-icon="restore" :title="t('menu.setting.backup')" @click="routerPage('2_1')"></v-list-item>
+    <v-list-item :active="activeItem === '/@admin/setting/sync'" prepend-icon="sync" :title="t('menu.setting.sync')" @click="routerPage('2_2')"></v-list-item>
+    <v-list-item :active="activeItem === '/@admin/system/setting'" prepend-icon="settings_applications" :title="t('menu.system.setting')" @click="routerPage('3_0')"></v-list-item>
+    <v-list-item :active="activeItem === '/@admin/system/user'" prepend-icon="supervisor_account" :title="t('menu.system.user')" @click="routerPage('3_1')"></v-list-item>
+  </v-list>
 </template>
 
 <style scoped>

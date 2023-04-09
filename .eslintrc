@@ -2,6 +2,7 @@
   "extends": "@antfu",
   "rules": {
     "curly": "off",
-    "@typescript-eslint/brace-style": "off"
+    "@typescript-eslint/brace-style": "off",
+    "no-mixed-operators": "off"
   }
 }

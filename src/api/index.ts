@@ -1,8 +1,8 @@
 import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import axios from 'axios'
-import { Message } from '@arco-design/web-vue'
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+import { ElMessage } from 'element-plus'
 import { AxiosCanceler } from './helper/axiosCancel'
 import App from '~/App.vue'
 import type { Result } from '~/api/interface'
@@ -40,7 +40,7 @@ class RequestHttp {
     /**
      * @description 请求拦截器
      * 客户端发送请求 -> [请求拦截器] -> 服务器
-     * token校验(JWT) : 接受服务器返回的token,存储到vuex/pinia/本地储存当中
+     * token校验(JWT) : 接收服务器返回的 token,存储到 pinia / 本地储存当中
      */
     this.service.interceptors.request.use(
       (config: AxiosRequestConfig) => {
@@ -70,7 +70,7 @@ class RequestHttp {
         // https://stackoverflow.com/questions/3297048/403-forbidden-vs-401-unauthorized-http-responses
         // 登陆失效（code == 401）
         if (data.code === ResultEnum.UNAUTHORIZED) {
-          Message.error('登陆已过期，请重新登陆！')
+          ElMessage.error('登陆已过期，请重新登陆！')
           user.setToken('')
           user.setUserName('')
           user.setAvatar('')
@@ -79,7 +79,7 @@ class RequestHttp {
         }
         // 没有权限（code == 403）
         if (data.code === ResultEnum.FORBIDDEN) {
-          Message.error(data.message)
+          ElMessage.error(data.message)
           return Promise.reject(data)
         }
         // 全局错误信息拦截（防止下载文件得时候返回数据流，没有code，直接报错）
@@ -94,7 +94,7 @@ class RequestHttp {
         const { response } = error
         // 请求超时单独判断，因为请求超时没有 response
         if (error.message.includes('timeout')) {
-          Message.error('请求超时！请您稍后重试')
+          ElMessage.error('请求超时！请您稍后重试')
         }
         // 根据响应的错误状态码，做不同的处理
         if (response) {

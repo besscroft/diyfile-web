@@ -22,62 +22,117 @@ useDetail()
 </script>
 
 <template>
-  <div
-    :style="{
-      boxSizing: 'border-box',
-      width: '100%',
-      padding: '0.25rem',
-      height: '100%',
-      backgroundColor: 'var(--color-fill-2)',
-    }"
-  >
-    <a-card hoverable :style="{ height: '100%' }" :title="t('table.StorageInfo')">
-      <GoBack />
-      <br>
-      <a-space v-if="loading" direction="vertical" size="large" :style="{ width: '100%' }">
-        <a-skeleton animation="animation">
-          <a-space direction="vertical" :style="{ width: '100%' }" size="large">
-            <a-skeleton-line :rows="5" />
-          </a-space>
-        </a-skeleton>
-      </a-space>
-      <a-space v-else direction="vertical" size="large" fill>
-        <a-descriptions :data="detail" layout="inline-vertical" bordered>
-          <descriptions-item label="存储名称">{{ detail.name }}</descriptions-item>
-          <descriptions-item label="存储类型">
-            <template #default>
-              <a-tag v-if="detail.type === 0" size="small" color="cyan">本地存储</a-tag>
-              <a-tag v-if="detail.type === 1" size="small" color="cyan">OneDrive</a-tag>
-              <a-tag v-if="detail.type === 2" size="small" color="cyan">阿里云 OSS</a-tag>
-            </template>
-          </descriptions-item>
-          <descriptions-item label="存储 Key">{{ detail.storageKey }}</descriptions-item>
-          <descriptions-item label="存储启用状态">
-            <template #default>
-              <a-tag v-if="detail.enable === 1" size="small" color="green">启用</a-tag>
-              <a-tag v-else size="small" color="red">禁用</a-tag>
-            </template>
-          </descriptions-item>
-          <descriptions-item label="创建者">{{ detail.creator }}</descriptions-item>
-          <descriptions-item label="更新者">{{ detail.updater }}</descriptions-item>
-          <descriptions-item label="创建时间">{{ detail.createTime }}</descriptions-item>
-          <descriptions-item label="更新时间">{{ detail.updateTime }}</descriptions-item>
-          <descriptions-item label="备注">{{ detail.remark }}</descriptions-item>
-        </a-descriptions>
-        <a-list>
-          <template #header>
-            配置列表
-          </template>
-          <a-list-item v-for="item in detail.configList" :key="item.id">
-            <a-list-item-meta
-              :title="item.name"
-              :description="item.configValue"
-            />
-          </a-list-item>
-        </a-list>
-      </a-space>
-    </a-card>
-  </div>
+  <el-card :body-style="{ padding: '0.25rem' }" class="my-1 h-10" shadow="never">
+    <el-page-header @back="router.back()" class="mt-1">
+      <template #content>
+        <div class="flex items-center">
+          <span class="text-large font-400 mr-2"> {{ t('table.StorageInfo') }} </span>
+        </div>
+      </template>
+    </el-page-header>
+  </el-card>
+  <el-card :body-style="{ padding: '1rem' }" class="box-card overflow-auto no-scrollbar" style="height: calc(100% - 4rem); -ms-overflow-style: none;" shadow="never">
+    <el-descriptions
+      v-if="detail"
+      direction="vertical"
+      class="margin-top"
+      :column="3"
+      border
+    >
+      <el-descriptions-item>
+        <template #label>
+          <div class="cell-item">
+            存储名称
+          </div>
+        </template>
+        {{ detail.name }}
+      </el-descriptions-item>
+      <el-descriptions-item>
+        <template #label>
+          <div class="cell-item">
+            存储类型
+          </div>
+        </template>
+        <el-tag v-if="detail.type === 0" class="mx-1" effect="dark" round>本地存储</el-tag>
+        <el-tag v-if="detail.type === 1" class="mx-1" effect="dark" round>OneDrive</el-tag>
+        <el-tag v-if="detail.type === 2" class="mx-1" effect="dark" round>阿里云 OSS</el-tag>
+        <el-tag v-if="detail.type === 3" class="mx-1" effect="dark" round>Amazon S3</el-tag>
+      </el-descriptions-item>
+      <el-descriptions-item>
+        <template #label>
+          <div class="cell-item">
+            存储 Key
+          </div>
+        </template>
+        {{ detail.storageKey }}
+      </el-descriptions-item>
+      <el-descriptions-item>
+        <template #label>
+          <div class="cell-item">
+            存储启用状态
+          </div>
+        </template>
+        <el-tag v-if="detail.enable === 1" class="mx-1" effect="dark" round>启用</el-tag>
+        <el-tag v-else class="mx-1" effect="dark" type="danger" round>禁用</el-tag>
+      </el-descriptions-item>
+      <el-descriptions-item>
+        <template #label>
+          <div class="cell-item">
+            创建者
+          </div>
+        </template>
+        {{ detail.creator }}
+      </el-descriptions-item>
+      <el-descriptions-item>
+        <template #label>
+          <div class="cell-item">
+            更新者
+          </div>
+        </template>
+        {{ detail.updater }}
+      </el-descriptions-item>
+      <el-descriptions-item>
+        <template #label>
+          <div class="cell-item">
+            创建时间
+          </div>
+        </template>
+        {{ detail.createTime }}
+      </el-descriptions-item>
+      <el-descriptions-item>
+        <template #label>
+          <div class="cell-item">
+            更新时间
+          </div>
+        </template>
+        {{ detail.updateTime }}
+      </el-descriptions-item>
+      <el-descriptions-item>
+        <template #label>
+          <div class="cell-item">
+            备注
+          </div>
+        </template>
+        {{ detail.remark }}
+      </el-descriptions-item>
+    </el-descriptions>
+    <el-descriptions
+      v-if="detail"
+      class="margin-top"
+      :column="1"
+      title="配置列表"
+      border
+    >
+      <el-descriptions-item v-for="item in detail.configList" :key="item.id">
+        <template #label>
+          <div class="cell-item">
+            {{ item.name }}
+          </div>
+        </template>
+        {{ item.configValue }}
+      </el-descriptions-item>
+    </el-descriptions>
+  </el-card>
 </template>
 
 <style scoped>

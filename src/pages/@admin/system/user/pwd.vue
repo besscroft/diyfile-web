@@ -1,58 +1,26 @@
 <script setup lang="ts">
-import { Message } from '@arco-design/web-vue'
-import type { User } from '~/api/interface/user'
-import { userPasswordUpdate } from '~/api/modules/user'
-import { ResultEnum } from '~/enums/httpEnum'
-
 const router = useRouter()
 const { t } = useI18n()
-
-const pwdForm = reactive<User.UpdatePasswordData>({
-  userId: undefined,
-  isSelf: false,
-  oldPassword: '',
-  newPassword: '',
-})
-
-const handleSubmit = () => {
-  pwdForm.userId = Number(router.currentRoute.value.query.id)
-  userPasswordUpdate(pwdForm).then((res) => {
-    if (res.code === ResultEnum.SUCCESS) {
-      Message.info(res.message)
-      router.push('/@admin/system/user')
-    }
-  })
-}
 </script>
 
 <template>
-  <div
-    :style="{
-      boxSizing: 'border-box',
-      width: '100%',
-      padding: '0.25rem',
-      height: '100%',
-      backgroundColor: 'var(--color-fill-2)',
-    }"
-  >
-    <a-card hoverable :style="{ height: '100%', padding: '0.25rem' }" :title="t('tip.cardTitle')">
-      <template #extra>
-        <a-space>
-          <a-button type="primary" @click="handleSubmit">{{ t('button.submit') }}</a-button>
-        </a-space>
+  <el-card :body-style="{ padding: '0.25rem' }" class="my-1 h-10" shadow="never">
+    <el-page-header @back="router.back()">
+      <template #content>
+        <div class="flex items-center">
+          <span class="text-large font-400 mr-2"> {{ t('tip.cardTitle') }} </span>
+        </div>
       </template>
-      <div class="flex flex-row flex-wrap mx-1.5" style="margin-top: 1rem">
-        <a-form class="flex-initial mx-auto" :model="pwdForm" :style="{ width: '600px' }" layout="vertical">
-          <a-form-item field="oldPassword" :label="t('tip.password')" required>
-            <a-input v-model="pwdForm.oldPassword" :placeholder="t('tip.passwordPh')" allow-clear />
-          </a-form-item>
-          <a-form-item field="newPassword" :label="t('tip.passwordNew')" required>
-            <a-input-password v-model="pwdForm.newPassword" :placeholder="t('tip.passwordNewPh')" allow-clear />
-          </a-form-item>
-        </a-form>
-      </div>
-    </a-card>
-  </div>
+      <template #extra>
+        <div class="flex items-center">
+          <v-btn icon="done" variant="text" size="x-small" @click="handleSubmit(ruleFormRef)" />
+        </div>
+      </template>
+    </el-page-header>
+  </el-card>
+  <el-card :body-style="{ padding: '1rem' }" class="box-card overflow-auto no-scrollbar" style="height: calc(100% - 4rem); -ms-overflow-style: none;" shadow="never">
+    在写了在写了！
+  </el-card>
 </template>
 
 <style scoped>

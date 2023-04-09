@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Message } from '@arco-design/web-vue'
+import { ElMessage } from 'element-plus'
 import type { User } from '~/api/interface/user'
 import { userPasswordUpdate } from '~/api/modules/user'
 import { ResultEnum } from '~/enums/httpEnum'
@@ -20,51 +20,28 @@ const handleUpdatePwd = () => {
     if (res.code === ResultEnum.SUCCESS) {
       oldPwd.value = ''
       pwd.value = ''
-      Message.info(res.message)
+      ElMessage.info(res.message)
     }
   })
 }
 </script>
 
 <template>
-  <div
-    :style="{
-      width: '100%',
-      height: '100%',
-    }"
-  >
-    <a-card :bordered="false" hoverable :style="{ height: '100%' }">
-      <a-form layout="vertical">
-        <a-form-item label="请输入旧密码...">
-          <a-input v-model="oldPwd" allow-clear>
-            <template #prefix>
-              <icon-public />
-            </template>
-          </a-input>
-        </a-form-item>
-        <a-form-item label="请输入新密码...">
-          <a-input-search v-model="pwd" search-button allow-clear>
-            <template #prefix>
-              <icon-public />
-            </template>
-            <template #button-icon>
-              <a-popconfirm content="确定要更新吗?" type="warning" :onOk="handleUpdatePwd">
-                <icon-edit />
-              </a-popconfirm>
-            </template>
-          </a-input-search>
-        </a-form-item>
-        更多设置，敬请期待！
-      </a-form>
-    </a-card>
+  <div class="h-full mx-2 mt-2">
+    <v-text-field
+      v-model="oldPwd"
+      label="旧密码"
+    ></v-text-field>
+    <v-text-field
+      class="mt-2"
+      v-model="pwd"
+      label="新密码"
+      append-inner-icon="download_done"
+      @click:append-inner="handleUpdatePwd"
+    ></v-text-field>
   </div>
 </template>
 
 <style scoped>
 
 </style>
-
-<route lang="yaml">
-meta:
-  layout: admin
-</route>

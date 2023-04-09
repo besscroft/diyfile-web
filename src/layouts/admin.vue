@@ -1,25 +1,21 @@
 <script setup lang="ts">
+import { useTheme } from 'vuetify'
+
 const router = useRouter()
 const { isMobile } = useDevice()
-const props = ref<Boolean>(false)
-// 控制菜单收缩
-const menuStatus = ref<Boolean>(false)
+const theme = useTheme()
 
 const toggleTheme = () => {
   if (isDark.value) {
     // 恢复亮色主题
-    document.body.removeAttribute('arco-theme')
     localStorage.setItem('diyfile-theme', 'light')
+    theme.global.name.value = 'light'
   } else {
     // 设置为暗黑主题
-    document.body.setAttribute('arco-theme', 'dark')
     localStorage.setItem('diyfile-theme', 'dark')
+    theme.global.name.value = 'dark'
   }
   toggleDark()
-}
-
-const onMenuCollapse = () => {
-  menuStatus.value = !menuStatus.value
 }
 
 /** 路由切换 */
@@ -43,31 +39,32 @@ const routerPage = (val: string) => {
 </script>
 
 <template>
-  <a-layout style="height: 100%;">
-    <a-layout-header>
-      <Header :value="props" @toggleTheme="toggleTheme" />
-    </a-layout-header>
-    <a-layout>
-      <a-layout-sider
-        v-if="!isMobile"
-        hide-trigger
-        collapsible
-        :collapsed="menuStatus"
-      >
-        <PopMenu @onMenuCollapse="onMenuCollapse" @routerPage="routerPage" />
-      </a-layout-sider>
-      <a-layout-content v-if="isMobile" style="margin-bottom: 56px;">
-        <RouterView />
-      </a-layout-content>
-      <a-layout-content v-else>
-        <RouterView />
-      </a-layout-content>
-    </a-layout>
-    <a-layout-footer v-if="isMobile" style="position: fixed; bottom: 0; width: 100%;">
-      <MobileMenu @routerPage="routerPage" />
-    </a-layout-footer>
-    <a-layout-footer v-else>
-      <Footer />
-    </a-layout-footer>
-  </a-layout>
+  <el-container class="w-full h-full">
+    <el-header class="w-full" style="border-bottom: 1px solid var(--el-border-color-light);">
+      <Header @toggleTheme="toggleTheme" />
+    </el-header>
+    <el-container v-if="!isMobile" style="height: calc(100% - 60px)">
+      <el-aside class="w-48 h-full" style="border-right: 1px solid var(--el-border-color-light);">
+        <PopMenu class="h-full" @routerPage="routerPage" />
+      </el-aside>
+      <el-container>
+        <el-main :style="isDark ? 'height: calc(100% - 60px); background: #121212; --el-main-padding: 0.5rem;' : 'height: calc(100% - 60px); background: #f8f8f8; --el-main-padding: 0.5rem;'">
+          <RouterView />
+        </el-main>
+        <el-footer style="border-top: 1px solid var(--el-border-color-light);">
+          <Footer />
+        </el-footer>
+      </el-container>
+    </el-container>
+    <el-container v-else style="height: calc(100% - 60px)">
+      <el-container>
+        <el-main style="height: calc(100% - 60px)">
+          <RouterView />
+        </el-main>
+        <el-footer style="border-top: 1px solid var(--el-border-color-light); text-align: center;" class="items-center">
+          <MobileMenu @routerPage="routerPage" />
+        </el-footer>
+      </el-container>
+    </el-container>
+  </el-container>
 </template>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { Message, Modal } from '@arco-design/web-vue'
 import axios from 'axios'
+import { ElMessage } from 'element-plus'
+import type { UploadInstance } from 'element-plus'
 import { API_URL } from '../../../../../config/config'
 import { ResultEnum } from '~/enums/httpEnum'
 import { getBackupFile } from '~/api/modules/monitor'
@@ -8,6 +9,8 @@ import { getBackupFile } from '~/api/modules/monitor'
 const router = useRouter()
 const { t } = useI18n()
 const user = useUserStore()
+const dialogVisible = ref<boolean>(false)
+const uploadRef = ref<UploadInstance>()
 
 const handleBackupFile = () => {
   getBackupFile().then((res) => {
@@ -30,22 +33,11 @@ const handleBackupFile = () => {
   })
 }
 
-const beforeUpload = (file: any) => {
-  return new Promise((resolve, reject) => {
-    Modal.confirm({
-      title: '确定要上传吗？',
-      content: `上传 ${file.name} 文件，系统配置将会覆盖，存储数据将会新增！`,
-      onOk: () => resolve(true),
-      onCancel: () => reject('cancel'),
-    })
-  })
-}
-
 const onRequestUpload = (option: any) => {
-  const { fileItem } = option
+  const { file } = option
   // 创建 FormData 对象
   const formData = new FormData()
-  formData.append('file', fileItem.file)
+  formData.append('file', file)
 
   // 发送 POST 请求上传文件
   axios.post(`${API_URL}/monitor/restoreData`, formData, {
@@ -56,11 +48,11 @@ const onRequestUpload = (option: any) => {
   }).then((res) => {
     console.log(res)
     if (res.data.code === ResultEnum.SUCCESS) {
-      Message.success(res.data.message)
+      ElMessage.success(res.data.message)
       return Promise.resolve(res.data)
     }
     if (res.data.code === ResultEnum.UNAUTHORIZED) {
-      Message.error('登陆已过期，请重新登陆！')
+      ElMessage.error('登陆已过期，请重新登陆！')
       user.setToken('')
       user.setUserName('')
       user.setAvatar('')
@@ -69,51 +61,75 @@ const onRequestUpload = (option: any) => {
     }
     // 没有权限（code == 403）
     if (res.data.code === ResultEnum.FORBIDDEN) {
-      Message.error(res.data.message)
+      ElMessage.error(res.data.message)
       return Promise.reject(res.data)
     }
   }).catch((err) => {
     console.log(err)
   })
 }
+
+const onConfirmUpload = () => {
+  dialogVisible.value = false
+  uploadRef.value?.submit()
+}
 </script>
 
 <template>
-  <div
-    :style="{
-      boxSizing: 'border-box',
-      width: '100%',
-      padding: '0.25rem',
-      height: '100%',
-      backgroundColor: 'var(--color-fill-2)',
-    }"
-  >
-    <a-card hoverable :style="{ height: '100%' }" :title="t('menu.setting.backup')">
-      <a-space size="medium">
-        <template #split>
-          <a-divider direction="vertical" />
-        </template>
-        <a-button type="outline" @click="handleBackupFile">
-          {{ t('button.backup') }}
-        </a-button>
-        <a-upload
-          type="outline"
+  <el-card :body-style="{ padding: '0.25rem' }" class="my-1 h-10" shadow="never">
+    <el-page-header @back="router.back()" class="mt-1">
+      <template #content>
+        <div class="flex items-center">
+          <span class="text-large font-400 mr-2"> {{ t('menu.setting.backup') }} </span>
+        </div>
+      </template>
+    </el-page-header>
+  </el-card>
+  <el-card :body-style="{ padding: '0px' }" class="box-card h-full w-full overflow-auto" style="height: calc(100% - 4rem); -ms-overflow-style: none;" shadow="never">
+    <div class="flex flex-col mx-2 my-2 ma-2">
+      <div class="ma-2 w-40">
+        <v-btn prepend-icon="cloud_download" variant="text" @click="handleBackupFile">
+        {{ t('button.backup') }}
+      </v-btn>
+      </div>
+      <div class="ma-2 w-40">
+        <el-upload
+          class="w-20"
+          ref="uploadRef"
+          :http-request="onRequestUpload"
+          :auto-upload="false"
           accept=".json"
-          action="/"
-          @before-upload="beforeUpload"
-          :custom-request="(option) => onRequestUpload(option)"
           :show-file-list="false"
         >
-          {{ t('button.restore') }}
-        </a-upload>
-      </a-space>
-    </a-card>
-  </div>
+          <v-btn prepend-icon="note_add" variant="text">
+            {{ t('button.selectFile') }}
+          </v-btn>
+        </el-upload>
+      </div>
+      <div class="ma-2 w-40">
+        <v-btn prepend-icon="cloud_upload" variant="text" @click="dialogVisible = true">
+        {{ t('button.restore') }}
+      </v-btn>
+      </div>
+    </div>
+  </el-card>
+
+  <el-dialog
+    v-model="dialogVisible"
+    title="确定要上传吗？"
+    width="30%"
+  >
+    <span>上传备份文件，系统配置将会覆盖，存储数据将会新增！</span>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="dialogVisible = false">Cancel</el-button>
+        <el-button type="primary" @click="onConfirmUpload">
+          Confirm
+        </el-button>
+      </span>
+    </template>
+  </el-dialog>
 </template>
-
-<style scoped>
-
-</style>
 
 <route lang="yaml">
 meta:

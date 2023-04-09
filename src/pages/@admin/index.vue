@@ -1,15 +1,43 @@
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n'
+import { Warning } from '@element-plus/icons-vue'
 import { getServerInfo, getTotalInfo } from '~/api/modules/monitor'
 import { ResultEnum } from '~/enums/httpEnum'
 
 const router = useRouter()
 const { t } = useI18n()
-const visible = ref<Boolean>(false)
-const loadingServer = ref<Boolean>(true)
-const loadingTotal = ref<Boolean>(true)
-const serverInfo = ref()
-const totalInfo = ref()
+const loadingTotal = ref<boolean>(true)
+const serverInfo = ref({
+  memoryInfo: {
+    total: 0,
+    used: 0,
+    free: 0,
+  },
+  cpuInfo: {
+    cpuNum: 0,
+  },
+  diskInfos: [],
+  systemInfo: {
+    computerIp: '',
+    computerName: '',
+    osArch: '',
+    osName: '',
+    userDir: '',
+  },
+})
+const totalInfo = ref({
+  storageActiveCount: 0,
+  storageCount: 0,
+  userCount: 0,
+  userDisableCount: 0,
+})
+
+const colors = [
+  { color: '#f56c6c', percentage: 20 },
+  { color: '#e6a23c', percentage: 40 },
+  { color: '#5cb87a', percentage: 60 },
+  { color: '#1989fa', percentage: 80 },
+  { color: '#6f7ad3', percentage: 100 },
+]
 
 const handServerInfo = async () => {
   loadingTotal.value = true
@@ -19,121 +47,295 @@ const handServerInfo = async () => {
     }
     loadingTotal.value = false
   })
-  loadingServer.value = true
   await getServerInfo().then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
       serverInfo.value = res.data
     }
-    loadingServer.value = false
   })
 }
 
-const handleOk = () => {
-  visible.value = false
-}
+onBeforeMount(() => {
+  handServerInfo()
+})
 
-handServerInfo()
+const timer = setInterval(() => {
+  handServerInfo()
+}, 5000)
+
+onUnmounted(() => {
+  clearInterval(timer)
+})
 </script>
 
 <template>
-  <div
-    :style="{
-      boxSizing: 'border-box',
-      width: '100%',
-      padding: '0.25rem',
-      height: '100%',
-      backgroundColor: 'var(--color-fill-2)',
-    }"
-  >
-    <a-card hoverable :bordered="false" :style="{ height: '100%' }" :title="t('menu.index')">
+  <el-card :body-style="{ padding: '0.25rem' }" class="my-1 h-10" shadow="never">
+    <el-page-header @back="router.back()">
+      <template #content>
+        <div class="flex items-center">
+          <span class="text-large font-400 mr-2"> {{ t('menu.index') }} </span>
+        </div>
+      </template>
       <template #extra>
-        <a-space>
-          <a-button :loading="loadingServer" @click="handServerInfo">
-            <template #icon>
-              <icon-sync />
+        <div class="flex items-center">
+          <v-btn icon="sync" variant="text" size="x-small" @click="handServerInfo"></v-btn>
+        </div>
+      </template>
+    </el-page-header>
+  </el-card>
+  <el-card :body-style="{ padding: '0px' }" class="box-card h-full w-full overflow-auto" style="height: calc(100% - 4rem); -ms-overflow-style: none;" shadow="never">
+    <el-row v-if="serverInfo" :gutter="[12, 10]">
+      <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
+        <el-card :body-style="{ padding: '0.25rem' }" class="box-card mx-1 my-0.5 h-36" shadow="hover">
+          <div class="statistic-card flex h-full">
+            <el-statistic class="flex-grow" :value="`${(serverInfo.memoryInfo.total / 1024 / 1024 / 1024).toFixed(2)}GB`">
+              <template #title>
+                <div style="display: inline-flex; align-items: center">
+                  总内存
+                  <el-tooltip
+                    effect="dark"
+                    content="服务器总内存"
+                    placement="top"
+                  >
+                    <el-icon style="margin-left: 4px" :size="12">
+                      <Warning />
+                    </el-icon>
+                  </el-tooltip>
+                </div>
+              </template>
+            </el-statistic>
+            <el-statistic class="flex-grow ml-1" :value="`${(serverInfo.memoryInfo.used / 1024 / 1024 / 1024).toFixed(2)}GB`">
+              <template #title>
+                <div style="display: inline-flex; align-items: center">
+                  已用内存
+                  <el-tooltip
+                    effect="dark"
+                    content="服务器当前已使用内存"
+                    placement="top"
+                  >
+                    <el-icon style="margin-left: 4px" :size="12">
+                      <Warning />
+                    </el-icon>
+                  </el-tooltip>
+                </div>
+              </template>
+            </el-statistic>
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
+        <el-card :body-style="{ padding: '0.25rem' }" class="box-card  my-0.5 h-36" shadow="hover">
+          <div class="statistic-card flex h-full">
+            <el-statistic class="flex-grow" :value="`${(serverInfo.memoryInfo.free / 1024 / 1024 / 1024).toFixed(2)}GB`" title="New transactions today">
+              <template #title>
+                <div style="display: inline-flex; align-items: center">
+                  剩余内存
+                  <el-tooltip
+                    effect="dark"
+                    content="服务器当前可使用内存"
+                    placement="top"
+                  >
+                    <el-icon style="margin-left: 4px" :size="12">
+                      <Warning />
+                    </el-icon>
+                  </el-tooltip>
+                </div>
+              </template>
+            </el-statistic>
+            <el-progress
+              type="dashboard"
+              :percentage="((serverInfo.memoryInfo.used / 1024 / 1024).toFixed(2) / (serverInfo.memoryInfo.total / 1024 / 1024).toFixed(2)).toFixed(2) * 100"
+              :color="colors"
+            >
+              <template #default="{ percentage }">
+                <span class="percentage-value -ml-3">{{ percentage }} % </span>
+              </template>
+            </el-progress>
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
+        <el-card :body-style="{ padding: '0.25rem' }" class="box-card mx-1 my-0.5 h-36" shadow="hover">
+          <div class="statistic-card flex h-full">
+            <el-statistic class="flex-grow" :value="totalInfo.userCount">
+              <template #title>
+                <div style="display: inline-flex; align-items: center">
+                  用户总数
+                  <el-tooltip
+                    effect="dark"
+                    content="用户总数量"
+                    placement="top"
+                  >
+                    <el-icon style="margin-left: 4px" :size="12">
+                      <Warning />
+                    </el-icon>
+                  </el-tooltip>
+                </div>
+              </template>
+            </el-statistic>
+            <el-statistic class="flex-grow mx-1" :value="totalInfo.userDisableCount">
+              <template #title>
+                <div style="display: inline-flex; align-items: center">
+                  禁用数量
+                  <el-tooltip
+                    effect="dark"
+                    content="已经禁用的用户数量"
+                    placement="top"
+                  >
+                    <el-icon style="margin-left: 4px" :size="12">
+                      <Warning />
+                    </el-icon>
+                  </el-tooltip>
+                </div>
+              </template>
+            </el-statistic>
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
+        <el-card :body-style="{ padding: '0.25rem' }" class="box-card mx-1 my-0.5 h-36" shadow="hover">
+          <div class="statistic-card flex h-full">
+            <el-statistic class="flex-grow" :value="totalInfo.storageCount">
+              <template #title>
+                <div style="display: inline-flex; align-items: center">
+                  存储总数
+                  <el-tooltip
+                    effect="dark"
+                    content="存储总数量"
+                    placement="top"
+                  >
+                    <el-icon style="margin-left: 4px" :size="12">
+                      <Warning />
+                    </el-icon>
+                  </el-tooltip>
+                </div>
+              </template>
+            </el-statistic>
+            <el-statistic class="flex-grow mx-1" :value="totalInfo.storageActiveCount">
+              <template #title>
+                <div style="display: inline-flex; align-items: center">
+                  启用数量
+                  <el-tooltip
+                    effect="dark"
+                    content="启用的存储数量"
+                    placement="top"
+                  >
+                    <el-icon style="margin-left: 4px" :size="12">
+                      <Warning />
+                    </el-icon>
+                  </el-tooltip>
+                </div>
+              </template>
+            </el-statistic>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
+    <div class="flex flex-wrap flex-col sm:flex-row">
+      <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
+        <el-descriptions
+          v-if="serverInfo"
+          class="margin-top"
+          title="服务器信息"
+          :column="1"
+          border
+        >
+          <el-descriptions-item>
+            <template #label>
+              <div class="cell-item">
+                服务器名称
+              </div>
             </template>
-          </a-button>
-        </a-space>
-      </template>
-      <div class="flex flex-wrap flex-col sm:flex-row">
-        <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[21rem] m-1">
-          <a-card :loading="loadingServer" :bordered="false" title="运行信息" hoverable>
-            <a-list :bordered="false">
-              <a-list-item>服务器名称: {{ serverInfo.systemInfo.computerName }}</a-list-item>
-              <a-list-item>服务器IP: {{ serverInfo.systemInfo.computerIp }}</a-list-item>
-              <a-list-item>操作系统: {{ serverInfo.systemInfo.osName }}</a-list-item>
-              <a-list-item>系统架构: {{ serverInfo.systemInfo.osArch }}</a-list-item>
-              <a-list-item>CPU 核心数: {{ serverInfo.cpuInfo.cpuNum }}</a-list-item>
-              <a-list-item>总内存: {{ (serverInfo.memoryInfo.total / 1024 / 1024).toFixed(2) }} MB</a-list-item>
-              <a-list-item>已用内存: {{ (serverInfo.memoryInfo.used / 1024 / 1024).toFixed(2) }} MB</a-list-item>
-              <a-list-item>剩余内存: {{ (serverInfo.memoryInfo.free / 1024 / 1024).toFixed(2) }} MB</a-list-item>
-              <a-list-item>
-                <a-progress :percent="((serverInfo.memoryInfo.used / 1024 / 1024).toFixed(2) / (serverInfo.memoryInfo.total / 1024 / 1024).toFixed(2)).toFixed(2)">
-                  <template v-slot:text="scope" >
-                    内存使用率 {{scope.percent * 100}}%
-                  </template>
-                </a-progress>
-              </a-list-item>
-            </a-list>
-          </a-card>
-        </div>
-        <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
-          <a-card :loading="loadingTotal" :bordered="false" title="概览" hoverable>
-            <a-card title="用户数量" :bordered="false" :style="{ width: '100%' }">
-              <a-statistic title="用户总数" :value="totalInfo.userCount" show-group-separator />
-              <a-divider direction="vertical" />
-              <a-statistic title="禁用数量" :value="totalInfo.userDisableCount" show-group-separator />
-            </a-card>
-            <a-card title="存储数量" :bordered="false" :style="{ width: '100%' }">
-              <a-statistic title="存储总数" :value="totalInfo.storageCount" show-group-separator />
-              <a-divider direction="vertical" />
-              <a-statistic title="启用数量" :value="totalInfo.storageActiveCount" show-group-separator />
-            </a-card>
-          </a-card>
-        </div>
-        <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
-          <a-card title="Todo List" :bordered="false" hoverable>
-            <a-list :bordered="false">
-              <a-list-item><icon-subscribed />MySQL 存储适配</a-list-item>
-              <a-list-item><icon-subscribed />基于 openJDK 17 的 SpringBoot3 开发</a-list-item>
-              <a-list-item><icon-subscribed />OneDrive 支持</a-list-item>
-              <a-list-item><icon-subscribed />多元化存储支持</a-list-item>
-              <a-list-item><icon-subscribed />多平台部署支持</a-list-item>
-              <a-list-item><icon-subscribe />存储间同步功能</a-list-item>
-              <a-list-item><icon-subscribe />S3 API 支持</a-list-item>
-              <a-list-item><icon-github />更多请查看 issues 计划列表</a-list-item>
-            </a-list>
-          </a-card>
-        </div>
-        <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
-          <a-card title="支持" :bordered="false" hoverable>
-            <a-divider orientation="left">提建议/问题反馈</a-divider>
-            欢迎通过 issues 提交建议或问题反馈，我们会尽快处理！
-            <a-divider orientation="left">技术支持</a-divider>
-            我提供免费技术支持，你可以通过邮邮件与我取得联系，非工作时间我会尽快回复。
-            Email: <a href="mailto:besscroft@foxmail.com"><b>旅行者</b></a>
-          </a-card>
-        </div>
+            {{ serverInfo.systemInfo.computerName }}
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template #label>
+              <div class="cell-item">
+                服务器IP
+              </div>
+            </template>
+            {{ serverInfo.systemInfo.computerIp }}
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template #label>
+              <div class="cell-item">
+                操作系统
+              </div>
+            </template>
+            {{ serverInfo.systemInfo.osName }}
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template #label>
+              <div class="cell-item">
+                系统架构
+              </div>
+            </template>
+            {{ serverInfo.systemInfo.osArch }}
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template #label>
+              <div class="cell-item">
+                CPU 核心数
+              </div>
+            </template>
+            {{ serverInfo.cpuInfo.cpuNum }}
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template #label>
+              <div class="cell-item">
+                总内存
+              </div>
+            </template>
+            {{ (serverInfo.memoryInfo.total / 1024 / 1024).toFixed(2) }} MB
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template #label>
+              <div class="cell-item">
+                已用内存
+              </div>
+            </template>
+            {{ (serverInfo.memoryInfo.used / 1024 / 1024).toFixed(2) }} MB
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template #label>
+              <div class="cell-item">
+                剩余内存
+              </div>
+            </template>
+            {{ (serverInfo.memoryInfo.free / 1024 / 1024).toFixed(2) }} MB
+          </el-descriptions-item>
+        </el-descriptions>
       </div>
-    </a-card>
-    <a-drawer
-      :visible="visible.value"
-      placement="top"
-      :closable="false"
-      @ok="handleOk"
-      unmountOnClose
-      hideCancel
-    >
-      <template #title>
-        Oops!
-      </template>
-      <div>如你所见，还有诸多问题，积极修复中，请耐心等待！如果你想一起参与，可联系我！</div>
-    </a-drawer>
-  </div>
+      <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
+        <el-divider content-position="left">提建议/问题反馈</el-divider>
+        <span>欢迎通过 issues 提交建议或问题反馈，我们会尽快处理！</span>
+        <el-divider content-position="left">技术支持</el-divider>
+        <span>我提供免费技术支持，你可以通过邮邮件与我取得联系，非工作时间我会尽快回复。
+            Email: <a href="mailto:besscroft@foxmail.com"><b>旅行者</b></a></span>
+      </div>
+      <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
+        <el-divider content-position="left">...</el-divider>
+      </div>
+      <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
+        <el-divider content-position="left">...</el-divider>
+      </div>
+    </div>
+  </el-card>
 </template>
 
 <style scoped>
+:global(h2#card-usage ~ .example .example-showcase) {
+  background-color: var(--el-fill-color) !important;
+}
 
+.el-statistic {
+  --el-statistic-content-font-size: 28px;
+}
+
+.statistic-card {
+  height: 100%;
+  padding: 16px;
+  border-radius: 4px;
+}
 </style>
 
 <route lang="yaml">

@@ -29,6 +29,7 @@ button:
   download: Download
   proxyDownload: Proxy Download
   backup: Backup
+  selectFile: Select File
   restore: Restore
 intro:
   desc: Opinionated Vite Starter Template
@@ -101,3 +102,6 @@ setting:
   base: Basic Config
   web: Site Config
   user: User Config
+header:
+  docs: Docs
+  github: Github

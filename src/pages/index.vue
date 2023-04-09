@@ -3,15 +3,9 @@ import { getDefaultStorage } from '~/api/modules/file'
 import { ResultEnum } from '~/enums/httpEnum'
 
 const { t } = useI18n()
-const user = useUserStore()
 const router = useRouter()
 const loading = ref<boolean>(true)
-const routes = ref<Array<any>>([
-  {
-    path: '/',
-    label: 'Home',
-  },
-])
+const { isMobile } = useDevice()
 
 onBeforeMount(() => {
   getDefaultStorage().then((res) => {
@@ -30,44 +24,14 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <div
-    :style="{
-      boxSizing: 'border-box',
-      width: '100%',
-      padding: '12px',
-      height: '100%',
-      backgroundColor: 'var(--color-fill-2)',
-    }"
-  >
-    <a-row :gutter="20" :style="{ marginBottom: '20px' }">
-      <a-col :xs="1" :sm="2" :md="2" :lg="3" :xl="4" :xxl="4" />
-      <a-col :xs="22" :sm="20" :md="20" :lg="18" :xl="16" :xxl="16">
-        <a-tag color="gray">
-          <template #icon>
-            <icon-branch />
-          </template>
-          <a-breadcrumb :routes="routes" :max-count="3">
-            <template #item-render="{ route }">
-              <a-link @click="router.push(route.path)">
-                {{ route.label }}
-              </a-link>
-            </template>
-          </a-breadcrumb>
-        </a-tag>
-        <a-card :bordered="false" :style="{ width: '100%' }">
-          <a-spin v-if="loading" :size="32" class="flex justify-center">
-            <template #icon>
-              <icon-sync />
-            </template>
-          </a-spin>
-          <a-empty v-else>
-            什么都没有呢！请登录后进入后台进行配置！
-          </a-empty>
-        </a-card>
-      </a-col>
-      <a-col :xs="1" :sm="2" :md="2" :lg="3" :xl="4" :xxl="4" />
-    </a-row>
-  </div>
+  <el-skeleton
+    v-if="loading"
+    :rows="5"
+    animated
+    :style="isMobile ? { 'width': '100%', 'overflow-x': 'hidden !important' } : { 'width': '66%', 'overflow-x': 'hidden !important' }"
+    class="mx-auto"
+  />
+  <p v-else>什么都没有呢！请登录后进入后台进行配置！</p>
 </template>
 
 <route lang="yaml">
