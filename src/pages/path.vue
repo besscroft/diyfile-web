@@ -6,7 +6,7 @@ import { getEnableStorage, storageInfoByStorageKey } from '~/api/modules/storage
 import { ResultEnum } from '~/enums/httpEnum'
 import type { Storage } from '~/types/storage'
 import { download } from '~/utils/ButtonUtil'
-import { getFileName, isAudio, isImage, isPDF, isVideo } from '~/utils/FileUtil'
+import { getFileName, isAudio, isImage, isMarkdown, isPDF, isText, isVideo } from '~/utils/FileUtil'
 import { uploadOneDrive } from '~/utils/uploadFileUtil'
 
 const { text, copy, copied } = useClipboard()
@@ -280,8 +280,16 @@ onMounted(() => {
       </template>
     </el-dropdown>
   </nav>
+  <el-skeleton
+    v-if="loading"
+    :rows="5"
+    animated
+    :style="isMobile ? { 'width': '100%', 'overflow-x': 'hidden !important' } : { 'width': '66%', 'overflow-x': 'hidden !important' }"
+    class="mx-auto"
+  />
   <el-table
-    v-if="!loading && !fileInfo && dataList"
+    v-else-if="!loading && !fileInfo && dataList"
+    v-loading="loading"
     :data="dataList"
     :style="isMobile ? { 'width': '100%', 'overflow-x': 'hidden !important' } : { 'width': '66%', 'overflow-x': 'hidden !important' }"
     height="97%"
@@ -298,7 +306,7 @@ onMounted(() => {
           <v-icon v-else-if="isVideo(scope.row.name)" icon="video_library" />
           <v-icon v-else-if="isAudio(scope.row.name)" icon="music_note" />
           <v-icon v-else-if="isPDF(scope.row.name)" icon="picture_as_pdf" />
-          <v-icon v-else icon="draft" />
+          <v-icon v-else icon="description" />
           <span
             class="cursor-pointer"
             style="margin-left: 10px"
@@ -347,12 +355,15 @@ onMounted(() => {
   </el-table>
   <v-card v-else class="mx-auto" :style="isMobile ? { width: '100%' } : { width: '66%' }">
     <!-- 文件预览 -->
-    <VideoPreview
-      class="m-4"
-      v-if="!loading && fileInfo && isVideo(fileInfo.name)"
-      :fileInfo="fileInfo"
-      :storageInfo="storageInfo"
-    />
+    <VideoPreview v-if="!loading && fileInfo && isVideo(fileInfo.name)" class="m-4" :fileInfo="fileInfo" :storageInfo="storageInfo" />
+    <AudioPreview v-else-if="!loading && fileInfo && isAudio(fileInfo.name)" class="m-4" :fileInfo="fileInfo" :storageInfo="storageInfo" />
+    <ImagePreview v-else-if="!loading && fileInfo && isImage(fileInfo.name)" class="m-4" :fileInfo="fileInfo" :storageInfo="storageInfo" />
+    <MarkdownPreview v-else-if="!loading && fileInfo && isMarkdown(fileInfo.name)" class="m-4" :fileInfo="fileInfo" :storageInfo="storageInfo" />
+    <TextPreview v-else-if="!loading && fileInfo && isText(fileInfo.name)" class="m-4" :fileInfo="fileInfo" :storageInfo="storageInfo" />
+    <PDFPreview v-else-if="!loading && fileInfo && isPDF(fileInfo.name)" class="m-4" :fileInfo="fileInfo" :storageInfo="storageInfo" />
+    <OtherPreview v-else-if="!loading && fileInfo" :fileInfo="fileInfo" class="m-4" :storageInfo="storageInfo" />
+    <p v-else-if="!fileInfo && !dataList">什么都没有呢！请登录后进入后台进行配置！</p>
+    <p v-else>Oops！发生了意外情况，也许是网络不稳定、格式不支持或者出现了 Bug~</p>
   </v-card>
 </template>
 

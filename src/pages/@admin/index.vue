@@ -5,10 +5,31 @@ import { ResultEnum } from '~/enums/httpEnum'
 
 const router = useRouter()
 const { t } = useI18n()
-const loadingServer = ref<boolean>(true)
 const loadingTotal = ref<boolean>(true)
-const serverInfo = ref()
-const totalInfo = ref()
+const serverInfo = ref({
+  memoryInfo: {
+    total: 0,
+    used: 0,
+    free: 0,
+  },
+  cpuInfo: {
+    cpuNum: 0,
+  },
+  diskInfos: [],
+  systemInfo: {
+    computerIp: '',
+    computerName: '',
+    osArch: '',
+    osName: '',
+    userDir: '',
+  },
+})
+const totalInfo = ref({
+  storageActiveCount: 0,
+  storageCount: 0,
+  userCount: 0,
+  userDisableCount: 0,
+})
 
 const colors = [
   { color: '#f56c6c', percentage: 20 },
@@ -26,12 +47,10 @@ const handServerInfo = async () => {
     }
     loadingTotal.value = false
   })
-  loadingServer.value = true
   await getServerInfo().then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
       serverInfo.value = res.data
     }
-    loadingServer.value = false
   })
 }
 
@@ -214,7 +233,6 @@ onUnmounted(() => {
     <div class="flex flex-wrap flex-col sm:flex-row">
       <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
         <el-descriptions
-          v-loading="loadingServer"
           v-if="serverInfo"
           class="margin-top"
           title="服务器信息"

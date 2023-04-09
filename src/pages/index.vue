@@ -5,6 +5,7 @@ import { ResultEnum } from '~/enums/httpEnum'
 const { t } = useI18n()
 const router = useRouter()
 const loading = ref<boolean>(true)
+const { isMobile } = useDevice()
 
 onBeforeMount(() => {
   getDefaultStorage().then((res) => {
@@ -23,13 +24,14 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <el-row :gutter="20">
-    <el-col :xs="0" :sm="1" :md="1" :lg="3" :xl="4" :xxl="4"></el-col>
-    <el-col :xs="24" :sm="22" :md="22" :lg="18" :xl="16" :xxl="16">
-      {{ t('tip.noData') }}
-    </el-col>
-    <el-col :xs="0" :sm="1" :md="1" :lg="3" :xl="4" :xxl="4"></el-col>
-  </el-row>
+  <el-skeleton
+    v-if="loading"
+    :rows="5"
+    animated
+    :style="isMobile ? { 'width': '100%', 'overflow-x': 'hidden !important' } : { 'width': '66%', 'overflow-x': 'hidden !important' }"
+    class="mx-auto"
+  />
+  <p v-else>什么都没有呢！请登录后进入后台进行配置！</p>
 </template>
 
 <route lang="yaml">
