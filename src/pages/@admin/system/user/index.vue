@@ -56,8 +56,7 @@ const useUserPage = (role: string) => {
 const handleUserDelete = (id: number) => {
   userDelete(id).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
-      snackbar.setType('blue')
-      snackbar.setText(res.message)
+      snackbar.success(res.message)
       useUserPage('')
     }
   })
@@ -68,8 +67,7 @@ const handleUserStatusUpdate = (id: number, status: number) => {
   updateUserStatusData.status = status
   userStatusUpdate(updateUserStatusData).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
-      snackbar.setType('blue')
-      snackbar.setText(res.message)
+      snackbar.success(res.message)
       useUserPage('')
     }
   })

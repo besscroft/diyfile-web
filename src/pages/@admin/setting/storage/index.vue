@@ -55,8 +55,7 @@ const handleStoragePage = (type: number) => {
 const handleStorageDelete = (storageId: number) => {
   storageDelete(storageId).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
-      snackbar.setType('blue')
-      snackbar.setText(res.message)
+      snackbar.success(res.message)
       handleStoragePage(-1)
     }
   })
@@ -67,13 +66,11 @@ const handleStorageUpdateStatus = (storageId: number, status: number) => {
   updateStorageStatusData.status = status
   storageUpdateStatus(updateStorageStatusData).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
-      snackbar.setType('blue')
-      snackbar.setText(res.message)
+      snackbar.success(res.message)
       handleStoragePage(-1)
     }
   }).catch((err) => {
-    snackbar.setType('red')
-    snackbar.setText(err.message)
+    snackbar.error(err.message)
   })
   updateStorageStatusData.storageId = undefined
   updateStorageStatusData.status = undefined
@@ -82,8 +79,7 @@ const handleStorageUpdateStatus = (storageId: number, status: number) => {
 const handleStorageDefault = (storageId: number) => {
   storageSetDefault(storageId).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
-      snackbar.setType('blue')
-      snackbar.setText(res.message)
+      snackbar.success(res.message)
       handleStoragePage(-1)
     }
   })

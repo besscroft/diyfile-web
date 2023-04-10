@@ -34,8 +34,7 @@ const handleSubmit = (formEl: FormInstance | undefined) => {
       pwdForm.userId = Number(router.currentRoute.value.query.id)
       userPasswordUpdate(pwdForm).then((res) => {
         if (res.code === ResultEnum.SUCCESS) {
-          snackbar.setType('pink')
-          snackbar.setText(res.message)
+          snackbar.success(res.message)
           router.push('/@admin/system/user')
         }
       })

@@ -8,8 +8,7 @@ const snackbar = useSnackbarStore()
 const handleUpdateBarkId = (barkId: string) => {
   updateConfig({ configKey: 'barkId', configValue: barkId }).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
-      snackbar.setType('blue')
-      snackbar.setText(res.message)
+      snackbar.success(res.message)
     }
   })
 }

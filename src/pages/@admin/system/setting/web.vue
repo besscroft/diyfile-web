@@ -9,8 +9,7 @@ const dataMap = ref({})
 const handleUpdateSiteConfig = (configKey: string, configValue: string) => {
   updateConfig({ configKey, configValue }).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
-      snackbar.setType('blue')
-      snackbar.setText(res.message)
+      snackbar.success(res.message)
       if (configKey === 'beian') {
         user.setBeian(configValue)
       }

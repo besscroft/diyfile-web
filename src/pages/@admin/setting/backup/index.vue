@@ -48,13 +48,11 @@ const onRequestUpload = (option: any) => {
   }).then((res) => {
     console.log(res)
     if (res.data.code === ResultEnum.SUCCESS) {
-      snackbar.setType('blue')
-      snackbar.setText(res.data.message)
+      snackbar.success(res.data.message)
       return Promise.resolve(res.data)
     }
     if (res.data.code === ResultEnum.UNAUTHORIZED) {
-      snackbar.setType('red')
-      snackbar.setText('登陆已过期，请重新登陆！')
+      snackbar.error('登陆已过期，请重新登陆！')
       user.setToken('')
       user.setUserName('')
       user.setAvatar('')
@@ -63,8 +61,7 @@ const onRequestUpload = (option: any) => {
     }
     // 没有权限（code == 403）
     if (res.data.code === ResultEnum.FORBIDDEN) {
-      snackbar.setType('red')
-      snackbar.setText(res.data.message)
+      snackbar.error(res.data.message)
       return Promise.reject(res.data)
     }
   }).catch((err) => {

@@ -143,13 +143,11 @@ const handleSubmit = (formEl: FormInstance | undefined) => {
       handleFormData()
       storageUpdate(updateStorageData.value).then((res) => {
         if (res.code === ResultEnum.SUCCESS) {
-          snackbar.setType('blue')
-          snackbar.setText(res.message)
+          snackbar.success(res.message)
           router.push('/@admin/setting/storage')
         }
       }).catch((err) => {
-        snackbar.setType('red')
-        snackbar.setText(err.message)
+        snackbar.error(err.message)
       })
     } else {
       return false

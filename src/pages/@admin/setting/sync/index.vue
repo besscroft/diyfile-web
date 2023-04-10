@@ -33,8 +33,7 @@ const taskAddHandle = () => {
   taskAddParam.afterPath = afterPath.value
   taskAdd(taskAddParam).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
-      snackbar.setType('blue')
-      snackbar.setText(res.message)
+      snackbar.success(res.message)
     }
   }).catch((err) => {
     console.log(err)

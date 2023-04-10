@@ -40,8 +40,7 @@ const handleSubmit = (formEl: FormInstance | undefined) => {
     if (valid) {
       userUpdate(updateUserRuleForm).then((res) => {
         if (res.code === ResultEnum.SUCCESS) {
-          snackbar.setType('blue')
-          snackbar.setText(res.message)
+          snackbar.success(res.message)
           router.push('/@admin/system/user')
         }
       })

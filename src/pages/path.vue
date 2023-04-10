@@ -110,8 +110,7 @@ const handleFolder = (path: string) => {
 const handleShare = (url: string) => {
   copy(url)
   if (copied) {
-    snackbar.setType('blue')
-    snackbar.setText(t('button.copyOk'))
+    snackbar.success(t('button.copyOk'))
   }
 }
 
@@ -162,8 +161,7 @@ const handleDelete = (option: any) => {
   }
   deleteFile(storageKey.value, url).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
-      snackbar.setType('blue')
-      snackbar.setText(res.message)
+      snackbar.success(res.message)
       handleRouter()
     }
   })

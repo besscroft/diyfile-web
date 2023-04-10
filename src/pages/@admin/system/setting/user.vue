@@ -20,8 +20,7 @@ const handleUpdatePwd = () => {
     if (res.code === ResultEnum.SUCCESS) {
       oldPwd.value = ''
       pwd.value = ''
-      snackbar.setType('blue')
-      snackbar.setText(res.message)
+      snackbar.success(res.message)
     }
   })
 }

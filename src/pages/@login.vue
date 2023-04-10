@@ -15,7 +15,7 @@ const loginForm = reactive<Login.ReqLoginForm>({
 const handleSubmit = () => {
   loginApi(loginForm).then(async (res) => {
     if (res.code === ResultEnum.SUCCESS) {
-      snackbar.setText('登录成功')
+      snackbar.success('登录成功')
       const token = res.data.tokenValue
       user.setUserName('')
       user.setAvatar('')

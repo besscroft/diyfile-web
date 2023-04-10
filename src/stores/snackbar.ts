@@ -5,24 +5,35 @@ export const useSnackbarStore = defineStore('snackbarStore', {
   state: (): any => ({
     // active
     active: false,
-    // type
-    type: 'blue',
+    // color
+    color: 'blue',
     // text
     text: '',
   }),
   actions: {
-    /** active */
-    setActive(active: boolean) {
-      this.active = active
-    },
-    /** type */
-    setType(type: string) {
-      this.type = type
-    },
-    /** text */
-    setText(text: string) {
+    /** success */
+    success(text: string) {
+      this.color = 'light-blue'
       this.text = text
-      this.avtive = true
+      this.active = true
+    },
+    /** warning */
+    warning(text: string) {
+      this.color = 'orange-lighten-2'
+      this.text = text
+      this.active = true
+    },
+    /** message */
+    message(text: string) {
+      this.color = 'grey-lighten-2'
+      this.text = text
+      this.active = true
+    },
+    /** error */
+    error(text: string) {
+      this.color = 'red'
+      this.text = text
+      this.active = true
     },
   },
   persist: piniaPersistConfig('snackbarStore'),

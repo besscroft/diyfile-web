@@ -36,7 +36,7 @@ useHead({
 
     <template v-slot:actions>
       <v-btn
-        :color="snackbar.type || 'blue'"
+        :color="snackbar.color || 'light-blue'"
         variant="text"
         @click="snackbar.active = false"
       >

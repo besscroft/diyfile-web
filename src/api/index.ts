@@ -70,9 +70,7 @@ class RequestHttp {
         // https://stackoverflow.com/questions/3297048/403-forbidden-vs-401-unauthorized-http-responses
         // 登陆失效（code == 401）
         if (data.code === ResultEnum.UNAUTHORIZED) {
-          snackbar.setActive(true)
-          snackbar.setType('red')
-          snackbar.setText('登陆失效，请重新登陆')
+          snackbar.error('登陆失效，请重新登陆')
           user.setToken('')
           user.setUserName('')
           user.setAvatar('')
@@ -81,9 +79,7 @@ class RequestHttp {
         }
         // 没有权限（code == 403）
         if (data.code === ResultEnum.FORBIDDEN) {
-          snackbar.setActive(true)
-          snackbar.setType('red')
-          snackbar.setText(data.message)
+          snackbar.error(data.message)
           return Promise.reject(data)
         }
         // 全局错误信息拦截（防止下载文件得时候返回数据流，没有code，直接报错）
@@ -100,7 +96,7 @@ class RequestHttp {
         if (error.message.includes('timeout')) {
           snackbar.setActive(true)
           snackbar.setType('red')
-          snackbar.setText('请求超时，请刷新重试')
+          snackbar.error('请求超时，请刷新重试')
           return Promise.reject(error)
         }
         // 根据响应的错误状态码，做不同的处理
