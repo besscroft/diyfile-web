@@ -20,9 +20,9 @@ const tab = ref(1)
   </el-card>
   <el-card :body-style="{ padding: '0px' }" class="box-card h-full w-full overflow-auto" style="height: calc(100% - 4rem); -ms-overflow-style: none;" shadow="never">
     <v-tabs
+      v-model="tab"
       color="deep-purple-accent-4"
       align-tabs="center"
-      v-model="tab"
     >
       <v-tab :value="1">{{ t('setting.base') }}</v-tab>
       <v-tab :value="2">{{ t('setting.web') }}</v-tab>

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ElMessage } from 'element-plus'
 import type { FormInstance, FormRules } from 'element-plus'
 import type { User } from '~/api/interface/user'
 import { userAdd } from '~/api/modules/user'
@@ -7,6 +6,7 @@ import { ResultEnum } from '~/enums/httpEnum'
 
 const router = useRouter()
 const { t } = useI18n()
+const snackbar = useSnackbarStore()
 const ruleFormRef = ref<FormInstance>()
 
 const addUserRuleForm = reactive<User.AddUserRequestData>({
@@ -50,7 +50,8 @@ const handleSubmit = (formEl: FormInstance | undefined) => {
     if (valid) {
       userAdd(addUserRuleForm).then((res) => {
         if (res.code === ResultEnum.SUCCESS) {
-          ElMessage.info(res.message)
+          snackbar.setType('blue')
+          snackbar.setText(res.message)
           router.push('/@admin/system/user')
         }
       })

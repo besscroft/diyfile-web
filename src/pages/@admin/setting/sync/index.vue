@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { ElMessage } from 'element-plus'
 import type { Sync } from '~/api/interface/Sync'
 import { getEnableStorage } from '~/api/modules/storage'
 import { taskAdd } from '~/api/modules/sync'
 import { ResultEnum } from '~/enums/httpEnum'
 
 const router = useRouter()
+const snackbar = useSnackbarStore()
 const { t } = useI18n()
 
 // 同步前存储 key
@@ -33,7 +33,8 @@ const taskAddHandle = () => {
   taskAddParam.afterPath = afterPath.value
   taskAdd(taskAddParam).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
-      ElMessage.success(res.message)
+      snackbar.setType('blue')
+      snackbar.setText(res.message)
     }
   }).catch((err) => {
     console.log(err)

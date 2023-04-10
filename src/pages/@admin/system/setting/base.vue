@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { ElMessage } from 'element-plus'
 import { getBarkId, updateConfig } from '~/api/modules/systemConfig'
 import { ResultEnum } from '~/enums/httpEnum'
 
 const barkId = ref()
+const snackbar = useSnackbarStore()
 
 const handleUpdateBarkId = (barkId: string) => {
   updateConfig({ configKey: 'barkId', configValue: barkId }).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
-      ElMessage.success(res.message)
+      snackbar.setType('blue')
+      snackbar.setText(res.message)
     }
   })
 }

@@ -20,8 +20,8 @@ dependencies:
     specifier: ^1.27.1
     version: 1.27.1
   element-plus:
-    specifier: ^2.3.2
-    version: 2.3.2(vue@3.2.47)
+    specifier: ^2.3.3
+    version: 2.3.3(vue@3.2.47)
   http-proxy-middleware:
     specifier: ^2.0.6
     version: 2.0.6
@@ -53,8 +53,8 @@ dependencies:
     specifier: ^4.1.6
     version: 4.1.6(vue@3.2.47)
   vuetify:
-    specifier: ^3.1.11
-    version: 3.1.11(vite-plugin-vuetify@1.0.2)(vue-i18n@9.2.2)(vue@3.2.47)
+    specifier: ^3.1.13
+    version: 3.1.13(vite-plugin-vuetify@1.0.2)(vue-i18n@9.2.2)(vue@3.2.47)
   webfontloader:
     specifier: ^1.6.28
     version: 1.6.28
@@ -185,7 +185,7 @@ devDependencies:
     version: 0.22.4(rollup@2.79.1)(vite@4.2.0)
   vite-plugin-vuetify:
     specifier: ^1.0.2
-    version: 1.0.2(vite@4.2.0)(vue@3.2.47)(vuetify@3.1.11)
+    version: 1.0.2(vite@4.2.0)(vue@3.2.47)(vuetify@3.1.13)
   vite-ssg:
     specifier: ^0.22.1
     version: 0.22.1(@vueuse/head@1.1.23)(critters@0.0.16)(vite@4.2.0)(vue-router@4.1.6)(vue@3.2.47)
@@ -3259,7 +3259,7 @@ packages:
       '@vue/server-renderer': 3.2.47(vue@3.2.47)
     dev: true
 
-  /@vuetify/loader-shared@1.7.1(vue@3.2.47)(vuetify@3.1.11):
+  /@vuetify/loader-shared@1.7.1(vue@3.2.47)(vuetify@3.1.13):
     resolution: {integrity: sha512-kLUvuAed6RCvkeeTNJzuy14pqnkur8lTuner7v7pNE/kVhPR97TuyXwBSBMR1cJeiLiOfu6SF5XlCYbXByEx1g==}
     peerDependencies:
       vue: ^3.0.0
@@ -3268,7 +3268,7 @@ packages:
       find-cache-dir: 3.3.2
       upath: 2.0.1
       vue: 3.2.47
-      vuetify: 3.1.11(vite-plugin-vuetify@1.0.2)(vue-i18n@9.2.2)(vue@3.2.47)
+      vuetify: 3.1.13(vite-plugin-vuetify@1.0.2)(vue-i18n@9.2.2)(vue@3.2.47)
 
   /@vueuse/core@9.13.0(vue@3.2.47):
     resolution: {integrity: sha512-pujnclbeHWxxPRqXWmdkKV5OX4Wk4YeK7wusHqRwU0Q7EFusHoqNA/aPhB6KCh9hEqJkLAJo7bb0Lh9b+OIVzw==}
@@ -4561,8 +4561,8 @@ packages:
     resolution: {integrity: sha512-M8WEXFuKXMYMVr45fo8mq0wUrrJHheiKZf6BArTKk9ZBYCKJEOU5H8cdWgDT+qCVZf7Na4lVUaZsA+h6uA9+PA==}
     dev: true
 
-  /element-plus@2.3.2(vue@3.2.47):
-    resolution: {integrity: sha512-NIK0QckKKagdlMm3eLoVoD4Lkfj5ECzpZAxwrRLdm1Yi5qiTU9Guor33+IbIa52z4gHMuhMxgSVS2xAGmjLHsw==}
+  /element-plus@2.3.3(vue@3.2.47):
+    resolution: {integrity: sha512-Zy61OXrG6b4FF3h29A9ZOUkaEQXjCuFwNa7DlpB3Vo+42Tw5zBbHe5a4BY7i56TVJG5xTbS9UQyA726J91pDqg==}
     peerDependencies:
       vue: ^3.2.0
     dependencies:
@@ -9719,18 +9719,18 @@ packages:
       - rollup
     dev: true
 
-  /vite-plugin-vuetify@1.0.2(vite@4.2.0)(vue@3.2.47)(vuetify@3.1.11):
+  /vite-plugin-vuetify@1.0.2(vite@4.2.0)(vue@3.2.47)(vuetify@3.1.13):
     resolution: {integrity: sha512-MubIcKD33O8wtgQXlbEXE7ccTEpHZ8nPpe77y9Wy3my2MWw/PgehP9VqTp92BLqr0R1dSL970Lynvisx3UxBFw==}
     engines: {node: '>=12'}
     peerDependencies:
       vite: ^2.7.0 || ^3.0.0 || ^4.0.0
       vuetify: ^3.0.0-beta.4
     dependencies:
-      '@vuetify/loader-shared': 1.7.1(vue@3.2.47)(vuetify@3.1.11)
+      '@vuetify/loader-shared': 1.7.1(vue@3.2.47)(vuetify@3.1.13)
       debug: 4.3.4(supports-color@8.1.1)
       upath: 2.0.1
       vite: 4.2.0(@types/node@18.6.1)(sass@1.61.0)
-      vuetify: 3.1.11(vite-plugin-vuetify@1.0.2)(vue-i18n@9.2.2)(vue@3.2.47)
+      vuetify: 3.1.13(vite-plugin-vuetify@1.0.2)(vue-i18n@9.2.2)(vue@3.2.47)
     transitivePeerDependencies:
       - supports-color
       - vue
@@ -9951,8 +9951,8 @@ packages:
       '@vue/server-renderer': 3.2.47(vue@3.2.47)
       '@vue/shared': 3.2.47
 
-  /vuetify@3.1.11(vite-plugin-vuetify@1.0.2)(vue-i18n@9.2.2)(vue@3.2.47):
-    resolution: {integrity: sha512-EAR/7vdYY0jCYW+sn9owl6CC5QsWFw100KJnK0ahdHnFj9B93PR5xetekge8BsEWx6bSnsRIOdPyvud+p29wow==}
+  /vuetify@3.1.13(vite-plugin-vuetify@1.0.2)(vue-i18n@9.2.2)(vue@3.2.47):
+    resolution: {integrity: sha512-mC2UvWqS3Ne/aZ6Q+79kiL36xSe5jGxm0KWWq2e4SRxuqIE14IbyzqfXvU0bEqns0dHU5dOiKCMM9jHZFDLKgQ==}
     engines: {node: ^12.20 || >=14.13}
     peerDependencies:
       vite-plugin-vuetify: ^1.0.0-alpha.12
@@ -9967,7 +9967,7 @@ packages:
       webpack-plugin-vuetify:
         optional: true
     dependencies:
-      vite-plugin-vuetify: 1.0.2(vite@4.2.0)(vue@3.2.47)(vuetify@3.1.11)
+      vite-plugin-vuetify: 1.0.2(vite@4.2.0)(vue@3.2.47)(vuetify@3.1.13)
       vue: 3.2.47
       vue-i18n: 9.2.2(vue@3.2.47)
 

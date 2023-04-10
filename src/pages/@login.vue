@@ -4,9 +4,8 @@ import { getInfo, loginApi } from '~/api/modules/user'
 import { ResultEnum } from '~/enums/httpEnum'
 
 const { t } = useI18n()
-const router = useRouter()
 const user = useUserStore()
-const { isMobile } = useDevice()
+const snackbar = useSnackbarStore()
 
 const loginForm = reactive<Login.ReqLoginForm>({
   username: '',
@@ -16,6 +15,7 @@ const loginForm = reactive<Login.ReqLoginForm>({
 const handleSubmit = () => {
   loginApi(loginForm).then(async (res) => {
     if (res.code === ResultEnum.SUCCESS) {
+      snackbar.setText('登录成功')
       const token = res.data.tokenValue
       user.setUserName('')
       user.setAvatar('')

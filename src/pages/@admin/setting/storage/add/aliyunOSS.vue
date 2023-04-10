@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import type { FormInstance, FormRules } from 'element-plus'
-import { ElMessage } from 'element-plus'
 import type { Storage } from '~/api/interface/storage'
 import { storageAdd } from '~/api/modules/storage'
 import { ResultEnum } from '~/enums/httpEnum'
 
 const { t } = useI18n()
 const router = useRouter()
+const snackbar = useSnackbarStore()
 const ruleFormRef = ref<FormInstance>()
 const addStorageForm = reactive({
   /** 存储名称 */
@@ -128,11 +128,13 @@ const handleSubmit = (formEl: FormInstance | undefined) => {
       handleFormData()
       storageAdd(addStorageData.value).then((res) => {
         if (res.code === ResultEnum.SUCCESS) {
-          ElMessage.info(res.message)
+          snackbar.setType('blue')
+          snackbar.setText(res.message)
           router.push('/@admin/setting/storage')
         }
       }).catch((err) => {
-        ElMessage.error(err.message)
+        snackbar.setType('red')
+        snackbar.setText(err.message)
       })
     } else {
       return false

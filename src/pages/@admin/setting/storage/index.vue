@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ElMessage } from 'element-plus'
 import { Delete } from '@element-plus/icons-vue'
 import type { Storage } from '~/api/interface/storage'
 import { storageDelete, storagePage, storageSetDefault, storageUpdateStatus } from '~/api/modules/storage'
@@ -7,6 +6,7 @@ import { ResultEnum } from '~/enums/httpEnum'
 
 const router = useRouter()
 const { t } = useI18n()
+const snackbar = useSnackbarStore()
 const dataList = ref<Array<Object>>([])
 const pageInfo = reactive({
   total: 0,
@@ -15,7 +15,7 @@ const pageInfo = reactive({
   pageSize: 8,
 })
 const typeFlag = ref<any>()
-const loading = ref<Boolean>(true)
+const loading = ref<boolean>(true)
 const data = reactive({
   form: {},
   queryParam: {
@@ -55,7 +55,8 @@ const handleStoragePage = (type: number) => {
 const handleStorageDelete = (storageId: number) => {
   storageDelete(storageId).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
-      ElMessage.success('删除成功!')
+      snackbar.setType('blue')
+      snackbar.setText(res.message)
       handleStoragePage(-1)
     }
   })
@@ -66,11 +67,13 @@ const handleStorageUpdateStatus = (storageId: number, status: number) => {
   updateStorageStatusData.status = status
   storageUpdateStatus(updateStorageStatusData).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
-      ElMessage.success(res.message)
+      snackbar.setType('blue')
+      snackbar.setText(res.message)
       handleStoragePage(-1)
     }
   }).catch((err) => {
-    ElMessage.error(err.message)
+    snackbar.setType('red')
+    snackbar.setText(err.message)
   })
   updateStorageStatusData.storageId = undefined
   updateStorageStatusData.status = undefined
@@ -79,7 +82,8 @@ const handleStorageUpdateStatus = (storageId: number, status: number) => {
 const handleStorageDefault = (storageId: number) => {
   storageSetDefault(storageId).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
-      ElMessage.success(res.message)
+      snackbar.setType('blue')
+      snackbar.setText(res.message)
       handleStoragePage(-1)
     }
   })

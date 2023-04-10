@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ArrowDown, Check, MostlyCloudy } from '@element-plus/icons-vue'
-import { ElMessage } from 'element-plus'
 import { deleteFile, getFileInfo, getFileItemByKey, getUploadUrl } from '~/api/modules/file'
 import { getEnableStorage, storageInfoByStorageKey } from '~/api/modules/storage'
 import { ResultEnum } from '~/enums/httpEnum'
@@ -13,6 +12,7 @@ const { text, copy, copied } = useClipboard()
 const { isMobile } = useDevice()
 const { t } = useI18n()
 const user = useUserStore()
+const snackbar = useSnackbarStore()
 const router = useRouter()
 const storageKey = ref()
 const dataList = ref()
@@ -110,7 +110,8 @@ const handleFolder = (path: string) => {
 const handleShare = (url: string) => {
   copy(url)
   if (copied) {
-    ElMessage.info(t('button.copyOk'))
+    snackbar.setType('blue')
+    snackbar.setText(t('button.copyOk'))
   }
 }
 
@@ -161,7 +162,8 @@ const handleDelete = (option: any) => {
   }
   deleteFile(storageKey.value, url).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
-      ElMessage.success(res.message)
+      snackbar.setType('blue')
+      snackbar.setText(res.message)
       handleRouter()
     }
   })
