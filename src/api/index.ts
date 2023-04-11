@@ -2,7 +2,6 @@ import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } fro
 import axios from 'axios'
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
-import { ElMessage } from 'element-plus'
 import { AxiosCanceler } from './helper/axiosCancel'
 import App from '~/App.vue'
 import type { Result } from '~/api/interface'
@@ -20,6 +19,7 @@ const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
 app.use(pinia)
 const user = useUserStore(pinia)
+const snackbar = useSnackbarStore(pinia)
 const axiosCanceler = new AxiosCanceler()
 
 const config = {
@@ -70,7 +70,7 @@ class RequestHttp {
         // https://stackoverflow.com/questions/3297048/403-forbidden-vs-401-unauthorized-http-responses
         // 登陆失效（code == 401）
         if (data.code === ResultEnum.UNAUTHORIZED) {
-          ElMessage.error('登陆已过期，请重新登陆！')
+          snackbar.error('登陆失效，请重新登陆')
           user.setToken('')
           user.setUserName('')
           user.setAvatar('')
@@ -79,7 +79,7 @@ class RequestHttp {
         }
         // 没有权限（code == 403）
         if (data.code === ResultEnum.FORBIDDEN) {
-          ElMessage.error(data.message)
+          snackbar.error(data.message)
           return Promise.reject(data)
         }
         // 全局错误信息拦截（防止下载文件得时候返回数据流，没有code，直接报错）
@@ -94,7 +94,10 @@ class RequestHttp {
         const { response } = error
         // 请求超时单独判断，因为请求超时没有 response
         if (error.message.includes('timeout')) {
-          ElMessage.error('请求超时！请您稍后重试')
+          snackbar.setActive(true)
+          snackbar.setType('red')
+          snackbar.error('请求超时，请刷新重试')
+          return Promise.reject(error)
         }
         // 根据响应的错误状态码，做不同的处理
         if (response) {

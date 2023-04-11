@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { ElMessage } from 'element-plus'
 import type { FormInstance, FormRules } from 'element-plus'
 import type { User } from '~/api/interface/user'
 import { getUserById, userUpdate } from '~/api/modules/user'
 import { ResultEnum } from '~/enums/httpEnum'
 
 const router = useRouter()
+const snackbar = useSnackbarStore()
 const { t } = useI18n()
 const ruleFormRef = ref<FormInstance>()
 
@@ -40,7 +40,7 @@ const handleSubmit = (formEl: FormInstance | undefined) => {
     if (valid) {
       userUpdate(updateUserRuleForm).then((res) => {
         if (res.code === ResultEnum.SUCCESS) {
-          ElMessage.info(res.message)
+          snackbar.success(res.message)
           router.push('/@admin/system/user')
         }
       })

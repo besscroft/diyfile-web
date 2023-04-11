@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ArrowDown, Check, MostlyCloudy } from '@element-plus/icons-vue'
-import { ElMessage } from 'element-plus'
 import { deleteFile, getFileInfo, getFileItemByKey, getUploadUrl } from '~/api/modules/file'
 import { getEnableStorage, storageInfoByStorageKey } from '~/api/modules/storage'
 import { ResultEnum } from '~/enums/httpEnum'
@@ -13,6 +12,7 @@ const { text, copy, copied } = useClipboard()
 const { isMobile } = useDevice()
 const { t } = useI18n()
 const user = useUserStore()
+const snackbar = useSnackbarStore()
 const router = useRouter()
 const storageKey = ref()
 const dataList = ref()
@@ -69,7 +69,8 @@ const handleSelectChange = (name: string, value: string) => {
 
 /** 自定义上传请求 */
 const onRequestUpload = (option: any) => {
-  const { fileItem } = option
+  console.log(option)
+  const fileItem = option.file
   const fullPath = router.currentRoute.value.fullPath
   let uri = ''
   if (`/${storageKey.value}` !== fullPath) {
@@ -79,7 +80,7 @@ const onRequestUpload = (option: any) => {
   }
   getUploadUrl(storageKey.value, uri).then((res) => {
     if (res.code === ResultEnum.SUCCESS && typeof res.data == 'string') {
-      uploadOneDrive(fileItem.file, res.data, option)
+      uploadOneDrive(fileItem, res.data, option)
     }
   })
 }
@@ -110,7 +111,7 @@ const handleFolder = (path: string) => {
 const handleShare = (url: string) => {
   copy(url)
   if (copied) {
-    ElMessage.info(t('button.copyOk'))
+    snackbar.success(t('button.copyOk'))
   }
 }
 
@@ -161,7 +162,7 @@ const handleDelete = (option: any) => {
   }
   deleteFile(storageKey.value, url).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
-      ElMessage.success(res.message)
+      snackbar.success(res.message)
       handleRouter()
     }
   })
@@ -266,7 +267,7 @@ onMounted(() => {
       </span>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item v-if="!loading && storageInfo.type === 1">上传</el-dropdown-item>
+          <el-dropdown-item v-if="!loading && storageInfo.type === 1" @click="uploadView = true">上传</el-dropdown-item>
           <el-dropdown-item
             v-for="(item, index) in storageList"
             :key="item.name"
@@ -280,6 +281,19 @@ onMounted(() => {
       </template>
     </el-dropdown>
   </nav>
+  <el-upload
+    v-if="!loading && uploadView"
+    drag
+    :http-request="(option) => onRequestUpload(option)"
+    multiple
+    :style="isMobile ? { 'width': '100%', 'overflow-x': 'hidden !important' } : { 'width': '66%', 'overflow-x': 'hidden !important' }"
+    class="mx-auto"
+  >
+    <v-icon icon="cloud_upload" size="x-large"></v-icon>
+    <div class="el-upload__text">
+      请选择文件上传，或拖拽文件到此处！
+    </div>
+  </el-upload>
   <el-skeleton
     v-if="loading"
     :rows="5"

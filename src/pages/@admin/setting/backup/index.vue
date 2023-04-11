@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import axios from 'axios'
-import { ElMessage } from 'element-plus'
 import type { UploadInstance } from 'element-plus'
 import { API_URL } from '../../../../../config/config'
 import { ResultEnum } from '~/enums/httpEnum'
@@ -8,6 +7,7 @@ import { getBackupFile } from '~/api/modules/monitor'
 
 const router = useRouter()
 const { t } = useI18n()
+const snackbar = useSnackbarStore()
 const user = useUserStore()
 const dialogVisible = ref<boolean>(false)
 const uploadRef = ref<UploadInstance>()
@@ -48,11 +48,11 @@ const onRequestUpload = (option: any) => {
   }).then((res) => {
     console.log(res)
     if (res.data.code === ResultEnum.SUCCESS) {
-      ElMessage.success(res.data.message)
+      snackbar.success(res.data.message)
       return Promise.resolve(res.data)
     }
     if (res.data.code === ResultEnum.UNAUTHORIZED) {
-      ElMessage.error('登陆已过期，请重新登陆！')
+      snackbar.error('登陆已过期，请重新登陆！')
       user.setToken('')
       user.setUserName('')
       user.setAvatar('')
@@ -61,7 +61,7 @@ const onRequestUpload = (option: any) => {
     }
     // 没有权限（code == 403）
     if (res.data.code === ResultEnum.FORBIDDEN) {
-      ElMessage.error(res.data.message)
+      snackbar.error(res.data.message)
       return Promise.reject(res.data)
     }
   }).catch((err) => {
@@ -77,7 +77,7 @@ const onConfirmUpload = () => {
 
 <template>
   <el-card :body-style="{ padding: '0.25rem' }" class="my-1 h-10" shadow="never">
-    <el-page-header @back="router.back()" class="mt-1">
+    <el-page-header class="mt-1" @back="router.back()">
       <template #content>
         <div class="flex items-center">
           <span class="text-large font-400 mr-2"> {{ t('menu.setting.backup') }} </span>
@@ -89,13 +89,13 @@ const onConfirmUpload = () => {
     <div class="flex flex-col mx-2 my-2 ma-2">
       <div class="ma-2 w-40">
         <v-btn prepend-icon="cloud_download" variant="text" @click="handleBackupFile">
-        {{ t('button.backup') }}
-      </v-btn>
+          {{ t('button.backup') }}
+        </v-btn>
       </div>
       <div class="ma-2 w-40">
         <el-upload
-          class="w-20"
           ref="uploadRef"
+          class="w-20"
           :http-request="onRequestUpload"
           :auto-upload="false"
           accept=".json"
@@ -108,8 +108,8 @@ const onConfirmUpload = () => {
       </div>
       <div class="ma-2 w-40">
         <v-btn prepend-icon="cloud_upload" variant="text" @click="dialogVisible = true">
-        {{ t('button.restore') }}
-      </v-btn>
+          {{ t('button.restore') }}
+        </v-btn>
       </div>
     </div>
   </el-card>

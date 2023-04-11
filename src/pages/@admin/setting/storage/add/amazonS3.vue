@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import type { FormInstance, FormRules } from 'element-plus'
-import { ElMessage } from 'element-plus'
 import type { Storage } from '~/api/interface/storage'
 import { getAwsRegions, storageAdd } from '~/api/modules/storage'
 import { ResultEnum } from '~/enums/httpEnum'
 
 const { t } = useI18n()
 const router = useRouter()
+const snackbar = useSnackbarStore()
 const ruleFormRef = ref<FormInstance>()
 const loading = ref<boolean>(false)
 const regionList = ref<Array<string>>()
@@ -144,11 +144,11 @@ const handleSubmit = (formEl: FormInstance | undefined) => {
       handleFormData()
       storageAdd(addStorageData.value).then((res) => {
         if (res.code === ResultEnum.SUCCESS) {
-          ElMessage.info(res.message)
+          snackbar.success(res.message)
           router.push('/@admin/setting/storage')
         }
       }).catch((err) => {
-        ElMessage.error(err.message)
+        snackbar.error(err.message)
       })
     } else {
       return false
@@ -164,7 +164,7 @@ onMounted(() => {
     }
     loading.value = false
   }).catch((err) => {
-    ElMessage.error(err.message)
+    snackbar.error(err.message)
     loading.value = false
   })
 })

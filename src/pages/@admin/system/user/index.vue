@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ElMessage } from 'element-plus'
 import { Delete, User as userIcon } from '@element-plus/icons-vue'
 import type { User } from '~/api/interface/user'
 import { userDelete, userPage, userStatusUpdate } from '~/api/modules/user'
@@ -7,6 +6,7 @@ import { ResultEnum } from '~/enums/httpEnum'
 
 const router = useRouter()
 const user = useUserStore()
+const snackbar = useSnackbarStore()
 const loading = ref<boolean>(true)
 const { t } = useI18n()
 const dataList = ref()
@@ -56,7 +56,7 @@ const useUserPage = (role: string) => {
 const handleUserDelete = (id: number) => {
   userDelete(id).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
-      ElMessage.info(res.message)
+      snackbar.success(res.message)
       useUserPage('')
     }
   })
@@ -67,7 +67,7 @@ const handleUserStatusUpdate = (id: number, status: number) => {
   updateUserStatusData.status = status
   userStatusUpdate(updateUserStatusData).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
-      ElMessage.success(res.message)
+      snackbar.success(res.message)
       useUserPage('')
     }
   })
@@ -107,7 +107,20 @@ useUserPage('')
   </el-card>
   <el-card :body-style="{ padding: '0px' }" class="box-card overflow-auto no-scrollbar" style="height: calc(100% - 4rem); -ms-overflow-style: none;" shadow="never">
     <el-row :gutter="[12, 10]">
-      <el-col v-for="item in dataList" :key="item.id" :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
+      <el-col v-if="loading" :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
+        <el-skeleton :body-style="{ padding: '0.25rem' }" class="box-card mx-1 my-0.5 h-80">
+          <template #template>
+            <el-skeleton-item variant="rect" class="w-11/12 h-68 mx-2.5" />
+            <div style="padding: 14px">
+              <div class="w-11/12 flex align-center justify-space-between">
+                <el-skeleton-item variant="text" style="margin-right: 16px" />
+                <el-skeleton-item variant="text" style="width: 30%" />
+              </div>
+            </div>
+          </template>
+        </el-skeleton>
+      </el-col>
+      <el-col v-for="item in dataList" v-else :key="item.id" :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
         <el-card :body-style="{ padding: '0.25rem' }" class="box-card mx-1 my-0.5 h-80" shadow="hover">
           <template #header>
             <div class="flex justify-space-between align-center">
@@ -131,7 +144,7 @@ useUserPage('')
           >
             <div class="justify-center">
               <img
-                class="rounded-full mt-1 w-14 h-14 mx-auto"
+                class="rounded-full my-2 w-14 h-14 mx-auto"
                 alt="avatar"
                 :src="item.avatar"
               />

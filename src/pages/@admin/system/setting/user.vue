@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { ElMessage } from 'element-plus'
 import type { User } from '~/api/interface/user'
 import { userPasswordUpdate } from '~/api/modules/user'
 import { ResultEnum } from '~/enums/httpEnum'
 
+const snackbar = useSnackbarStore()
 const oldPwd = ref<string>()
 const pwd = ref<string>()
 const pwdForm = reactive<User.UpdatePasswordData>({
@@ -20,7 +20,7 @@ const handleUpdatePwd = () => {
     if (res.code === ResultEnum.SUCCESS) {
       oldPwd.value = ''
       pwd.value = ''
-      ElMessage.info(res.message)
+      snackbar.success(res.message)
     }
   })
 }
@@ -33,8 +33,8 @@ const handleUpdatePwd = () => {
       label="旧密码"
     ></v-text-field>
     <v-text-field
-      class="mt-2"
       v-model="pwd"
+      class="mt-2"
       label="新密码"
       append-inner-icon="download_done"
       @click:append-inner="handleUpdatePwd"

@@ -23,7 +23,7 @@ useDetail()
 
 <template>
   <el-card :body-style="{ padding: '0.25rem' }" class="my-1 h-10" shadow="never">
-    <el-page-header @back="router.back()" class="mt-1">
+    <el-page-header class="mt-1" @back="router.back()">
       <template #content>
         <div class="flex items-center">
           <span class="text-large font-400 mr-2"> {{ t('table.UserInfo') }} </span>
@@ -32,8 +32,13 @@ useDetail()
     </el-page-header>
   </el-card>
   <el-card :body-style="{ padding: '1rem' }" class="box-card overflow-auto no-scrollbar" style="height: calc(100% - 4rem); -ms-overflow-style: none;" shadow="never">
+    <el-skeleton
+      v-if="loading"
+      :rows="5"
+      animated
+    />
     <el-descriptions
-      v-if="detail"
+      v-else
       direction="vertical"
       class="margin-top"
       :column="3"

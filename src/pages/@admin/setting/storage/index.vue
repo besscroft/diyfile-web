@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ElMessage } from 'element-plus'
 import { Delete } from '@element-plus/icons-vue'
 import type { Storage } from '~/api/interface/storage'
 import { storageDelete, storagePage, storageSetDefault, storageUpdateStatus } from '~/api/modules/storage'
@@ -7,6 +6,7 @@ import { ResultEnum } from '~/enums/httpEnum'
 
 const router = useRouter()
 const { t } = useI18n()
+const snackbar = useSnackbarStore()
 const dataList = ref<Array<Object>>([])
 const pageInfo = reactive({
   total: 0,
@@ -15,7 +15,7 @@ const pageInfo = reactive({
   pageSize: 8,
 })
 const typeFlag = ref<any>()
-const loading = ref<Boolean>(true)
+const loading = ref<boolean>(true)
 const data = reactive({
   form: {},
   queryParam: {
@@ -55,7 +55,7 @@ const handleStoragePage = (type: number) => {
 const handleStorageDelete = (storageId: number) => {
   storageDelete(storageId).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
-      ElMessage.success('删除成功!')
+      snackbar.success(res.message)
       handleStoragePage(-1)
     }
   })
@@ -66,11 +66,11 @@ const handleStorageUpdateStatus = (storageId: number, status: number) => {
   updateStorageStatusData.status = status
   storageUpdateStatus(updateStorageStatusData).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
-      ElMessage.success(res.message)
+      snackbar.success(res.message)
       handleStoragePage(-1)
     }
   }).catch((err) => {
-    ElMessage.error(err.message)
+    snackbar.error(err.message)
   })
   updateStorageStatusData.storageId = undefined
   updateStorageStatusData.status = undefined
@@ -79,7 +79,7 @@ const handleStorageUpdateStatus = (storageId: number, status: number) => {
 const handleStorageDefault = (storageId: number) => {
   storageSetDefault(storageId).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
-      ElMessage.success(res.message)
+      snackbar.success(res.message)
       handleStoragePage(-1)
     }
   })
@@ -118,7 +118,20 @@ handleStoragePage(-1)
   </el-card>
   <el-card :body-style="{ padding: '0px' }" class="box-card overflow-auto no-scrollbar" style="height: calc(100% - 4rem); -ms-overflow-style: none;" shadow="never">
     <el-row :gutter="[12, 10]">
-      <el-col v-for="item in dataList" :key="item.id" :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
+      <el-col v-if="loading" :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
+        <el-skeleton :body-style="{ padding: '0.25rem' }" class="box-card mx-1 my-0.5 h-80">
+          <template #template>
+            <el-skeleton-item variant="rect" class="w-11/12 h-68 mx-2.5" />
+            <div style="padding: 14px">
+              <div class="w-11/12 flex align-center justify-space-between">
+                <el-skeleton-item variant="text" style="margin-right: 16px" />
+                <el-skeleton-item variant="text" style="width: 30%" />
+              </div>
+            </div>
+          </template>
+        </el-skeleton>
+      </el-col>
+      <el-col v-for="item in dataList" v-else :key="item.id" :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
         <el-card :body-style="{ padding: '0.25rem' }" class="box-card mx-1 my-0.5 h-80" shadow="hover">
           <template #header>
             <div class="flex justify-space-between align-center">
@@ -143,7 +156,7 @@ handleStoragePage(-1)
             style="display: flex"
           >
             <div class="flex w-full">
-              <v-icon icon="storage" color="info" class="mt-3 mb-3 mx-auto" />
+              <v-avatar size="56" image="/storage_FILL0_wght400_GRAD0_opsz48.png" class="mt-3 mb-3 mx-auto" />
             </div>
             {{ item.remark }}
             <div class="mt-auto">
