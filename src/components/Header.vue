@@ -8,8 +8,8 @@ const emit = defineEmits(['toggleTheme'])
 const { t, locale } = useI18n()
 const router = useRouter()
 const user = useUserStore()
-const username = ref<String>('')
-const avatar = ref<String>('')
+const username = ref<string>('')
+const avatar = ref<string>('')
 const { isMobile } = useDevice()
 const theme = useTheme()
 
@@ -39,8 +39,6 @@ const toggleLocales = (item: any) => {
 
 /** 退出登录 */
 const loginOut = () => {
-  username.value = ''
-  avatar.value = ''
   localStorage.setItem('user', '')
   localStorage.setItem('diyfile-token', '')
   window.location.href = '/'
@@ -95,7 +93,7 @@ onMounted(() => {
           </template>
         </el-dropdown>
         <v-btn variant="text" class="mx-2" size="small" :icon="isDark ? 'dark_mode' : 'light_mode'" @click="toggleTheme"></v-btn>
-        <el-dropdown v-if="user.userName">
+        <el-dropdown v-if="(user.userName && isMobile) || (user.userName && !router.currentRoute.value.path.startsWith('/@'))">
           <el-avatar
             alt="avatar"
             :src="user.avatar"
@@ -114,7 +112,7 @@ onMounted(() => {
             </el-dropdown-menu>
           </template>
         </el-dropdown>
-        <v-btn v-else prepend-icon="login" @click="routerPage('/@login')">
+        <v-btn v-else-if="(!user.userName && isMobile) || (!user.userName && !router.currentRoute.value.path.startsWith('/@'))" prepend-icon="login" @click="routerPage('/@login')">
           {{ t('button.login') }}
         </v-btn>
       </div>

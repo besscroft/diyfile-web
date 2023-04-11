@@ -20,7 +20,9 @@ const toggleTheme = () => {
 
 /** 路由切换 */
 const routerPage = (val: string) => {
-  if (val === '2_0') {
+  if (val === '/') {
+    router.push('/')
+  } else if (val === '2_0') {
     router.push('/@admin/setting/storage')
   } else if (val === '2_1') {
     router.push('/@admin/setting/backup')

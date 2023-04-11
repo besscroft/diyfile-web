@@ -32,8 +32,13 @@ useDetail()
     </el-page-header>
   </el-card>
   <el-card :body-style="{ padding: '1rem' }" class="box-card overflow-auto no-scrollbar" style="height: calc(100% - 4rem); -ms-overflow-style: none;" shadow="never">
+    <el-skeleton
+      v-if="loading"
+      :rows="5"
+      animated
+    />
     <el-descriptions
-      v-if="detail"
+      v-else
       direction="vertical"
       class="margin-top"
       :column="3"
