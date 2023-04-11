@@ -16,7 +16,11 @@ onMounted(() => {
 </script>
 
 <template>
+  <!-- href="https://github.com/besscroft" -->
   <div class="h-full flex text-center justify-center items-center">
-    Made with ❤ by Bess Croft.
+    <a v-if="user.beian" href="https://beian.miit.gov.cn/" target="_blank">{{ user.beian }}</a>
+    <span v-else>
+      Made with ❤ by Bess Croft.
+    </span>
   </div>
 </template>
