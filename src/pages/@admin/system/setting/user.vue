@@ -3,7 +3,7 @@ import type { User } from '~/api/interface/user'
 import { userPasswordUpdate } from '~/api/modules/user'
 import { ResultEnum } from '~/enums/httpEnum'
 
-const snackbar = useSnackbarStore()
+const message = useMessage()
 const oldPwd = ref<string>()
 const pwd = ref<string>()
 const pwdForm = reactive<User.UpdatePasswordData>({
@@ -20,7 +20,7 @@ const handleUpdatePwd = () => {
     if (res.code === ResultEnum.SUCCESS) {
       oldPwd.value = ''
       pwd.value = ''
-      snackbar.success(res.message)
+      message.success(res.message)
     }
   })
 }

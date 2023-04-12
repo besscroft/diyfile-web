@@ -6,7 +6,7 @@ import { ResultEnum } from '~/enums/httpEnum'
 
 const router = useRouter()
 const user = useUserStore()
-const snackbar = useSnackbarStore()
+const message = useMessage()
 const loading = ref<boolean>(true)
 const { t } = useI18n()
 const dataList = ref()
@@ -56,7 +56,7 @@ const useUserPage = (role: string) => {
 const handleUserDelete = (id: number) => {
   userDelete(id).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
-      snackbar.success(res.message)
+      message.success(res.message)
       useUserPage('')
     }
   })
@@ -67,7 +67,7 @@ const handleUserStatusUpdate = (id: number, status: number) => {
   updateUserStatusData.status = status
   userStatusUpdate(updateUserStatusData).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
-      snackbar.success(res.message)
+      message.success(res.message)
       useUserPage('')
     }
   })

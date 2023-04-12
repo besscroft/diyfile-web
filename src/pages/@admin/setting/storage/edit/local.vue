@@ -6,7 +6,7 @@ import { ResultEnum } from '~/enums/httpEnum'
 
 const { t } = useI18n()
 const router = useRouter()
-const snackbar = useSnackbarStore()
+const message = useMessage()
 const ruleFormRef = ref<FormInstance>()
 const updateStorageForm = reactive({
   /** 存储id */
@@ -76,11 +76,11 @@ const handleSubmit = (formEl: FormInstance | undefined) => {
       handleFormData()
       storageUpdate(updateStorageData.value).then((res) => {
         if (res.code === ResultEnum.SUCCESS) {
-          snackbar.success(res.message)
+          message.success(res.message)
           router.push('/@admin/setting/storage')
         }
       }).catch((err) => {
-        snackbar.error(err.message)
+        message.error(err.message)
       })
     } else {
       return false

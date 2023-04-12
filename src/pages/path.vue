@@ -12,7 +12,7 @@ const { text, copy, copied } = useClipboard()
 const { isMobile } = useDevice()
 const { t } = useI18n()
 const user = useUserStore()
-const snackbar = useSnackbarStore()
+const message = useMessage()
 const router = useRouter()
 const storageKey = ref()
 const dataList = ref()
@@ -69,7 +69,6 @@ const handleSelectChange = (name: string, value: string) => {
 
 /** 自定义上传请求 */
 const onRequestUpload = (option: any) => {
-  console.log(option)
   const fileItem = option.file
   const fullPath = router.currentRoute.value.fullPath
   let uri = ''
@@ -111,7 +110,7 @@ const handleFolder = (path: string) => {
 const handleShare = (url: string) => {
   copy(url)
   if (copied) {
-    snackbar.success(t('button.copyOk'))
+    message.success(t('button.copyOk'))
   }
 }
 
@@ -162,7 +161,7 @@ const handleDelete = (option: any) => {
   }
   deleteFile(storageKey.value, url).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
-      snackbar.success(res.message)
+      message.success(res.message)
       handleRouter()
     }
   })
@@ -335,7 +334,7 @@ onMounted(() => {
       v-if="!isMobile"
       prop="lastModifiedDateTime"
       :label="t('table.index.time')"
-      width="160"
+      width="168"
     />
     <el-table-column
       v-if="!isMobile"

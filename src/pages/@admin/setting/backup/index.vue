@@ -7,7 +7,7 @@ import { getBackupFile } from '~/api/modules/monitor'
 
 const router = useRouter()
 const { t } = useI18n()
-const snackbar = useSnackbarStore()
+const message = useMessage()
 const user = useUserStore()
 const dialogVisible = ref<boolean>(false)
 const uploadRef = ref<UploadInstance>()
@@ -46,13 +46,12 @@ const onRequestUpload = (option: any) => {
       'Authorization': `Bearer ${user.token}`,
     },
   }).then((res) => {
-    console.log(res)
     if (res.data.code === ResultEnum.SUCCESS) {
-      snackbar.success(res.data.message)
+      message.success(res.data.message)
       return Promise.resolve(res.data)
     }
     if (res.data.code === ResultEnum.UNAUTHORIZED) {
-      snackbar.error('登陆已过期，请重新登陆！')
+      message.error('登陆已过期，请重新登陆！')
       user.setToken('')
       user.setUserName('')
       user.setAvatar('')
@@ -61,7 +60,7 @@ const onRequestUpload = (option: any) => {
     }
     // 没有权限（code == 403）
     if (res.data.code === ResultEnum.FORBIDDEN) {
-      snackbar.error(res.data.message)
+      message.error(res.data.message)
       return Promise.reject(res.data)
     }
   }).catch((err) => {

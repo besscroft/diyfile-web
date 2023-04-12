@@ -5,7 +5,7 @@ import { storageAdd } from '~/api/modules/storage'
 import { ResultEnum } from '~/enums/httpEnum'
 
 const { t } = useI18n()
-const snackbar = useSnackbarStore()
+const message = useMessage()
 const router = useRouter()
 const ruleFormRef = ref<FormInstance>()
 const addStorageForm = reactive({
@@ -72,11 +72,11 @@ const handleSubmit = (formEl: FormInstance | undefined) => {
       handleFormData()
       storageAdd(addStorageData.value).then((res) => {
         if (res.code === ResultEnum.SUCCESS) {
-          snackbar.success(res.message)
+          message.success(res.message)
           router.push('/@admin/setting/storage')
         }
       }).catch((err) => {
-        snackbar.error(err.message)
+        message.error(err.message)
       })
     } else {
       return false

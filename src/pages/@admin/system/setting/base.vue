@@ -3,12 +3,12 @@ import { getBarkId, updateConfig } from '~/api/modules/systemConfig'
 import { ResultEnum } from '~/enums/httpEnum'
 
 const barkId = ref()
-const snackbar = useSnackbarStore()
+const message = useMessage()
 
 const handleUpdateBarkId = (barkId: string) => {
   updateConfig({ configKey: 'barkId', configValue: barkId }).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
-      snackbar.success(res.message)
+      message.success(res.message)
     }
   })
 }

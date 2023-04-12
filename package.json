@@ -61,6 +61,7 @@
     "markdown-it-link-attributes": "^4.0.1",
     "markdown-it-shiki": "^0.8.0",
     "material-design-icons-iconfont": "^6.7.0",
+    "naive-ui": "^2.34.3",
     "pnpm": "^7.30.0",
     "sass": "^1.61.0",
     "shiki": "^0.14.1",

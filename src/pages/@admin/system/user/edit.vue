@@ -5,7 +5,7 @@ import { getUserById, userUpdate } from '~/api/modules/user'
 import { ResultEnum } from '~/enums/httpEnum'
 
 const router = useRouter()
-const snackbar = useSnackbarStore()
+const message = useMessage()
 const { t } = useI18n()
 const ruleFormRef = ref<FormInstance>()
 
@@ -40,7 +40,7 @@ const handleSubmit = (formEl: FormInstance | undefined) => {
     if (valid) {
       userUpdate(updateUserRuleForm).then((res) => {
         if (res.code === ResultEnum.SUCCESS) {
-          snackbar.success(res.message)
+          message.success(res.message)
           router.push('/@admin/system/user')
         }
       })

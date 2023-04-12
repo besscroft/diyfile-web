@@ -2,7 +2,6 @@
 import { getDefaultStorage } from '~/api/modules/file'
 import { ResultEnum } from '~/enums/httpEnum'
 
-const { t } = useI18n()
 const router = useRouter()
 const loading = ref<boolean>(true)
 const { isMobile } = useDevice()

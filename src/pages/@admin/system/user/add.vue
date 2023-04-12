@@ -6,7 +6,7 @@ import { ResultEnum } from '~/enums/httpEnum'
 
 const router = useRouter()
 const { t } = useI18n()
-const snackbar = useSnackbarStore()
+const message = useMessage()
 const ruleFormRef = ref<FormInstance>()
 
 const addUserRuleForm = reactive<User.AddUserRequestData>({
@@ -50,7 +50,7 @@ const handleSubmit = (formEl: FormInstance | undefined) => {
     if (valid) {
       userAdd(addUserRuleForm).then((res) => {
         if (res.code === ResultEnum.SUCCESS) {
-          snackbar.success(res.message)
+          message.success(res.message)
           router.push('/@admin/system/user')
         }
       })

@@ -19,7 +19,6 @@ const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
 app.use(pinia)
 const user = useUserStore(pinia)
-const snackbar = useSnackbarStore(pinia)
 const axiosCanceler = new AxiosCanceler()
 
 const config = {
@@ -70,7 +69,7 @@ class RequestHttp {
         // https://stackoverflow.com/questions/3297048/403-forbidden-vs-401-unauthorized-http-responses
         // 登陆失效（code == 401）
         if (data.code === ResultEnum.UNAUTHORIZED) {
-          snackbar.error('登陆失效，请重新登陆')
+          window.$message.error('登陆失效，请重新登陆')
           user.setToken('')
           user.setUserName('')
           user.setAvatar('')
@@ -79,12 +78,12 @@ class RequestHttp {
         }
         // 没有权限（code == 403）
         if (data.code === ResultEnum.FORBIDDEN) {
-          snackbar.error(data.message)
+          window.$message.error(data.message)
           return Promise.reject(data)
         }
         // 全局错误信息拦截（防止下载文件得时候返回数据流，没有code，直接报错）
         if (data.code && data.code !== ResultEnum.SUCCESS) {
-          // Message.error(data.message)
+          // message.error(data.message)
           return Promise.reject(data)
         }
         // 成功请求（在页面上除非特殊情况，否则不用处理失败逻辑）
@@ -94,9 +93,7 @@ class RequestHttp {
         const { response } = error
         // 请求超时单独判断，因为请求超时没有 response
         if (error.message.includes('timeout')) {
-          snackbar.setActive(true)
-          snackbar.setType('red')
-          snackbar.error('请求超时，请刷新重试')
+          window.$message.error('请求超时，请刷新重试')
           return Promise.reject(error)
         }
         // 根据响应的错误状态码，做不同的处理

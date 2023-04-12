@@ -9,7 +9,8 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    AudioPreview: typeof import('./components/previews/AudioPreview.vue')['default']
+    Application: typeof import('./components/Application/Application.vue')['default']
+    AudioPreview: typeof import('./components/Previews/AudioPreview.vue')['default']
     ElAlert: typeof import('element-plus/es')['ElAlert']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
@@ -49,16 +50,21 @@ declare module '@vue/runtime-core' {
     ElUpload: typeof import('element-plus/es')['ElUpload']
     Footer: typeof import('./components/Footer.vue')['default']
     Header: typeof import('./components/Header.vue')['default']
-    ImagePreview: typeof import('./components/previews/ImagePreview.vue')['default']
-    MarkdownPreview: typeof import('./components/previews/MarkdownPreview.vue')['default']
+    ImagePreview: typeof import('./components/Previews/ImagePreview.vue')['default']
+    MarkdownPreview: typeof import('./components/Previews/MarkdownPreview.vue')['default']
     MobileMenu: typeof import('./components/MobileMenu.vue')['default']
-    OtherPreview: typeof import('./components/previews/OtherPreview.vue')['default']
-    PDFPreview: typeof import('./components/previews/PDFPreview.vue')['default']
+    NConfigProvider: typeof import('naive-ui')['NConfigProvider']
+    NDialogProvider: typeof import('naive-ui')['NDialogProvider']
+    NLoadingBarProvider: typeof import('naive-ui')['NLoadingBarProvider']
+    NMessageProvider: typeof import('naive-ui')['NMessageProvider']
+    NNotificationProvider: typeof import('naive-ui')['NNotificationProvider']
+    OtherPreview: typeof import('./components/Previews/OtherPreview.vue')['default']
+    PDFPreview: typeof import('./components/Previews/PDFPreview.vue')['default']
     PopMenu: typeof import('./components/PopMenu.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    TextPreview: typeof import('./components/previews/TextPreview.vue')['default']
-    VideoPreview: typeof import('./components/previews/VideoPreview.vue')['default']
+    TextPreview: typeof import('./components/Previews/TextPreview.vue')['default']
+    VideoPreview: typeof import('./components/Previews/VideoPreview.vue')['default']
   }
   export interface ComponentCustomProperties {
     vLoading: typeof import('element-plus/es')['ElLoadingDirective']

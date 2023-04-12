@@ -5,7 +5,7 @@ import { taskAdd } from '~/api/modules/sync'
 import { ResultEnum } from '~/enums/httpEnum'
 
 const router = useRouter()
-const snackbar = useSnackbarStore()
+const message = useMessage()
 const { t } = useI18n()
 
 // 同步前存储 key
@@ -33,7 +33,7 @@ const taskAddHandle = () => {
   taskAddParam.afterPath = afterPath.value
   taskAdd(taskAddParam).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
-      snackbar.success(res.message)
+      message.success(res.message)
     }
   }).catch((err) => {
     console.log(err)

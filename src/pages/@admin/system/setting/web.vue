@@ -3,13 +3,13 @@ import { getSiteConfig, updateConfig } from '~/api/modules/systemConfig'
 import { ResultEnum } from '~/enums/httpEnum'
 
 const user = useUserStore()
-const snackbar = useSnackbarStore()
+const message = useMessage()
 const dataMap = ref({})
 
 const handleUpdateSiteConfig = (configKey: string, configValue: string) => {
   updateConfig({ configKey, configValue }).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
-      snackbar.success(res.message)
+      message.success(res.message)
       if (configKey === 'beian') {
         user.setBeian(configValue)
       }

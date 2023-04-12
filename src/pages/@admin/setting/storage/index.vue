@@ -6,7 +6,7 @@ import { ResultEnum } from '~/enums/httpEnum'
 
 const router = useRouter()
 const { t } = useI18n()
-const snackbar = useSnackbarStore()
+const message = useMessage()
 const dataList = ref<Array<Object>>([])
 const pageInfo = reactive({
   total: 0,
@@ -55,7 +55,7 @@ const handleStoragePage = (type: number) => {
 const handleStorageDelete = (storageId: number) => {
   storageDelete(storageId).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
-      snackbar.success(res.message)
+      message.success(res.message)
       handleStoragePage(-1)
     }
   })
@@ -66,11 +66,11 @@ const handleStorageUpdateStatus = (storageId: number, status: number) => {
   updateStorageStatusData.status = status
   storageUpdateStatus(updateStorageStatusData).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
-      snackbar.success(res.message)
+      message.success(res.message)
       handleStoragePage(-1)
     }
   }).catch((err) => {
-    snackbar.error(err.message)
+    message.error(err.message)
   })
   updateStorageStatusData.storageId = undefined
   updateStorageStatusData.status = undefined
@@ -79,7 +79,7 @@ const handleStorageUpdateStatus = (storageId: number, status: number) => {
 const handleStorageDefault = (storageId: number) => {
   storageSetDefault(storageId).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
-      snackbar.success(res.message)
+      message.success(res.message)
       handleStoragePage(-1)
     }
   })
@@ -104,7 +104,7 @@ handleStoragePage(-1)
             <template #dropdown>
               <el-dropdown-menu>
                 <!-- 存储类型：0->本地存储；1->OneDrive -->
-                <el-dropdown-item @click="handleStoragePage()">所有类型</el-dropdown-item>
+                <el-dropdown-item @click="handleStoragePage(-1)">所有类型</el-dropdown-item>
                 <el-dropdown-item @click="handleStoragePage(0)" divided>本地存储</el-dropdown-item>
                 <el-dropdown-item @click="handleStoragePage(1)">OneDrive</el-dropdown-item>
                 <el-dropdown-item @click="handleStoragePage(2)">阿里云OSS</el-dropdown-item>
