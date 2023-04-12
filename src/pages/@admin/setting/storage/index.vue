@@ -137,7 +137,7 @@ handleStoragePage(-1)
             <div class="flex justify-space-between align-center">
               <span class="mx-1">{{ item.name }}</span>
               <el-dropdown>
-                <v-btn prepend-icon="expand_more" variant="text"> {{ t('table.Optional') }} </v-btn>
+                <v-btn icon="expand_more" variant="text" size="x-small" />
                 <template #dropdown>
                   <el-dropdown-menu>
                     <el-dropdown-item @click="router.push({ path: `/@admin/setting/storage/${encodeURIComponent(item.id)}`, params: { id: item.id } })">{{ t('button.detail') }}</el-dropdown-item>
