@@ -4,15 +4,10 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <el-card :body-style="{ padding: '0.25rem' }" class="my-1 h-10" shadow="never">
-    <el-page-header class="mt-1" @back="router.back()">
-      <template #content>
-        <div class="flex items-center">
-          <span class="text-large font-400 mr-2"> {{ t('tip.cardTitle') }} </span>
-        </div>
-      </template>
-    </el-page-header>
-  </el-card>
+  <n-card content-style="padding: 0;" class="my-0.5">
+    <n-page-header :title="t('tip.cardTitle')" class="mx-0.5" @back="router.back()">
+    </n-page-header>
+  </n-card>
   <el-card :body-style="{ padding: '1rem' }" class="box-card overflow-auto no-scrollbar" style="height: calc(100% - 4rem); -ms-overflow-style: none;" shadow="never">
     <el-row :gutter="10">
       <el-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6" />

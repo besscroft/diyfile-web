@@ -75,15 +75,10 @@ const onConfirmUpload = () => {
 </script>
 
 <template>
-  <el-card :body-style="{ padding: '0.25rem' }" class="my-1 h-10" shadow="never">
-    <el-page-header class="mt-1" @back="router.back()">
-      <template #content>
-        <div class="flex items-center">
-          <span class="text-large font-400 mr-2"> {{ t('menu.setting.backup') }} </span>
-        </div>
-      </template>
-    </el-page-header>
-  </el-card>
+  <n-card content-style="padding: 0;" class="my-0.5">
+    <n-page-header :title="t('menu.setting.backup')" class="mx-0.5">
+    </n-page-header>
+  </n-card>
   <el-card :body-style="{ padding: '0px' }" class="box-card h-full w-full overflow-auto" style="height: calc(100% - 4rem); -ms-overflow-style: none;" shadow="never">
     <div class="flex flex-col mx-2 my-2 ma-2">
       <div class="ma-2 w-40">

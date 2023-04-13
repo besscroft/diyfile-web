@@ -79,13 +79,8 @@ useUserPage('')
 </script>
 
 <template>
-  <el-card :body-style="{ padding: '0.25rem' }" class="my-1 h-10" shadow="never">
-    <el-page-header @back="router.back()">
-      <template #content>
-        <div class="flex items-center">
-          <span class="text-large font-400 mr-2"> {{ t('menu.system.user') }} </span>
-        </div>
-      </template>
+  <n-card content-style="padding: 0;" class="my-0.5">
+    <n-page-header :title="t('menu.system.user')" class="mx-0.5">
       <template #extra>
         <div class="flex items-center">
           <v-btn icon="person_add" variant="text" size="x-small" @click="router.push('/@admin/system/user/add')" />
@@ -103,8 +98,8 @@ useUserPage('')
           </el-dropdown>
         </div>
       </template>
-    </el-page-header>
-  </el-card>
+    </n-page-header>
+  </n-card>
   <el-card :body-style="{ padding: '0px' }" class="box-card overflow-auto no-scrollbar" style="height: calc(100% - 4rem); -ms-overflow-style: none;" shadow="never">
     <el-row :gutter="[12, 10]">
       <el-col v-if="loading" :xs="24" :sm="12" :md="8" :lg="6" :xl="6">

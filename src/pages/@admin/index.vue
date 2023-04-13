@@ -68,20 +68,15 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <el-card :body-style="{ padding: '0.25rem' }" class="my-1 h-10" shadow="never">
-    <el-page-header @back="router.back()">
-      <template #content>
-        <div class="flex items-center">
-          <span class="text-large font-400 mr-2"> {{ t('menu.index') }} </span>
-        </div>
-      </template>
+  <n-card content-style="padding: 0;" class="my-0.5">
+    <n-page-header :title="t('menu.index')" class="mx-0.5">
       <template #extra>
         <div class="flex items-center">
           <v-btn icon="sync" variant="text" size="x-small" @click="handServerInfo"></v-btn>
         </div>
       </template>
-    </el-page-header>
-  </el-card>
+    </n-page-header>
+  </n-card>
   <el-card :body-style="{ padding: '0px' }" class="box-card h-full w-full overflow-auto" style="height: calc(100% - 4rem); -ms-overflow-style: none;" shadow="never">
     <el-row v-if="serverInfo" :gutter="[12, 10]">
       <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
