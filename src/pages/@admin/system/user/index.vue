@@ -101,9 +101,9 @@ useUserPage('')
     </n-page-header>
   </n-card>
   <n-card content-style="padding: 0;" class="box-card overflow-auto no-scrollbar" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
-    <el-row :gutter="[12, 10]">
-      <el-col v-if="loading" :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
-        <el-skeleton :body-style="{ padding: '0.25rem' }" class="box-card mx-1 my-0.5 h-80">
+    <n-grid cols="1 s:2 m:3 l:4 xl:4 2xl:4" responsive="screen" :x-gap="12" :y-gap="8">
+      <n-grid-item v-if="loading">
+        <el-skeleton :body-style="{ padding: '0.25rem' }" class="box-card h-80">
           <template #template>
             <el-skeleton-item variant="rect" class="w-11/12 h-68 mx-2.5" />
             <div style="padding: 14px">
@@ -114,12 +114,12 @@ useUserPage('')
             </div>
           </template>
         </el-skeleton>
-      </el-col>
-      <el-col v-for="item in dataList" v-else :key="item.id" :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
+      </n-grid-item>
+      <n-grid-item v-for="item in dataList" v-else :key="item.id">
         <n-card
           :title="item.name"
           content-style="padding: 0.25rem;"
-          class="box-card mx-1 my-0.5 h-80"
+          class="box-card h-80"
         >
           <template #header-extra>
             <el-dropdown>
@@ -277,8 +277,8 @@ useUserPage('')
             </div>
           </template>
         </n-card>
-      </el-col>
-    </el-row>
+      </n-grid-item>
+    </n-grid>
     <el-pagination
       v-model:current-page="pageInfo.pageNum"
       :page-size="pageInfo.pageSize"

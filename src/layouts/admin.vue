@@ -47,7 +47,7 @@ const routerPage = (val: string) => {
         <Header @toggleTheme="toggleTheme" />
       </n-layout-header>
       <n-layout has-sider position="absolute" style="margin-top: 60px; height: calc(100% - 60px)">
-        <n-layout-sider v-if="!isMobile" bordered collapse-mode="width" width="180">
+        <n-layout-sider v-if="!isMobile" bordered collapse-mode="width" width="188">
           <PopMenu class="h-full" @routerPage="routerPage" />
         </n-layout-sider>
         <n-layout class="h-full">

@@ -78,9 +78,36 @@ onUnmounted(() => {
     </n-page-header>
   </n-card>
   <n-card content-style="padding: 0;" class="box-card h-full w-full overflow-auto" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
-    <el-row v-if="serverInfo" :gutter="[12, 10]">
-      <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
-        <n-card content-style="padding: 0.25rem;" class="box-card mx-1 my-0.5 h-36">
+    <n-grid cols="1 s:2 m:3 l:4 xl:4 2xl:4" responsive="screen" :x-gap="12" :y-gap="8" class="mx-0.5">
+      <n-grid-item>
+        <n-card content-style="padding: 0.25rem;" class="box-card h-36">
+          <div class="statistic-card flex h-full">
+            <el-statistic class="flex-grow ml-1" :value="`${(serverInfo.memoryInfo.used / 1024 / 1024 / 1024).toFixed(2)}GB`">
+              <template #title>
+                <div style="display: inline-flex; align-items: center">
+                  已用内存
+                  <el-tooltip
+                    effect="dark"
+                    content="服务器当前已使用内存"
+                    placement="top"
+                  >
+                    <el-icon style="margin-left: 4px" :size="12">
+                      <Warning />
+                    </el-icon>
+                  </el-tooltip>
+                </div>
+              </template>
+            </el-statistic>
+            <n-progress
+              type="dashboard"
+              gap-position="bottom"
+              :percentage="((serverInfo.memoryInfo.used / 1024 / 1024).toFixed(2) / (serverInfo.memoryInfo.total / 1024 / 1024).toFixed(2)).toFixed(2) * 100"
+            />
+          </div>
+        </n-card>
+      </n-grid-item>
+      <n-grid-item>
+        <n-card content-style="padding: 0.25rem;" class="box-card h-36">
           <div class="statistic-card flex h-full">
             <el-statistic class="flex-grow" :value="`${(serverInfo.memoryInfo.total / 1024 / 1024 / 1024).toFixed(2)}GB`">
               <template #title>
@@ -98,28 +125,6 @@ onUnmounted(() => {
                 </div>
               </template>
             </el-statistic>
-            <el-statistic class="flex-grow ml-1" :value="`${(serverInfo.memoryInfo.used / 1024 / 1024 / 1024).toFixed(2)}GB`">
-              <template #title>
-                <div style="display: inline-flex; align-items: center">
-                  已用内存
-                  <el-tooltip
-                    effect="dark"
-                    content="服务器当前已使用内存"
-                    placement="top"
-                  >
-                    <el-icon style="margin-left: 4px" :size="12">
-                      <Warning />
-                    </el-icon>
-                  </el-tooltip>
-                </div>
-              </template>
-            </el-statistic>
-          </div>
-        </n-card>
-      </el-col>
-      <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
-        <n-card content-style="padding: 0.25rem;" class="box-card mx-1 my-0.5 h-36">
-          <div class="statistic-card flex h-full">
             <el-statistic class="flex-grow" :value="`${(serverInfo.memoryInfo.free / 1024 / 1024 / 1024).toFixed(2)}GB`" title="New transactions today">
               <template #title>
                 <div style="display: inline-flex; align-items: center">
@@ -136,20 +141,11 @@ onUnmounted(() => {
                 </div>
               </template>
             </el-statistic>
-            <el-progress
-              type="dashboard"
-              :percentage="((serverInfo.memoryInfo.used / 1024 / 1024).toFixed(2) / (serverInfo.memoryInfo.total / 1024 / 1024).toFixed(2)).toFixed(2) * 100"
-              :color="colors"
-            >
-              <template #default="{ percentage }">
-                <span class="percentage-value -ml-3">{{ percentage }} % </span>
-              </template>
-            </el-progress>
           </div>
         </n-card>
-      </el-col>
-      <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
-        <n-card content-style="padding: 0.25rem;" class="box-card mx-1 my-0.5 h-36">
+      </n-grid-item>
+      <n-grid-item>
+        <n-card content-style="padding: 0.25rem;" class="box-card h-36">
           <div class="statistic-card flex h-full">
             <el-statistic class="flex-grow" :value="totalInfo.userCount">
               <template #title>
@@ -185,9 +181,9 @@ onUnmounted(() => {
             </el-statistic>
           </div>
         </n-card>
-      </el-col>
-      <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
-        <n-card content-style="padding: 0.25rem;" class="box-card mx-1 my-0.5 h-36">
+      </n-grid-item>
+      <n-grid-item>
+        <n-card content-style="padding: 0.25rem;" class="box-card h-36">
           <div class="statistic-card flex h-full">
             <el-statistic class="flex-grow" :value="totalInfo.storageCount">
               <template #title>
@@ -223,97 +219,43 @@ onUnmounted(() => {
             </el-statistic>
           </div>
         </n-card>
-      </el-col>
-    </el-row>
-    <div class="flex flex-wrap flex-col sm:flex-row">
-      <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
-        <el-descriptions
-          v-if="serverInfo"
-          class="margin-top"
-          title="服务器信息"
-          :column="1"
-          border
-        >
-          <el-descriptions-item>
-            <template #label>
-              <div class="cell-item">
-                服务器名称
-              </div>
-            </template>
+      </n-grid-item>
+      <n-grid-item>
+        <n-descriptions v-if="serverInfo" title="服务器信息" label-placement="left" bordered :column="1">
+          <n-descriptions-item label="服务器名称">
             {{ serverInfo.systemInfo.computerName }}
-          </el-descriptions-item>
-          <el-descriptions-item>
-            <template #label>
-              <div class="cell-item">
-                服务器IP
-              </div>
-            </template>
+          </n-descriptions-item>
+          <n-descriptions-item label="服务器IP">
             {{ serverInfo.systemInfo.computerIp }}
-          </el-descriptions-item>
-          <el-descriptions-item>
-            <template #label>
-              <div class="cell-item">
-                操作系统
-              </div>
-            </template>
+          </n-descriptions-item>
+          <n-descriptions-item label="操作系统">
             {{ serverInfo.systemInfo.osName }}
-          </el-descriptions-item>
-          <el-descriptions-item>
-            <template #label>
-              <div class="cell-item">
-                系统架构
-              </div>
-            </template>
+          </n-descriptions-item>
+          <n-descriptions-item label="系统架构">
             {{ serverInfo.systemInfo.osArch }}
-          </el-descriptions-item>
-          <el-descriptions-item>
-            <template #label>
-              <div class="cell-item">
-                CPU 核心数
-              </div>
-            </template>
+          </n-descriptions-item>
+          <n-descriptions-item label="CPU 核心数">
             {{ serverInfo.cpuInfo.cpuNum }}
-          </el-descriptions-item>
-          <el-descriptions-item>
-            <template #label>
-              <div class="cell-item">
-                总内存
-              </div>
-            </template>
+          </n-descriptions-item>
+          <n-descriptions-item label="总内存">
             {{ (serverInfo.memoryInfo.total / 1024 / 1024).toFixed(2) }} MB
-          </el-descriptions-item>
-          <el-descriptions-item>
-            <template #label>
-              <div class="cell-item">
-                已用内存
-              </div>
-            </template>
+          </n-descriptions-item>
+          <n-descriptions-item label="已用内存">
             {{ (serverInfo.memoryInfo.used / 1024 / 1024).toFixed(2) }} MB
-          </el-descriptions-item>
-          <el-descriptions-item>
-            <template #label>
-              <div class="cell-item">
-                剩余内存
-              </div>
-            </template>
+          </n-descriptions-item>
+          <n-descriptions-item label="剩余内存">
             {{ (serverInfo.memoryInfo.free / 1024 / 1024).toFixed(2) }} MB
-          </el-descriptions-item>
-        </el-descriptions>
-      </div>
-      <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
+          </n-descriptions-item>
+        </n-descriptions>
+      </n-grid-item>
+      <n-grid-item>
         <el-divider content-position="left">提建议/问题反馈</el-divider>
         <span>欢迎通过 issues 提交建议或问题反馈，我们会尽快处理！</span>
         <el-divider content-position="left">技术支持</el-divider>
         <span>我提供免费技术支持，你可以通过邮邮件与我取得联系，非工作时间我会尽快回复。
             Email: <a href="mailto:besscroft@foxmail.com"><b>旅行者</b></a></span>
-      </div>
-      <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
-        <el-divider content-position="left">...</el-divider>
-      </div>
-      <div class="lg:w-1/4 sm:flex sm:flex-col sm:w-full max-w-[22rem] m-1">
-        <el-divider content-position="left">...</el-divider>
-      </div>
-    </div>
+      </n-grid-item>
+    </n-grid>
   </n-card>
 </template>
 
