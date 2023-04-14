@@ -13,7 +13,7 @@ const tab = ref(1)
     <n-page-header :title="t('menu.system.setting')" class="mx-0.5">
     </n-page-header>
   </n-card>
-  <el-card :body-style="{ padding: '0px' }" class="box-card h-full w-full overflow-auto" style="height: calc(100% - 4rem); -ms-overflow-style: none;" shadow="never">
+  <n-card content-style="padding: 0.5rem;" class="box-card h-full w-full overflow-auto" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
     <v-tabs
       v-model="tab"
       color="deep-purple-accent-4"
@@ -34,7 +34,7 @@ const tab = ref(1)
         <User />
       </v-window-item>
     </v-window>
-  </el-card>
+  </n-card>
 </template>
 
 <style scoped>

@@ -26,7 +26,7 @@ useDetail()
     <n-page-header :title="t('table.StorageInfo')" class="mx-0.5" @back="router.back()">
     </n-page-header>
   </n-card>
-  <el-card :body-style="{ padding: '1rem' }" class="box-card overflow-auto no-scrollbar" style="height: calc(100% - 4rem); -ms-overflow-style: none;" shadow="never">
+  <n-card content-style="padding: 0.5rem;" class="box-card overflow-auto no-scrollbar" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
     <el-skeleton
       v-if="loading"
       :rows="5"
@@ -132,7 +132,7 @@ useDetail()
         {{ item.configValue }}
       </el-descriptions-item>
     </el-descriptions>
-  </el-card>
+  </n-card>
 </template>
 
 <style scoped>

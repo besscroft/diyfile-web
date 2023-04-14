@@ -79,7 +79,7 @@ const onConfirmUpload = () => {
     <n-page-header :title="t('menu.setting.backup')" class="mx-0.5">
     </n-page-header>
   </n-card>
-  <el-card :body-style="{ padding: '0px' }" class="box-card h-full w-full overflow-auto" style="height: calc(100% - 4rem); -ms-overflow-style: none;" shadow="never">
+  <n-card content-style="padding: 0;" class="box-card h-full w-full overflow-auto" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
     <div class="flex flex-col mx-2 my-2 ma-2">
       <div class="ma-2 w-40">
         <v-btn prepend-icon="cloud_download" variant="text" @click="handleBackupFile">
@@ -106,7 +106,7 @@ const onConfirmUpload = () => {
         </v-btn>
       </div>
     </div>
-  </el-card>
+  </n-card>
 
   <el-dialog
     v-model="dialogVisible"

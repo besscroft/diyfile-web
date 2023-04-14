@@ -111,7 +111,7 @@ handleStoragePage(-1)
       </template>
     </n-page-header>
   </n-card>
-  <el-card :body-style="{ padding: '0px' }" class="box-card overflow-auto no-scrollbar" style="height: calc(100% - 4rem); -ms-overflow-style: none;" shadow="never">
+  <n-card content-style="padding: 0;" class="box-card overflow-auto no-scrollbar" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
     <el-row :gutter="[12, 10]">
       <el-col v-if="loading" :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
         <el-skeleton :body-style="{ padding: '0.25rem' }" class="box-card mx-1 my-0.5 h-80">
@@ -127,33 +127,30 @@ handleStoragePage(-1)
         </el-skeleton>
       </el-col>
       <el-col v-for="item in dataList" v-else :key="item.id" :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
-        <el-card :body-style="{ padding: '0.25rem' }" class="box-card mx-1 my-0.5 h-80" shadow="hover">
-          <template #header>
-            <div class="flex justify-space-between align-center">
-              <span class="mx-1">{{ item.name }}</span>
-              <el-dropdown>
-                <v-btn icon="expand_more" variant="text" size="x-small" />
-                <template #dropdown>
-                  <el-dropdown-menu>
-                    <el-dropdown-item @click="router.push({ path: `/@admin/setting/storage/${encodeURIComponent(item.id)}`, params: { id: item.id } })">{{ t('button.detail') }}</el-dropdown-item>
-                    <el-dropdown-item v-if="item.type === 0" @click="router.push({ path: '/@admin/setting/storage/edit/local', query: { id: item.id } })">{{ t('button.edit') }}</el-dropdown-item>
-                    <el-dropdown-item v-if="item.type === 1" @click="router.push({ path: '/@admin/setting/storage/edit/oneDrive', query: { id: item.id } })">{{ t('button.edit') }}</el-dropdown-item>
-                    <el-dropdown-item v-if="item.type === 2" @click="router.push({ path: '/@admin/setting/storage/edit/aliyunOSS', query: { id: item.id } })">{{ t('button.edit') }}</el-dropdown-item>
-                    <el-dropdown-item v-if="item.type === 3" @click="router.push({ path: '/@admin/setting/storage/edit/amazonS3', query: { id: item.id } })">{{ t('button.edit') }}</el-dropdown-item>
-                  </el-dropdown-menu>
-                </template>
-              </el-dropdown>
-            </div>
+        <n-card
+          :title="item.name"
+          content-style="padding: 0.25rem;"
+          class="box-card mx-1 my-0.5 h-80"
+        >
+          <template #header-extra>
+            <el-dropdown>
+              <v-btn icon="expand_more" variant="text" size="x-small" />
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item @click="router.push({ path: `/@admin/setting/storage/${encodeURIComponent(item.id)}`, params: { id: item.id } })">{{ t('button.detail') }}</el-dropdown-item>
+                  <el-dropdown-item v-if="item.type === 0" @click="router.push({ path: '/@admin/setting/storage/edit/local', query: { id: item.id } })">{{ t('button.edit') }}</el-dropdown-item>
+                  <el-dropdown-item v-if="item.type === 1" @click="router.push({ path: '/@admin/setting/storage/edit/oneDrive', query: { id: item.id } })">{{ t('button.edit') }}</el-dropdown-item>
+                  <el-dropdown-item v-if="item.type === 2" @click="router.push({ path: '/@admin/setting/storage/edit/aliyunOSS', query: { id: item.id } })">{{ t('button.edit') }}</el-dropdown-item>
+                  <el-dropdown-item v-if="item.type === 3" @click="router.push({ path: '/@admin/setting/storage/edit/amazonS3', query: { id: item.id } })">{{ t('button.edit') }}</el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
           </template>
-          <v-card
-            variant="text"
-            class="flex h-68 flex-col"
-            style="display: flex"
-          >
-            <div class="flex w-full">
-              <v-avatar size="56" image="/storage_FILL0_wght400_GRAD0_opsz48.png" class="mt-3 mb-3 mx-auto" />
-            </div>
-            {{ item.remark }}
+          <div class="flex w-full">
+            <v-avatar size="56" image="/storage_FILL0_wght400_GRAD0_opsz48.png" class="mb-3 mx-auto" />
+          </div>
+          {{ item.remark }}
+          <template #action>
             <div class="mt-auto">
               <div class="flex justify-space-between">
                 <div class="flex items-center justify-center">
@@ -287,8 +284,8 @@ handleStoragePage(-1)
                 </span>
               </div>
             </div>
-          </v-card>
-        </el-card>
+          </template>
+        </n-card>
       </el-col>
     </el-row>
     <el-pagination
@@ -299,7 +296,7 @@ handleStoragePage(-1)
       hide-on-single-page
       @current-change="(current) => { pageInfo.pageNum = current; handleStoragePage(roleFlag) }"
     />
-  </el-card>
+  </n-card>
 </template>
 
 <style scoped>

@@ -100,7 +100,7 @@ useUserPage('')
       </template>
     </n-page-header>
   </n-card>
-  <el-card :body-style="{ padding: '0px' }" class="box-card overflow-auto no-scrollbar" style="height: calc(100% - 4rem); -ms-overflow-style: none;" shadow="never">
+  <n-card content-style="padding: 0;" class="box-card overflow-auto no-scrollbar" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
     <el-row :gutter="[12, 10]">
       <el-col v-if="loading" :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
         <el-skeleton :body-style="{ padding: '0.25rem' }" class="box-card mx-1 my-0.5 h-80">
@@ -116,35 +116,32 @@ useUserPage('')
         </el-skeleton>
       </el-col>
       <el-col v-for="item in dataList" v-else :key="item.id" :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
-        <el-card :body-style="{ padding: '0.25rem' }" class="box-card mx-1 my-0.5 h-80" shadow="hover">
-          <template #header>
-            <div class="flex justify-space-between align-center">
-              <span class="mx-1">{{ item.name }}</span>
-              <el-dropdown>
-                <v-btn icon="expand_more" variant="text" size="x-small" />
-                <template #dropdown>
-                  <el-dropdown-menu>
-                    <el-dropdown-item @click="router.push({ path: `/@admin/system/user/${encodeURIComponent(item.username)}`, params: { username: item.username } })">{{ t('button.detail') }}</el-dropdown-item>
-                    <el-dropdown-item @click="router.push({ path: '/@admin/system/user/edit', query: { id: item.id } })">{{ t('button.edit') }}</el-dropdown-item>
-                    <el-dropdown-item v-if="user.roleCode === 'platform-super-admin'" @click="router.push({ path: '/@admin/system/user/pwd', query: { id: item.id } })">{{ t('button.pwd') }}</el-dropdown-item>
-                  </el-dropdown-menu>
-                </template>
-              </el-dropdown>
-            </div>
+        <n-card
+          :title="item.name"
+          content-style="padding: 0.25rem;"
+          class="box-card mx-1 my-0.5 h-80"
+        >
+          <template #header-extra>
+            <el-dropdown>
+              <v-btn icon="expand_more" variant="text" size="x-small" />
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item @click="router.push({ path: `/@admin/system/user/${encodeURIComponent(item.username)}`, params: { username: item.username } })">{{ t('button.detail') }}</el-dropdown-item>
+                  <el-dropdown-item @click="router.push({ path: '/@admin/system/user/edit', query: { id: item.id } })">{{ t('button.edit') }}</el-dropdown-item>
+                  <el-dropdown-item v-if="user.roleCode === 'platform-super-admin'" @click="router.push({ path: '/@admin/system/user/pwd', query: { id: item.id } })">{{ t('button.pwd') }}</el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
           </template>
-          <v-card
-            variant="text"
-            class="flex h-68 flex-col"
-            style="display: flex"
-          >
-            <div class="justify-center">
-              <img
-                class="rounded-full my-2 w-14 h-14 mx-auto"
-                alt="avatar"
-                :src="item.avatar"
-              />
-              {{ item.remark }}
-            </div>
+          <div class="justify-center">
+            <img
+              class="rounded-full my-1 w-14 h-14 mx-auto"
+              alt="avatar"
+              :src="item.avatar"
+            />
+            {{ item.remark }}
+          </div>
+          <template #action>
             <div class="mt-auto">
               <div class="flex justify-space-between">
                 <div class="flex items-center justify-center">
@@ -278,8 +275,8 @@ useUserPage('')
                 </el-popover>
               </div>
             </div>
-          </v-card>
-        </el-card>
+          </template>
+        </n-card>
       </el-col>
     </el-row>
     <el-pagination
@@ -290,7 +287,7 @@ useUserPage('')
       hide-on-single-page
       @current-change="(current) => { pageInfo.pageNum = current; useUserPage(roleFlag) }"
     />
-  </el-card>
+  </n-card>
 </template>
 
 <style scoped>

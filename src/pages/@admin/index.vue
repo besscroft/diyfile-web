@@ -77,10 +77,10 @@ onUnmounted(() => {
       </template>
     </n-page-header>
   </n-card>
-  <el-card :body-style="{ padding: '0px' }" class="box-card h-full w-full overflow-auto" style="height: calc(100% - 4rem); -ms-overflow-style: none;" shadow="never">
+  <n-card content-style="padding: 0;" class="box-card h-full w-full overflow-auto" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
     <el-row v-if="serverInfo" :gutter="[12, 10]">
       <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
-        <el-card :body-style="{ padding: '0.25rem' }" class="box-card mx-1 my-0.5 h-36" shadow="hover">
+        <n-card content-style="padding: 0.25rem;" class="box-card mx-1 my-0.5 h-36">
           <div class="statistic-card flex h-full">
             <el-statistic class="flex-grow" :value="`${(serverInfo.memoryInfo.total / 1024 / 1024 / 1024).toFixed(2)}GB`">
               <template #title>
@@ -115,10 +115,10 @@ onUnmounted(() => {
               </template>
             </el-statistic>
           </div>
-        </el-card>
+        </n-card>
       </el-col>
       <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
-        <el-card :body-style="{ padding: '0.25rem' }" class="box-card  my-0.5 h-36" shadow="hover">
+        <n-card content-style="padding: 0.25rem;" class="box-card mx-1 my-0.5 h-36">
           <div class="statistic-card flex h-full">
             <el-statistic class="flex-grow" :value="`${(serverInfo.memoryInfo.free / 1024 / 1024 / 1024).toFixed(2)}GB`" title="New transactions today">
               <template #title>
@@ -146,10 +146,10 @@ onUnmounted(() => {
               </template>
             </el-progress>
           </div>
-        </el-card>
+        </n-card>
       </el-col>
       <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
-        <el-card :body-style="{ padding: '0.25rem' }" class="box-card mx-1 my-0.5 h-36" shadow="hover">
+        <n-card content-style="padding: 0.25rem;" class="box-card mx-1 my-0.5 h-36">
           <div class="statistic-card flex h-full">
             <el-statistic class="flex-grow" :value="totalInfo.userCount">
               <template #title>
@@ -184,10 +184,10 @@ onUnmounted(() => {
               </template>
             </el-statistic>
           </div>
-        </el-card>
+        </n-card>
       </el-col>
       <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
-        <el-card :body-style="{ padding: '0.25rem' }" class="box-card mx-1 my-0.5 h-36" shadow="hover">
+        <n-card content-style="padding: 0.25rem;" class="box-card mx-1 my-0.5 h-36">
           <div class="statistic-card flex h-full">
             <el-statistic class="flex-grow" :value="totalInfo.storageCount">
               <template #title>
@@ -222,7 +222,7 @@ onUnmounted(() => {
               </template>
             </el-statistic>
           </div>
-        </el-card>
+        </n-card>
       </el-col>
     </el-row>
     <div class="flex flex-wrap flex-col sm:flex-row">
@@ -314,7 +314,7 @@ onUnmounted(() => {
         <el-divider content-position="left">...</el-divider>
       </div>
     </div>
-  </el-card>
+  </n-card>
 </template>
 
 <style scoped>

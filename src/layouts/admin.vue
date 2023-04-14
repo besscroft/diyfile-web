@@ -41,32 +41,24 @@ const routerPage = (val: string) => {
 </script>
 
 <template>
-  <el-container class="w-full h-full">
-    <el-header class="w-full" style="border-bottom: 1px solid var(--el-border-color-light);">
-      <Header @toggleTheme="toggleTheme" />
-    </el-header>
-    <el-container v-if="!isMobile" style="height: calc(100% - 60px)">
-      <el-aside class="w-48 h-full" style="border-right: 1px solid var(--el-border-color-light);">
-        <PopMenu class="h-full" @routerPage="routerPage" />
-      </el-aside>
-      <el-container>
-        <el-main :style="isDark ? 'height: calc(100% - 60px); background: #121212; --el-main-padding: 0.5rem;' : 'height: calc(100% - 60px); background: #f8f8f8; --el-main-padding: 0.5rem;'">
-          <RouterView />
-        </el-main>
-        <el-footer style="border-top: 1px solid var(--el-border-color-light);">
-          <Footer />
-        </el-footer>
-      </el-container>
-    </el-container>
-    <el-container v-else style="height: calc(100% - 60px)">
-      <el-container>
-        <el-main style="height: calc(100% - 60px)">
-          <RouterView />
-        </el-main>
-        <el-footer style="border-top: 1px solid var(--el-border-color-light); text-align: center;" class="items-center">
-          <MobileMenu @routerPage="routerPage" />
-        </el-footer>
-      </el-container>
-    </el-container>
-  </el-container>
+  <div>
+    <n-layout position="absolute">
+      <n-layout-header style="height: 60px" bordered>
+        <Header @toggleTheme="toggleTheme" />
+      </n-layout-header>
+      <n-layout has-sider position="absolute" style="margin-top: 60px; height: calc(100% - 60px)">
+        <n-layout-sider bordered collapse-mode="width" width="180">
+          <PopMenu class="h-full" @routerPage="routerPage" />
+        </n-layout-sider>
+        <n-layout class="h-full">
+          <n-layout-content content-style="padding: 0.25rem;" style="height: calc(100% - 60px)">
+            <RouterView />
+          </n-layout-content>
+          <n-layout-footer style="height: 60px">
+            <Footer style="height: 60px" />
+          </n-layout-footer>
+        </n-layout>
+      </n-layout>
+    </n-layout>
+  </div>
 </template>

@@ -95,7 +95,7 @@ const handleSubmit = (formEl: FormInstance | undefined) => {
       </template>
     </n-page-header>
   </n-card>
-  <el-card :body-style="{ padding: '1rem' }" class="box-card overflow-auto no-scrollbar" style="height: calc(100% - 4rem); -ms-overflow-style: none;" shadow="never">
+  <n-card content-style="padding: 0.5rem;" class="box-card overflow-auto no-scrollbar" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
     <el-row :gutter="10">
       <el-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6" />
       <el-col :xs="22" :sm="12" :md="12" :lg="12" :xl="12" :xxl="12">
@@ -118,7 +118,7 @@ const handleSubmit = (formEl: FormInstance | undefined) => {
       </el-col>
       <el-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6" />
     </el-row>
-  </el-card>
+  </n-card>
 </template>
 
 <style scoped>
