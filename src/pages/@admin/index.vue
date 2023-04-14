@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import { Warning } from '@element-plus/icons-vue'
 import { getServerInfo, getTotalInfo } from '~/api/modules/monitor'
 import { ResultEnum } from '~/enums/httpEnum'
 
-const router = useRouter()
 const { t } = useI18n()
 const loadingTotal = ref<boolean>(true)
 const serverInfo = ref({
@@ -30,14 +28,6 @@ const totalInfo = ref({
   userCount: 0,
   userDisableCount: 0,
 })
-
-const colors = [
-  { color: '#f56c6c', percentage: 20 },
-  { color: '#e6a23c', percentage: 40 },
-  { color: '#5cb87a', percentage: 60 },
-  { color: '#1989fa', percentage: 80 },
-  { color: '#6f7ad3', percentage: 100 },
-]
 
 const handServerInfo = async () => {
   loadingTotal.value = true
@@ -82,22 +72,9 @@ onUnmounted(() => {
       <n-grid-item>
         <n-card content-style="padding: 0.25rem;" class="box-card h-36">
           <div class="statistic-card flex h-full">
-            <el-statistic class="flex-grow ml-1" :value="`${(serverInfo.memoryInfo.used / 1024 / 1024 / 1024).toFixed(2)}GB`">
-              <template #title>
-                <div style="display: inline-flex; align-items: center">
-                  已用内存
-                  <el-tooltip
-                    effect="dark"
-                    content="服务器当前已使用内存"
-                    placement="top"
-                  >
-                    <el-icon style="margin-left: 4px" :size="12">
-                      <Warning />
-                    </el-icon>
-                  </el-tooltip>
-                </div>
-              </template>
-            </el-statistic>
+            <n-statistic label="已用内存" class="flex-grow">
+              {{ (serverInfo.memoryInfo.used / 1024 / 1024 / 1024).toFixed(2) }} GB
+            </n-statistic>
             <n-progress
               type="dashboard"
               gap-position="bottom"
@@ -109,114 +86,36 @@ onUnmounted(() => {
       <n-grid-item>
         <n-card content-style="padding: 0.25rem;" class="box-card h-36">
           <div class="statistic-card flex h-full">
-            <el-statistic class="flex-grow" :value="`${(serverInfo.memoryInfo.total / 1024 / 1024 / 1024).toFixed(2)}GB`">
-              <template #title>
-                <div style="display: inline-flex; align-items: center">
-                  总内存
-                  <el-tooltip
-                    effect="dark"
-                    content="服务器总内存"
-                    placement="top"
-                  >
-                    <el-icon style="margin-left: 4px" :size="12">
-                      <Warning />
-                    </el-icon>
-                  </el-tooltip>
-                </div>
-              </template>
-            </el-statistic>
-            <el-statistic class="flex-grow" :value="`${(serverInfo.memoryInfo.free / 1024 / 1024 / 1024).toFixed(2)}GB`" title="New transactions today">
-              <template #title>
-                <div style="display: inline-flex; align-items: center">
-                  剩余内存
-                  <el-tooltip
-                    effect="dark"
-                    content="服务器当前可使用内存"
-                    placement="top"
-                  >
-                    <el-icon style="margin-left: 4px" :size="12">
-                      <Warning />
-                    </el-icon>
-                  </el-tooltip>
-                </div>
-              </template>
-            </el-statistic>
+            <n-statistic label="总内存" class="flex-grow">
+              {{ (serverInfo.memoryInfo.total / 1024 / 1024 / 1024).toFixed(2) }} GB
+            </n-statistic>
+            <n-statistic label="剩余内存" class="flex-grow">
+              {{ (serverInfo.memoryInfo.free / 1024 / 1024 / 1024).toFixed(2) }} GB
+            </n-statistic>
           </div>
         </n-card>
       </n-grid-item>
       <n-grid-item>
         <n-card content-style="padding: 0.25rem;" class="box-card h-36">
           <div class="statistic-card flex h-full">
-            <el-statistic class="flex-grow" :value="totalInfo.userCount">
-              <template #title>
-                <div style="display: inline-flex; align-items: center">
-                  用户总数
-                  <el-tooltip
-                    effect="dark"
-                    content="用户总数量"
-                    placement="top"
-                  >
-                    <el-icon style="margin-left: 4px" :size="12">
-                      <Warning />
-                    </el-icon>
-                  </el-tooltip>
-                </div>
-              </template>
-            </el-statistic>
-            <el-statistic class="flex-grow mx-1" :value="totalInfo.userDisableCount">
-              <template #title>
-                <div style="display: inline-flex; align-items: center">
-                  禁用数量
-                  <el-tooltip
-                    effect="dark"
-                    content="已经禁用的用户数量"
-                    placement="top"
-                  >
-                    <el-icon style="margin-left: 4px" :size="12">
-                      <Warning />
-                    </el-icon>
-                  </el-tooltip>
-                </div>
-              </template>
-            </el-statistic>
+            <n-statistic label="用户总数" class="flex-grow">
+              {{ totalInfo.userCount }}
+            </n-statistic>
+            <n-statistic label="禁用数量" class="flex-grow">
+              {{ totalInfo.userDisableCount }}
+            </n-statistic>
           </div>
         </n-card>
       </n-grid-item>
       <n-grid-item>
         <n-card content-style="padding: 0.25rem;" class="box-card h-36">
           <div class="statistic-card flex h-full">
-            <el-statistic class="flex-grow" :value="totalInfo.storageCount">
-              <template #title>
-                <div style="display: inline-flex; align-items: center">
-                  存储总数
-                  <el-tooltip
-                    effect="dark"
-                    content="存储总数量"
-                    placement="top"
-                  >
-                    <el-icon style="margin-left: 4px" :size="12">
-                      <Warning />
-                    </el-icon>
-                  </el-tooltip>
-                </div>
-              </template>
-            </el-statistic>
-            <el-statistic class="flex-grow mx-1" :value="totalInfo.storageActiveCount">
-              <template #title>
-                <div style="display: inline-flex; align-items: center">
-                  启用数量
-                  <el-tooltip
-                    effect="dark"
-                    content="启用的存储数量"
-                    placement="top"
-                  >
-                    <el-icon style="margin-left: 4px" :size="12">
-                      <Warning />
-                    </el-icon>
-                  </el-tooltip>
-                </div>
-              </template>
-            </el-statistic>
+            <n-statistic label="存储总数" class="flex-grow">
+              {{ totalInfo.storageCount }}
+            </n-statistic>
+            <n-statistic label="启用数量" class="flex-grow">
+              {{ totalInfo.storageActiveCount }}
+            </n-statistic>
           </div>
         </n-card>
       </n-grid-item>
@@ -249,9 +148,9 @@ onUnmounted(() => {
         </n-descriptions>
       </n-grid-item>
       <n-grid-item>
-        <el-divider content-position="left">提建议/问题反馈</el-divider>
+        <n-divider title-placement="left"> 提建议/问题反馈 </n-divider>
         <span>欢迎通过 issues 提交建议或问题反馈，我们会尽快处理！</span>
-        <el-divider content-position="left">技术支持</el-divider>
+        <n-divider title-placement="left"> 技术支持 </n-divider>
         <span>我提供免费技术支持，你可以通过邮邮件与我取得联系，非工作时间我会尽快回复。
             Email: <a href="mailto:besscroft@foxmail.com"><b>旅行者</b></a></span>
       </n-grid-item>
@@ -260,14 +159,6 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-:global(h2#card-usage ~ .example .example-showcase) {
-  background-color: var(--el-fill-color) !important;
-}
-
-.el-statistic {
-  --el-statistic-content-font-size: 28px;
-}
-
 .statistic-card {
   height: 100%;
   padding: 16px;

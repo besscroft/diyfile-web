@@ -293,13 +293,9 @@ onMounted(() => {
       请选择文件上传，或拖拽文件到此处！
     </div>
   </el-upload>
-  <el-skeleton
-    v-if="loading"
-    :rows="5"
-    animated
-    :style="isMobile ? { 'width': '100%', 'overflow-x': 'hidden !important' } : { 'width': '66%', 'overflow-x': 'hidden !important' }"
-    class="mx-auto"
-  />
+  <div v-if="loading" class="flex justify-center mt-7">
+    <n-spin size="medium" />
+  </div>
   <el-table
     v-else-if="!loading && !fileInfo && dataList"
     v-loading="loading"

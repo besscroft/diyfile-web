@@ -23,13 +23,9 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <el-skeleton
-    v-if="loading"
-    :rows="5"
-    animated
-    :style="isMobile ? { 'width': '100%', 'overflow-x': 'hidden !important' } : { 'width': '66%', 'overflow-x': 'hidden !important' }"
-    class="mx-auto"
-  />
+  <div v-if="loading" class="flex justify-center mt-7">
+    <n-spin size="medium" />
+  </div>
   <p v-else>什么都没有呢！请登录后进入后台进行配置！</p>
 </template>
 
