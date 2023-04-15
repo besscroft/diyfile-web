@@ -311,8 +311,8 @@ onMounted(() => {
     v-else-if="!loading && !fileInfo && dataList"
     v-loading="loading"
     :data="dataList"
-    :style="isMobile ? { 'width': '100%', 'overflow-x': 'hidden !important' } : { 'width': '66%', 'overflow-x': 'hidden !important' }"
-    height="97%"
+    :style="isMobile ? { width: '100%' } : { width: '66%' }"
+    height="calc(100vh - 180px)"
     class="mx-auto"
     stripe
   >
