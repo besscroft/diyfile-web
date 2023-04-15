@@ -53,6 +53,7 @@ declare module '@vue/runtime-core' {
     ImagePreview: typeof import('./components/Previews/ImagePreview.vue')['default']
     MarkdownPreview: typeof import('./components/Previews/MarkdownPreview.vue')['default']
     MobileMenu: typeof import('./components/MobileMenu.vue')['default']
+    NAvatar: typeof import('naive-ui')['NAvatar']
     NBreadcrumb: typeof import('naive-ui')['NBreadcrumb']
     NBreadcrumbItem: typeof import('naive-ui')['NBreadcrumbItem']
     NButton: typeof import('naive-ui')['NButton']
