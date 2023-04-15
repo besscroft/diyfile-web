@@ -33,6 +33,7 @@ const updateStorageStatusData = reactive<Storage.UpdateStorageStatusRequestData>
 })
 
 const handleStoragePage = (type: number) => {
+  showDropdownRef.value = false
   if (type === -1) {
     data.queryParam.type = null
     typeFlag.value = null
@@ -51,12 +52,6 @@ const handleStoragePage = (type: number) => {
     }
     loading.value = false
   })
-}
-
-/** 分页下拉菜单处理 */
-const handlePageSelect = (key: number) => {
-  showDropdownRef.value = false
-  handleStoragePage(key)
 }
 
 const pageOptions = ref<Array<DropdownOption | DropdownGroupOption | DropdownDividerOption | DropdownRenderOption>>([
@@ -128,7 +123,7 @@ handleStoragePage(-1)
       <template #extra>
         <div class="flex items-center">
           <v-btn icon="add_box" variant="text" size="x-small" @click="router.push('/@admin/setting/storage/add')" />
-          <n-dropdown :options="pageOptions || undefined" @select="handlePageSelect">
+          <n-dropdown :options="pageOptions || undefined" @select="handleStoragePage">
             <v-btn icon="dynamic_form" variant="text" size="x-small" />
           </n-dropdown>
         </div>
@@ -329,7 +324,7 @@ handleStoragePage(-1)
       layout="total, prev, pager, next"
       :total="pageInfo.total"
       hide-on-single-page
-      @current-change="(current) => { pageInfo.pageNum = current; handleStoragePage(roleFlag) }"
+      @current-change="(current) => { pageInfo.pageNum = current; handleStoragePage(typeFlag) }"
     />
   </n-card>
 </template>

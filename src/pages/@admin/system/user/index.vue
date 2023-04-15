@@ -35,6 +35,7 @@ const updateUserStatusData = reactive<User.ChangeUserStatusRequestData>({
 })
 
 const useUserPage = (role: string) => {
+  showDropdownRef.value = false
   if (role) {
     data.queryParam.role = role
     roleFlag.value = role.toString()
@@ -53,12 +54,6 @@ const useUserPage = (role: string) => {
     }
     loading.value = false
   })
-}
-
-/** 分页下拉菜单处理 */
-const handlePageSelect = (key: string) => {
-  showDropdownRef.value = false
-  useUserPage(key)
 }
 
 const pageOptions = ref<Array<DropdownOption | DropdownGroupOption | DropdownDividerOption | DropdownRenderOption>>([
@@ -119,7 +114,7 @@ useUserPage('')
       <template #extra>
         <div class="flex items-center">
           <v-btn icon="person_add" variant="text" size="x-small" @click="router.push('/@admin/system/user/add')" />
-          <n-dropdown :options="pageOptions || undefined" @select="handlePageSelect">
+          <n-dropdown :options="pageOptions || undefined" @select="useUserPage">
             <v-btn icon="group" variant="text" size="x-small" />
           </n-dropdown>
         </div>

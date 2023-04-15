@@ -284,7 +284,11 @@ onMounted(() => {
       </n-breadcrumb>
     </n-scrollbar>
     <n-dropdown :options="tableOptions || undefined" @select="handleTableSelect">
-      <v-btn icon="group" variant="text" size="x-small" />
+      <n-icon size="16" class="cursor-pointer">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
+          <path d="M24.59 16.59L17 24.17V4h-2v20.17l-7.59-7.58L6 18l10 10l10-10l-1.41-1.41z" fill="currentColor"></path>
+        </svg>
+      </n-icon>
     </n-dropdown>
   </div>
   <el-upload

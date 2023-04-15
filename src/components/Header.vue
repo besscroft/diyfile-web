@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { DropdownDividerOption, DropdownGroupOption, DropdownOption, DropdownRenderOption } from 'naive-ui'
 import { useTheme } from 'vuetify'
 import { getSiteTitle } from '~/api/modules/systemConfig'
 
@@ -11,11 +12,27 @@ const user = useUserStore()
 const username = ref<string>('')
 const avatar = ref<string>('')
 const { isMobile } = useDevice()
+const showDropdownRef = ref(false)
 const theme = useTheme()
 
 const toggleTheme = () => {
   emit('toggleTheme')
 }
+
+const localesOptions = ref<Array<DropdownOption | DropdownGroupOption | DropdownDividerOption | DropdownRenderOption>>([
+  {
+    label: '简体中文',
+    key: 'zh-CN',
+  },
+  {
+    label: 'English',
+    key: 'en',
+  },
+  {
+    label: '日本語',
+    key: 'ja',
+  },
+])
 
 /** 路由切换 */
 const routerPage = (val: string) => {
@@ -32,6 +49,7 @@ const routerPage = (val: string) => {
 
 /** 切换语言 */
 const toggleLocales = (item: any) => {
+  showDropdownRef.value = false
   locale.value = item
   user.setLanguage(item)
   localStorage.setItem('diyfile-locale', item)
@@ -82,17 +100,10 @@ onMounted(() => {
     </el-col>
     <el-col :span="4">
       <div class="avatar-container">
-        <el-dropdown>
-          <v-btn variant="text" size="small" icon="translate"></v-btn>
-          <template #dropdown>
-            <el-dropdown-menu>
-              <el-dropdown-item @click="toggleLocales('zh-CN')"> 简体中文 </el-dropdown-item>
-              <el-dropdown-item @click="toggleLocales('en')"> English </el-dropdown-item>
-              <el-dropdown-item @click="toggleLocales('ja')"> 日本語 </el-dropdown-item>
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
-        <v-btn variant="text" class="mx-2" size="small" :icon="isDark ? 'dark_mode' : 'light_mode'" @click="toggleTheme"></v-btn>
+        <n-dropdown :options="localesOptions || undefined" @select="toggleLocales">
+          <v-btn icon="translate" variant="text" size="x-small" />
+        </n-dropdown>
+        <v-btn variant="text" class="mx-2" size="x-small" :icon="isDark ? 'dark_mode' : 'light_mode'" @click="toggleTheme"></v-btn>
         <el-dropdown v-if="(user.userName && isMobile) || (user.userName && !router.currentRoute.value.path.startsWith('/@'))">
           <el-avatar
             alt="avatar"
