@@ -325,8 +325,8 @@ onMounted(() => {
     <TextPreview v-else-if="!loading && fileInfo && isText(fileInfo.name)" class="m-4" :fileInfo="fileInfo" :storageInfo="storageInfo" />
     <PDFPreview v-else-if="!loading && fileInfo && isPDF(fileInfo.name)" class="m-4" :fileInfo="fileInfo" :storageInfo="storageInfo" />
     <OtherPreview v-else-if="!loading && fileInfo" :fileInfo="fileInfo" class="m-4" :storageInfo="storageInfo" />
-    <p v-else-if="!fileInfo && !dataList">什么都没有呢！请登录后进入后台进行配置！</p>
-    <p v-else>Oops！发生了意外情况，也许是网络不稳定、格式不支持或者出现了 Bug~</p>
+    <n-result v-else-if="!fileInfo && !dataList" status="404" title="什么都没有呢！请登录后进入后台进行配置！" description="生活总归带点荒谬" />
+    <n-result v-else status="500" title="Oops！发生了意外情况，也许是网络不稳定、格式不支持或者出现了 Bug~" description="生活总归带点荒谬" />
   </v-card>
 </template>
 
