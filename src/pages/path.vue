@@ -4,14 +4,13 @@ import { deleteFile, getFileInfo, getFileItemByKey, getUploadUrl } from '~/api/m
 import { getEnableStorage, storageInfoByStorageKey } from '~/api/modules/storage'
 import { ResultEnum } from '~/enums/httpEnum'
 import type { Storage } from '~/types/storage'
-import { download } from '~/utils/ButtonUtil'
 import { getFileName, isAudio, isImage, isMarkdown, isPDF, isText, isVideo } from '~/utils/FileUtil'
 import { uploadOneDrive } from '~/utils/uploadFileUtil'
+import FileDataTable from '~/components/FileDataTable.vue'
 
 const { text, copy, copied } = useClipboard()
 const { isMobile } = useDevice()
 const { t } = useI18n()
-const user = useUserStore()
 const showDropdownRef = ref(false)
 const message = useMessage()
 const router = useRouter()
@@ -285,8 +284,8 @@ onMounted(() => {
     </n-scrollbar>
     <n-dropdown :options="tableOptions || undefined" @select="handleTableSelect">
       <n-icon size="16" class="cursor-pointer">
-        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
-          <path d="M24.59 16.59L17 24.17V4h-2v20.17l-7.59-7.58L6 18l10 10l10-10l-1.41-1.41z" fill="currentColor"></path>
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
+          <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6l-6-6l1.41-1.41z" fill="currentColor"></path>
         </svg>
       </n-icon>
     </n-dropdown>
@@ -307,72 +306,16 @@ onMounted(() => {
   <div v-if="loading" class="flex justify-center mt-7">
     <n-spin size="medium" />
   </div>
-  <el-table
+  <FileDataTable
     v-else-if="!loading && !fileInfo && dataList"
-    v-loading="loading"
-    :data="dataList"
+    :value="dataList"
     :style="isMobile ? { width: '100%' } : { width: '66%' }"
-    height="calc(100vh - 180px)"
     class="mx-auto"
-    stripe
-  >
-    <el-table-column
-      :label="t('table.index.fileName')"
-    >
-      <template #default="scope">
-        <div style="display: flex; align-items: center">
-          <v-icon v-if="scope.row.type !== 'file'" icon="folder" />
-          <v-icon v-else-if="isImage(scope.row.name)" icon="image" />
-          <v-icon v-else-if="isVideo(scope.row.name)" icon="video_library" />
-          <v-icon v-else-if="isAudio(scope.row.name)" icon="music_note" />
-          <v-icon v-else-if="isPDF(scope.row.name)" icon="picture_as_pdf" />
-          <v-icon v-else icon="description" />
-          <span
-            class="cursor-pointer"
-            style="margin-left: 10px"
-            @click="() => { scope.row.type !== 'file' ? handleFolder(scope.row.name) : clickFile(scope.row.name) }"
-          >
-            {{ scope.row.name }}
-          </span>
-        </div>
-      </template>
-    </el-table-column>
-    <el-table-column
-      v-if="!isMobile"
-      prop="lastModifiedDateTime"
-      :label="t('table.index.time')"
-      width="168"
-    />
-    <el-table-column
-      v-if="!isMobile"
-      :label="t('table.index.fileSize')"
-      width="120"
-    >
-      <template #default="scope">
-        <span style="margin-left: 10px">{{ (scope.row.size / 1000 / 1000).toFixed(2) }} MB</span>
-      </template>
-    </el-table-column>
-    <el-table-column
-      v-if="!isMobile"
-      :label="t('table.Optional')"
-      align="right"
-      width="100"
-    >
-      <template #default="scope">
-        <v-icon v-if="scope.row.type === 'file'" class="cursor-pointer" icon="download" @click="download(scope.row.url)" />
-        <v-icon v-if="scope.row.type === 'file'" class="cursor-pointer" icon="content_copy" @click="handleShare(scope.row.url)" />
-        <el-popconfirm
-          v-if="scope.row.type === 'file'"
-          title="确定要删除吗？"
-          :onConfirm="() => handleDelete(scope.row)"
-        >
-          <template #reference>
-            <v-icon class="cursor-pointer" icon="delete" />
-          </template>
-        </el-popconfirm>
-      </template>
-    </el-table-column>
-  </el-table>
+    @handleFolder="handleFolder"
+    @clickFile="clickFile"
+    @handleDelete="handleDelete"
+    @handleShare="handleShare"
+  />
   <v-card v-else class="mx-auto" :style="isMobile ? { width: '100%' } : { width: '66%' }">
     <!-- 文件预览 -->
     <VideoPreview v-if="!loading && fileInfo && isVideo(fileInfo.name)" class="m-4" :fileInfo="fileInfo" :storageInfo="storageInfo" />
