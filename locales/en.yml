@@ -31,6 +31,7 @@ button:
   backup: Backup
   selectFile: Select File
   restore: Restore
+  open: Open
 intro:
   desc: Opinionated Vite Starter Template
   dynamic-route: Demo of dynamic route

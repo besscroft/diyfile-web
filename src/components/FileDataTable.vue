@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { DataTableColumns } from 'naive-ui'
+import type { DataTableColumns, DropdownDividerOption, DropdownGroupOption, DropdownOption, DropdownRenderOption } from 'naive-ui'
 import { VIcon } from 'vuetify/components/VIcon'
-import { isAudio, isImage, isPDF, isVideo } from '~/utils/FileUtil'
+import { getFileName, isAudio, isImage, isPDF, isVideo } from '~/utils/FileUtil'
 import { download } from '~/utils/ButtonUtil'
 import PathTableNPopconfirm from '~/components/PathTableNPopconfirm.vue'
 
@@ -16,6 +16,10 @@ const dataList = defineProps(['value'])
 const emit = defineEmits(['handleFolder', 'clickFile', 'handleDelete', 'handleShare'])
 const { t } = useI18n()
 const { isMobile } = useDevice()
+const showDropdownRef = ref(false)
+const xRef = ref(0)
+const yRef = ref(0)
+const rowItem = ref<any>({})
 
 const handleDelete = (row: any) => {
   emit('handleDelete', row)
@@ -172,17 +176,114 @@ const createColumns = (): DataTableColumns<Title> => {
 }
 
 const columns = createColumns()
+
+const options = ref<Array<DropdownOption | DropdownGroupOption | DropdownDividerOption | DropdownRenderOption>>([])
+
+/** 点击下拉框元素 */
+const handleSelect = (row: string) => {
+  showDropdownRef.value = false
+  if (row === 'copy') {
+    emit('handleShare', rowItem.value.url)
+  } else if (row === 'open') {
+    rowItem.value.type !== 'file' ? emit('handleFolder', rowItem.value.name) : emit('clickFile', rowItem.value.name)
+  } else if (row === 'download') {
+    download(rowItem.value.url)
+  } else if (row === 'delete') {
+    handleDelete(rowItem.value)
+  }
+}
+
+const onClickOutSide = (row: any) => {
+  showDropdownRef.value = false
+}
+
+const rowProps = (row: Title) => {
+  return {
+    onContextmenu: (e: MouseEvent) => {
+      rowItem.value = row
+      e.preventDefault()
+      showDropdownRef.value = false
+      nextTick().then(() => {
+        showDropdownRef.value = true
+        xRef.value = e.clientX
+        yRef.value = e.clientY
+      })
+    },
+  }
+}
+
+watch(() => {
+  return rowItem.value
+}, (row) => {
+  options.value = [
+    {
+      label: t('button.open'),
+      key: 'open',
+    },
+    {
+      label: t('button.copy'),
+      key: 'copy',
+      show: row.type === 'file',
+    },
+    {
+      label: t('button.download'),
+      key: 'download',
+      show: row.type === 'file',
+    },
+    {
+      label: t('button.delete'),
+      key: 'delete',
+      show: row.type === 'file',
+    },
+  ]
+})
+
+onBeforeMount(() => {
+  options.value = [
+    {
+      label: t('button.open'),
+      key: 'open',
+    },
+    {
+      label: t('button.copy'),
+      key: 'copy',
+    },
+    {
+      label: t('button.edit'),
+      key: 'edit',
+    },
+    {
+      label: t('button.delete'),
+      key: 'delete',
+    },
+  ]
+})
 </script>
 
 <template>
-  <n-data-table
-    :columns="columns"
-    :data="dataList.value"
-    :bordered="false"
-    max-height="calc(100vh - 208px)"
-    size="small"
-    striped
-  />
+  <div
+    :style="isMobile ? { width: '100%' } : { width: '66%' }"
+  >
+    <n-data-table
+      :columns="columns"
+      :data="dataList.value"
+      :row-props="rowProps"
+      :bordered="false"
+      max-height="calc(100vh - 208px)"
+      size="small"
+      striped
+    />
+    <n-dropdown
+      placement="bottom-start"
+      trigger="manual"
+      :x="xRef"
+      :y="yRef"
+      :options="options"
+      :show="showDropdownRef"
+      :on-clickoutside="onClickOutSide"
+      @select="handleSelect"
+    />
+  </div>
 </template>
 
 <style scoped>

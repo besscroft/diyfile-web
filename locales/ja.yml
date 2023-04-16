@@ -31,6 +31,7 @@ button:
   backup: バックアップ
   selectFile: ファイルを選択
   restore: リストア
+  open: 開く
 intro:
   desc: 固執された Vite スターターテンプレート
   dynamic-route: 動的ルートのデモ
