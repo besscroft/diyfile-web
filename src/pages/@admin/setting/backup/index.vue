@@ -5,7 +5,6 @@ import { API_URL } from '../../../../../config/config'
 import { ResultEnum } from '~/enums/httpEnum'
 import { getBackupFile } from '~/api/modules/monitor'
 
-const router = useRouter()
 const { t } = useI18n()
 const message = useMessage()
 const user = useUserStore()

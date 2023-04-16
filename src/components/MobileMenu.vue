@@ -1,14 +1,46 @@
 <script setup lang="ts">
+import type { DropdownDividerOption, DropdownGroupOption, DropdownOption, DropdownRenderOption } from 'naive-ui'
 import { useI18n } from 'vue-i18n'
 
 const emit = defineEmits(['routerPage'])
 const { t } = useI18n()
 const router = useRouter()
 const activeItem = ref<string>('')
+const showDropdownRef = ref(false)
 
 /** 点击菜单事件 */
 const routerPage = (val: string) => {
   emit('routerPage', val)
+}
+
+const settingOptions = ref<Array<DropdownOption | DropdownGroupOption | DropdownDividerOption | DropdownRenderOption>>([
+  {
+    label: t('menu.setting.storage'),
+    key: '2_0',
+  },
+  {
+    label: t('menu.setting.backup'),
+    key: '2_1',
+  },
+  {
+    label: t('menu.setting.sync'),
+    key: '2_2',
+  },
+])
+const systemOptions = ref<Array<DropdownOption | DropdownGroupOption | DropdownDividerOption | DropdownRenderOption>>([
+  {
+    label: t('menu.system.setting'),
+    key: '3_0',
+  },
+  {
+    label: t('menu.system.user'),
+    key: '3_1',
+  },
+])
+
+const handleSelect = (path: string) => {
+  showDropdownRef.value = false
+  routerPage(path)
 }
 
 watch(router.currentRoute, (val) => {
@@ -21,42 +53,22 @@ onMounted(() => {
 </script>
 
 <template>
-  <el-row class="row-bg h-full items-center" justify="space-between">
-    <el-col :span="6">
-      <el-dropdown>
-        <v-btn value="setting" variant="text" :active="activeItem.startsWith('/@admin/setting')">
-          <v-icon>restore</v-icon>
-          {{ t('menu.setting.index') }}
-        </v-btn>
-        <template #dropdown>
-          <el-dropdown-menu>
-            <el-dropdown-item @click="routerPage('2_0')">{{ t('menu.setting.storage') }}</el-dropdown-item>
-            <el-dropdown-item @click="routerPage('2_1')">{{ t('menu.setting.backup') }}</el-dropdown-item>
-            <el-dropdown-item @click="routerPage('2_2')">{{ t('menu.setting.sync') }}</el-dropdown-item>
-          </el-dropdown-menu>
-        </template>
-      </el-dropdown>
-    </el-col>
-    <el-col :span="6">
-      <v-btn value="index" variant="text" :active="activeItem === '/@admin'" @click="routerPage('/@admin')">
-        <v-icon>dashboard</v-icon>
-        {{ t('menu.index') }}
+  <n-space class="flex justify-center items-center justify-space-around">
+    <n-dropdown trigger="hover" :options="settingOptions" @select="handleSelect">
+      <v-btn value="setting" variant="text" :active="activeItem.startsWith('/@admin/setting')">
+        <v-icon>restore</v-icon>
+        {{ t('menu.setting.index') }}
       </v-btn>
-    </el-col>
-    <el-col :span="6"><el-dropdown>
+    </n-dropdown>
+    <v-btn value="index" variant="text" :active="activeItem === '/@admin'" @click="routerPage('/@admin')">
+      <v-icon>dashboard</v-icon>
+      {{ t('menu.index') }}
+    </v-btn>
+    <n-dropdown trigger="hover" :options="systemOptions" @select="handleSelect">
       <v-btn value="system" variant="text" :active="activeItem.startsWith('/@admin/system')">
         <v-icon>settings_suggest</v-icon>
         {{ t('menu.system.index') }}
       </v-btn>
-      <template #dropdown>
-        <el-dropdown-menu>
-          <el-dropdown-item @click="routerPage('3_0')">{{ t('menu.system.setting') }}</el-dropdown-item>
-          <el-dropdown-item @click="routerPage('3_1')">{{ t('menu.system.user') }}</el-dropdown-item>
-        </el-dropdown-menu>
-      </template>
-    </el-dropdown></el-col>
-  </el-row>
+    </n-dropdown>
+  </n-space>
 </template>
-
-<style scoped>
-</style>

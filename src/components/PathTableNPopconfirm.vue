@@ -18,7 +18,3 @@ const handlePositiveClick = () => {
     确定要删除吗?
   </n-popconfirm>
 </template>
-
-<style scoped>
-
-</style>

@@ -118,7 +118,7 @@ onMounted(() => {
 <template>
   <n-grid x-gap="12" :cols="12" class="h-full">
     <n-gi :span="isMobile ? 4 : 3" class="flex items-center">
-      <span class="cursor-pointer inline-block h-10 w-32 rounded-lg" @click="routerPage('/')">
+      <span class="cursor-pointer inline-block h-10 w-32 rounded-lg ml-0.5" @click="routerPage('/')">
         <img
           src="/diyfile.png"
           :class="!isMobile ? 'transform scale-100' : 'transform scale-75'"
@@ -133,8 +133,9 @@ onMounted(() => {
       </n-dropdown>
       <v-btn variant="text" class="mx-2" size="x-small" :icon="isDark ? 'dark_mode' : 'light_mode'" @click="toggleTheme" />
       <n-dropdown v-if="(user.userName && isMobile) || (user.userName && !router.currentRoute.value.path.startsWith('/@'))" :options="avatarOptions || undefined" @select="handleAvatarSelect">
-        <el-avatar
-          alt="avatar"
+        <n-avatar
+          round
+          size="medium"
           :src="user.avatar"
         />
       </n-dropdown>

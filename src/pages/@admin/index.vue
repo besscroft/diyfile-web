@@ -68,7 +68,7 @@ onUnmounted(() => {
     </n-page-header>
   </n-card>
   <n-card content-style="padding: 0;" class="box-card h-full w-full overflow-auto" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
-    <n-grid cols="1 s:2 m:3 l:4 xl:4 2xl:4" responsive="screen" :x-gap="12" :y-gap="8" class="mx-0.5">
+    <n-grid cols="1 s:2 m:3 l:4 xl:4 2xl:4" responsive="screen" :x-gap="12" :y-gap="8">
       <n-grid-item>
         <n-card content-style="padding: 0.25rem;" class="box-card h-36">
           <div class="statistic-card flex h-full">
@@ -152,7 +152,7 @@ onUnmounted(() => {
         <span>欢迎通过 issues 提交建议或问题反馈，我们会尽快处理！</span>
         <n-divider title-placement="left"> 技术支持 </n-divider>
         <span>我提供免费技术支持，你可以通过邮邮件与我取得联系，非工作时间我会尽快回复。
-            Email: <a href="mailto:besscroft@foxmail.com"><b>旅行者</b></a></span>
+          Email: <a href="mailto:besscroft@foxmail.com"><b>旅行者</b></a></span>
       </n-grid-item>
     </n-grid>
   </n-card>

@@ -298,7 +298,7 @@ onMounted(() => {
     :style="isMobile ? { 'width': '100%', 'overflow-x': 'hidden !important' } : { 'width': '66%', 'overflow-x': 'hidden !important' }"
     class="mx-auto"
   >
-    <v-icon icon="cloud_upload" size="x-large"></v-icon>
+    <v-icon icon="cloud_upload" size="x-large" />
     <div class="el-upload__text">
       请选择文件上传，或拖拽文件到此处！
     </div>

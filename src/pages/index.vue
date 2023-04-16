@@ -4,7 +4,6 @@ import { ResultEnum } from '~/enums/httpEnum'
 
 const router = useRouter()
 const loading = ref<boolean>(true)
-const { isMobile } = useDevice()
 
 onBeforeMount(() => {
   getDefaultStorage().then((res) => {
