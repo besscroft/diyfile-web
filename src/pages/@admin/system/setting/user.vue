@@ -31,17 +31,13 @@ const handleUpdatePwd = () => {
     <v-text-field
       v-model="oldPwd"
       label="旧密码"
-    ></v-text-field>
+    />
     <v-text-field
       v-model="pwd"
       class="mt-2"
       label="新密码"
       append-inner-icon="download_done"
       @click:append-inner="handleUpdatePwd"
-    ></v-text-field>
+    />
   </div>
 </template>
-
-<style scoped>
-
-</style>

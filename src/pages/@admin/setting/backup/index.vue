@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { UploadInst, UploadFileInfo } from 'naive-ui'
+import type { UploadFileInfo, UploadInst } from 'naive-ui'
 import axios from 'axios'
 import { API_URL } from '../../../../../config/config'
 import { ResultEnum } from '~/enums/httpEnum'
@@ -110,8 +110,8 @@ const handleSubmitClick = () => {
           :default-upload="false"
           multiple
           :custom-request="onRequestUpload"
-          @change="handleFileChange"
           accept=".json"
+          @change="handleFileChange"
         >
           <v-btn prepend-icon="note_add" variant="text">
             {{ t('button.selectFile') }}

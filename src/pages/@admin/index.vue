@@ -62,7 +62,7 @@ onUnmounted(() => {
     <n-page-header :title="t('menu.index')" class="mx-0.5">
       <template #extra>
         <div class="flex items-center">
-          <v-btn icon="sync" variant="text" size="x-small" @click="handServerInfo"></v-btn>
+          <v-btn icon="sync" variant="text" size="x-small" @click="handServerInfo" />
         </div>
       </template>
     </n-page-header>

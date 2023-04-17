@@ -31,17 +31,13 @@ onMounted(() => {
       label="网站标题"
       append-inner-icon="download_done"
       @click:append-inner="() => handleUpdateSiteConfig('title', dataMap.title)"
-    ></v-text-field>
+    />
     <v-text-field
       v-model="dataMap.beian"
       class="mt-2"
       label="备案号"
       append-inner-icon="download_done"
       @click:append-inner="() => handleUpdateSiteConfig('beian', dataMap.beian)"
-    ></v-text-field>
+    />
   </div>
 </template>
-
-<style scoped>
-
-</style>

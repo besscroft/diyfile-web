@@ -1,23 +1,24 @@
 <script setup lang="ts">
+import type { SelectGroupOption, SelectOption } from 'naive-ui'
 import type { Sync } from '~/api/interface/Sync'
 import { getEnableStorage } from '~/api/modules/storage'
 import { taskAdd } from '~/api/modules/sync'
 import { ResultEnum } from '~/enums/httpEnum'
 
-const router = useRouter()
 const message = useMessage()
 const { t } = useI18n()
+const { isMobile } = useDevice()
 
 // 同步前存储 key
-const beforeStorageKey = ref<string>('')
+const beforeStorageKey = ref<string>()
 // 同步前存储路径
 const beforePath = ref<string>('')
 // 同步后存储 key
-const afterStorageKey = ref<string>('')
+const afterStorageKey = ref<string>()
 // 同步后存储路径
 const afterPath = ref<string>('')
-// 可用存储列表
-const storageList = ref()
+const storageOptions = ref<Array<SelectOption | SelectGroupOption>>([])
+
 const taskAddParam = reactive<Sync.TaskAddParam>({
   beforeStorageKey: '',
   beforePath: '',
@@ -40,11 +41,17 @@ const taskAddHandle = () => {
   })
 }
 
-onMounted(() => {
+onBeforeMount(() => {
   // 获取存储下拉框数据
   getEnableStorage().then((res) => {
     if (res.code === ResultEnum.SUCCESS && Array.isArray(res.data)) {
-      storageList.value = res.data
+      // 将 res.data 遍历插入 storageOptions
+      for (const item of res.data) {
+        storageOptions.value.push({
+          label: item.name,
+          value: item.storageKey,
+        })
+      }
     }
   }).catch((err) => {
     console.log(err)
@@ -63,51 +70,35 @@ onMounted(() => {
     </n-page-header>
   </n-card>
   <n-card content-style="padding: 0;" class="box-card h-full w-full overflow-auto" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
-    <el-row :gutter="10">
-      <el-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6" />
-      <el-col :xs="22" :sm="12" :md="12" :lg="12" :xl="12" :xxl="12">
+    <n-grid x-gap="12" :cols="isMobile ? 1 : 3">
+      <n-gi :offset="isMobile ? 0 : 1">
         <div class="flex flex-col space-y-3">
-          <el-select v-model="beforeStorageKey" class="mt-4" placeholder="请选择需要同步的存储 ...">
-            <el-option
-              v-for="item in storageList"
-              :key="item.value"
-              :label="item.name"
-              :value="item.storageKey"
-            />
-          </el-select>
-          <el-input v-model="beforePath" placeholder="请输入需要同步的文件或文件夹路径" clearable />
-          <el-select v-model="afterStorageKey" class="mt-4" placeholder="请选择同步到哪个存储 ...">
-            <el-option
-              v-for="item in storageList"
-              :key="item.value"
-              :label="item.name"
-              :value="item.storageKey"
-            />
-          </el-select>
-          <el-input v-model="afterPath" placeholder="请输入同步到的文件夹路径" clearable />
-          <el-alert
-            type="warning"
-            description="目前仅支持 OneDrive 同步，一般情况下需要填写正确的绝对路径。
-              比如说 /test/temp 文件夹同步到 /new 文件夹，或者 /test/123.txt 同步到 /new 文件夹"
-            show-icon
-            :closable="false"
+          <n-select
+            v-model:value="beforeStorageKey"
+            placeholder="请选择需要同步的存储"
+            :options="storageOptions"
+            class="mt-4"
           />
-          <el-alert
-            type="warning"
-            description="避免重复请求，以免造成资源浪费！同步前也请考量下配置，比如 512M 内存的小机器和 IO 性能极差的机器，就不建议跨存储同步大量大文件了..."
-            show-icon
-            :closable="false"
+          <n-input v-model:value="beforePath" type="text" placeholder="请输入需要同步的文件或文件夹路径" clearable />
+          <n-select
+            v-model:value="afterStorageKey"
+            placeholder="请选择同步到哪个存储"
+            :options="storageOptions"
+            class="mt-4"
           />
+          <n-input v-model:value="afterPath" type="text" placeholder="请输入同步到的文件夹路径" clearable />
+          <n-alert type="warning">
+            目前仅支持 OneDrive 同步，一般情况下需要填写正确的绝对路径。
+            比如说 /test/temp 文件夹同步到 /new 文件夹，或者 /test/123.txt 同步到 /new 文件夹
+          </n-alert>
+          <n-alert type="warning">
+            避免重复请求，以免造成资源浪费！同步前也请考量下配置，比如 512M 内存的小机器和 IO 性能极差的机器，就不建议跨存储同步大量大文件了...
+          </n-alert>
         </div>
-      </el-col>
-      <el-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6" />
-    </el-row>
+      </n-gi>
+    </n-grid>
   </n-card>
 </template>
-
-<style scoped>
-
-</style>
 
 <route lang="yaml">
 meta:

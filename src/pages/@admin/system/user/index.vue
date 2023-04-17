@@ -308,13 +308,11 @@ useUserPage('')
         </n-card>
       </n-grid-item>
     </n-grid>
-    <el-pagination
-      v-model:current-page="pageInfo.pageNum"
-      :page-size="pageInfo.pageSize"
-      layout="total, prev, pager, next"
-      :total="pageInfo.total"
-      hide-on-single-page
-      @current-change="(current) => { pageInfo.pageNum = current; useUserPage(roleFlag) }"
+    <n-pagination
+      v-model:page="pageInfo.pageNum"
+      v-model:page-size="pageInfo.pageSize"
+      :page-count="pageInfo.totalPage"
+      @update:page="(current) => { pageInfo.pageNum = current; useUserPage(roleFlag) }"
     />
   </n-card>
 </template>

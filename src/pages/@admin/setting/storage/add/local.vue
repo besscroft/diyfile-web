@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { FormInstance, FormRules } from 'element-plus'
+import type { FormInst, FormRules } from 'naive-ui'
 import type { Storage } from '~/api/interface/storage'
 import { storageAdd } from '~/api/modules/storage'
 import { ResultEnum } from '~/enums/httpEnum'
@@ -7,7 +7,8 @@ import { ResultEnum } from '~/enums/httpEnum'
 const { t } = useI18n()
 const message = useMessage()
 const router = useRouter()
-const ruleFormRef = ref<FormInstance>()
+const { isMobile } = useDevice()
+const formRef = ref<FormInst | null>(null)
 const addStorageForm = reactive({
   /** 存储名称 */
   name: '',
@@ -29,7 +30,7 @@ const addStorageData = ref<Storage.AddStorageRequestData>({
   configList: [],
 })
 
-const rules = reactive<FormRules>({
+const rules: FormRules = {
   name: [
     { required: true, message: '存储名称不能为空！', trigger: 'blur' },
     { max: 20, message: '存储名称长度不能大于 20', trigger: 'blur' },
@@ -41,7 +42,7 @@ const rules = reactive<FormRules>({
   mount_path: [
     { required: true, message: '挂载路径不能为空！', trigger: 'blur' },
   ],
-})
+}
 
 const list = ref<Array<Storage.StorageConfig>>([])
 const mount_path = ref<Storage.StorageConfig>({
@@ -60,12 +61,9 @@ const handleFormData = () => {
   addStorageData.value.configList = list.value
 }
 
-const handleSubmit = (formEl: FormInstance | undefined) => {
-  if (!formEl) {
-    return
-  }
-  formEl.validate((valid) => {
-    if (valid) {
+const handleSubmit = () => {
+  formRef.value?.validate((errors) => {
+    if (!errors) {
       addStorageData.value.name = addStorageForm.name
       addStorageData.value.storageKey = addStorageForm.storageKey
       addStorageData.value.remark = addStorageForm.remark
@@ -79,7 +77,8 @@ const handleSubmit = (formEl: FormInstance | undefined) => {
         message.error(err.message)
       })
     } else {
-      return false
+      console.log(errors)
+      message.error('请检查您的内容！')
     }
   })
 }
@@ -90,40 +89,29 @@ const handleSubmit = (formEl: FormInstance | undefined) => {
     <n-page-header :title="t('tip.cardTitle')" class="mx-0.5" @back="router.back()">
       <template #extra>
         <div class="flex items-center">
-          <v-btn icon="done" variant="text" size="x-small" @click="handleSubmit(ruleFormRef)" />
+          <v-btn icon="done" variant="text" size="x-small" @click="handleSubmit" />
         </div>
       </template>
     </n-page-header>
   </n-card>
   <n-card content-style="padding: 0.5rem;" class="box-card overflow-auto no-scrollbar" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
-    <el-row :gutter="10">
-      <el-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6" />
-      <el-col :xs="22" :sm="12" :md="12" :lg="12" :xl="12" :xxl="12">
-        <el-form
-          ref="ruleFormRef"
-          label-position="top"
-          :model="addStorageForm"
-          :rules="rules"
-        >
-          <el-form-item :label="t('storage.name')" prop="name" required>
-            <el-input v-model="addStorageForm.name" placeholder="请输入存储名称" maxlength="20" show-word-limit type="text" clearable />
-          </el-form-item>
-          <el-form-item label="storageKey" prop="storageKey" required>
-            <el-input v-model="addStorageForm.storageKey" placeholder="请输入 storageKey" maxlength="20" show-word-limit type="text" clearable />
-          </el-form-item>
-          <el-form-item :label="t('storage.remark')">
-            <el-input v-model="addStorageForm.remark" placeholder="请输入备注" maxlength="200" show-word-limit type="textarea" />
-          </el-form-item>
-        </el-form>
-      </el-col>
-      <el-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6" />
-    </el-row>
+    <n-grid x-gap="12" :cols="isMobile ? 1 : 3">
+      <n-gi :offset="isMobile ? 0 : 1">
+        <n-form ref="formRef" :model="addStorageForm" :rules="rules">
+          <n-form-item :label="t('storage.name')" path="name" required>
+            <n-input v-model:value="addStorageForm.name" placeholder="请输入存储名称" clearable show-count :maxlength="20" />
+          </n-form-item>
+          <n-form-item label="storageKey" path="storageKey" required>
+            <n-input v-model:value="addStorageForm.storageKey" placeholder="请输入 storageKey" clearable show-count :maxlength="20" />
+          </n-form-item>
+          <n-form-item :label="t('storage.remark')" path="remark">
+            <n-input v-model:value="addStorageForm.remark" type="textarea" placeholder="请输入备注" maxlength="160" show-count />
+          </n-form-item>
+        </n-form>
+      </n-gi>
+    </n-grid>
   </n-card>
 </template>
-
-<style scoped>
-
-</style>
 
 <route lang="yaml">
 meta:

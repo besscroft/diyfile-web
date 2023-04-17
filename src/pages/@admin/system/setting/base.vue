@@ -27,7 +27,7 @@ onMounted(() => {
       label="BarkId"
       append-inner-icon="download_done"
       @click:append-inner="() => handleUpdateBarkId(barkId)"
-    ></v-text-field>
+    />
   </div>
 </template>
 

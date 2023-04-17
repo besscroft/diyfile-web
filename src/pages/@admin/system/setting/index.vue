@@ -3,15 +3,13 @@ import Base from '~/pages/@admin/system/setting/base.vue'
 import User from '~/pages/@admin/system/setting/user.vue'
 import Web from '~/pages/@admin/system/setting/web.vue'
 
-const router = useRouter()
 const { t } = useI18n()
 const tab = ref(1)
 </script>
 
 <template>
   <n-card content-style="padding: 0;" class="my-0.5">
-    <n-page-header :title="t('menu.system.setting')" class="mx-0.5">
-    </n-page-header>
+    <n-page-header :title="t('menu.system.setting')" class="mx-0.5" />
   </n-card>
   <n-card content-style="padding: 0.5rem;" class="box-card h-full w-full overflow-auto" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
     <v-tabs
@@ -36,10 +34,6 @@ const tab = ref(1)
     </v-window>
   </n-card>
 </template>
-
-<style scoped>
-
-</style>
 
 <route lang="yaml">
 meta:
