@@ -127,6 +127,7 @@ const handleSubmit = () => {
             <n-input v-model:value="addUserRuleForm.email" placeholder="请输入邮箱" clearable />
           </n-form-item>
           <n-form-item :label="t('user.telephone')" path="telephone">
+            <n-input-group-label>+86</n-input-group-label>
             <n-input v-model:value="addUserRuleForm.telephone" placeholder="请输入手机号" clearable />
           </n-form-item>
           <n-form-item :label="t('storage.remark')" path="remark">

@@ -309,6 +309,7 @@ useUserPage('')
       </n-grid-item>
     </n-grid>
     <n-pagination
+      v-if="pageInfo.totalPage > 1"
       v-model:page="pageInfo.pageNum"
       v-model:page-size="pageInfo.pageSize"
       :page-count="pageInfo.totalPage"
