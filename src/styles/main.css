@@ -41,6 +41,10 @@ html.dark .el-card {
   display: none;
 }
 
+.el-header {
+  --el-header-padding: 0 !important;
+}
+
 .el-card__header {
   padding: 0 !important;
 }

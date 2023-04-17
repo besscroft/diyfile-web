@@ -2,10 +2,8 @@
 import { getDefaultStorage } from '~/api/modules/file'
 import { ResultEnum } from '~/enums/httpEnum'
 
-const { t } = useI18n()
 const router = useRouter()
 const loading = ref<boolean>(true)
-const { isMobile } = useDevice()
 
 onBeforeMount(() => {
   getDefaultStorage().then((res) => {
@@ -24,14 +22,10 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <el-skeleton
-    v-if="loading"
-    :rows="5"
-    animated
-    :style="isMobile ? { 'width': '100%', 'overflow-x': 'hidden !important' } : { 'width': '66%', 'overflow-x': 'hidden !important' }"
-    class="mx-auto"
-  />
-  <p v-else>什么都没有呢！请登录后进入后台进行配置！</p>
+  <div v-if="loading" class="flex justify-center mt-7">
+    <n-spin size="medium" />
+  </div>
+  <n-result v-else status="404" title="什么都没有呢！请登录后进入后台进行配置！" description="生活总归带点荒谬" />
 </template>
 
 <route lang="yaml">

@@ -5,7 +5,7 @@ import { ResultEnum } from '~/enums/httpEnum'
 
 const { t } = useI18n()
 const user = useUserStore()
-const snackbar = useSnackbarStore()
+const message = useMessage()
 
 const loginForm = reactive<Login.ReqLoginForm>({
   username: '',
@@ -15,7 +15,7 @@ const loginForm = reactive<Login.ReqLoginForm>({
 const handleSubmit = () => {
   loginApi(loginForm).then(async (res) => {
     if (res.code === ResultEnum.SUCCESS) {
-      snackbar.success('登录成功')
+      message.success(res.message)
       const token = res.data.tokenValue
       user.setUserName('')
       user.setAvatar('')
@@ -105,8 +105,8 @@ const handleSubmit = () => {
         </div>
 
         <button
-          @click="handleSubmit"
           class="block w-full rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white"
+          @click="handleSubmit"
         >
           {{ t('button.login') }}
         </button>

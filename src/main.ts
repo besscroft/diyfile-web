@@ -12,14 +12,14 @@ import 'vuetify/styles'
 import '@unocss/reset/tailwind.css'
 import './styles/main.css'
 import 'uno.css'
-import 'element-plus/theme-chalk/dark/css-vars.css'
 import 'aplayer/dist/APlayer.min.css'
 import { AxiosCanceler } from '~/api/helper/axiosCancel'
 import { ResultEnum } from '~/enums/httpEnum'
 import { getInfo } from '~/api/modules/user'
+import { setupNaiveDiscreteApi } from '~/plugins/naiveDiscreteApi'
 
 /* global */
-console.log(`${'\n'} %c DiyFile v0.4.1 %c https://github.com/besscroft/diyfile ${'\n'}${'\n'}`, 'color: #fadfa3; background: #030307; padding:5px 0;', 'background: #fadfa3; padding:5px 0;')
+console.log(`${'\n'} %c DiyFile v0.5.0 %c https://github.com/besscroft/diyfile ${'\n'}${'\n'}`, 'color: #fadfa3; background: #030307; padding:5px 0;', 'background: #fadfa3; padding:5px 0;')
 
 generatedRoutes.push({
   path: '/',
@@ -49,7 +49,7 @@ export const createApp = ViteSSG(
       .forEach(i => i.install?.(ctx))
     const pinia = createPinia()
     pinia.use(piniaPluginPersistedstate)
-    ctx.app.use(pinia).use(vuetify)
+    ctx.app.use(pinia).use(vuetify).use(setupNaiveDiscreteApi)
     if (ctx.isClient) {
       ctx.router.beforeEach(async (to, from, next) => {
         axiosCanceler.removeAllPending()

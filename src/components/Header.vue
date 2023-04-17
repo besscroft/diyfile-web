@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { DropdownDividerOption, DropdownGroupOption, DropdownOption, DropdownRenderOption } from 'naive-ui'
 import { useTheme } from 'vuetify'
 import { getSiteTitle } from '~/api/modules/systemConfig'
 
@@ -11,11 +12,28 @@ const user = useUserStore()
 const username = ref<string>('')
 const avatar = ref<string>('')
 const { isMobile } = useDevice()
+const showDropdownRef = ref(false)
 const theme = useTheme()
 
 const toggleTheme = () => {
   emit('toggleTheme')
 }
+
+const localesOptions = ref<Array<DropdownOption | DropdownGroupOption | DropdownDividerOption | DropdownRenderOption>>([
+  {
+    label: '简体中文',
+    key: 'zh-CN',
+  },
+  {
+    label: 'English',
+    key: 'en',
+  },
+  {
+    label: '日本語',
+    key: 'ja',
+  },
+])
+const avatarOptions = ref<Array<DropdownOption | DropdownGroupOption | DropdownDividerOption | DropdownRenderOption>>([])
 
 /** 路由切换 */
 const routerPage = (val: string) => {
@@ -30,18 +48,31 @@ const routerPage = (val: string) => {
   }
 }
 
-/** 切换语言 */
-const toggleLocales = (item: any) => {
-  locale.value = item
-  user.setLanguage(item)
-  localStorage.setItem('diyfile-locale', item)
-}
-
 /** 退出登录 */
 const loginOut = () => {
   localStorage.setItem('user', '')
   localStorage.setItem('diyfile-token', '')
   window.location.href = '/'
+}
+
+/** 头像下拉框操作 */
+const handleAvatarSelect = (key: string) => {
+  if (key === 'index') {
+    routerPage('/@admin')
+  } else if (key === 'home') {
+    routerPage('/')
+  } else if (key === 'quit') {
+    loginOut()
+  }
+  showDropdownRef.value = false
+}
+
+/** 切换语言 */
+const toggleLocales = (item: any) => {
+  showDropdownRef.value = false
+  locale.value = item
+  user.setLanguage(item)
+  localStorage.setItem('diyfile-locale', item)
 }
 
 onMounted(() => {
@@ -62,72 +93,55 @@ onMounted(() => {
       }
     })
   }
+  // 头像下拉框数组参数设置
+  avatarOptions.value = []
+  if (!router.currentRoute.value.path.startsWith('/@')) {
+    avatarOptions.value.push({
+      label: t('menu.index'),
+      key: 'index',
+    })
+  } else {
+    avatarOptions.value.push({
+      label: t('button.home'),
+      key: 'home',
+    })
+  }
+  if (user.token) {
+    avatarOptions.value.push({
+      label: t('button.quit'),
+      key: 'quit',
+    })
+  }
 })
 </script>
 
 <template>
-  <el-row :gutter="20" class="h-full w-full flex justify-center items-center">
-    <el-col :span="4">
-      <span class="cursor-pointer inline-block h-10 w-32 rounded-lg" @click="routerPage('/')">
+  <n-grid x-gap="12" :cols="12" class="h-full">
+    <n-gi :span="isMobile ? 4 : 3" class="flex items-center">
+      <span class="cursor-pointer inline-block h-10 w-32 rounded-lg ml-0.5" @click="routerPage('/')">
         <img
           src="/diyfile.png"
           :class="!isMobile ? 'transform scale-100' : 'transform scale-75'"
           alt="logo"
         >
       </span>
-    </el-col>
-    <el-col :span="16">
-      <div v-if="!isMobile" class="flex gap-4 justify-center items-center">
-      </div>
-    </el-col>
-    <el-col :span="4">
-      <div class="avatar-container">
-        <el-dropdown>
-          <v-btn variant="text" size="small" icon="translate"></v-btn>
-          <template #dropdown>
-            <el-dropdown-menu>
-              <el-dropdown-item @click="toggleLocales('zh-CN')"> 简体中文 </el-dropdown-item>
-              <el-dropdown-item @click="toggleLocales('en')"> English </el-dropdown-item>
-              <el-dropdown-item @click="toggleLocales('ja')"> 日本語 </el-dropdown-item>
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
-        <v-btn variant="text" class="mx-2" size="small" :icon="isDark ? 'dark_mode' : 'light_mode'" @click="toggleTheme"></v-btn>
-        <el-dropdown v-if="(user.userName && isMobile) || (user.userName && !router.currentRoute.value.path.startsWith('/@'))">
-          <el-avatar
-            alt="avatar"
-            :src="user.avatar"
-          />
-          <template #dropdown>
-            <el-dropdown-menu>
-              <el-dropdown-item v-if="!router.currentRoute.value.path.startsWith('/@')" @click="routerPage('/@admin')">
-                {{ t('menu.index') }}
-              </el-dropdown-item>
-              <el-dropdown-item v-else @click="routerPage('/')">
-                {{ t('button.home') }}
-              </el-dropdown-item>
-              <el-dropdown-item v-if="user.token" @click="loginOut">
-                {{ t('button.quit') }}
-              </el-dropdown-item>
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
-        <v-btn v-else-if="(!user.userName && isMobile) || (!user.userName && !router.currentRoute.value.path.startsWith('/@'))" prepend-icon="login" @click="routerPage('/@login')">
-          {{ t('button.login') }}
-        </v-btn>
-      </div>
-    </el-col>
-  </el-row>
+    </n-gi>
+    <n-gi :span="isMobile ? 2 : 6" />
+    <n-gi :span="isMobile ? 6 : 3" class="flex items-center justify-end mr-0.5rem">
+      <n-dropdown :options="localesOptions || undefined" @select="toggleLocales">
+        <v-btn icon="translate" variant="text" size="x-small" />
+      </n-dropdown>
+      <v-btn variant="text" class="mx-2" size="x-small" :icon="isDark ? 'dark_mode' : 'light_mode'" @click="toggleTheme" />
+      <n-dropdown v-if="(user.userName && isMobile) || (user.userName && !router.currentRoute.value.path.startsWith('/@'))" :options="avatarOptions || undefined" @select="handleAvatarSelect">
+        <n-avatar
+          round
+          size="medium"
+          :src="user.avatar"
+        />
+      </n-dropdown>
+      <v-btn v-else-if="(!user.userName && isMobile) || (!user.userName && !router.currentRoute.value.path.startsWith('/@'))" prepend-icon="login" @click="routerPage('/@login')">
+        {{ t('button.login') }}
+      </v-btn>
+    </n-gi>
+  </n-grid>
 </template>
-
-<style scoped>
-.avatar-container {
-  height: 60px;
-  line-height: 60px;
-  margin-right: -24px;
-  display: flex;
-  justify-content: flex-end;
-  /** 垂直居中 */
-  align-items: center;
-}
-</style>

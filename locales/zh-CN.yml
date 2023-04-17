@@ -31,6 +31,7 @@ button:
   backup: 备份
   selectFile: 选择文件
   restore: 恢复
+  open: 打开
 intro:
   desc: 固执己见的 Vite 项目模板
   dynamic-route: 动态路由演示

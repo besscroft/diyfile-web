@@ -1,7 +1,7 @@
 <script setup lang="ts">
-const { t } = useI18n()
+import { darkTheme } from 'naive-ui'
+
 const user = useUserStore()
-const snackbar = useSnackbarStore()
 // https://github.com/vueuse/head
 // you can use this to manipulate the document head in any components,
 // they will be rendered correctly in the html results with vite-ssg
@@ -25,23 +25,12 @@ useHead({
 </script>
 
 <template>
-  <RouterView />
-  <v-snackbar
-    v-model="snackbar.active"
-    location="top"
-    timeout="1000"
-    multi-line
+  <NConfigProvider
+    class="w-full h-full"
+    :theme="isDark ? darkTheme : undefined"
   >
-    {{ snackbar.text }}
-
-    <template v-slot:actions>
-      <v-btn
-        :color="snackbar.color || 'light-blue'"
-        variant="text"
-        @click="snackbar.active = false"
-      >
-        {{ t('button.go') }}
-      </v-btn>
-    </template>
-  </v-snackbar>
+    <Application>
+      <RouterView />
+    </Application>
+  </NConfigProvider>
 </template>

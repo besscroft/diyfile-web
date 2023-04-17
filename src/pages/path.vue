@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import { ArrowDown, Check, MostlyCloudy } from '@element-plus/icons-vue'
+import type { DropdownDividerOption, DropdownGroupOption, DropdownOption, DropdownRenderOption } from 'naive-ui'
 import { deleteFile, getFileInfo, getFileItemByKey, getUploadUrl } from '~/api/modules/file'
 import { getEnableStorage, storageInfoByStorageKey } from '~/api/modules/storage'
 import { ResultEnum } from '~/enums/httpEnum'
 import type { Storage } from '~/types/storage'
-import { download } from '~/utils/ButtonUtil'
 import { getFileName, isAudio, isImage, isMarkdown, isPDF, isText, isVideo } from '~/utils/FileUtil'
 import { uploadOneDrive } from '~/utils/uploadFileUtil'
+import FileDataTable from '~/components/FileDataTable.vue'
 
 const { text, copy, copied } = useClipboard()
 const { isMobile } = useDevice()
 const { t } = useI18n()
-const user = useUserStore()
-const snackbar = useSnackbarStore()
+const showDropdownRef = ref(false)
+const message = useMessage()
 const router = useRouter()
 const storageKey = ref()
 const dataList = ref()
@@ -20,7 +20,6 @@ const fileInfo = ref()
 const loading = ref<boolean>(true)
 const uploadView = ref<boolean>(false)
 const storageList = ref()
-const storageName = ref<string>()
 const storageInfo = ref<Storage>()
 // 面包屑路由
 const routes = ref<Array<any>>([
@@ -30,46 +29,72 @@ const routes = ref<Array<any>>([
   },
 ])
 
-/** 获取存储信息 */
-const getStorageInfo = (key: string) => {
-  if (!storageInfo.value || storageInfo.value?.storageKey !== key) {
-    storageInfoByStorageKey(key).then((res) => {
-      if (res.code === ResultEnum.SUCCESS) {
-        storageInfo.value = res.data
-      }
-    })
-  }
-}
-
-/** 获取所有可用存储并处理 */
-const handleEnableStorage = () => {
-  getEnableStorage().then((res) => {
-    if (res.code === ResultEnum.SUCCESS && Array.isArray(res.data)) {
-      for (const resKey in res.data) {
-        if (res.data[resKey].storageKey === storageKey.value) {
-          storageName.value = res.data[resKey].name
-        }
-      }
-      storageList.value = res.data
-    }
-  })
-}
+const tableOptions = ref<Array<DropdownOption | DropdownGroupOption | DropdownDividerOption | DropdownRenderOption>>([])
 
 /** 选择框发生变化 */
-const handleSelectChange = (name: string, value: string) => {
+const handleSelectChange = (value: string) => {
   if (value !== storageKey.value) {
     storageKey.value = value
     fileInfo.value = null
     dataList.value = null
     uploadView.value = false
-    storageName.value = name
     router.push(`/${value}`)
   }
 }
 
+/** 下拉菜单处理 */
+const handleTableSelect = (key: string) => {
+  showDropdownRef.value = false
+  if (key === 'upload') {
+    uploadView.value = true
+    return
+  }
+  handleSelectChange(key)
+}
+
+/** 获取存储信息 */
+const getStorageInfo = (key: string): any => {
+  if (!storageInfo.value || storageInfo.value?.storageKey !== key) {
+    storageInfoByStorageKey(key).then((res) => {
+      storageInfo.value = res.data
+      return res.data
+    })
+  }
+  return undefined
+}
+
+/** 下拉菜单数组处理 */
+const handleTableOption = (info: Storage, storages: any) => {
+  tableOptions.value = []
+  tableOptions.value.push({
+    label: '上传',
+    key: 'upload',
+  })
+  tableOptions.value.push({
+    type: 'divider',
+    key: 'd1',
+  })
+  for (const resKey in storages) {
+    tableOptions.value.push({
+      label: storages[resKey].name,
+      key: storages[resKey].storageKey,
+    })
+  }
+}
+
+/** 获取所有可用存储并处理 */
+const handleEnableStorage = (info: Storage) => {
+  getEnableStorage().then((res) => {
+    if (res.code === ResultEnum.SUCCESS && Array.isArray(res.data)) {
+      // 下拉菜单内容
+      handleTableOption(info, res.data)
+      storageList.value = res.data
+    }
+  })
+}
+
 /** 自定义上传请求 */
 const onRequestUpload = (option: any) => {
-  console.log(option)
   const fileItem = option.file
   const fullPath = router.currentRoute.value.fullPath
   let uri = ''
@@ -111,7 +136,7 @@ const handleFolder = (path: string) => {
 const handleShare = (url: string) => {
   copy(url)
   if (copied) {
-    snackbar.success(t('button.copyOk'))
+    message.success(t('button.copyOk'))
   }
 }
 
@@ -162,7 +187,7 @@ const handleDelete = (option: any) => {
   }
   deleteFile(storageKey.value, url).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
-      snackbar.success(res.message)
+      message.success(res.message)
       handleRouter()
     }
   })
@@ -219,8 +244,7 @@ watch(() => {
 onMounted(() => {
   const path = router.currentRoute.value.params.path
   const key = router.currentRoute.value.params.storageKey
-  getStorageInfo(key.toString())
-  handleEnableStorage()
+  handleEnableStorage(getStorageInfo(key.toString()))
   try {
     const fullPath = router.currentRoute.value.path
     const uri = fullPath.slice(`/${key}`.length, fullPath.length)
@@ -242,45 +266,30 @@ onMounted(() => {
 </script>
 
 <template>
-  <nav
-    :style="isMobile ? { 'width': '100%', 'overflow-x': 'hidden !important' } : { 'width': '66%', 'overflow-x': 'hidden !important' }"
-    className="flex flex-row items-center mx-auto justify-between -mt-3"
-  >
-    <div class="flex no-scrollbar inline-flex items-center overflow-x-scroll">
-      <v-icon start icon="share" />
-      <v-chip
-        variant="text"
-        label
-        :style="isDark ? { 'overflow-x': 'auto', 'scrollbar-width': 'none', '-ms-overflow-style': 'none', 'background': '#16161A !important' } : { 'overflow-x': 'auto', 'scrollbar-width': 'none', '-ms-overflow-style': 'none', 'background': '#FFFFFF !important' }"
-        class="-ml-1"
-      >
-        <v-breadcrumbs
-          class="mx-auto text-sm"
-          :items="routes"
-          density="compact"
-        />
-      </v-chip>
-    </div>
-    <el-dropdown>
-      <span class="el-dropdown-link">
-        <el-icon class="mr-1 el-icon--right"><ArrowDown /></el-icon>
-      </span>
-      <template #dropdown>
-        <el-dropdown-menu>
-          <el-dropdown-item v-if="!loading && storageInfo.type === 1" @click="uploadView = true">上传</el-dropdown-item>
-          <el-dropdown-item
-            v-for="(item, index) in storageList"
-            :key="item.name"
-            :icon="storageKey === item.storageKey ? Check : MostlyCloudy"
-            :divided="index === 0 && !loading && storageInfo.type === 1"
-            @click="handleSelectChange(item.name, item.storageKey)"
-          >
-            {{ item.name }}
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </template>
-    </el-dropdown>
-  </nav>
+  <div class="flex justify-center items-center mx-auto" :style="isMobile ? { width: '100%', height: '22px' } : { width: '66%', height: '22px' }">
+    <n-icon size="16">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
+        <path d="M17 11h3a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-3a2 2 0 0 0-2 2v1H9.01V5a2 2 0 0 0-2-2H4c-1.1 0-2 .9-2 2v4a2 2 0 0 0 2 2h3a2 2 0 0 0 2-2V8h2v7.01c0 1.65 1.34 2.99 2.99 2.99H15v1a2 2 0 0 0 2 2h3a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-3a2 2 0 0 0-2 2v1h-1.01c-.54 0-.99-.45-.99-.99V8h2v1c0 1.1.9 2 2 2z" fill="currentColor"></path>
+      </svg>
+    </n-icon>
+    <n-scrollbar
+      x-scrollable
+      style="height: 28px"
+    >
+      <n-breadcrumb>
+        <n-breadcrumb-item v-for="item in routes" :key="item" :href="item.href">
+          {{ item.title }}
+        </n-breadcrumb-item>
+      </n-breadcrumb>
+    </n-scrollbar>
+    <n-dropdown :options="tableOptions || undefined" @select="handleTableSelect">
+      <n-icon size="16" class="cursor-pointer">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
+          <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6l-6-6l1.41-1.41z" fill="currentColor"></path>
+        </svg>
+      </n-icon>
+    </n-dropdown>
+  </div>
   <el-upload
     v-if="!loading && uploadView"
     drag
@@ -289,84 +298,24 @@ onMounted(() => {
     :style="isMobile ? { 'width': '100%', 'overflow-x': 'hidden !important' } : { 'width': '66%', 'overflow-x': 'hidden !important' }"
     class="mx-auto"
   >
-    <v-icon icon="cloud_upload" size="x-large"></v-icon>
+    <v-icon icon="cloud_upload" size="x-large" />
     <div class="el-upload__text">
       请选择文件上传，或拖拽文件到此处！
     </div>
   </el-upload>
-  <el-skeleton
-    v-if="loading"
-    :rows="5"
-    animated
-    :style="isMobile ? { 'width': '100%', 'overflow-x': 'hidden !important' } : { 'width': '66%', 'overflow-x': 'hidden !important' }"
-    class="mx-auto"
-  />
-  <el-table
+  <div v-if="loading" class="flex justify-center mt-7">
+    <n-spin size="medium" />
+  </div>
+  <FileDataTable
     v-else-if="!loading && !fileInfo && dataList"
-    v-loading="loading"
-    :data="dataList"
-    :style="isMobile ? { 'width': '100%', 'overflow-x': 'hidden !important' } : { 'width': '66%', 'overflow-x': 'hidden !important' }"
-    height="97%"
+    :value="dataList"
+    :style="isMobile ? { width: '100%' } : { width: '66%' }"
     class="mx-auto"
-    stripe
-  >
-    <el-table-column
-      :label="t('table.index.fileName')"
-    >
-      <template #default="scope">
-        <div style="display: flex; align-items: center">
-          <v-icon v-if="scope.row.type !== 'file'" icon="folder" />
-          <v-icon v-else-if="isImage(scope.row.name)" icon="image" />
-          <v-icon v-else-if="isVideo(scope.row.name)" icon="video_library" />
-          <v-icon v-else-if="isAudio(scope.row.name)" icon="music_note" />
-          <v-icon v-else-if="isPDF(scope.row.name)" icon="picture_as_pdf" />
-          <v-icon v-else icon="description" />
-          <span
-            class="cursor-pointer"
-            style="margin-left: 10px"
-            @click="() => { scope.row.type !== 'file' ? handleFolder(scope.row.name) : clickFile(scope.row.name) }"
-          >
-            {{ scope.row.name }}
-          </span>
-        </div>
-      </template>
-    </el-table-column>
-    <el-table-column
-      v-if="!isMobile"
-      prop="lastModifiedDateTime"
-      :label="t('table.index.time')"
-      width="160"
-    />
-    <el-table-column
-      v-if="!isMobile"
-      :label="t('table.index.fileSize')"
-      width="120"
-    >
-      <template #default="scope">
-        <span style="margin-left: 10px">{{ (scope.row.size / 1000 / 1000).toFixed(2) }} MB</span>
-      </template>
-    </el-table-column>
-    <el-table-column
-      v-if="!isMobile"
-      :label="t('table.Optional')"
-      align="right"
-      width="100"
-    >
-      <template #default="scope">
-        <v-icon v-if="scope.row.type === 'file'" class="cursor-pointer" icon="download" @click="download(scope.row.url)" />
-        <v-icon v-if="scope.row.type === 'file'" class="cursor-pointer" icon="content_copy" @click="handleShare(scope.row.url)" />
-        <el-popconfirm
-          v-if="scope.row.type === 'file'"
-          title="确定要删除吗？"
-          :onConfirm="() => handleDelete(scope.row)"
-        >
-          <template #reference>
-            <v-icon class="cursor-pointer" icon="delete" />
-          </template>
-        </el-popconfirm>
-      </template>
-    </el-table-column>
-  </el-table>
+    @handleFolder="handleFolder"
+    @clickFile="clickFile"
+    @handleDelete="handleDelete"
+    @handleShare="handleShare"
+  />
   <v-card v-else class="mx-auto" :style="isMobile ? { width: '100%' } : { width: '66%' }">
     <!-- 文件预览 -->
     <VideoPreview v-if="!loading && fileInfo && isVideo(fileInfo.name)" class="m-4" :fileInfo="fileInfo" :storageInfo="storageInfo" />
@@ -376,8 +325,8 @@ onMounted(() => {
     <TextPreview v-else-if="!loading && fileInfo && isText(fileInfo.name)" class="m-4" :fileInfo="fileInfo" :storageInfo="storageInfo" />
     <PDFPreview v-else-if="!loading && fileInfo && isPDF(fileInfo.name)" class="m-4" :fileInfo="fileInfo" :storageInfo="storageInfo" />
     <OtherPreview v-else-if="!loading && fileInfo" :fileInfo="fileInfo" class="m-4" :storageInfo="storageInfo" />
-    <p v-else-if="!fileInfo && !dataList">什么都没有呢！请登录后进入后台进行配置！</p>
-    <p v-else>Oops！发生了意外情况，也许是网络不稳定、格式不支持或者出现了 Bug~</p>
+    <n-result v-else-if="!fileInfo && !dataList" status="404" title="什么都没有呢！请登录后进入后台进行配置！" description="生活总归带点荒谬" />
+    <n-result v-else status="500" title="Oops！发生了意外情况，也许是网络不稳定、格式不支持或者出现了 Bug~" description="生活总归带点荒谬" />
   </v-card>
 </template>
 

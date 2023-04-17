@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import type { FormInstance, FormRules } from 'element-plus'
+import type { FormInst, FormRules } from 'naive-ui'
 import type { Storage } from '~/api/interface/storage'
 import { getAwsRegions, storageInfo, storageUpdate } from '~/api/modules/storage'
 import { ResultEnum } from '~/enums/httpEnum'
 
 const { t } = useI18n()
 const router = useRouter()
-const snackbar = useSnackbarStore()
-const ruleFormRef = ref<FormInstance>()
+const message = useMessage()
+const { isMobile } = useDevice()
+const formRef = ref<FormInst | null>(null)
 const loading = ref<boolean>(false)
-const regionList = ref<Array<String>>()
+const regionList = ref<Array<string>>()
 const updateStorageForm = reactive({
   /** 存储id */
   id: undefined,
@@ -42,7 +43,7 @@ const updateStorageData = ref<Storage.UpdateStorageRequestData>({
   configList: [],
 })
 
-const rules = reactive<FormRules>({
+const rules: FormRules = {
   name: [
     { required: true, message: '存储名称不能为空！', trigger: 'blur' },
     { max: 20, message: '存储名称长度不能大于 20', trigger: 'blur' },
@@ -65,7 +66,7 @@ const rules = reactive<FormRules>({
   mount_path: [
     { required: true, message: '挂载路径不能为空！', trigger: 'blur' },
   ],
-})
+}
 
 const list = ref<Array<Storage.StorageConfig>>([])
 const endpoint = ref<Storage.StorageConfig>({
@@ -134,12 +135,9 @@ const handleFormData = () => {
   updateStorageData.value.configList = list.value
 }
 
-const handleSubmit = (formEl: FormInstance | undefined) => {
-  if (!formEl) {
-    return
-  }
-  formEl.validate((valid) => {
-    if (valid) {
+const handleSubmit = () => {
+  formRef.value?.validate((errors) => {
+    if (!errors) {
       updateStorageData.value.id = updateStorageForm.id
       updateStorageData.value.name = updateStorageForm.name
       updateStorageData.value.storageKey = updateStorageForm.storageKey
@@ -148,14 +146,15 @@ const handleSubmit = (formEl: FormInstance | undefined) => {
       handleFormData()
       storageUpdate(updateStorageData.value).then((res) => {
         if (res.code === ResultEnum.SUCCESS) {
-          snackbar.success(res.message)
+          message.success(res.message)
           router.push('/@admin/setting/storage')
         }
       }).catch((err) => {
-        snackbar.error(err.message)
+        message.error(err.message)
       })
     } else {
-      return false
+      console.log(errors)
+      message.error('请检查您的内容！')
     }
   })
 }
@@ -200,80 +199,58 @@ onBeforeMount(() => {
     }
     loading.value = false
   }).catch((err) => {
-    snackbar.success(err.message)
+    message.success(err.message)
     loading.value = false
   })
 })
 </script>
 
 <template>
-  <el-card :body-style="{ padding: '0.25rem' }" class="my-1 h-10" shadow="never">
-    <el-page-header @back="router.back()">
-      <template #content>
-        <div class="flex items-center">
-          <span class="text-large font-400 mr-2"> {{ t('tip.cardTitle') }} </span>
-        </div>
-      </template>
+  <n-card content-style="padding: 0;" class="my-0.5">
+    <n-page-header :title="t('tip.cardTitle')" class="mx-0.5" @back="router.back()">
       <template #extra>
         <div class="flex items-center">
-          <v-btn icon="done" variant="text" size="x-small" @click="handleSubmit(ruleFormRef)" />
+          <v-btn icon="done" variant="text" size="x-small" @click="handleSubmit" />
         </div>
       </template>
-    </el-page-header>
-  </el-card>
-  <el-card :body-style="{ padding: '1rem' }" class="box-card overflow-auto no-scrollbar" style="height: calc(100% - 4rem); -ms-overflow-style: none;" shadow="never">
-    <el-row :gutter="10">
-      <el-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6" />
-      <el-col :xs="22" :sm="12" :md="12" :lg="12" :xl="12" :xxl="12">
-        <el-form
-          ref="ruleFormRef"
-          label-position="top"
-          :model="updateStorageForm"
-          :rules="rules"
-        >
-          <el-form-item :label="t('storage.name')" prop="name" required>
-            <el-input v-model="updateStorageForm.name" placeholder="请输入存储名称" maxlength="20" show-word-limit type="text" clearable />
-          </el-form-item>
-          <el-form-item label="storageKey">
-            <el-input v-model="updateStorageForm.storageKey" disabled />
-          </el-form-item>
-          <el-form-item label="BucketName" prop="bucketName" required>
-            <el-input v-model="updateStorageForm.bucketName" placeholder="AWS S3 Bucket 名称" clearable />
-            <p class="text-xs">{{ bucketName.description }}</p>
-          </el-form-item>
-          <el-form-item label="Endpoint" prop="endpoint" required>
-            <el-input v-model="updateStorageForm.endpoint" placeholder="请输入Bucket 地域的 Endpoint" clearable />
-            <p class="text-xs">{{ endpoint.description }}</p>
-          </el-form-item>
-          <el-form-item label="Region" prop="region" required>
-            <el-input v-model="updateStorageForm.region" placeholder="请输入Bucket 地域的 Region" clearable />
-            <p class="text-xs">{{ region.description }}</p>
-          </el-form-item>
-          <el-form-item label="AccessKey" prop="accessKey" required>
-            <el-input v-model="updateStorageForm.accessKey" placeholder="请输入 AccessKey" clearable />
-            <p class="text-xs">{{ accessKey.description }}</p>
-          </el-form-item>
-          <el-form-item label="SecretKey" prop="secretKey" required>
-            <el-input v-model="updateStorageForm.secretKey" placeholder="请输入 SecretKey" clearable />
-            <p class="text-xs">{{ secretKey.description }}</p>
-          </el-form-item>
-          <el-form-item label="挂载路径" prop="mount_path" required>
-            <el-input v-model="updateStorageForm.mount_path" placeholder="请输入挂载路径" clearable />
-            <p class="text-xs">{{ mount_path.description }}</p>
-          </el-form-item>
-          <el-form-item :label="t('storage.remark')">
-            <el-input v-model="updateStorageForm.remark" placeholder="请输入备注" maxlength="200" show-word-limit type="textarea" />
-          </el-form-item>
-        </el-form>
-      </el-col>
-      <el-col :xs="1" :sm="6" :md="6" :lg="6" :xl="6" :xxl="6" />
-    </el-row>
-  </el-card>
+    </n-page-header>
+  </n-card>
+  <n-card content-style="padding: 0.5rem;" class="box-card overflow-auto no-scrollbar" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
+    <n-grid x-gap="12" :cols="isMobile ? 1 : 3">
+      <n-gi :offset="isMobile ? 0 : 1">
+        <n-form ref="formRef" :model="updateStorageForm" :rules="rules">
+          <n-form-item :label="t('storage.name')" path="name" required>
+            <n-input v-model:value="updateStorageForm.name" placeholder="请输入存储名称" clearable show-count :maxlength="20" />
+          </n-form-item>
+          <n-form-item label="storageKey" path="storageKey" required>
+            <n-input v-model:value="updateStorageForm.storageKey" disabled />
+          </n-form-item>
+          <n-form-item label="BucketName" path="bucketName" required>
+            <n-input v-model:value="updateStorageForm.bucketName" :placeholder="bucketName.description" clearable />
+          </n-form-item>
+          <n-form-item label="Endpoint" path="endpoint" required>
+            <n-input v-model:value="updateStorageForm.endpoint" :placeholder="endpoint.description" clearable />
+          </n-form-item>
+          <n-form-item label="Region" path="region" required>
+            <n-input v-model:value="updateStorageForm.region" :placeholder="region.description" clearable />
+          </n-form-item>
+          <n-form-item label="AccessKey" path="accessKey" required>
+            <n-input v-model:value="updateStorageForm.accessKey" :placeholder="accessKey.description" clearable />
+          </n-form-item>
+          <n-form-item label="SecretKey" path="secretKey" required>
+            <n-input v-model:value="updateStorageForm.secretKey" :placeholder="secretKey.description" clearable />
+          </n-form-item>
+          <n-form-item label="挂载路径" path="mount_path" required>
+            <n-input v-model:value="updateStorageForm.mount_path" :placeholder="mount_path.description" clearable />
+          </n-form-item>
+          <n-form-item :label="t('storage.remark')" path="remark">
+            <n-input v-model:value="updateStorageForm.remark" type="textarea" placeholder="请输入备注" maxlength="160" show-count />
+          </n-form-item>
+        </n-form>
+      </n-gi>
+    </n-grid>
+  </n-card>
 </template>
-
-<style scoped>
-
-</style>
 
 <route lang="yaml">
 meta:

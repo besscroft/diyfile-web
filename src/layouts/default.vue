@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useTheme } from 'vuetify'
 
-const router = useRouter()
 const theme = useTheme()
 
 const toggleTheme = () => {
@@ -19,19 +18,19 @@ const toggleTheme = () => {
 </script>
 
 <template>
-  <el-container class="w-full h-full">
-    <el-header class="w-full" style="border-bottom: 1px solid var(--el-border-color-light);">
-      <Header @toggleTheme="toggleTheme" />
-    </el-header>
-    <el-container style="height: calc(100% - 60px)">
-      <el-container>
-        <el-main style="height: calc(100% - 60px);">
+  <div>
+    <n-layout position="absolute">
+      <n-layout-header style="height: 60px" bordered>
+        <Header @toggleTheme="toggleTheme" />
+      </n-layout-header>
+      <n-layout style="height: calc(100% - 120px)">
+        <n-layout-content content-style="padding: 0.5rem;">
           <RouterView />
-        </el-main>
-        <el-footer style="height: 60px; border-top: 1px solid var(--el-border-color-light);">
-          <Footer />
-        </el-footer>
-      </el-container>
-    </el-container>
-  </el-container>
+        </n-layout-content>
+      </n-layout>
+      <n-layout-footer style="height: 60px" bordered>
+        <Footer />
+      </n-layout-footer>
+    </n-layout>
+  </div>
 </template>
