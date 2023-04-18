@@ -3,7 +3,7 @@ import { ResultEnum } from '~/enums/httpEnum'
 
 /** OneDrive 分片上传 */
 export const uploadOneDrive = async (file: File, uploadUrl: string, option: any) => {
-  const { onProgress, onError, onSuccess } = option
+  const { onProgress, onError, onFinish } = option
   let start = 0
   let end = 0
   const fileSize = file.size
@@ -31,7 +31,8 @@ export const uploadOneDrive = async (file: File, uploadUrl: string, option: any)
         if (progressEvent.total > 0) {
           percent = (uploadedChunks + progressEvent.loaded / progressEvent.total) / chunks
         }
-        onProgress(percent, progressEvent)
+        // const progress = event.percent;
+        onProgress({ percent: percent * 100 })
       },
     }).then((res) => {
       if (res.status === 202) {
@@ -40,7 +41,7 @@ export const uploadOneDrive = async (file: File, uploadUrl: string, option: any)
         uploadBlock()
       } else if (res.status === 201 || res.status === ResultEnum.SUCCESS) {
         console.log(res)
-        onSuccess(res)
+        onFinish(res)
       }
     }).catch((err) => {
       onError(err)

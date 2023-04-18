@@ -95,7 +95,8 @@ const handleEnableStorage = (info: Storage) => {
 
 /** 自定义上传请求 */
 const onRequestUpload = (option: any) => {
-  const fileItem = option.file
+  const { file } = option
+  const fileItem = file.file
   const fullPath = router.currentRoute.value.fullPath
   let uri = ''
   if (`/${storageKey.value}` !== fullPath) {
@@ -290,19 +291,31 @@ onMounted(() => {
       </n-icon>
     </n-dropdown>
   </div>
-  <el-upload
+  <n-upload
     v-if="!loading && uploadView"
-    drag
-    :http-request="(option) => onRequestUpload(option)"
     multiple
-    :style="isMobile ? { 'width': '100%', 'overflow-x': 'hidden !important' } : { 'width': '66%', 'overflow-x': 'hidden !important' }"
+    directory-dnd
+    :custom-request="onRequestUpload"
+    :on-finish="({ file }) => { message.success(`上传 ${file.name} 成功！`) }"
+    :on-error="({ file }) => { message.error(`上传 ${file.name} 失败！`) }"
+    :max="5"
+    :style="isMobile ? { width: '100%' } : { width: '66%' }"
     class="mx-auto"
   >
-    <v-icon icon="cloud_upload" size="x-large" />
-    <div class="el-upload__text">
-      请选择文件上传，或拖拽文件到此处！
-    </div>
-  </el-upload>
+    <n-upload-dragger>
+      <div style="margin-bottom: 12px">
+        <n-icon size="48" :depth="3">
+          <archive-icon />
+        </n-icon>
+      </div>
+      <n-text style="font-size: 16px">
+        点击或者拖动文件到该区域来上传
+      </n-text>
+      <n-p depth="3" style="margin: 8px 0 0 0">
+        请不要上传敏感数据，比如你的银行卡号和密码，信用卡号有效期和安全码
+      </n-p>
+    </n-upload-dragger>
+  </n-upload>
   <div v-if="loading" class="flex justify-center mt-7">
     <n-spin size="medium" />
   </div>
