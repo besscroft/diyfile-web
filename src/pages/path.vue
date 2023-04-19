@@ -4,7 +4,16 @@ import { deleteFile, getFileInfo, getFileItemByKey, getUploadUrl } from '~/api/m
 import { getEnableStorage, storageInfoByStorageKey } from '~/api/modules/storage'
 import { ResultEnum } from '~/enums/httpEnum'
 import type { Storage } from '~/types/storage'
-import { getFileName, isAudio, isImage, isMarkdown, isPDF, isText, isVideo } from '~/utils/FileUtil'
+import {
+  getFileName,
+  isAudio,
+  isFile,
+  isImage,
+  isMarkdown,
+  isPDF,
+  isText,
+  isVideo,
+} from '~/utils/FileUtil'
 import { uploadOneDrive } from '~/utils/uploadFileUtil'
 import FileDataTable from '~/components/FileDataTable.vue'
 
@@ -225,11 +234,11 @@ const handleRouterChange = (key: any, uri: any) => {
 /** 路由监听处理 */
 watch(() => {
   return router.currentRoute.value.path
-}, (path) => {
+}, async (path) => {
   const key = router.currentRoute.value.params.storageKey
   if (path !== '/' && !path.startsWith('/@')) {
     const params = path.slice(((path.lastIndexOf('/') - 1) >>> 0) + 2)
-    if (params && params.includes('.')) {
+    if (params && params.includes('.') && isFile(params)) {
       // 包含 . 的可能是文件
       handleRouterChange(key, path)
       handleFile(key, path.slice(`/${key}`.length, path.length), getFileName(path))
@@ -249,7 +258,8 @@ onMounted(() => {
   try {
     const fullPath = router.currentRoute.value.path
     const uri = fullPath.slice(`/${key}`.length, fullPath.length)
-    if (path.length > 0 && path[path.length - 1].includes('.')) {
+    const params = uri.slice(((uri.lastIndexOf('.') - 1) >>> 0) + 2)
+    if (path.length > 0 && params.includes('.') && isFile(params)) {
       const fileName = fullPath.substring(fullPath.lastIndexOf('/') + 1)
       // 包含 . 的可能是文件
       handleRouterChange(key, path)
@@ -270,7 +280,7 @@ onMounted(() => {
   <div class="flex justify-center items-center mx-auto" :style="isMobile ? { width: '100%', height: '22px' } : { width: '66%', height: '22px' }">
     <n-icon size="16">
       <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
-        <path d="M17 11h3a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-3a2 2 0 0 0-2 2v1H9.01V5a2 2 0 0 0-2-2H4c-1.1 0-2 .9-2 2v4a2 2 0 0 0 2 2h3a2 2 0 0 0 2-2V8h2v7.01c0 1.65 1.34 2.99 2.99 2.99H15v1a2 2 0 0 0 2 2h3a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-3a2 2 0 0 0-2 2v1h-1.01c-.54 0-.99-.45-.99-.99V8h2v1c0 1.1.9 2 2 2z" fill="currentColor"></path>
+        <path d="M17 11h3a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-3a2 2 0 0 0-2 2v1H9.01V5a2 2 0 0 0-2-2H4c-1.1 0-2 .9-2 2v4a2 2 0 0 0 2 2h3a2 2 0 0 0 2-2V8h2v7.01c0 1.65 1.34 2.99 2.99 2.99H15v1a2 2 0 0 0 2 2h3a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-3a2 2 0 0 0-2 2v1h-1.01c-.54 0-.99-.45-.99-.99V8h2v1c0 1.1.9 2 2 2z" fill="currentColor" />
       </svg>
     </n-icon>
     <n-scrollbar
@@ -286,7 +296,7 @@ onMounted(() => {
     <n-dropdown :options="tableOptions || undefined" @select="handleTableSelect">
       <n-icon size="16" class="cursor-pointer">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
-          <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6l-6-6l1.41-1.41z" fill="currentColor"></path>
+          <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6l-6-6l1.41-1.41z" fill="currentColor" />
         </svg>
       </n-icon>
     </n-dropdown>
@@ -331,13 +341,13 @@ onMounted(() => {
   />
   <v-card v-else class="mx-auto" :style="isMobile ? { width: '100%' } : { width: '66%' }">
     <!-- 文件预览 -->
-    <VideoPreview v-if="!loading && fileInfo && isVideo(fileInfo.name)" class="m-4" :fileInfo="fileInfo" :storageInfo="storageInfo" />
-    <AudioPreview v-else-if="!loading && fileInfo && isAudio(fileInfo.name)" class="m-4" :fileInfo="fileInfo" :storageInfo="storageInfo" />
-    <ImagePreview v-else-if="!loading && fileInfo && isImage(fileInfo.name)" class="m-4" :fileInfo="fileInfo" :storageInfo="storageInfo" />
-    <MarkdownPreview v-else-if="!loading && fileInfo && isMarkdown(fileInfo.name)" class="m-4" :fileInfo="fileInfo" :storageInfo="storageInfo" />
-    <TextPreview v-else-if="!loading && fileInfo && isText(fileInfo.name)" class="m-4" :fileInfo="fileInfo" :storageInfo="storageInfo" />
-    <PDFPreview v-else-if="!loading && fileInfo && isPDF(fileInfo.name)" class="m-4" :fileInfo="fileInfo" :storageInfo="storageInfo" />
-    <OtherPreview v-else-if="!loading && fileInfo" :fileInfo="fileInfo" class="m-4" :storageInfo="storageInfo" />
+    <VideoPreview v-if="!loading && fileInfo && isVideo(fileInfo.name)" class="m-4" :file-info="fileInfo" :storage-info="storageInfo" />
+    <AudioPreview v-else-if="!loading && fileInfo && isAudio(fileInfo.name)" class="m-4" :file-info="fileInfo" :storage-info="storageInfo" />
+    <ImagePreview v-else-if="!loading && fileInfo && isImage(fileInfo.name)" class="m-4" :file-info="fileInfo" :storage-info="storageInfo" />
+    <MarkdownPreview v-else-if="!loading && fileInfo && isMarkdown(fileInfo.name)" class="m-4" :file-info="fileInfo" :storage-info="storageInfo" />
+    <TextPreview v-else-if="!loading && fileInfo && isText(fileInfo.name)" class="m-4" :file-info="fileInfo" :storage-info="storageInfo" />
+    <PDFPreview v-else-if="!loading && fileInfo && isPDF(fileInfo.name)" class="m-4" :file-info="fileInfo" :storage-info="storageInfo" />
+    <OtherPreview v-else-if="!loading && fileInfo" :file-info="fileInfo" class="m-4" :storage-info="storageInfo" />
     <n-result v-else-if="!fileInfo && !dataList" status="404" title="什么都没有呢！请登录后进入后台进行配置！" description="生活总归带点荒谬" />
     <n-result v-else status="500" title="Oops！发生了意外情况，也许是网络不稳定、格式不支持或者出现了 Bug~" description="生活总归带点荒谬" />
   </v-card>
