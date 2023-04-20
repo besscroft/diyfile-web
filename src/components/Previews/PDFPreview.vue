@@ -27,22 +27,6 @@ const handleDownload = (url: string) => {
   download(url)
 }
 
-const setPage = (page: number) => {
-  if (page > 0 && pdfInfo.pageNum < pdfInfo.numPages) {
-    pdfInfo.pageNum++
-  } else if (page < 0 && pdfInfo.pageNum > 1) {
-    pdfInfo.pageNum--
-  }
-}
-
-const setZoom = (val: number) => {
-  if (val > 0 && pdfInfo.scale < 2) {
-    pdfInfo.scale += val
-  } else if (val < 0 && pdfInfo.scale > 0.5) {
-    pdfInfo.scale += val
-  }
-}
-
 onMounted(() => {
   const loadingTask = createLoadingTask(props.fileInfo.url)
   loadingTask.promise.then((pdf: { numPages: number }) => {
@@ -55,24 +39,15 @@ onMounted(() => {
   <div class="flex align-center justify-space-between w-full px-2" style="height: 48px; background-color: #323639; z-index: 999">
     <p v-if="!isMobile" class="title" style="color: #fff; font-size: 18px">{{ props.fileInfo.name }}</p>
     <div class="flex align-center space-x-4" style="color: #fff; user-select: none">
-      <div class="cursor-pointer" @click="setPage(-1)">上一页</div>
+      <div class="cursor-pointer" @click="pdfInfo.pageNum > 1 ? pdfInfo.pageNum-- : ''">上一页</div>
       <div class="cursor-pointer">{{ pdfInfo.pageNum }}/{{ pdfInfo.numPages }}</div>
-      <div class="cursor-pointer" @click="setPage(1)">下一页</div>
-      <div class="cursor-pointer" @click="setZoom(0.1)">放大</div>
-      <div class="cursor-pointer" @click="setZoom(-0.1)">缩小</div>
+      <div class="cursor-pointer" @click="pdfInfo.pageNum < pdfInfo.numPages ? pdfInfo.pageNum++ : ''">下一页</div>
+      <div class="cursor-pointer" @click="pdfInfo.scale < 2 ? pdfInfo.scale += 0.1 : ''">放大</div>
+      <div class="cursor-pointer" @click="pdfInfo.scale > 0.5 ? pdfInfo.scale -= 0.1 : ''">缩小</div>
     </div>
   </div>
   <div class="flex mx-auto" style="height: calc(100vh - 256px)">
-    <!-- 目录 -->
-    <div v-if="!isMobile" class="container-left overflow-y-auto w-1/4" style="height: calc(100vh - 256px); width: 300px; background-color: #323639">
-      <div v-for="item in pdfInfo.numPages" :key="item" class="cursor-pointer align-center ma-2">
-        <div :style="item === pdfInfo.pageNum ? 'border: 5px solid #7d9dfe' : ''">
-          <VuePdfEmbed class="item-pdf" :source="props.fileInfo.url" :page="item" @click="pdfInfo.pageNum = item" />
-        </div>
-        <p class="px-2" style="color: #fff">{{ item }}</p>
-      </div>
-    </div>
-    <div :class="isMobile ? 'w-full' : 'flex-grow-1 overflow-hidden w-3/4'" style="height: calc(100vh - 256px); background-color: #505050">
+    <div class="flex-grow-1 overflow-hidden" style="height: calc(100vh - 256px); background-color: #505050">
       <div class="h-full w-full overflow-auto">
         <VuePdfEmbed :source="props.fileInfo.url" :style="scale" :page="pdfInfo.pageNum" />
       </div>
