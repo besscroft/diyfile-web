@@ -13,15 +13,22 @@ const props = defineProps({
 })
 const { text, copy, copied, isSupported } = useClipboard(props.fileInfo.url)
 const { t } = useI18n()
+const url = ref<string>()
 
 const handleDownload = (url: string) => {
   download(url)
 }
+
+onMounted(() => {
+  // 如果有需要，可以自建一个pdf.js的服务，然后将下面的url改为自己的
+  url.value = `https://pdfjs.besscroft.com/web/viewer.html?file=${props.fileInfo.url}`
+})
 </script>
 
 <template>
+  <iframe :src="url" frameBorder="0" width="100%" height="100%" />
   <v-divider :thickness="2" class="border-opacity-50" color="success"></v-divider>
-  <v-alert border="start" color="blue-lighten-4" text="看起来没有针对当前文件格式的预览呢，不过您也可以直接下载！"></v-alert>
+  <v-alert border="start" color="blue-lighten-4" :text="`正在阅读：${decodeURIComponent(props.fileInfo.name)}`"></v-alert>
   <v-divider :thickness="2" class="border-opacity-50" color="success"></v-divider>
   <div class="flex flex-wrap justify-center items-center space-x-2 min-h-12">
     <v-btn prepend-icon="download" class="my-1" color="green-accent-3" @click="handleDownload(props.fileInfo.url)">
