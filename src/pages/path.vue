@@ -8,6 +8,7 @@ import {
   getFileName,
   isAudio,
   isFile,
+  isFileByRawExtension,
   isImage,
   isMarkdown,
   isPDF,
@@ -259,13 +260,13 @@ onMounted(() => {
     const fullPath = router.currentRoute.value.path
     const uri = fullPath.slice(`/${key}`.length, fullPath.length)
     const params = uri.slice(((uri.lastIndexOf('.') - 1) >>> 0) + 2)
-    if (path.length > 0 && params.includes('.') && isFile(params)) {
+    if (params.length > 0 && uri.includes('.') && isFileByRawExtension(params)) {
       const fileName = fullPath.substring(fullPath.lastIndexOf('/') + 1)
-      // 包含 . 的可能是文件
+      // 可能是文件
       handleRouterChange(key, path)
       handleFile(key, uri, fileName)
     } else {
-      // 不包含 . 的可能是文件夹
+      // 可能是文件夹
       handleRouterChange(key, path)
       handleRouter()
     }

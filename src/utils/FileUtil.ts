@@ -82,3 +82,8 @@ export const isFile = (fileName: string): boolean => {
   const ext = getRawExtension(fileName)
   return fileExtensions.includes(ext)
 }
+
+/** 判断是否为文件 */
+export const isFileByRawExtension = (type: string): boolean => {
+  return fileExtensions.includes(type)
+}
