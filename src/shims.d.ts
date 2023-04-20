@@ -18,3 +18,5 @@ declare module '*.vue' {
 declare module 'aplayer' {
   export default any
 }
+
+declare module 'pdfjs-dist/*.js'
