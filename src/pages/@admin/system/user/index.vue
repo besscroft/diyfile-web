@@ -313,6 +313,7 @@ useUserPage('')
       v-model:page="pageInfo.pageNum"
       v-model:page-size="pageInfo.pageSize"
       :page-count="pageInfo.totalPage"
+      class="mt-0.5"
       @update:page="(current) => { pageInfo.pageNum = current; useUserPage(roleFlag) }"
     />
   </n-card>
