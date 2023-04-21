@@ -64,9 +64,6 @@ onUnmounted(() => {
     <v-btn v-if="props.storageInfo.type === 1 && props.fileInfo.proxyUrl" prepend-icon="download" class="my-1" color="blue-grey-lighten-3" @click="handleDownload(props.fileInfo.proxyUrl)">
       {{ t('button.proxyDownload') }}
     </v-btn>
-    <v-btn prepend-icon="sentiment_satisfied" class="my-1" variant="tonal">
-      其它操作开发中
-    </v-btn>
   </div>
 </template>
 

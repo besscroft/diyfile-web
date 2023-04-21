@@ -216,8 +216,8 @@ onBeforeMount(() => {
     </n-page-header>
   </n-card>
   <n-card content-style="padding: 0.5rem;" class="box-card overflow-auto no-scrollbar" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
-    <n-grid x-gap="12" :cols="isMobile ? 1 : 3">
-      <n-gi :offset="isMobile ? 0 : 1">
+    <n-grid cols="5" item-responsive responsive="screen">
+      <n-grid-item offset="0 m:1 l:1" span="5 m:3 l:3">
         <n-form ref="formRef" :model="updateStorageForm" :rules="rules">
           <n-form-item :label="t('storage.name')" path="name" required>
             <n-input v-model:value="updateStorageForm.name" placeholder="请输入存储名称" clearable show-count :maxlength="20" />
@@ -247,7 +247,7 @@ onBeforeMount(() => {
             <n-input v-model:value="updateStorageForm.remark" type="textarea" placeholder="请输入备注" maxlength="160" show-count />
           </n-form-item>
         </n-form>
-      </n-gi>
+      </n-grid-item>
     </n-grid>
   </n-card>
 </template>

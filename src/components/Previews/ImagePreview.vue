@@ -20,11 +20,9 @@ const handleDownload = (url: string) => {
 </script>
 
 <template>
-  <v-img
-    aspect-ratio="16/9"
-    cover
+  <n-image
     :src="props.fileInfo.url"
-  ></v-img>
+  />
   <v-divider :thickness="2" class="border-opacity-50" color="success"></v-divider>
   <v-alert border="start" color="blue-lighten-4" :text="`正在预览：${decodeURIComponent(props.fileInfo.name)}`"></v-alert>
   <v-divider :thickness="2" class="border-opacity-50" color="success"></v-divider>
@@ -37,9 +35,6 @@ const handleDownload = (url: string) => {
     </v-btn>
     <v-btn v-if="props.storageInfo.type === 1 && props.fileInfo.proxyUrl" prepend-icon="download" class="my-1" color="blue-grey-lighten-3" @click="handleDownload(props.fileInfo.proxyUrl)">
       {{ t('button.proxyDownload') }}
-    </v-btn>
-    <v-btn prepend-icon="sentiment_satisfied" class="my-1" variant="tonal">
-      其它操作开发中
     </v-btn>
   </div>
 </template>

@@ -19,9 +19,15 @@ dependencies:
   dplayer:
     specifier: ^1.27.1
     version: 1.27.1
+  github-markdown-css:
+    specifier: ^5.2.0
+    version: 5.2.0
   http-proxy-middleware:
     specifier: ^2.0.6
     version: 2.0.6
+  markdown-it-highlightjs:
+    specifier: ^4.0.1
+    version: 4.0.1
   nprogress:
     specifier: ^0.2.0
     version: 0.2.0
@@ -5894,6 +5900,10 @@ packages:
       assert-plus: 1.0.0
     dev: true
 
+  /github-markdown-css@5.2.0:
+    resolution: {integrity: sha512-hq5RaCInSUZ48bImOZpkppW2/MT44StRgsbsZ8YA4vJFwLKB/Vo3k7R2t+pUGqO+ThG0QDMi96TewV/B3vyItg==}
+    dev: false
+
   /glob-parent@5.1.2:
     resolution: {integrity: sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==}
     engines: {node: '>= 6'}
@@ -6063,7 +6073,6 @@ packages:
   /highlight.js@11.7.0:
     resolution: {integrity: sha512-1rRqesRFhMO/PRF+G86evnyJkCgaZFOI+Z6kdj15TA18funfoqJXvgPCLSf0SWq3SRfg1j3HlDs8o4s3EGq1oQ==}
     engines: {node: '>=12.0.0'}
-    dev: true
 
   /hookable@5.4.2:
     resolution: {integrity: sha512-6rOvaUiNKy9lET1X0ECnyZ5O5kSV0PJbtA5yZUgdEF7fGJEVwSLSislltyt7nFwVVALYHQJtfGeAR2Y0A0uJkg==}
@@ -7118,6 +7127,12 @@ packages:
       - bluebird
       - supports-color
     dev: true
+
+  /markdown-it-highlightjs@4.0.1:
+    resolution: {integrity: sha512-EPXwFEN6P5nqR3G4KjT20r20xbGYKMMA/360hhSYFmeoGXTE6hsLtJAiB/8ID8slVH4CWHHEL7GX0YenyIstVQ==}
+    dependencies:
+      highlight.js: 11.7.0
+    dev: false
 
   /markdown-it-link-attributes@4.0.1:
     resolution: {integrity: sha512-pg5OK0jPLg62H4k7M9mRJLT61gUp9nvG0XveKYHMOOluASo9OEF13WlXrpAp2aj35LbedAy3QOCgQCw0tkLKAQ==}

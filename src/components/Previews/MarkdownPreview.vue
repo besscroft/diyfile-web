@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import MarkdownIt from 'markdown-it'
+import hljs from 'highlight.js'
+import 'github-markdown-css'
 import { download } from '~/utils/ButtonUtil'
 
 const props = defineProps({
@@ -13,15 +16,37 @@ const props = defineProps({
 })
 const { text, copy, copied, isSupported } = useClipboard(props.fileInfo.url)
 const { t } = useI18n()
+const contentHtml = ref()
 
 const handleDownload = (url: string) => {
   download(url)
 }
+
+onMounted(async () => {
+  const response = await fetch(props.fileInfo.url)
+  const markdown = await response.text()
+  const md = new MarkdownIt({
+    html: true,
+    linkify: true,
+    typographer: true,
+    highlight: (str, lang) => {
+      if (lang && hljs.getLanguage(lang)) {
+        try {
+          return hljs.highlight(str, { language: lang }).value
+        } catch (__) {}
+      }
+
+      return '' // use external default escaping
+    },
+  })
+  contentHtml.value = md.render(markdown.replace('/^[\u200B\u200C\u200D\u200E\u200F\uFEFF]/', ''))
+})
 </script>
 
 <template>
-  <v-divider :thickness="2" class="border-opacity-50" color="success"></v-divider>
-  <v-alert border="start" color="blue-lighten-4" text="看起来没有针对当前文件格式的预览呢，不过您也可以直接下载！"></v-alert>
+  <div class="content px-2 py-4">
+    <div class="markdown-body overflow-y-auto overflow-x-hidden" style="height: calc(100vh - 208px)" v-html="contentHtml"></div>
+  </div>
   <v-divider :thickness="2" class="border-opacity-50" color="success"></v-divider>
   <div class="flex flex-wrap justify-center items-center space-x-2 min-h-12">
     <v-btn prepend-icon="download" class="my-1" color="green-accent-3" @click="handleDownload(props.fileInfo.url)">
@@ -33,12 +58,11 @@ const handleDownload = (url: string) => {
     <v-btn v-if="props.storageInfo.type === 1 && props.fileInfo.proxyUrl" prepend-icon="download" class="my-1" color="blue-grey-lighten-3" @click="handleDownload(props.fileInfo.proxyUrl)">
       {{ t('button.proxyDownload') }}
     </v-btn>
-    <v-btn prepend-icon="sentiment_satisfied" class="my-1" variant="tonal">
-      其它操作开发中
-    </v-btn>
   </div>
 </template>
 
 <style scoped>
-
+.content .markdown-body >>> pre:hover .copy-btn {
+  opacity: 1;
+}
 </style>

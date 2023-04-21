@@ -9,8 +9,8 @@ const { isMobile } = useDevice()
     <n-page-header :title="t('tip.cardTitle')" class="mx-0.5" @back="router.back()" />
   </n-card>
   <n-card content-style="padding: 0.5rem;" class="box-card overflow-auto no-scrollbar" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
-    <n-grid x-gap="12" :cols="isMobile ? 1 : 3">
-      <n-gi :offset="isMobile ? 0 : 1">
+    <n-grid cols="5" item-responsive responsive="screen">
+      <n-grid-item offset="0 m:1 l:1" span="5 m:3 l:3">
         <div class="flex flex-col space-y-3">
           <v-btn disabled @click="router.push({ path: '/@admin/setting/storage/add/local', query: { type: 0 } })">本地存储(开发中)</v-btn>
           <v-btn @click="router.push({ path: '/@admin/setting/storage/add/oneDrive', query: { type: 1 } })">OneDrive</v-btn>
@@ -18,7 +18,7 @@ const { isMobile } = useDevice()
           <v-btn @click="router.push({ path: '/@admin/setting/storage/add/amazonS3', query: { type: 3 } })">AmazonS3</v-btn>
           <v-btn disabled>更多存储支持中...</v-btn>
         </div>
-      </n-gi>
+      </n-grid-item>
     </n-grid>
   </n-card>
 </template>
