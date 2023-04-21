@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import type { DataTableColumns, DropdownDividerOption, DropdownGroupOption, DropdownOption, DropdownRenderOption } from 'naive-ui'
 import { VIcon } from 'vuetify/components/VIcon'
-import { getFileName, isAudio, isImage, isPDF, isVideo } from '~/utils/FileUtil'
+import { isAudio, isImage, isPDF, isVideo } from '~/utils/FileUtil'
 import { download } from '~/utils/ButtonUtil'
-import PathTableNPopconfirm from '~/components/PathTableNPopconfirm.vue'
 
 interface Title {
   fileName: string
@@ -15,6 +14,7 @@ interface Title {
 const dataList = defineProps(['value'])
 const emit = defineEmits(['handleFolder', 'clickFile', 'handleDelete', 'handleShare'])
 const { t } = useI18n()
+const user = useUserStore()
 const { isMobile } = useDevice()
 const showDropdownRef = ref(false)
 const xRef = ref(0)
@@ -144,30 +144,19 @@ const createColumns = (): DataTableColumns<Title> => {
       {
         title: t('table.index.time'),
         key: 'lastModifiedDateTime',
-        width: 220,
+        width: 136,
       },
       {
         title: t('table.index.fileSize'),
         key: 'size',
         width: 100,
         render: (row) => {
-          return `${(row?.size / 1000 / 1000).toFixed(2)} MB`
-        },
-      },
-      {
-        title: t('table.Optional'),
-        key: 'actions',
-        width: 100,
-        render: (row) => {
-          if (row.type === 'file') {
-            return h('div',
-              { class: 'flex items-center cursor-pointer' },
-              [
-                h(VIcon, { icon: 'download', onClick: () => { download(row.url) } }),
-                h(VIcon, { icon: 'content_copy', onClick: () => { emit('handleShare', row.url) } }),
-                h(PathTableNPopconfirm, { onClick: () => { handleDelete(row) } }),
-              ],
-            )
+          if (row?.size <= 1024) {
+            return `${(row?.size / 1024).toFixed(2)} KB`
+          } else if (row?.size <= 1024 * 1024 * 1024) {
+            return `${(row?.size / 1024 / 1024).toFixed(2)} MB`
+          } else {
+            return `${(row?.size / 1024 / 1024 / 1024).toFixed(2)} GB`
           }
         },
       },
@@ -175,7 +164,7 @@ const createColumns = (): DataTableColumns<Title> => {
   }
 }
 
-const columns = createColumns()
+const tableColumns = ref(createColumns())
 
 const options = ref<Array<DropdownOption | DropdownGroupOption | DropdownDividerOption | DropdownRenderOption>>([])
 
@@ -211,6 +200,12 @@ const rowProps = (row: Title) => {
     },
   }
 }
+
+watch(() => {
+  return user.language
+}, () => {
+  tableColumns.value = createColumns()
+})
 
 watch(() => {
   return rowItem.value
@@ -265,7 +260,7 @@ onBeforeMount(() => {
     :style="isMobile ? { width: '100%' } : { width: '66%' }"
   >
     <n-data-table
-      :columns="columns"
+      :columns="tableColumns"
       :data="dataList.value"
       :row-props="rowProps"
       :bordered="false"

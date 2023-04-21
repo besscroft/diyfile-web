@@ -70,8 +70,8 @@ onBeforeMount(() => {
     </n-page-header>
   </n-card>
   <n-card content-style="padding: 0;" class="box-card h-full w-full overflow-auto" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
-    <n-grid x-gap="12" :cols="isMobile ? 1 : 3">
-      <n-gi :offset="isMobile ? 0 : 1">
+    <n-grid cols="5" item-responsive responsive="screen">
+      <n-grid-item offset="0 m:1 l:1" span="5 m:3 l:3">
         <div class="flex flex-col space-y-3">
           <n-select
             v-model:value="beforeStorageKey"
@@ -95,7 +95,7 @@ onBeforeMount(() => {
             避免重复请求，以免造成资源浪费！同步前也请考量下配置，比如 512M 内存的小机器和 IO 性能极差的机器，就不建议跨存储同步大量大文件了...
           </n-alert>
         </div>
-      </n-gi>
+      </n-grid-item>
     </n-grid>
   </n-card>
 </template>

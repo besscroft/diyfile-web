@@ -55,8 +55,8 @@ const handleSubmit = () => {
     </n-page-header>
   </n-card>
   <n-card content-style="padding: 0.5rem;" class="box-card overflow-auto no-scrollbar" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
-    <n-grid x-gap="12" :cols="isMobile ? 1 : 3">
-      <n-gi :offset="isMobile ? 0 : 1">
+    <n-grid cols="5" item-responsive responsive="screen">
+      <n-grid-item offset="0 m:1 l:1" span="5 m:3 l:3">
         <n-form ref="formRef" :model="pwdForm" :rules="rules">
           <n-form-item :label="t('tip.password')" path="oldPassword" required>
             <n-input
@@ -79,7 +79,7 @@ const handleSubmit = () => {
             />
           </n-form-item>
         </n-form>
-      </n-gi>
+      </n-grid-item>
     </n-grid>
   </n-card>
 </template>

@@ -99,10 +99,26 @@ onUnmounted(() => {
         <n-card content-style="padding: 0.25rem;" class="box-card h-36">
           <div class="statistic-card flex h-full">
             <n-statistic label="用户总数" class="flex-grow">
-              {{ totalInfo.userCount }}
+              <template #prefix>
+                <n-icon>
+                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
+                    <path d="M16.67 13.13C18.04 14.06 19 15.32 19 17v3h4v-3c0-2.18-3.57-3.47-6.33-3.87zM15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4c-.47 0-.91.1-1.33.24a5.98 5.98 0 0 1 0 7.52c.42.14.86.24 1.33.24zm-6 0c2.21 0 4-1.79 4-4s-1.79-4-4-4s-4 1.79-4 4s1.79 4 4 4zm0-6c1.1 0 2 .9 2 2s-.9 2-2 2s-2-.9-2-2s.9-2 2-2zm0 7c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4zm6 5H3v-.99C3.2 16.29 6.3 15 9 15s5.8 1.29 6 2v1z" fill="currentColor"></path>
+                  </svg>
+                </n-icon>
+              </template>
+              <n-number-animation :from="0" :to="totalInfo.userCount" />
             </n-statistic>
             <n-statistic label="禁用数量" class="flex-grow">
-              {{ totalInfo.userDisableCount }}
+              <template #prefix>
+                <n-icon>
+                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
+                    <circle cx="9" cy="8" opacity=".3" r="2" fill="currentColor"></circle>
+                    <path opacity=".3" d="M9 15c-2.7 0-5.8 1.29-6 2.01V18h12v-1c-.2-.71-3.3-2-6-2z" fill="currentColor"></path>
+                    <path d="M16.67 13.13C18.04 14.06 19 15.32 19 17v3h4v-3c0-2.18-3.57-3.47-6.33-3.87zM15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4c-.47 0-.91.1-1.33.24a5.98 5.98 0 0 1 0 7.52c.42.14.86.24 1.33.24zm-6 0c2.21 0 4-1.79 4-4s-1.79-4-4-4s-4 1.79-4 4s1.79 4 4 4zm0-6c1.1 0 2 .9 2 2s-.9 2-2 2s-2-.9-2-2s.9-2 2-2zm0 7c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4zm6 5H3v-.99C3.2 16.29 6.3 15 9 15s5.8 1.29 6 2v1z" fill="currentColor"></path>
+                  </svg>
+                </n-icon>
+              </template>
+              <n-number-animation :from="0" :to="totalInfo.userDisableCount" />
             </n-statistic>
           </div>
         </n-card>
@@ -111,10 +127,24 @@ onUnmounted(() => {
         <n-card content-style="padding: 0.25rem;" class="box-card h-36">
           <div class="statistic-card flex h-full">
             <n-statistic label="存储总数" class="flex-grow">
-              {{ totalInfo.storageCount }}
+              <template #prefix>
+                <n-icon>
+                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
+                    <path d="M4 20h16c1.1 0 2-.9 2-2s-.9-2-2-2H4c-1.1 0-2 .9-2 2s.9 2 2 2zm0-3h2v2H4v-2zM2 6c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2s-.9-2-2-2H4c-1.1 0-2 .9-2 2zm4 1H4V5h2v2zm-2 7h16c1.1 0 2-.9 2-2s-.9-2-2-2H4c-1.1 0-2 .9-2 2s.9 2 2 2zm0-3h2v2H4v-2z" fill="currentColor"></path>
+                  </svg>
+                </n-icon>
+              </template>
+              <n-number-animation :from="0" :to="totalInfo.storageCount" />
             </n-statistic>
             <n-statistic label="启用数量" class="flex-grow">
-              {{ totalInfo.storageActiveCount }}
+              <template #prefix>
+                <n-icon>
+                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
+                    <path d="M4 20h16c1.1 0 2-.9 2-2s-.9-2-2-2H4c-1.1 0-2 .9-2 2s.9 2 2 2zm0-3h2v2H4v-2zM2 6c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2s-.9-2-2-2H4c-1.1 0-2 .9-2 2zm4 1H4V5h2v2zm-2 7h16c1.1 0 2-.9 2-2s-.9-2-2-2H4c-1.1 0-2 .9-2 2s.9 2 2 2zm0-3h2v2H4v-2z" fill="currentColor"></path>
+                  </svg>
+                </n-icon>
+              </template>
+              <n-number-animation :from="0" :to="totalInfo.storageActiveCount" />
             </n-statistic>
           </div>
         </n-card>
@@ -137,13 +167,13 @@ onUnmounted(() => {
             {{ serverInfo.cpuInfo.cpuNum }}
           </n-descriptions-item>
           <n-descriptions-item label="总内存">
-            {{ (serverInfo.memoryInfo.total / 1024 / 1024).toFixed(2) }} MB
+            <n-number-animation :from="0" :to="(serverInfo.memoryInfo.total / 1024 / 1024).toFixed(2)" /> MB
           </n-descriptions-item>
           <n-descriptions-item label="已用内存">
-            {{ (serverInfo.memoryInfo.used / 1024 / 1024).toFixed(2) }} MB
+            <n-number-animation :from="0" :to="(serverInfo.memoryInfo.used / 1024 / 1024).toFixed(2)" /> MB
           </n-descriptions-item>
           <n-descriptions-item label="剩余内存">
-            {{ (serverInfo.memoryInfo.free / 1024 / 1024).toFixed(2) }} MB
+            <n-number-animation :from="0" :to="(serverInfo.memoryInfo.free / 1024 / 1024).toFixed(2)" /> MB
           </n-descriptions-item>
         </n-descriptions>
       </n-grid-item>

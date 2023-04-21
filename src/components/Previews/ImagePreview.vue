@@ -20,11 +20,9 @@ const handleDownload = (url: string) => {
 </script>
 
 <template>
-  <v-img
-    aspect-ratio="16/9"
-    cover
+  <n-image
     :src="props.fileInfo.url"
-  ></v-img>
+  />
   <v-divider :thickness="2" class="border-opacity-50" color="success"></v-divider>
   <v-alert border="start" color="blue-lighten-4" :text="`正在预览：${decodeURIComponent(props.fileInfo.name)}`"></v-alert>
   <v-divider :thickness="2" class="border-opacity-50" color="success"></v-divider>
