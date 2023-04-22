@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { FormInst, FormRules } from 'naive-ui'
+import type { FormInst, FormRules, SelectGroupOption, SelectOption } from 'naive-ui'
 import type { Storage } from '~/api/interface/storage'
 import { getAwsRegions, storageInfo, storageUpdate } from '~/api/modules/storage'
 import { ResultEnum } from '~/enums/httpEnum'
@@ -10,7 +10,7 @@ const message = useMessage()
 const { isMobile } = useDevice()
 const formRef = ref<FormInst | null>(null)
 const loading = ref<boolean>(false)
-const regionList = ref<Array<string>>()
+const regionList = ref<Array<SelectOption | SelectGroupOption>>([])
 const updateStorageForm = reactive({
   /** 存储id */
   id: undefined,
@@ -195,7 +195,12 @@ onBeforeMount(() => {
   loading.value = true
   getAwsRegions().then((res) => {
     if (res.code === ResultEnum.SUCCESS && Array.isArray(res.data)) {
-      regionList.value = res.data
+      for (const item of res.data) {
+        regionList.value.push({
+          label: item,
+          value: item,
+        })
+      }
     }
     loading.value = false
   }).catch((err) => {
@@ -232,7 +237,7 @@ onBeforeMount(() => {
             <n-input v-model:value="updateStorageForm.endpoint" :placeholder="endpoint.description" clearable />
           </n-form-item>
           <n-form-item label="Region" path="region" required>
-            <n-input v-model:value="updateStorageForm.region" :placeholder="region.description" clearable />
+            <n-select v-model:value="updateStorageForm.region" :options="regionList" />
           </n-form-item>
           <n-form-item label="AccessKey" path="accessKey" required>
             <n-input v-model:value="updateStorageForm.accessKey" :placeholder="accessKey.description" clearable />

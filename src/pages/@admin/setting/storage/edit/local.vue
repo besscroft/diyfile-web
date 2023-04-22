@@ -128,6 +128,9 @@ onBeforeMount(() => {
           <n-form-item label="storageKey" path="storageKey" required>
             <n-input v-model:value="updateStorageForm.storageKey" disabled />
           </n-form-item>
+          <n-form-item label="挂载路径" path="mount_path" required>
+            <n-input v-model:value="updateStorageForm.mount_path" :placeholder="mount_path.description" clearable />
+          </n-form-item>
           <n-form-item :label="t('storage.remark')" path="remark">
             <n-input v-model:value="updateStorageForm.remark" type="textarea" placeholder="请输入备注" maxlength="160" show-count />
           </n-form-item>

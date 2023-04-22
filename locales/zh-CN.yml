@@ -17,6 +17,7 @@ button:
   login: 登录
   copy: 复制
   copyUrl: 复制链接
+  copyProxyUrl: 复制直链
   copyOk: 复制成功
   add: 新增
   edit: 编辑

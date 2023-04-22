@@ -9,6 +9,7 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    Api: typeof import('./components/api.vue')['default']
     Application: typeof import('./components/Application/Application.vue')['default']
     AudioPreview: typeof import('./components/Previews/AudioPreview.vue')['default']
     FileDataTable: typeof import('./components/FileDataTable.vue')['default']

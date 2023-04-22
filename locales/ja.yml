@@ -17,6 +17,7 @@ button:
   login: ログイン
   copy: コピー
   copyUrl: リンクをコピー
+  copyProxyUrl: プロキシリンクをコピー
   copyOk: 正常にコピー
   add: 追加
   edit: 編集

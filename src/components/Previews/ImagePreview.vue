@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { download } from '~/utils/ButtonUtil'
+import { storageInfoByStorageKey } from '~/api/modules/storage'
+import { getBaseUrl } from '~/utils/WindowUtil'
 
 const props = defineProps({
   fileInfo: {
@@ -13,10 +15,30 @@ const props = defineProps({
 })
 const { text, copy, copied, isSupported } = useClipboard(props.fileInfo.url)
 const { t } = useI18n()
+const router = useRouter()
+const storageType = ref<number>(-1)
 
 const handleDownload = (url: string) => {
-  download(url)
+  if (storageType.value === 0) {
+    download(`${getBaseUrl()}/api/raw/?path=/${router.currentRoute.value.params.storageKey}/${props.fileInfo.url}`)
+  } else {
+    download(url)
+  }
 }
+
+const copyProxyUrl = (): string => {
+  if (storageType.value === 0) {
+    return `${getBaseUrl()}/api/raw/?path=/${router.currentRoute.value.params.storageKey}/${props.fileInfo.url}`
+  } else {
+    return `${getBaseUrl()}/api/raw/?path=${router.currentRoute.value.fullPath}`
+  }
+}
+
+onMounted(() => {
+  storageInfoByStorageKey(router.currentRoute.value.params.storageKey.toString()).then((res) => {
+    storageType.value = res.data.type
+  })
+})
 </script>
 
 <template>
@@ -30,8 +52,11 @@ const handleDownload = (url: string) => {
     <v-btn prepend-icon="download" class="my-1" color="green-accent-3" @click="handleDownload(props.fileInfo.url)">
       {{ t('button.download') }}
     </v-btn>
-    <v-btn prepend-icon="content_copy" class="my-1" color="teal-accent-1" @click="copy(props.fileInfo.url)">
+    <v-btn v-if="storageType !== 0" prepend-icon="content_copy" class="my-1" color="teal-accent-1" @click="copy(props.fileInfo.url)">
       {{ !copied ? t('button.copyUrl') : t('button.copyOk') }}
+    </v-btn>
+    <v-btn prepend-icon="content_copy" class="my-1" color="teal-accent-1" @click="copy(copyProxyUrl())">
+      {{ !copied ? t('button.copyProxyUrl') : t('button.copyOk') }}
     </v-btn>
     <v-btn v-if="props.storageInfo.type === 1 && props.fileInfo.proxyUrl" prepend-icon="download" class="my-1" color="blue-grey-lighten-3" @click="handleDownload(props.fileInfo.proxyUrl)">
       {{ t('button.proxyDownload') }}
