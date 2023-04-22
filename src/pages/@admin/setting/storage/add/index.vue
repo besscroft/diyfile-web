@@ -12,7 +12,7 @@ const { isMobile } = useDevice()
     <n-grid cols="5" item-responsive responsive="screen">
       <n-grid-item offset="0 m:1 l:1" span="5 m:3 l:3">
         <div class="flex flex-col space-y-3">
-          <v-btn disabled @click="router.push({ path: '/@admin/setting/storage/add/local', query: { type: 0 } })">本地存储(开发中)</v-btn>
+          <v-btn @click="router.push({ path: '/@admin/setting/storage/add/local', query: { type: 0 } })">本地存储(开发中)</v-btn>
           <v-btn @click="router.push({ path: '/@admin/setting/storage/add/oneDrive', query: { type: 1 } })">OneDrive</v-btn>
           <v-btn @click="router.push({ path: '/@admin/setting/storage/add/aliyunOSS', query: { type: 2 } })">阿里云OSS</v-btn>
           <v-btn @click="router.push({ path: '/@admin/setting/storage/add/amazonS3', query: { type: 3 } })">AmazonS3</v-btn>

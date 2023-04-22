@@ -17,6 +17,9 @@ import { AxiosCanceler } from '~/api/helper/axiosCancel'
 import { ResultEnum } from '~/enums/httpEnum'
 import { getInfo } from '~/api/modules/user'
 import { setupNaiveDiscreteApi } from '~/plugins/naiveDiscreteApi'
+import { getDownloadFile, getDownloadUrl } from '~/api/modules/file'
+import { getFileNameFromPath } from '~/utils/FileUtil'
+import { getBaseUrl } from '~/utils/WindowUtil'
 
 /* global */
 console.log(`${'\n'} %c DiyFile v0.5.0 %c https://github.com/besscroft/diyfile ${'\n'}${'\n'}`, 'color: #fadfa3; background: #030307; padding:5px 0;', 'background: #fadfa3; padding:5px 0;')
@@ -54,6 +57,39 @@ export const createApp = ViteSSG(
       ctx.router.beforeEach(async (to, from, next) => {
         axiosCanceler.removeAllPending()
         const user = useUserStore()
+        if (to.path.startsWith('/api/')) {
+          const pathArr = to.query?.path.toString()
+          const firstIndex = pathArr.indexOf('/')
+          const secondIndex = pathArr.indexOf('/', firstIndex + 1)
+          const storageKey = pathArr.substring(firstIndex + 1, secondIndex)
+          const path = pathArr.substring(secondIndex + 1)
+          const fullPath = `${getBaseUrl()}/api/raw/?path=${pathArr}`
+          if (to.path.startsWith('/api/raw/')) {
+            await getDownloadUrl(storageKey, path, fullPath).then((res) => {
+              if (res.code === ResultEnum.SUCCESS && typeof res.data === 'string') {
+                window.location.href = res.data
+              } else {
+                window.location.href = 'localhost'
+              }
+            }).catch(() => {
+              window.location.href = 'localhost'
+            })
+            return next(false)
+          }
+          if (to.path.startsWith('/api/proxy/')) {
+            await getDownloadFile(storageKey, path).then((res) => {
+              const url = window.URL.createObjectURL(new Blob([res]))
+              const a = document.createElement('a')
+              a.href = url
+              a.download = getFileNameFromPath(path)
+              document.body.appendChild(a)
+              a.click()
+              a.remove()
+              window.URL.revokeObjectURL(url)
+            })
+            return next(false)
+          }
+        }
         if (to.path === '/' || to.path === '/@login' || to.path === '/@about' || !to.path.startsWith('/@')) {
           return next()
         }

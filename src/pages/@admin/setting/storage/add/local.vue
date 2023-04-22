@@ -104,6 +104,9 @@ const handleSubmit = () => {
           <n-form-item label="storageKey" path="storageKey" required>
             <n-input v-model:value="addStorageForm.storageKey" placeholder="请输入 storageKey" clearable show-count :maxlength="20" />
           </n-form-item>
+          <n-form-item label="挂载路径" path="mount_path" required>
+            <n-input v-model:value="addStorageForm.mount_path" :placeholder="mount_path.description" clearable />
+          </n-form-item>
           <n-form-item :label="t('storage.remark')" path="remark">
             <n-input v-model:value="addStorageForm.remark" type="textarea" placeholder="请输入备注" maxlength="160" show-count />
           </n-form-item>

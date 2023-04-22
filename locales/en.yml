@@ -17,6 +17,7 @@ button:
   login: login
   copy: Copy
   copyUrl: Copy Url
+  copyProxyUrl: Copy Proxy Url
   copyOk: Copy Success
   add: Add
   edit: Edit
