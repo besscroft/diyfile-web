@@ -73,7 +73,7 @@ onMounted(() => {
     <v-btn prepend-icon="download" class="my-1" color="green-accent-3" @click="handleDownload(props.fileInfo.url)">
       {{ t('button.download') }}
     </v-btn>
-    <v-btn prepend-icon="content_copy" class="my-1" color="teal-accent-1" @click="copy(props.fileInfo.url)">
+    <v-btn v-if="storageType !== 0" prepend-icon="content_copy" class="my-1" color="teal-accent-1" @click="copy(props.fileInfo.url)">
       {{ !copied ? t('button.copyUrl') : t('button.copyOk') }}
     </v-btn>
     <v-btn prepend-icon="content_copy" class="my-1" color="teal-accent-1" @click="copy(copyProxyUrl())">
