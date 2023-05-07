@@ -80,6 +80,33 @@ const pageOptions = ref<Array<DropdownOption | DropdownGroupOption | DropdownDiv
     key: 3,
   },
 ])
+const selectOptions = ref<Array<DropdownOption | DropdownGroupOption | DropdownDividerOption | DropdownRenderOption>>([
+  {
+    label: t('button.detail'),
+    key: 'detail',
+  },
+  {
+    label: t('button.edit'),
+    key: 'edit',
+  },
+])
+
+const handleSelect = (key: string | number, item: any) => {
+  showDropdownRef.value = false
+  if (key === 'detail') {
+    router.push({ path: `/@admin/setting/storage/${encodeURIComponent(item.id)}`, params: { id: item.id } })
+  } else if (key === 'edit') {
+    if (item.type === 0) {
+      router.push({ path: '/@admin/setting/storage/edit/local', query: { id: item.id } })
+    } else if (item.type === 1) {
+      router.push({ path: '/@admin/setting/storage/edit/oneDrive', query: { id: item.id } })
+    } else if (item.type === 2) {
+      router.push({ path: '/@admin/setting/storage/edit/aliyunOSS', query: { id: item.id } })
+    } else if (item.type === 3) {
+      router.push({ path: '/@admin/setting/storage/edit/amazonS3', query: { id: item.id } })
+    }
+  }
+}
 
 const handleStorageDelete = (storageId: number) => {
   storageDelete(storageId).then((res) => {
@@ -143,28 +170,13 @@ handleStoragePage(-1)
         >
           <template #header-extra>
             <div class="text-center">
-              <v-menu open-on-hover>
-                <template v-slot:activator="{ props }">
-                  <v-btn icon="expand_more" v-bind="props" variant="text" size="x-small" />
-                </template>
-                <v-list>
-                  <v-list-item @click="router.push({ path: `/@admin/setting/storage/${encodeURIComponent(item.id)}`, params: { id: item.id } })">
-                    <v-list-item-title>{{ t('button.detail') }}</v-list-item-title>
-                  </v-list-item>
-                  <v-list-item v-if="item.type === 0" @click="router.push({ path: '/@admin/setting/storage/edit/local', query: { id: item.id } })">
-                    <v-list-item-title>{{ t('button.edit') }}</v-list-item-title>
-                  </v-list-item>
-                  <v-list-item v-if="item.type === 1" @click="router.push({ path: '/@admin/setting/storage/edit/oneDrive', query: { id: item.id } })">
-                    <v-list-item-title>{{ t('button.edit') }}</v-list-item-title>
-                  </v-list-item>
-                  <v-list-item v-if="item.type === 2" @click="router.push({ path: '/@admin/setting/storage/edit/aliyunOSS', query: { id: item.id } })">
-                    <v-list-item-title>{{ t('button.edit') }}</v-list-item-title>
-                  </v-list-item>
-                  <v-list-item v-if="item.type === 3" @click="router.push({ path: '/@admin/setting/storage/edit/amazonS3', query: { id: item.id } })">
-                    <v-list-item-title>{{ t('button.edit') }}</v-list-item-title>
-                  </v-list-item>
-                </v-list>
-              </v-menu>
+              <n-dropdown trigger="hover" :options="selectOptions" @select="(key) => handleSelect(key, item)">
+                <n-icon size="24" class="cursor-pointer">
+                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
+                    <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6l-6-6l1.41-1.41z" fill="currentColor" />
+                  </svg>
+                </n-icon>
+              </n-dropdown>
             </div>
           </template>
           <div class="flex w-full">

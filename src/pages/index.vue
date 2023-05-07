@@ -1,18 +1,15 @@
 <script setup lang="ts">
 import { getDefaultStorage } from '~/api/modules/file'
-import { ResultEnum } from '~/enums/httpEnum'
 
 const router = useRouter()
 const loading = ref<boolean>(true)
 
 onBeforeMount(() => {
   getDefaultStorage().then((res) => {
-    if (res.code === ResultEnum.SUCCESS) {
-      if (res.data.storageKey) {
-        router.push({ path: `/${res.data.storageKey}` })
-      } else {
-        loading.value = false
-      }
+    if (res.data.storageKey) {
+      router.push({ path: `/${res.data.storageKey}` })
+    } else {
+      loading.value = false
     }
   }).catch((err) => {
     console.log(err)

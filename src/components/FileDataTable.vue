@@ -175,7 +175,6 @@ const options = ref<Array<DropdownOption | DropdownGroupOption | DropdownDivider
 
 /** 点击下拉框元素 */
 const handleSelect = (row: string) => {
-  console.log(rowItem)
   showDropdownRef.value = false
   if (row === 'copyUrl') {
     if (storageType.value === 1) {
