@@ -78,7 +78,7 @@ onUnmounted(() => {
             <n-progress
               type="dashboard"
               gap-position="bottom"
-              :percentage="((serverInfo.memoryInfo.used / 1024 / 1024).toFixed(2) / (serverInfo.memoryInfo.total / 1024 / 1024).toFixed(2)).toFixed(2) * 100 || 0"
+              :percentage="((serverInfo.memoryInfo.used / 1024 / 1024) / (serverInfo.memoryInfo.total / 1024 / 1024) * 100).toFixed(2) || 0"
             />
           </div>
         </n-card>
