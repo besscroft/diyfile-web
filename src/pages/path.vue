@@ -74,30 +74,37 @@ const getStorageInfo = (key: string): any => {
 }
 
 /** 下拉菜单数组处理 */
-const handleTableOption = (info: Storage, storages: any) => {
+const handleTableOption = (info: Storage, storages: any, path: string) => {
   tableOptions.value = []
-  tableOptions.value.push({
-    label: '上传',
-    key: 'upload',
-  })
-  tableOptions.value.push({
-    type: 'divider',
-    key: 'd1',
-  })
-  for (const resKey in storages) {
-    tableOptions.value.push({
-      label: storages[resKey].name,
-      key: storages[resKey].storageKey,
-    })
+  if (path !== '/' && !path.startsWith('/@')) {
+    const params = path.slice(((path.lastIndexOf('/') - 1) >>> 0) + 2)
+    if (params && params.includes('.') && isFile(params)) {
+      console.log('文件')
+    } else {
+      tableOptions.value.push({
+        label: '上传',
+        key: 'upload',
+      })
+      tableOptions.value.push({
+        type: 'divider',
+        key: 'd1',
+      })
+    }
+    for (const resKey in storages) {
+      tableOptions.value.push({
+        label: storages[resKey].name,
+        key: storages[resKey].storageKey,
+      })
+    }
   }
 }
 
 /** 获取所有可用存储并处理 */
-const handleEnableStorage = (info: Storage) => {
+const handleEnableStorage = (info: Storage, path: string) => {
   getEnableStorage().then((res) => {
     if (res.code === ResultEnum.SUCCESS && Array.isArray(res.data)) {
       // 下拉菜单内容
-      handleTableOption(info, res.data)
+      handleTableOption(info, res.data, path)
       storageList.value = res.data
     }
   })
@@ -232,6 +239,12 @@ const handleRouterChange = (key: any, uri: any) => {
   }
 }
 
+watch(() => {
+  return router.currentRoute.value.path
+}, (path) => {
+  handleTableOption(storageInfo.value, storageList.value, path)
+})
+
 /** 路由监听处理 */
 watch(() => {
   return router.currentRoute.value.path
@@ -255,9 +268,9 @@ watch(() => {
 onMounted(() => {
   const path = router.currentRoute.value.params.path
   const key = router.currentRoute.value.params.storageKey
-  handleEnableStorage(getStorageInfo(key.toString()))
+  const fullPath = router.currentRoute.value.path
+  handleEnableStorage(getStorageInfo(key.toString()), fullPath)
   try {
-    const fullPath = router.currentRoute.value.path
     const uri = fullPath.slice(`/${key}`.length, fullPath.length)
     const params = uri.slice(((uri.lastIndexOf('.') - 1) >>> 0) + 2)
     if (params.length > 0 && uri.includes('.') && isFileByRawExtension(params)) {

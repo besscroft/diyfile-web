@@ -82,7 +82,34 @@ const pageOptions = ref<Array<DropdownOption | DropdownGroupOption | DropdownDiv
     key: 'platform-visitor',
   },
 ])
+const selectOptions = ref<Array<DropdownOption | DropdownGroupOption | DropdownDividerOption | DropdownRenderOption>>([
+  {
+    label: t('button.detail'),
+    key: 'detail',
+  },
+  {
+    label: t('button.edit'),
+    key: 'edit',
+  },
+  {
+    label: t('button.pwd'),
+    key: 'pwd',
+    show: user.roleCode === 'platform-super-admin',
+  },
+])
 
+const handleSelect = (key: string | number, item: any) => {
+  showDropdownRef.value = false
+  if (key === 'detail') {
+    router.push({ path: `/@admin/system/user/${encodeURIComponent(item.username)}`, params: { username: item.username } })
+  } else if (key === 'edit') {
+    router.push({ path: '/@admin/system/user/edit', query: { id: item.id } })
+  } else if (key === 'pwd') {
+    router.push({ path: '/@admin/system/user/pwd', query: { id: item.id } })
+  }
+}
+
+/** 用户删除 */
 const handleUserDelete = (id: number) => {
   userDelete(id).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
@@ -134,22 +161,13 @@ useUserPage('')
         >
           <template #header-extra>
             <div class="text-center">
-              <v-menu open-on-hover>
-                <template v-slot:activator="{ props }">
-                  <v-btn icon="expand_more" v-bind="props" variant="text" size="x-small" />
-                </template>
-                <v-list>
-                  <v-list-item @click="router.push({ path: `/@admin/system/user/${encodeURIComponent(item.username)}`, params: { username: item.username } })">
-                    <v-list-item-title>{{ t('button.detail') }}</v-list-item-title>
-                  </v-list-item>
-                  <v-list-item @click="router.push({ path: '/@admin/system/user/edit', query: { id: item.id } })">
-                    <v-list-item-title>{{ t('button.edit') }}</v-list-item-title>
-                  </v-list-item>
-                  <v-list-item v-if="user.roleCode === 'platform-super-admin'" @click="router.push({ path: '/@admin/system/user/pwd', query: { id: item.id } })">
-                    <v-list-item-title>{{ t('button.pwd') }}</v-list-item-title>
-                  </v-list-item>
-                </v-list>
-              </v-menu>
+              <n-dropdown trigger="hover" :options="selectOptions" @select="(key) => handleSelect(key, item)">
+                <n-icon size="24" class="cursor-pointer">
+                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
+                    <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6l-6-6l1.41-1.41z" fill="currentColor" />
+                  </svg>
+                </n-icon>
+              </n-dropdown>
             </div>
           </template>
           <div class="justify-center">
