@@ -67,7 +67,7 @@ menu:
     index: システム
     setting: 設定
     user: ユーザー
-    faqs: よくある質問
+    manual: マニュアル
 message:
   error: 間違い
 tag:

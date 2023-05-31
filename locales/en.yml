@@ -68,7 +68,7 @@ menu:
     index: System
     setting: Setting
     user: User
-    faqs: FAQs
+    manual: Manual
 message:
   error: Error
 tag:

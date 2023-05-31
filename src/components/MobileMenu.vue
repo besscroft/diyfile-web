@@ -36,6 +36,10 @@ const systemOptions = ref<Array<DropdownOption | DropdownGroupOption | DropdownD
     label: t('menu.system.user'),
     key: '3_1',
   },
+  {
+    label: t('menu.system.manual'),
+    key: '3_2',
+  },
 ])
 
 const handleSelect = (path: string) => {

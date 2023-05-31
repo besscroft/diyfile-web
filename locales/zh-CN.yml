@@ -68,7 +68,7 @@ menu:
     index: 系统
     setting: 设置
     user: 用户
-    faqs: 常见问题
+    manual: 手册
 message:
   error: 错误
 tag:
