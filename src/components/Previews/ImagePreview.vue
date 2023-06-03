@@ -19,8 +19,8 @@ const router = useRouter()
 const storageType = ref<number>(-1)
 
 const handleDownload = (url: string) => {
-  if (storageType.value === 0) {
-    download(`${getBaseUrl()}/api/raw/?path=/${router.currentRoute.value.params.storageKey}/${props.fileInfo.url}`)
+  if (storageType.value === 0 && props.fileInfo.url.startsWith('/@api')) {
+    download(`${getBaseUrl()}/api/raw/?path=/${router.currentRoute.value.params.storageKey}/${props.fileInfo.url.substring(6)}`)
   } else {
     download(url)
   }
@@ -28,7 +28,11 @@ const handleDownload = (url: string) => {
 
 const copyProxyUrl = (): string => {
   if (storageType.value === 0) {
-    return `${getBaseUrl()}/api/raw/?path=/${router.currentRoute.value.params.storageKey}/${props.fileInfo.url}`
+    if (props.fileInfo.url.startsWith('/@api')) {
+      return `${getBaseUrl()}/api/raw/?path=/${router.currentRoute.value.params.storageKey}/${props.fileInfo.url.substring(6)}`
+    } else {
+      return props.fileInfo.url
+    }
   } else {
     return `${getBaseUrl()}/api/raw/?path=${router.currentRoute.value.fullPath}`
   }
@@ -43,7 +47,7 @@ onMounted(() => {
 
 <template>
   <n-image
-    :src="props.fileInfo.url"
+    :src="props.fileInfo.url.startsWith('/@api') ? getBaseUrl() + '/@api/' + props.storageInfo.storageKey + '/' + props.fileInfo.url.substring(6) : props.fileInfo.url"
   />
   <v-divider :thickness="2" class="border-opacity-50" color="success" />
   <v-alert border="start" :text="`正在预览：${decodeURIComponent(props.fileInfo.name)}`" />

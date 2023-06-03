@@ -19,6 +19,7 @@ const updateStorageForm = reactive({
   /** 备注 */
   remark: '',
   enable: undefined,
+  domain: '',
   mount_path: '',
 })
 const updateStorageData = ref<Storage.UpdateStorageRequestData>({
@@ -47,6 +48,14 @@ const rules: FormRules = {
 }
 
 const list = ref<Array<Storage.StorageConfig>>([])
+const domain = ref<Storage.StorageConfig>({
+  id: undefined,
+  storageId: undefined,
+  name: '代理域名',
+  configKey: 'domain',
+  configValue: '',
+  description: '本地存储访问代理域名',
+})
 const mount_path = ref<Storage.StorageConfig>({
   id: undefined,
   storageId: undefined,
@@ -58,7 +67,9 @@ const mount_path = ref<Storage.StorageConfig>({
 
 const handleFormData = () => {
   list.value = []
+  domain.value.configValue = updateStorageForm.domain
   mount_path.value.configValue = updateStorageForm.mount_path
+  list.value.push(domain.value)
   list.value.push(mount_path.value)
   updateStorageData.value.configList = list.value
 }
@@ -98,6 +109,10 @@ onBeforeMount(() => {
       updateStorageForm.enable = res.data.enable
       const configList = res.data.configList
       for (const item of configList) {
+        if (item.configKey === 'domain') {
+          updateStorageForm.domain = item.configValue
+          domain.value = item
+        }
         if (item.configKey === 'mount_path') {
           updateStorageForm.mount_path = item.configValue
           mount_path.value = item
@@ -127,6 +142,9 @@ onBeforeMount(() => {
           </n-form-item>
           <n-form-item label="storageKey" path="storageKey" required>
             <n-input v-model:value="updateStorageForm.storageKey" disabled />
+          </n-form-item>
+          <n-form-item label="代理域名" path="domain">
+            <n-input v-model:value="updateStorageForm.domain" :placeholder="domain.description" clearable />
           </n-form-item>
           <n-form-item label="挂载路径" path="mount_path" required>
             <n-input v-model:value="updateStorageForm.mount_path" :placeholder="mount_path.description" clearable />

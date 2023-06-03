@@ -16,6 +16,7 @@ const addStorageForm = reactive({
   storageKey: '',
   /** 备注 */
   remark: '',
+  domain: '',
   mount_path: '',
 })
 const addStorageData = ref<Storage.AddStorageRequestData>({
@@ -45,6 +46,14 @@ const rules: FormRules = {
 }
 
 const list = ref<Array<Storage.StorageConfig>>([])
+const domain = ref<Storage.StorageConfig>({
+  id: undefined,
+  storageId: undefined,
+  name: '代理域名',
+  configKey: 'domain',
+  configValue: '',
+  description: '本地存储访问代理域名',
+})
 const mount_path = ref<Storage.StorageConfig>({
   id: undefined,
   storageId: undefined,
@@ -56,7 +65,9 @@ const mount_path = ref<Storage.StorageConfig>({
 
 const handleFormData = () => {
   list.value = []
+  domain.value.configValue = addStorageForm.domain
   mount_path.value.configValue = addStorageForm.mount_path
+  list.value.push(domain.value)
   list.value.push(mount_path.value)
   addStorageData.value.configList = list.value
 }
@@ -103,6 +114,9 @@ const handleSubmit = () => {
           </n-form-item>
           <n-form-item label="storageKey" path="storageKey" required>
             <n-input v-model:value="addStorageForm.storageKey" placeholder="请输入 storageKey" clearable show-count :maxlength="20" />
+          </n-form-item>
+          <n-form-item label="代理域名" path="domain">
+            <n-input v-model:value="addStorageForm.domain" :placeholder="domain.description" clearable />
           </n-form-item>
           <n-form-item label="挂载路径" path="mount_path" required>
             <n-input v-model:value="addStorageForm.mount_path" :placeholder="mount_path.description" clearable />

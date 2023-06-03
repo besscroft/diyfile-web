@@ -184,14 +184,26 @@ const handleSelect = (row: string) => {
     }
   } else if (row === 'copyProxyUrl') {
     if (storageType.value === 0) {
-      emit('handleShare', `${getBaseUrl()}/api/raw/?path=/${router.currentRoute.value.params.storageKey}/${rowItem.value.url}`)
+      if (rowItem.value.url.startsWith('/@api')) {
+        emit('handleShare', `${getBaseUrl()}/api/raw/?path=/${router.currentRoute.value.params.storageKey}/${rowItem.value.url}`)
+      } else {
+        emit('handleShare', rowItem.value.url)
+      }
     } else {
       emit('handleShare', `${getBaseUrl()}/api/raw/?path=${router.currentRoute.value.fullPath}/${rowItem.value.name}`)
     }
   } else if (row === 'open') {
     rowItem.value.type !== 'file' ? emit('handleFolder', rowItem.value.name) : emit('clickFile', rowItem.value.name)
   } else if (row === 'download') {
-    download(rowItem.value.url)
+    if (storageType.value === 0) {
+      if (rowItem.value.url.startsWith('/@api')) {
+        download(`${getBaseUrl()}/api/raw/?path=/${router.currentRoute.value.params.storageKey}/${rowItem.value.url.substring(6)}`)
+      } else {
+        download(rowItem.value.url)
+      }
+    } else {
+      download(rowItem.value.url)
+    }
   } else if (row === 'delete') {
     handleDelete(rowItem.value)
   } else {
