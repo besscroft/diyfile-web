@@ -2,6 +2,8 @@ import path from 'node:path'
 import { defineConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
 import Pages from 'vite-plugin-pages'
+import VueDevTools from 'vite-plugin-vue-devtools'
+
 // vite.config.ts
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 import generateSitemap from 'vite-ssg-sitemap'
@@ -41,6 +43,8 @@ export default defineConfig({
   },
 
   plugins: [
+    VueDevTools(),
+
     VueMacros({
       plugins: {
         vue: Vue({

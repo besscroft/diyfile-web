@@ -22,7 +22,11 @@ const dp = ref<DPlayer>()
 
 const copyProxyUrl = (): string => {
   if (storageType.value === 0) {
-    return `${getBaseUrl()}/api/raw/?path=/${router.currentRoute.value.params.storageKey}/${props.fileInfo.url}`
+    if (props.fileInfo.url.startsWith('/@api')) {
+      return `${getBaseUrl()}/api/raw/?path=/${router.currentRoute.value.params.storageKey}/${props.fileInfo.url.substring(6)}`
+    } else {
+      return props.fileInfo.url
+    }
   } else {
     return `${getBaseUrl()}/api/raw/?path=${router.currentRoute.value.fullPath}`
   }
@@ -43,14 +47,14 @@ const initPlayer = () => {
     volume: 0.7,
     mutex: true,
     video: {
-      url,
+      url: props.fileInfo.url.startsWith('/@api') ? `${getBaseUrl()}/@api/${props.storageInfo.storageKey}/${props.fileInfo.url.substring(6)}` : props.fileInfo.url,
     },
   })
 }
 
 const handleDownload = (url: string) => {
-  if (storageType.value === 0) {
-    download(`${getBaseUrl()}/api/raw/?path=/${router.currentRoute.value.params.storageKey}/${props.fileInfo.url}`)
+  if (storageType.value === 0 && props.fileInfo.url.startsWith('/@api')) {
+    download(`${getBaseUrl()}/api/raw/?path=/${router.currentRoute.value.params.storageKey}/${props.fileInfo.url.substring(6)}`)
   } else {
     download(url)
   }

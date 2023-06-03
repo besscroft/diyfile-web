@@ -42,6 +42,7 @@ onMounted(() => {
     <v-list-item :active="activeItem === '/@admin/setting/sync'" prepend-icon="sync" :title="t('menu.setting.sync')" @click="routerPage('2_2')" />
     <v-list-item :active="activeItem === '/@admin/system/setting'" prepend-icon="settings_applications" :title="t('menu.system.setting')" @click="routerPage('3_0')" />
     <v-list-item :active="activeItem === '/@admin/system/user'" prepend-icon="supervisor_account" :title="t('menu.system.user')" @click="routerPage('3_1')" />
+    <v-list-item :active="activeItem === '/@admin/system/manual'" prepend-icon="local_library" :title="t('menu.system.manual')" @click="routerPage('3_2')" />
     <div class="flex flex-col mt-auto space-y-1">
       <v-btn class="flex-grow-1" @click="routerPage('/')">{{ t('button.home') }}</v-btn>
       <v-btn class="flex-grow-1" @click="loginOut">{{ t('button.quit') }}</v-btn>

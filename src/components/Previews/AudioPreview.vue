@@ -26,7 +26,11 @@ const ap = ref<APlayer>()
 
 const copyProxyUrl = (): string => {
   if (storageType.value === 0) {
-    return `${getBaseUrl()}/api/raw/?path=/${router.currentRoute.value.params.storageKey}/${url}`
+    if (url.startsWith('/@api')) {
+      return `${getBaseUrl()}/api/raw/?path=/${router.currentRoute.value.params.storageKey}/${url.substring(6)}`
+    } else {
+      return url
+    }
   } else {
     return `${getBaseUrl()}/api/raw/?path=${router.currentRoute.value.fullPath}`
   }
@@ -49,7 +53,7 @@ const initPlayer = (cover: string) => {
     audio: [
       {
         name: props.fileInfo.name,
-        url,
+        url: props.fileInfo.url.startsWith('/@api') ? `${getBaseUrl()}/@api/${props.storageInfo.storageKey}/${props.fileInfo.url.substring(6)}` : props.fileInfo.url,
         theme: '#ebd0c2',
         cover,
       },
@@ -58,7 +62,11 @@ const initPlayer = (cover: string) => {
 }
 
 const handleDownload = (url: string) => {
-  download(url)
+  if (storageType.value === 0 && props.fileInfo.url.startsWith('/@api')) {
+    download(`${getBaseUrl()}/api/raw/?path=/${router.currentRoute.value.params.storageKey}/${props.fileInfo.url.substring(6)}`)
+  } else {
+    download(url)
+  }
 }
 
 const handleImagePath = (): string => {

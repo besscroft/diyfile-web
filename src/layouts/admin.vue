@@ -33,7 +33,7 @@ const routerPage = (val: string) => {
   } else if (val === '3_1') {
     router.push('/@admin/system/user')
   } else if (val === '3_2') {
-    router.push('/@admin/system/faqs')
+    router.push('/@admin/system/manual')
   } else {
     router.push('/@admin')
   }

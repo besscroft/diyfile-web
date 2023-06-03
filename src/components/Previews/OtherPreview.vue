@@ -19,12 +19,20 @@ const router = useRouter()
 const storageType = ref<number>(-1)
 
 const handleDownload = (url: string) => {
-  download(url)
+  if (storageType.value === 0 && props.fileInfo.url.startsWith('/@api')) {
+    download(`${getBaseUrl()}/api/raw/?path=/${router.currentRoute.value.params.storageKey}/${props.fileInfo.url.substring(6)}`)
+  } else {
+    download(url)
+  }
 }
 
 const copyProxyUrl = (): string => {
   if (storageType.value === 0) {
-    return `${getBaseUrl()}/api/raw/?path=/${router.currentRoute.value.params.storageKey}/${props.fileInfo.url}`
+    if (props.fileInfo.url.startsWith('/@api')) {
+      return `${getBaseUrl()}/api/raw/?path=/${router.currentRoute.value.params.storageKey}/${props.fileInfo.url.substring(6)}`
+    } else {
+      return props.fileInfo.url
+    }
   } else {
     return `${getBaseUrl()}/api/raw/?path=${router.currentRoute.value.fullPath}`
   }
