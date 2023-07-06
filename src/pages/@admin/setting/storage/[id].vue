@@ -57,12 +57,9 @@ useDetail()
       <n-descriptions-item label="更新时间">
         {{ detail.updateTime }}
       </n-descriptions-item>
-      <n-descriptions-item label="最近登录时间">
-        {{ detail.loginTime }}
-      </n-descriptions-item>
-      <n-descriptions-item label="帐号启用状态">
-        <n-tag v-if="detail.status === 1" type="info" :bordered="false"> 启用 </n-tag>
-        <n-tag v-else type="error" :bordered="false"> 禁用 </n-tag>
+      <n-descriptions-item label="存储默认值状态">
+        <n-tag v-if="detail.defaultStatus === 1" type="info" :bordered="false"> 默认 </n-tag>
+        <n-tag v-else type="error" :bordered="false"> 非默认 </n-tag>
       </n-descriptions-item>
       <n-descriptions-item label="备注" :span="3">
         {{ detail.remark }}
