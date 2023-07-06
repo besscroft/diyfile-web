@@ -22,7 +22,7 @@ import { getFileNameFromPath } from '~/utils/FileUtil'
 import { getBaseUrl } from '~/utils/WindowUtil'
 
 /* global */
-console.log(`${'\n'} %c DiyFile v0.5.2 %c https://github.com/besscroft/diyfile ${'\n'}${'\n'}`, 'color: #fadfa3; background: #030307; padding:5px 0;', 'background: #fadfa3; padding:5px 0;')
+console.log(`${'\n'} %c DiyFile v0.5.3 %c https://github.com/besscroft/diyfile ${'\n'}${'\n'}`, 'color: #fadfa3; background: #030307; padding:5px 0;', 'background: #fadfa3; padding:5px 0;')
 
 generatedRoutes.push({
   path: '/',
