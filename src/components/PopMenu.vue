@@ -137,15 +137,36 @@ onMounted(() => {
 
 <template>
   <div class="flex flex-column">
-    <v-list-item
-      :prepend-avatar="user.avatar"
-      :title="user.userName"
-      :subtitle="user.roleCode"
-    />
+    <div class="flex">
+      <div class="flex justify-center items-center h-10 w-1/4">
+        <n-avatar
+          round
+          size="large"
+          :src="user.avatar"
+        />
+      </div>
+      <div class="flex flex-col h-10 w-3/4 pl-1">
+        <n-gradient-text
+          gradient="linear-gradient(90deg, red 0%, green 50%, blue 100%)"
+        >
+          {{ user.userName }}
+        </n-gradient-text>
+        <n-tooltip trigger="hover">
+          <template #trigger>
+            {{ user.roleCode.slice(0, 14) + '...' }}
+          </template>
+          {{ user.roleCode }}
+        </n-tooltip>
+      </div>
+    </div>
     <n-menu v-model:value="activeItem" :options="menuOptions" />
     <div class="flex flex-col mt-auto space-y-1">
-      <v-btn class="flex-grow-1" @click="routerPage('/')">{{ t('button.home') }}</v-btn>
-      <v-btn class="flex-grow-1" @click="loginOut">{{ t('button.quit') }}</v-btn>
+      <n-button type="tertiary" @click="routerPage('/')">
+        {{ t('button.home') }}
+      </n-button>
+      <n-button class="mb-1" type="tertiary" @click="loginOut">
+        {{ t('button.quit') }}
+      </n-button>
     </div>
   </div>
 </template>

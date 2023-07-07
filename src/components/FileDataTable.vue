@@ -149,7 +149,7 @@ const createColumns = (): DataTableColumns<Title> => {
       {
         title: t('table.index.time'),
         key: 'lastModifiedDateTime',
-        width: 136,
+        width: 142,
       },
       {
         title: t('table.index.fileSize'),
