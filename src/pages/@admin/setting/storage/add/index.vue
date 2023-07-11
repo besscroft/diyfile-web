@@ -12,11 +12,11 @@ const { isMobile } = useDevice()
     <n-grid cols="5" item-responsive responsive="screen">
       <n-grid-item offset="0 m:1 l:1" span="5 m:3 l:3">
         <div class="flex flex-col space-y-3">
-          <v-btn @click="router.push({ path: '/@admin/setting/storage/add/local', query: { type: 0 } })">本地存储</v-btn>
-          <v-btn @click="router.push({ path: '/@admin/setting/storage/add/oneDrive', query: { type: 1 } })">OneDrive</v-btn>
-          <v-btn @click="router.push({ path: '/@admin/setting/storage/add/aliyunOSS', query: { type: 2 } })">阿里云OSS</v-btn>
-          <v-btn @click="router.push({ path: '/@admin/setting/storage/add/amazonS3', query: { type: 3 } })">AmazonS3</v-btn>
-          <v-btn disabled>更多存储支持中...</v-btn>
+          <n-button @click="router.push({ path: '/@admin/setting/storage/add/local', query: { type: 0 } })" ghost>本地存储</n-button>
+          <n-button @click="router.push({ path: '/@admin/setting/storage/add/oneDrive', query: { type: 1 } })" ghost>OneDrive</n-button>
+          <n-button @click="router.push({ path: '/@admin/setting/storage/add/aliyunOSS', query: { type: 2 } })" ghost>阿里云OSS</n-button>
+          <n-button @click="router.push({ path: '/@admin/setting/storage/add/amazonS3', query: { type: 3 } })" ghost>AmazonS3</n-button>
+          <n-button disabled ghost>更多存储支持中...</n-button>
         </div>
       </n-grid-item>
     </n-grid>

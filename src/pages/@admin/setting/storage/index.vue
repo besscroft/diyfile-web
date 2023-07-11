@@ -149,9 +149,26 @@ handleStoragePage(-1)
     <n-page-header :title="t('menu.setting.storage')" class="mx-0.5">
       <template #extra>
         <div class="flex items-center">
-          <v-btn icon="add_box" variant="text" size="x-small" @click="router.push('/@admin/setting/storage/add')" />
+          <n-button quaternary circle @click="router.push('/@admin/setting/storage/add')">
+            <template #icon>
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
+                <path d="M17 15V8h-2v7H8v2h7v7h2v-7h7v-2z" fill="currentColor"></path>
+              </svg>
+            </template>
+          </n-button>
           <n-dropdown :options="pageOptions || undefined" @select="handleStoragePage">
-            <v-btn icon="dynamic_form" variant="text" size="x-small" />
+            <n-button quaternary circle>
+              <template #icon>
+                <n-icon>
+                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
+                    <path d="M28 20h-2v2h2v6H4v-6h10v-2H4a2.002 2.002 0 0 0-2 2v6a2.002 2.002 0 0 0 2 2h24a2.002 2.002 0 0 0 2-2v-6a2.002 2.002 0 0 0-2-2z" fill="currentColor"></path>
+                    <circle cx="7" cy="25" r="1" fill="currentColor"></circle>
+                    <path d="M30 8h-8v6h-6v8h8v-6h6zm-8 12h-4v-4h4zm6-6h-4v-4h4z" fill="currentColor"></path>
+                    <path d="M18 10h-8V2h8zm-6-2h4V4h-4z" fill="currentColor"></path>
+                  </svg>
+                </n-icon>
+              </template>
+            </n-button>
           </n-dropdown>
         </div>
       </template>
@@ -180,7 +197,16 @@ handleStoragePage(-1)
             </div>
           </template>
           <div class="flex w-full">
-            <v-avatar size="56" image="/storage_FILL0_wght400_GRAD0_opsz48.png" class="mb-3 mx-auto" />
+            <n-icon size="46" class="mb-3 mx-auto">
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
+                <path d="M28 20h-2v2h2v6H4v-6h2v-2H4a2.002 2.002 0 0 0-2 2v6a2.002 2.002 0 0 0 2 2h24a2.002 2.002 0 0 0 2-2v-6a2.002 2.002 0 0 0-2-2z" fill="currentColor"></path>
+                <circle cx="7" cy="25" r="1" fill="currentColor"></circle>
+                <path d="M15 20H8v-7h7zm-5-2h3v-3h-3z" fill="currentColor"></path>
+                <path d="M24 20h-7v-7h7zm-5-2h3v-3h-3z" fill="currentColor"></path>
+                <path d="M15 11H8V4h7zm-5-2h3V6h-3z" fill="currentColor"></path>
+                <path d="M24 11h-7V4h7zm-5-2h3V6h-3z" fill="currentColor"></path>
+              </svg>
+            </n-icon>
           </div>
           {{ item.remark }}
           <template #action>

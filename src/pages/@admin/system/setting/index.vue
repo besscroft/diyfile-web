@@ -4,34 +4,25 @@ import User from '~/pages/@admin/system/setting/user.vue'
 import Web from '~/pages/@admin/system/setting/web.vue'
 
 const { t } = useI18n()
-const tab = ref(1)
+const { isMobile } = useDevice()
 </script>
 
 <template>
   <n-card content-style="padding: 0;" class="my-0.5">
     <n-page-header :title="t('menu.system.setting')" class="mx-0.5" />
   </n-card>
-  <n-card content-style="padding: 0.5rem;" class="box-card h-full w-full overflow-auto" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
-    <v-tabs
-      v-model="tab"
-      color="deep-purple-accent-4"
-      align-tabs="center"
-    >
-      <v-tab :value="1">{{ t('setting.base') }}</v-tab>
-      <v-tab :value="2">{{ t('setting.web') }}</v-tab>
-      <v-tab :value="3">{{ t('setting.user') }}</v-tab>
-    </v-tabs>
-    <v-window v-model="tab" class="wrapper mx-auto max-w-screen-sm">
-      <v-window-item :value="1">
+  <n-card content-style="padding: 0.5rem;" class="flex items-center box-card h-full w-full overflow-auto" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
+    <n-tabs type="line" animated :class="isMobile ? '' : 'w-160'">
+      <n-tab-pane :name="t('setting.base')" :tab="t('setting.base')">
         <Base />
-      </v-window-item>
-      <v-window-item :value="2">
+      </n-tab-pane>
+      <n-tab-pane :name="t('setting.web')" :tab="t('setting.web')">
         <Web />
-      </v-window-item>
-      <v-window-item :value="3">
+      </n-tab-pane>
+      <n-tab-pane :name="t('setting.user')" :tab="t('setting.user')">
         <User />
-      </v-window-item>
-    </v-window>
+      </n-tab-pane>
+    </n-tabs>
   </n-card>
 </template>
 
