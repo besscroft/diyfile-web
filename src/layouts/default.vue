@@ -1,17 +1,11 @@
 <script setup lang="ts">
-import { useTheme } from 'vuetify'
-
-const theme = useTheme()
-
 const toggleTheme = () => {
   if (isDark.value) {
     // 恢复亮色主题
     localStorage.setItem('diyfile-theme', 'light')
-    theme.global.name.value = 'light'
   } else {
     // 设置为暗黑主题
     localStorage.setItem('diyfile-theme', 'dark')
-    theme.global.name.value = 'dark'
   }
   toggleDark()
 }

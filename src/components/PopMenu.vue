@@ -132,8 +132,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex flex-column">
-    <div class="flex">
+  <div flex flex-col>
+    <div class="flex mt-1">
       <div class="flex justify-center items-center h-10 w-1/4">
         <n-avatar
           round

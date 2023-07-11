@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { DropdownDividerOption, DropdownGroupOption, DropdownOption, DropdownRenderOption } from 'naive-ui'
-import { useTheme } from 'vuetify'
 import { getSiteTitle } from '~/api/modules/systemConfig'
 
 // 路由状态
@@ -13,7 +12,6 @@ const username = ref<string>('')
 const avatar = ref<string>('')
 const { isMobile } = useDevice()
 const showDropdownRef = ref(false)
-const theme = useTheme()
 
 const toggleTheme = () => {
   emit('toggleTheme')
@@ -85,7 +83,6 @@ onMounted(() => {
   } else {
     locale.value = 'zh-CN'
   }
-  localTheme === 'dark' || isDark.value ? theme.global.name.value = 'dark' : theme.global.name.value = 'light'
   if (!user.title) {
     getSiteTitle().then((res) => {
       if (res.code === 200) {

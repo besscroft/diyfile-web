@@ -197,7 +197,7 @@ useUserPage('')
           </div>
           <template #action>
             <div class="mt-auto">
-              <div class="flex justify-space-between">
+              <div flex justify-between>
                 <div class="flex items-center justify-center space-x-1">
                   <span
                     class="inline-flex items-center justify-center rounded-full bg-blue-400 px-2.5 py-0.5 text-coolGray-50"

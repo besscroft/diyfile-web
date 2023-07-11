@@ -47,12 +47,7 @@ export default defineConfig({
     VueMacros({
       plugins: {
         vue: Vue({
-          template: {
-            // https://github.com/vuetifyjs/vuetify-loader/tree/next/packages/vite-plugin#image-loading
-            transformAssetUrls,
-          },
           include: [/\.vue$/, /\.md$/],
-          reactivityTransform: true,
         }),
       },
     }),

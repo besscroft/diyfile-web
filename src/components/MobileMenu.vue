@@ -57,7 +57,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <n-space class="flex justify-center items-center justify-space-around">
+  <n-space flex justify-center items-center justify="space-around">
     <n-dropdown trigger="hover" :options="settingOptions" @select="handleSelect">
       <n-button icon-placement="left" quaternary>
         <template #icon>

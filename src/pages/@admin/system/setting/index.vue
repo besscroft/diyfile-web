@@ -11,7 +11,7 @@ const { isMobile } = useDevice()
   <n-card content-style="padding: 0;" class="my-0.5">
     <n-page-header :title="t('menu.system.setting')" class="mx-0.5" />
   </n-card>
-  <n-card content-style="padding: 0.5rem;" class="flex items-center box-card h-full w-full overflow-auto" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
+  <n-card content-style="padding: 0.5rem;" flex items-center class="box-card h-full w-full overflow-auto" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
     <n-tabs type="line" animated :class="isMobile ? '' : 'w-160'">
       <n-tab-pane :name="t('setting.base')" :tab="t('setting.base')">
         <Base />
