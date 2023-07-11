@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import type { DataTableColumns, DropdownDividerOption, DropdownGroupOption, DropdownOption, DropdownRenderOption } from 'naive-ui'
-import { VIcon } from 'vuetify/components/VIcon'
-import { isAudio, isImage, isPDF, isVideo } from '~/utils/FileUtil'
 import { download } from '~/utils/ButtonUtil'
 import { getBaseUrl } from '~/utils/WindowUtil'
 import { storageInfoByStorageKey } from '~/api/modules/storage'
+import { renderFileIcon } from '~/utils/renderUtil'
 
 interface Title {
   fileName: string
@@ -36,57 +35,7 @@ const createColumns = (): DataTableColumns<Title> => {
       {
         title: t('table.index.fileName'),
         key: 'name',
-        render: (row) => {
-          if (row.type !== 'file') {
-            return h('div',
-              {
-                class: 'flex items-center cursor-pointer',
-                onClick: () => { emit('handleFolder', row.name) },
-              },
-              [h(VIcon, { icon: 'folder' }), h('p', row.name)],
-            )
-          } else if (isImage(row.name)) {
-            return h('div',
-              {
-                class: 'flex items-center cursor-pointer',
-                onClick: () => { emit('clickFile', row.name) },
-              },
-              [h(VIcon, { icon: 'image' }), h('p', row.name)],
-            )
-          } else if (isVideo(row.name)) {
-            return h('div',
-              {
-                class: 'flex items-center cursor-pointer',
-                onClick: () => { emit('clickFile', row.name) },
-              },
-              [h(VIcon, { icon: 'video_library' }), h('p', row.name)],
-            )
-          } else if (isAudio(row.name)) {
-            return h('div',
-              {
-                class: 'flex items-center cursor-pointer',
-                onClick: () => { emit('clickFile', row.name) },
-              },
-              [h(VIcon, { icon: 'music_note' }), h('p', row.name)],
-            )
-          } else if (isPDF(row.name)) {
-            return h('div',
-              {
-                class: 'flex items-center cursor-pointer',
-                onClick: () => { emit('clickFile', row.name) },
-              },
-              [h(VIcon, { icon: 'picture_as_pdf' }), h('p', row.name)],
-            )
-          } else {
-            return h('div',
-              {
-                class: 'flex items-center cursor-pointer',
-                onClick: () => { emit('clickFile', row.name) },
-              },
-              [h(VIcon, { icon: 'description' }), h('p', row.name)],
-            )
-          }
-        },
+        render: row => renderFileIcon(row, emit),
       },
     ]
   } else {
@@ -94,57 +43,7 @@ const createColumns = (): DataTableColumns<Title> => {
       {
         title: t('table.index.fileName'),
         key: 'name',
-        render: (row) => {
-          if (row.type !== 'file') {
-            return h('div',
-              {
-                class: 'flex items-center cursor-pointer',
-                onClick: () => { emit('handleFolder', row.name) },
-              },
-              [h(VIcon, { icon: 'folder' }), h('p', row.name)],
-            )
-          } else if (isImage(row.name)) {
-            return h('div',
-              {
-                class: 'flex items-center cursor-pointer',
-                onClick: () => { emit('clickFile', row.name) },
-              },
-              [h(VIcon, { icon: 'image' }), h('p', row.name)],
-            )
-          } else if (isVideo(row.name)) {
-            return h('div',
-              {
-                class: 'flex items-center cursor-pointer',
-                onClick: () => { emit('clickFile', row.name) },
-              },
-              [h(VIcon, { icon: 'video_library' }), h('p', row.name)],
-            )
-          } else if (isAudio(row.name)) {
-            return h('div',
-              {
-                class: 'flex items-center cursor-pointer',
-                onClick: () => { emit('clickFile', row.name) },
-              },
-              [h(VIcon, { icon: 'music_note' }), h('p', row.name)],
-            )
-          } else if (isPDF(row.name)) {
-            return h('div',
-              {
-                class: 'flex items-center cursor-pointer',
-                onClick: () => { emit('clickFile', row.name) },
-              },
-              [h(VIcon, { icon: 'picture_as_pdf' }), h('p', row.name)],
-            )
-          } else {
-            return h('div',
-              {
-                class: 'flex items-center cursor-pointer',
-                onClick: () => { emit('clickFile', row.name) },
-              },
-              [h(VIcon, { icon: 'description' }), h('p', row.name)],
-            )
-          }
-        },
+        render: row => renderFileIcon(row, emit),
       },
       {
         title: t('table.index.time'),
