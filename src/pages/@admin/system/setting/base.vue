@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { getBarkId, updateConfig } from '~/api/modules/systemConfig'
+import { getBarkId, getBarkStatus, updateConfig } from '~/api/modules/systemConfig'
 import { ResultEnum } from '~/enums/httpEnum'
 
 const barkId = ref()
+const barkStatus = ref(false)
 const message = useMessage()
 
 const handleUpdateBarkId = (barkId: string) => {
@@ -13,9 +14,20 @@ const handleUpdateBarkId = (barkId: string) => {
   })
 }
 
+const handleUpdateValue = (value: boolean) => {
+  updateConfig({ configKey: 'barkStatus', configValue: value ? 1 : 0 }).then((res) => {
+    if (res.code === ResultEnum.SUCCESS) {
+      message.success(res.message)
+    }
+  })
+}
+
 onMounted(() => {
   getBarkId().then((res) => {
     barkId.value = res.data
+  })
+  getBarkStatus().then((res) => {
+    barkStatus.value = res.data === 1 ? true : false
   })
 })
 </script>
@@ -35,9 +47,13 @@ onMounted(() => {
         </template>
       </n-button>
     </n-input-group>
+    <br />
+    <br />
+    是否启用 Bark 推送
+    <br />
+    <n-switch
+      v-model:value="barkStatus"
+      @update:value="(value: boolean) => handleUpdateValue(value)"
+    />
   </div>
 </template>
-
-<style scoped>
-
-</style>

@@ -3,6 +3,6 @@ export namespace SystemConfig {
     /** 系统配置键 */
     configKey: string
     /** 系统配置值 */
-    configValue: string
+    configValue: any
   }
 }
