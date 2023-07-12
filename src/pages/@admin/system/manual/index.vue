@@ -3,12 +3,12 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <n-card content-style="padding: 0;" class="my-0.5">
-    <n-page-header :title="t('menu.system.manual')" class="mx-0.5">
+  <n-card content-style="padding: 0;" my0.5>
+    <n-page-header :title="t('menu.system.manual')" mx0.5>
     </n-page-header>
   </n-card>
-  <n-card content-style="padding: 0;" class="box-card overflow-auto no-scrollbar" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
-    <n-collapse class="mx-2 my-4" :default-expanded-names="['1']">
+  <n-card content-style="padding: 0;" of-auto onscroll class="box-card" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
+    <n-collapse mx2 my4 :default-expanded-names="['1']">
       <n-collapse-item title="系统有哪些角色，分别能干什么？" name="1">
         <div>超级管理员：管理系统平台中的所有资源，<b>但不允许删除自己。</b></div>
         <div>平台管理员：管理系统平台中的大部分资源，<b>但不允许删除用户。</b></div>

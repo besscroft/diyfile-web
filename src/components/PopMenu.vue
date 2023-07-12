@@ -133,15 +133,15 @@ onMounted(() => {
 
 <template>
   <div flex flex-col>
-    <div class="flex mt-1">
-      <div class="flex justify-center items-center h-10 w-1/4">
+    <div flex mt-1>
+      <div flex justify-center items-center h-10 class="w-1/4">
         <n-avatar
           round
           size="large"
           :src="user.avatar"
         />
       </div>
-      <div class="flex flex-col h-10 w-3/4 pl-1">
+      <div flex flex-col h-10 pl-1 class="w-3/4">
         <n-gradient-text
           gradient="linear-gradient(90deg, red 0%, green 50%, blue 100%)"
         >
@@ -156,11 +156,11 @@ onMounted(() => {
       </div>
     </div>
     <n-menu v-model:value="activeItem" :options="menuOptions" />
-    <div class="flex flex-col mt-auto space-y-1">
+    <div flex flex-col mta space-y-1>
       <n-button type="tertiary" @click="routerPage('/')">
         {{ t('button.home') }}
       </n-button>
-      <n-button class="mb-1" type="tertiary" @click="loginOut">
+      <n-button mb1 type="tertiary" @click="loginOut">
         {{ t('button.quit') }}
       </n-button>
     </div>

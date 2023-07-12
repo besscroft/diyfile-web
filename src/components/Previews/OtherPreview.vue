@@ -63,8 +63,8 @@ onMounted(() => {
     </template>
     {{ '看起来没有针对当前文件格式的预览呢，不过您也可以直接下载！' }}
   </n-alert>
-  <div class="flex flex-wrap justify-center items-center space-x-2 min-h-12">
-    <n-button icon-placement="left" dashed class="my-1" @click="handleDownload(props.fileInfo.url)">
+  <div flex flex-wrap justify-center items-center space-x-2 min-h-12>
+    <n-button icon-placement="left" dashed my-1 @click="handleDownload(props.fileInfo.url)">
       <template #icon>
         <n-icon>
           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
@@ -75,7 +75,7 @@ onMounted(() => {
       </template>
       {{ t('button.download') }}
     </n-button>
-    <n-button v-if="storageType !== 0" icon-placement="left" dashed class="my-1" @click="copy(props.fileInfo.url)">
+    <n-button v-if="storageType !== 0" icon-placement="left" dashed my-1 @click="copy(props.fileInfo.url)">
       <template #icon>
         <n-icon>
           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
@@ -87,7 +87,7 @@ onMounted(() => {
       </template>
       {{ !copied ? t('button.copyUrl') : t('button.copyOk') }}
     </n-button>
-    <n-button icon-placement="left" dashed class="my-1" @click="copy(copyProxyUrl())">
+    <n-button icon-placement="left" dashed my-1 @click="copy(copyProxyUrl())">
       <template #icon>
         <n-icon>
           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
@@ -99,7 +99,7 @@ onMounted(() => {
       </template>
       {{ !copied ? t('button.copyProxyUrl') : t('button.copyOk') }}
     </n-button>
-    <n-button v-if="props.storageInfo.type === 1 && props.fileInfo.proxyUrl" icon-placement="left" dashed class="my-1" @click="handleDownload(props.fileInfo.proxyUrl)">
+    <n-button v-if="props.storageInfo.type === 1 && props.fileInfo.proxyUrl" icon-placement="left" dashed my-1 @click="handleDownload(props.fileInfo.proxyUrl)">
       <template #icon>
         <n-icon>
           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">

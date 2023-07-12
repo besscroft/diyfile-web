@@ -94,12 +94,12 @@ const handleSubmitClick = () => {
 </script>
 
 <template>
-  <n-card content-style="padding: 0;" class="my-0.5">
-    <n-page-header :title="t('menu.setting.backup')" class="mx-0.5" />
+  <n-card content-style="padding: 0;" my0.5>
+    <n-page-header :title="t('menu.setting.backup')" mx0.5 />
   </n-card>
-  <n-card content-style="padding: 0;" class="box-card h-full w-full overflow-auto" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
-    <div class="flex flex-col mx-2 my-2 ma-2">
-      <div class="ma-2 w-40">
+  <n-card content-style="padding: 0;" h-full w-full of-auto class="box-card" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
+    <div flex flex-col mx2 my2 ma2>
+      <div ma2 w-40>
         <n-button icon-placement="left" quaternary @click="handleBackupFile">
           <template #icon>
             <n-icon>
@@ -115,7 +115,7 @@ const handleSubmitClick = () => {
           {{ t('button.backup') }}
         </n-button>
       </div>
-      <div class="ma-2 w-40">
+      <div ma2 w-40>
         <n-upload
           ref="uploadRef"
           :default-upload="false"
@@ -137,7 +137,7 @@ const handleSubmitClick = () => {
           </n-button>
         </n-upload>
       </div>
-      <div class="ma-2 w-40">
+      <div ma2 w-40>
         <n-button icon-placement="left" quaternary @click="handleSubmitClick" :disabled="!fileListLengthRef">
           <template #icon>
             <n-icon>

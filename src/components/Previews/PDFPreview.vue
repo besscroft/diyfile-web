@@ -59,26 +59,26 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex align-center justify-space-between w-full px-2" style="height: 48px; background-color: #323639; z-index: 999">
+  <div flex text-center justify-between w-full px-2 style="height: 48px; background-color: #323639; z-index: 999">
     <p v-if="!isMobile" class="title" style="color: #fff; font-size: 18px">{{ props.fileInfo.name }}</p>
-    <div class="flex align-center space-x-4" style="color: #fff; user-select: none">
-      <div class="cursor-pointer" @click="pdfInfo.pageNum > 1 ? pdfInfo.pageNum-- : ''">上一页</div>
-      <div class="cursor-pointer">{{ pdfInfo.pageNum }}/{{ pdfInfo.numPages }}</div>
-      <div class="cursor-pointer" @click="pdfInfo.pageNum < pdfInfo.numPages ? pdfInfo.pageNum++ : ''">下一页</div>
-      <div class="cursor-pointer" @click="pdfInfo.scale < 2 ? pdfInfo.scale += 0.1 : ''">放大</div>
-      <div class="cursor-pointer" @click="pdfInfo.scale > 0.5 ? pdfInfo.scale -= 0.1 : ''">缩小</div>
+    <div flex text-center space-x-4 style="color: #fff; user-select: none">
+      <div cursor-pointer @click="pdfInfo.pageNum > 1 ? pdfInfo.pageNum-- : ''">上一页</div>
+      <div cursor-pointer>{{ pdfInfo.pageNum }}/{{ pdfInfo.numPages }}</div>
+      <div cursor-pointer @click="pdfInfo.pageNum < pdfInfo.numPages ? pdfInfo.pageNum++ : ''">下一页</div>
+      <div cursor-pointer @click="pdfInfo.scale < 2 ? pdfInfo.scale += 0.1 : ''">放大</div>
+      <div cursor-pointer @click="pdfInfo.scale > 0.5 ? pdfInfo.scale -= 0.1 : ''">缩小</div>
     </div>
   </div>
-  <div class="flex mx-auto" style="height: calc(100vh - 256px)">
-    <div class="flex-grow-1 overflow-hidden" style="height: calc(100vh - 256px); background-color: #505050">
-      <div class="h-full w-full overflow-auto">
+  <div flex flex-auto style="height: calc(100vh - 256px)">
+    <div flex-1 overflow-hidden style="height: calc(100vh - 256px); background-color: #505050">
+      <div h-full w-full of-auto>
         <VuePdfEmbed :source="props.fileInfo.url" :style="scale" :page="pdfInfo.pageNum" />
       </div>
     </div>
   </div>
   <n-divider />
-  <div class="flex flex-wrap justify-center items-center space-x-2 min-h-12">
-    <n-button icon-placement="left" dashed class="my-1" @click="handleDownload(props.fileInfo.url)">
+  <div flex flex-wrap justify-center items-center space-x-2 min-h-12>
+    <n-button icon-placement="left" dashed my-1 @click="handleDownload(props.fileInfo.url)">
       <template #icon>
         <n-icon>
           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
@@ -89,7 +89,7 @@ onMounted(() => {
       </template>
       {{ t('button.download') }}
     </n-button>
-    <n-button v-if="storageType !== 0" icon-placement="left" dashed class="my-1" @click="copy(props.fileInfo.url)">
+    <n-button v-if="storageType !== 0" icon-placement="left" dashed my-1 @click="copy(props.fileInfo.url)">
       <template #icon>
         <n-icon>
           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
@@ -101,7 +101,7 @@ onMounted(() => {
       </template>
       {{ !copied ? t('button.copyUrl') : t('button.copyOk') }}
     </n-button>
-    <n-button icon-placement="left" dashed class="my-1" @click="copy(copyProxyUrl())">
+    <n-button icon-placement="left" dashed my-1 @click="copy(copyProxyUrl())">
       <template #icon>
         <n-icon>
           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
@@ -113,7 +113,7 @@ onMounted(() => {
       </template>
       {{ !copied ? t('button.copyProxyUrl') : t('button.copyOk') }}
     </n-button>
-    <n-button v-if="props.storageInfo.type === 1 && props.fileInfo.proxyUrl" icon-placement="left" dashed class="my-1" @click="handleDownload(props.fileInfo.proxyUrl)">
+    <n-button v-if="props.storageInfo.type === 1 && props.fileInfo.proxyUrl" icon-placement="left" dashed my-1 @click="handleDownload(props.fileInfo.proxyUrl)">
       <template #icon>
         <n-icon>
           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">

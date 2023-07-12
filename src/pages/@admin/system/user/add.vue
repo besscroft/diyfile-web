@@ -88,10 +88,10 @@ const handleSubmit = () => {
 </script>
 
 <template>
-  <n-card content-style="padding: 0;" class="my-0.5">
-    <n-page-header :title="t('tip.cardTitle')" class="mx-0.5" @back="router.back()">
+  <n-card content-style="padding: 0;" my0.5>
+    <n-page-header :title="t('tip.cardTitle')" my0.5 @back="router.back()">
       <template #extra>
-        <div class="flex items-center">
+        <div flex items-center>
           <n-button quaternary circle @click="handleSubmit">
             <template #icon>
               <n-icon>
@@ -105,7 +105,7 @@ const handleSubmit = () => {
       </template>
     </n-page-header>
   </n-card>
-  <n-card content-style="padding: 0.5rem;" class="box-card overflow-auto no-scrollbar" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
+  <n-card content-style="padding: 0.5rem;" of-auto onscroll class="box-card" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
     <n-grid cols="5" item-responsive responsive="screen">
       <n-grid-item offset="0 m:1 l:1" span="5 m:3 l:3">
         <n-form ref="formRef" :model="addUserRuleForm" :rules="rules">

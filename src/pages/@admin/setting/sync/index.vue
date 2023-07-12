@@ -60,10 +60,10 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <n-card content-style="padding: 0;" class="my-0.5">
-    <n-page-header :title="t('menu.setting.sync')" class="mx-0.5">
+  <n-card content-style="padding: 0;" my0.5>
+    <n-page-header :title="t('menu.setting.sync')" mx0.5>
       <template #extra>
-        <div class="flex items-center">
+        <div flex items-center>
           <n-button quaternary circle @click="taskAddHandle">
             <template #icon>
               <n-icon>
@@ -77,7 +77,7 @@ onBeforeMount(() => {
       </template>
     </n-page-header>
   </n-card>
-  <n-card content-style="padding: 0;" class="box-card h-full w-full overflow-auto" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
+  <n-card content-style="padding: 0;" h-full w-full of-auto class="box-card" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
     <n-grid cols="5" item-responsive responsive="screen">
       <n-grid-item offset="0 m:1 l:1" span="5 m:3 l:3">
         <div class="flex flex-col space-y-3">

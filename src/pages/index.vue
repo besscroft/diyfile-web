@@ -19,7 +19,7 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <div v-if="loading" class="flex justify-center mt-7">
+  <div v-if="loading" flex justify-center mt-7>
     <n-spin size="medium" />
   </div>
   <n-result v-else status="404" title="什么都没有呢！请登录后进入后台进行配置！" description="生活总归带点荒谬" />

@@ -58,20 +58,22 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <n-card content-style="padding: 0;" class="my-0.5">
-    <n-page-header :title="t('menu.index')" class="mx-0.5">
+  <n-card content-style="padding: 0;" my0.5>
+    <n-page-header :title="t('menu.index')" mx0.5>
       <template #extra>
-        <div class="flex items-center">
+        <div flex items-center class="flex items-center">
           <n-button quaternary circle @click="handServerInfo">
             <template #icon>
-              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"><path d="M26 18A10 10 0 1 1 16 8h4v5l6-6l-6-6v5h-4a12 12 0 1 0 12 12z" fill="currentColor"></path><path d="M18.58 15.58h-3.45L15 18.15a4.83 4.83 0 0 1 .26-.45a1.59 1.59 0 0 1 .33-.35a1.53 1.53 0 0 1 .44-.23a2 2 0 0 1 .6-.08a2.54 2.54 0 0 1 .92.16a2.06 2.06 0 0 1 .74.48a2.28 2.28 0 0 1 .5.77a2.73 2.73 0 0 1 .18 1a2.87 2.87 0 0 1-.19 1.07a2.36 2.36 0 0 1-.55.84a2.44 2.44 0 0 1-.89.55a3.23 3.23 0 0 1-1.21.2a3.79 3.79 0 0 1-.94-.11a3 3 0 0 1-.74-.32a2.45 2.45 0 0 1-.55-.45a4.13 4.13 0 0 1-.41-.55l1.06-.81l.27.41a1.82 1.82 0 0 0 .34.34a1.59 1.59 0 0 0 .43.22a1.52 1.52 0 0 0 .55.08a1.29 1.29 0 0 0 1-.36a1.41 1.41 0 0 0 .33-1v-.06a1.18 1.18 0 0 0-1.28-1.27a1.44 1.44 0 0 0-.77.18a1.94 1.94 0 0 0-.48.39l-1.19-.17l.29-4.31h4.52z" fill="currentColor"></path></svg>
-            </template>
+              <n-icon>
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"><path d="M26 18A10 10 0 1 1 16 8h4v5l6-6l-6-6v5h-4a12 12 0 1 0 12 12z" fill="currentColor"></path><path d="M18.58 15.58h-3.45L15 18.15a4.83 4.83 0 0 1 .26-.45a1.59 1.59 0 0 1 .33-.35a1.53 1.53 0 0 1 .44-.23a2 2 0 0 1 .6-.08a2.54 2.54 0 0 1 .92.16a2.06 2.06 0 0 1 .74.48a2.28 2.28 0 0 1 .5.77a2.73 2.73 0 0 1 .18 1a2.87 2.87 0 0 1-.19 1.07a2.36 2.36 0 0 1-.55.84a2.44 2.44 0 0 1-.89.55a3.23 3.23 0 0 1-1.21.2a3.79 3.79 0 0 1-.94-.11a3 3 0 0 1-.74-.32a2.45 2.45 0 0 1-.55-.45a4.13 4.13 0 0 1-.41-.55l1.06-.81l.27.41a1.82 1.82 0 0 0 .34.34a1.59 1.59 0 0 0 .43.22a1.52 1.52 0 0 0 .55.08a1.29 1.29 0 0 0 1-.36a1.41 1.41 0 0 0 .33-1v-.06a1.18 1.18 0 0 0-1.28-1.27a1.44 1.44 0 0 0-.77.18a1.94 1.94 0 0 0-.48.39l-1.19-.17l.29-4.31h4.52z" fill="currentColor"></path></svg>
+              </n-icon>
+              </template>
           </n-button>
         </div>
       </template>
     </n-page-header>
   </n-card>
-  <n-card content-style="padding: 0;" class="box-card h-full w-full overflow-auto" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
+  <n-card content-style="padding: 0;" h-full w-full of-auto class="box-card" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
     <n-grid cols="1 s:2 m:3 l:4 xl:4 2xl:4" responsive="screen" :x-gap="12" :y-gap="8">
       <n-grid-item>
         <n-card content-style="padding: 0.25rem;" class="box-card h-36">

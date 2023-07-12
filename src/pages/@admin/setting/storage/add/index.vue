@@ -11,7 +11,7 @@ const { isMobile } = useDevice()
   <n-card content-style="padding: 0.5rem;" class="box-card overflow-auto no-scrollbar" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
     <n-grid cols="5" item-responsive responsive="screen">
       <n-grid-item offset="0 m:1 l:1" span="5 m:3 l:3">
-        <div class="flex flex-col space-y-3">
+        <div flex flex-col class="space-y-3">
           <n-button @click="router.push({ path: '/@admin/setting/storage/add/local', query: { type: 0 } })" ghost>本地存储</n-button>
           <n-button @click="router.push({ path: '/@admin/setting/storage/add/oneDrive', query: { type: 1 } })" ghost>OneDrive</n-button>
           <n-button @click="router.push({ path: '/@admin/setting/storage/add/aliyunOSS', query: { type: 2 } })" ghost>阿里云OSS</n-button>
