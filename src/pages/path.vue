@@ -291,10 +291,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex justify-center items-center mx-auto" :style="isMobile ? { width: '100%', height: '22px' } : { width: '66%', height: '22px' }">
+  <div flex justify-center items-center mxa :style="isMobile ? { width: '100%', height: '22px' } : { width: '66%', height: '22px' }">
     <n-icon size="16">
-      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
-        <path d="M17 11h3a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-3a2 2 0 0 0-2 2v1H9.01V5a2 2 0 0 0-2-2H4c-1.1 0-2 .9-2 2v4a2 2 0 0 0 2 2h3a2 2 0 0 0 2-2V8h2v7.01c0 1.65 1.34 2.99 2.99 2.99H15v1a2 2 0 0 0 2 2h3a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-3a2 2 0 0 0-2 2v1h-1.01c-.54 0-.99-.45-.99-.99V8h2v1c0 1.1.9 2 2 2z" fill="currentColor" />
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
+        <path d="M24 10l-1.414 1.414L26.172 15H11.899A5.014 5.014 0 0 0 8 11.101V2H6v9.101A5 5 0 0 0 6 20.9V30h2v-9.101A5.014 5.014 0 0 0 11.899 17h14.273l-3.586 3.586L24 22l6-6zM7 19a3 3 0 1 1 3-3a3.003 3.003 0 0 1-3 3z" fill="currentColor"></path>
       </svg>
     </n-icon>
     <n-scrollbar
@@ -324,12 +324,12 @@ onMounted(() => {
     :on-error="({ file }) => { message.error(`上传 ${file.name} 失败！`) }"
     :max="5"
     :style="isMobile ? { width: '100%' } : { width: '66%' }"
-    class="mx-auto"
+    mxa
   >
     <n-upload-dragger>
       <div style="margin-bottom: 12px">
         <n-icon size="48" :depth="3">
-          <archive-icon />
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"><path d="M11 18l1.41 1.41L15 16.83V29h2V16.83l2.59 2.58L21 18l-5-5l-5 5z" fill="currentColor"></path><path d="M23.5 22H23v-2h.5a4.5 4.5 0 0 0 .36-9H23l-.1-.82a7 7 0 0 0-13.88 0L9 11h-.86a4.5 4.5 0 0 0 .36 9H9v2h-.5A6.5 6.5 0 0 1 7.2 9.14a9 9 0 0 1 17.6 0A6.5 6.5 0 0 1 23.5 22z" fill="currentColor"></path></svg>
         </n-icon>
       </div>
       <n-text style="font-size: 16px">
@@ -340,30 +340,32 @@ onMounted(() => {
       </n-p>
     </n-upload-dragger>
   </n-upload>
-  <div v-if="loading" class="flex justify-center mt-7">
+  <div v-if="loading" flex justify-center mt-7>
     <n-spin size="medium" />
   </div>
   <FileDataTable
     v-else-if="!loading && !fileInfo && dataList"
     :value="dataList"
     :style="isMobile ? { width: '100%' } : { width: '66%' }"
-    class="mx-auto"
+    mxa
     @handleFolder="handleFolder"
     @clickFile="clickFile"
     @handleDelete="handleDelete"
     @handleShare="handleShare"
   />
-  <v-card v-else class="mx-auto" :style="isMobile ? { width: '100%' } : { width: '66%' }">
-    <!-- 文件预览 -->
-    <VideoPreview v-if="!loading && fileInfo && isVideo(fileInfo.name)" class="m-4" :file-info="fileInfo" :storage-info="storageInfo" />
-    <AudioPreview v-else-if="!loading && fileInfo && isAudio(fileInfo.name)" class="m-4" :file-info="fileInfo" :storage-info="storageInfo" />
-    <ImagePreview v-else-if="!loading && fileInfo && isImage(fileInfo.name)" class="m-4" :file-info="fileInfo" :storage-info="storageInfo" />
-    <MarkdownPreview v-else-if="!loading && fileInfo && isMarkdown(fileInfo.name)" class="m-4" :file-info="fileInfo" :storage-info="storageInfo" />
-    <TextPreview v-else-if="!loading && fileInfo && isText(fileInfo.name)" class="m-4" :file-info="fileInfo" :storage-info="storageInfo" />
-    <PDFPreview v-else-if="!loading && fileInfo && isPDF(fileInfo.name)" class="m-4" :file-info="fileInfo" :storage-info="storageInfo" />
-    <OtherPreview v-else-if="!loading && fileInfo" :file-info="fileInfo" class="m-4" :storage-info="storageInfo" />
-    <n-result v-else-if="!fileInfo && !dataList" status="404" title="什么都没有呢！请登录后进入后台进行配置！" description="生活总归带点荒谬" />
-    <n-result v-else status="500" title="Oops！发生了意外情况，也许是网络不稳定、格式不支持或者出现了 Bug~" description="生活总归带点荒谬" />
+  <v-card v-else>
+    <div mxa :style="isMobile ? { width: '100%' } : { width: '66%' }">
+      <!-- 文件预览 -->
+      <VideoPreview v-if="!loading && fileInfo && isVideo(fileInfo.name)" m-4 :file-info="fileInfo" :storage-info="storageInfo" />
+      <AudioPreview v-else-if="!loading && fileInfo && isAudio(fileInfo.name)" m-4 :file-info="fileInfo" :storage-info="storageInfo" />
+      <ImagePreview v-else-if="!loading && fileInfo && isImage(fileInfo.name)" m-4 :file-info="fileInfo" :storage-info="storageInfo" />
+      <MarkdownPreview v-else-if="!loading && fileInfo && isMarkdown(fileInfo.name)" m-4 :file-info="fileInfo" :storage-info="storageInfo" />
+      <TextPreview v-else-if="!loading && fileInfo && isText(fileInfo.name)" m-4 :file-info="fileInfo" :storage-info="storageInfo" />
+      <PDFPreview v-else-if="!loading && fileInfo && isPDF(fileInfo.name)" m-4 :file-info="fileInfo" :storage-info="storageInfo" />
+      <OtherPreview v-else-if="!loading && fileInfo" :file-info="fileInfo" m-4 :storage-info="storageInfo" />
+      <n-result v-else-if="!fileInfo && !dataList" status="404" title="什么都没有呢！请登录后进入后台进行配置！" description="生活总归带点荒谬" />
+      <n-result v-else status="500" title="Oops！发生了意外情况，也许是网络不稳定、格式不支持或者出现了 Bug~" description="生活总归带点荒谬" />
+    </div>
   </v-card>
 </template>
 

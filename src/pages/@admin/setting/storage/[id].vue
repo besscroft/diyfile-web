@@ -23,10 +23,10 @@ useDetail()
 </script>
 
 <template>
-  <n-card content-style="padding: 0;" class="my-0.5">
-    <n-page-header :title="t('table.StorageInfo')" class="mx-0.5" @back="router.back()" />
+  <n-card content-style="padding: 0;" my0.5>
+    <n-page-header :title="t('table.StorageInfo')" mx0.5 @back="router.back()" />
   </n-card>
-  <n-card content-style="padding: 0.5rem;" class="box-card overflow-auto no-scrollbar" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
+  <n-card content-style="padding: 0.5rem;" of-auto onscroll class="box-card" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
     <n-skeleton v-if="loading" text :repeat="3" :sharp="false" size="medium" />
     <n-descriptions v-else label-placement="top" bordered :column="isMobile ? 2 : 4">
       <n-descriptions-item label="存储名称">

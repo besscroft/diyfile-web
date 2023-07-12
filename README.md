@@ -52,4 +52,10 @@ git clone https://github.com/besscroft/diyfile-web.git
 
 ### 感谢
 
-[Vitesse](https://github.com/antfu/vitesse)
+本项目基于 [Vitesse](https://github.com/antfu/vitesse) 项目开发
+
+本项目使用 JetBrains 的开源许可证，基于 IntelliJ IDEA 开发，感谢！
+
+![JetBrains 徽标（主要） logo](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg)
+
+![IntelliJ IDEA logo](https://resources.jetbrains.com/storage/products/company/brand/logos/IntelliJ_IDEA.svg)

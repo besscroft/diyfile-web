@@ -1,19 +1,14 @@
 <script setup lang="ts">
-import { useTheme } from 'vuetify'
-
 const router = useRouter()
 const { isMobile } = useDevice()
-const theme = useTheme()
 
 const toggleTheme = () => {
   if (isDark.value) {
     // 恢复亮色主题
     localStorage.setItem('diyfile-theme', 'light')
-    theme.global.name.value = 'light'
   } else {
     // 设置为暗黑主题
     localStorage.setItem('diyfile-theme', 'dark')
-    theme.global.name.value = 'dark'
   }
   toggleDark()
 }
@@ -48,9 +43,9 @@ const routerPage = (val: string) => {
       </n-layout-header>
       <n-layout has-sider position="absolute" style="margin-top: 60px; height: calc(100% - 60px)">
         <n-layout-sider v-if="!isMobile" bordered collapse-mode="width" width="188">
-          <PopMenu class="h-full" @routerPage="routerPage" />
+          <PopMenu h-full @routerPage="routerPage" />
         </n-layout-sider>
-        <n-layout class="h-full">
+        <n-layout h-full>
           <n-layout-content content-style="padding: 0.25rem;" style="height: calc(100% - 60px)">
             <RouterView />
           </n-layout-content>

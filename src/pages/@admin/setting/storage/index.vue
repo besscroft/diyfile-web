@@ -145,20 +145,39 @@ handleStoragePage(-1)
 </script>
 
 <template>
-  <n-card content-style="padding: 0;" class="my-0.5">
-    <n-page-header :title="t('menu.setting.storage')" class="mx-0.5">
+  <n-card content-style="padding: 0;" my0.5>
+    <n-page-header :title="t('menu.setting.storage')" mx0.5>
       <template #extra>
-        <div class="flex items-center">
-          <v-btn icon="add_box" variant="text" size="x-small" @click="router.push('/@admin/setting/storage/add')" />
+        <div flex items-center>
+          <n-button quaternary circle @click="router.push('/@admin/setting/storage/add')">
+            <template #icon>
+              <n-icon>
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
+                  <path d="M17 15V8h-2v7H8v2h7v7h2v-7h7v-2z" fill="currentColor"></path>
+                </svg>
+              </n-icon>
+            </template>
+          </n-button>
           <n-dropdown :options="pageOptions || undefined" @select="handleStoragePage">
-            <v-btn icon="dynamic_form" variant="text" size="x-small" />
+            <n-button quaternary circle>
+              <template #icon>
+                <n-icon>
+                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
+                    <path d="M28 20h-2v2h2v6H4v-6h10v-2H4a2.002 2.002 0 0 0-2 2v6a2.002 2.002 0 0 0 2 2h24a2.002 2.002 0 0 0 2-2v-6a2.002 2.002 0 0 0-2-2z" fill="currentColor"></path>
+                    <circle cx="7" cy="25" r="1" fill="currentColor"></circle>
+                    <path d="M30 8h-8v6h-6v8h8v-6h6zm-8 12h-4v-4h4zm6-6h-4v-4h4z" fill="currentColor"></path>
+                    <path d="M18 10h-8V2h8zm-6-2h4V4h-4z" fill="currentColor"></path>
+                  </svg>
+                </n-icon>
+              </template>
+            </n-button>
           </n-dropdown>
         </div>
       </template>
     </n-page-header>
   </n-card>
-  <n-card content-style="padding: 0;" class="box-card overflow-auto no-scrollbar" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
-    <div v-if="loading" class="flex justify-center mt-7">
+  <n-card content-style="padding: 0;" of-auto onscroll class="box-card" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
+    <div v-if="loading" flex justify-center mt-7>
       <n-spin size="medium" />
     </div>
     <n-grid v-else cols="1 s:2 m:3 l:4 xl:4 2xl:4" responsive="screen" :x-gap="12" :y-gap="8">
@@ -166,10 +185,11 @@ handleStoragePage(-1)
         <n-card
           :title="item.name"
           content-style="padding: 0.25rem;"
-          class="box-card h-80"
+          h-80
+          class="box-card"
         >
           <template #header-extra>
-            <div class="text-center">
+            <div text-center>
               <n-dropdown trigger="hover" :options="selectOptions" @select="(key) => handleSelect(key, item)">
                 <n-icon size="24" class="cursor-pointer">
                   <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
@@ -179,14 +199,23 @@ handleStoragePage(-1)
               </n-dropdown>
             </div>
           </template>
-          <div class="flex w-full">
-            <v-avatar size="56" image="/storage_FILL0_wght400_GRAD0_opsz48.png" class="mb-3 mx-auto" />
+          <div flex w-full>
+            <n-icon size="46" mb3 mxa>
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
+                <path d="M28 20h-2v2h2v6H4v-6h2v-2H4a2.002 2.002 0 0 0-2 2v6a2.002 2.002 0 0 0 2 2h24a2.002 2.002 0 0 0 2-2v-6a2.002 2.002 0 0 0-2-2z" fill="currentColor"></path>
+                <circle cx="7" cy="25" r="1" fill="currentColor"></circle>
+                <path d="M15 20H8v-7h7zm-5-2h3v-3h-3z" fill="currentColor"></path>
+                <path d="M24 20h-7v-7h7zm-5-2h3v-3h-3z" fill="currentColor"></path>
+                <path d="M15 11H8V4h7zm-5-2h3V6h-3z" fill="currentColor"></path>
+                <path d="M24 11h-7V4h7zm-5-2h3V6h-3z" fill="currentColor"></path>
+              </svg>
+            </n-icon>
           </div>
           {{ item.remark }}
           <template #action>
-            <div class="mt-auto">
-              <div class="flex justify-space-between">
-                <div class="flex items-center justify-center space-x-1">
+            <div mta>
+              <div flex justify-between>
+                <div flex items-center justify-center space-x-1>
                   <span
                     class="inline-flex items-center justify-center rounded-full bg-blue-400 px-2.5 py-0.5 text-coolGray-50"
                   >
@@ -335,7 +364,7 @@ handleStoragePage(-1)
       v-model:page="pageInfo.pageNum"
       v-model:page-size="pageInfo.pageSize"
       :page-count="pageInfo.totalPage"
-      class="mt-0.5"
+      mt-0.5
       @update:page="(current) => { pageInfo.pageNum = current; handleStoragePage(typeFlag) }"
     />
   </n-card>

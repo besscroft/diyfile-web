@@ -5,9 +5,7 @@ import { createPinia } from 'pinia'
 import { createWebHistory } from 'vue-router'
 import App from './App.vue'
 import type { UserModule } from './types'
-import vuetify from '~/plugins/vuetify'
 import generatedRoutes from '~pages'
-import 'vuetify/styles'
 
 import '@unocss/reset/tailwind.css'
 import './styles/main.css'
@@ -22,7 +20,7 @@ import { getFileNameFromPath } from '~/utils/FileUtil'
 import { getBaseUrl } from '~/utils/WindowUtil'
 
 /* global */
-console.log(`${'\n'} %c DiyFile v0.5.3 %c https://github.com/besscroft/diyfile ${'\n'}${'\n'}`, 'color: #fadfa3; background: #030307; padding:5px 0;', 'background: #fadfa3; padding:5px 0;')
+console.log(`${'\n'} %c DiyFile v0.6.0 %c https://github.com/besscroft/diyfile ${'\n'}${'\n'}`, 'color: #fadfa3; background: #030307; padding:5px 0;', 'background: #fadfa3; padding:5px 0;')
 
 generatedRoutes.push({
   path: '/',
@@ -52,7 +50,7 @@ export const createApp = ViteSSG(
       .forEach(i => i.install?.(ctx))
     const pinia = createPinia()
     pinia.use(piniaPluginPersistedstate)
-    ctx.app.use(pinia).use(vuetify).use(setupNaiveDiscreteApi)
+    ctx.app.use(pinia).use(setupNaiveDiscreteApi)
     if (ctx.isClient) {
       ctx.router.beforeEach(async (to, from, next) => {
         axiosCanceler.removeAllPending()

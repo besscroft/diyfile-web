@@ -58,16 +58,22 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <n-card content-style="padding: 0;" class="my-0.5">
-    <n-page-header :title="t('menu.index')" class="mx-0.5">
+  <n-card content-style="padding: 0;" my0.5>
+    <n-page-header :title="t('menu.index')" mx0.5>
       <template #extra>
-        <div class="flex items-center">
-          <v-btn icon="sync" variant="text" size="x-small" @click="handServerInfo" />
+        <div flex items-center class="flex items-center">
+          <n-button quaternary circle @click="handServerInfo">
+            <template #icon>
+              <n-icon>
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"><path d="M26 18A10 10 0 1 1 16 8h4v5l6-6l-6-6v5h-4a12 12 0 1 0 12 12z" fill="currentColor"></path><path d="M18.58 15.58h-3.45L15 18.15a4.83 4.83 0 0 1 .26-.45a1.59 1.59 0 0 1 .33-.35a1.53 1.53 0 0 1 .44-.23a2 2 0 0 1 .6-.08a2.54 2.54 0 0 1 .92.16a2.06 2.06 0 0 1 .74.48a2.28 2.28 0 0 1 .5.77a2.73 2.73 0 0 1 .18 1a2.87 2.87 0 0 1-.19 1.07a2.36 2.36 0 0 1-.55.84a2.44 2.44 0 0 1-.89.55a3.23 3.23 0 0 1-1.21.2a3.79 3.79 0 0 1-.94-.11a3 3 0 0 1-.74-.32a2.45 2.45 0 0 1-.55-.45a4.13 4.13 0 0 1-.41-.55l1.06-.81l.27.41a1.82 1.82 0 0 0 .34.34a1.59 1.59 0 0 0 .43.22a1.52 1.52 0 0 0 .55.08a1.29 1.29 0 0 0 1-.36a1.41 1.41 0 0 0 .33-1v-.06a1.18 1.18 0 0 0-1.28-1.27a1.44 1.44 0 0 0-.77.18a1.94 1.94 0 0 0-.48.39l-1.19-.17l.29-4.31h4.52z" fill="currentColor"></path></svg>
+              </n-icon>
+              </template>
+          </n-button>
         </div>
       </template>
     </n-page-header>
   </n-card>
-  <n-card content-style="padding: 0;" class="box-card h-full w-full overflow-auto" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
+  <n-card content-style="padding: 0;" h-full w-full of-auto class="box-card" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
     <n-grid cols="1 s:2 m:3 l:4 xl:4 2xl:4" responsive="screen" :x-gap="12" :y-gap="8">
       <n-grid-item>
         <n-card content-style="padding: 0.25rem;" class="box-card h-36">
@@ -101,8 +107,11 @@ onUnmounted(() => {
             <n-statistic label="用户总数" class="flex-grow">
               <template #prefix>
                 <n-icon>
-                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
-                    <path d="M16.67 13.13C18.04 14.06 19 15.32 19 17v3h4v-3c0-2.18-3.57-3.47-6.33-3.87zM15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4c-.47 0-.91.1-1.33.24a5.98 5.98 0 0 1 0 7.52c.42.14.86.24 1.33.24zm-6 0c2.21 0 4-1.79 4-4s-1.79-4-4-4s-4 1.79-4 4s1.79 4 4 4zm0-6c1.1 0 2 .9 2 2s-.9 2-2 2s-2-.9-2-2s.9-2 2-2zm0 7c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4zm6 5H3v-.99C3.2 16.29 6.3 15 9 15s5.8 1.29 6 2v1z" fill="currentColor"></path>
+                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
+                    <path d="M30 30h-2v-5a5.006 5.006 0 0 0-5-5v-2a7.008 7.008 0 0 1 7 7z" fill="currentColor"></path>
+                    <path d="M22 30h-2v-5a5.006 5.006 0 0 0-5-5H9a5.006 5.006 0 0 0-5 5v5H2v-5a7.008 7.008 0 0 1 7-7h6a7.008 7.008 0 0 1 7 7z" fill="currentColor"></path>
+                    <path d="M20 2v2a5 5 0 0 1 0 10v2a7 7 0 0 0 0-14z" fill="currentColor"></path>
+                    <path d="M12 4a5 5 0 1 1-5 5a5 5 0 0 1 5-5m0-2a7 7 0 1 0 7 7a7 7 0 0 0-7-7z" fill="currentColor"></path>
                   </svg>
                 </n-icon>
               </template>
@@ -111,10 +120,11 @@ onUnmounted(() => {
             <n-statistic label="禁用数量" class="flex-grow">
               <template #prefix>
                 <n-icon>
-                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
-                    <circle cx="9" cy="8" opacity=".3" r="2" fill="currentColor"></circle>
-                    <path opacity=".3" d="M9 15c-2.7 0-5.8 1.29-6 2.01V18h12v-1c-.2-.71-3.3-2-6-2z" fill="currentColor"></path>
-                    <path d="M16.67 13.13C18.04 14.06 19 15.32 19 17v3h4v-3c0-2.18-3.57-3.47-6.33-3.87zM15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4c-.47 0-.91.1-1.33.24a5.98 5.98 0 0 1 0 7.52c.42.14.86.24 1.33.24zm-6 0c2.21 0 4-1.79 4-4s-1.79-4-4-4s-4 1.79-4 4s1.79 4 4 4zm0-6c1.1 0 2 .9 2 2s-.9 2-2 2s-2-.9-2-2s.9-2 2-2zm0 7c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4zm6 5H3v-.99C3.2 16.29 6.3 15 9 15s5.8 1.29 6 2v1z" fill="currentColor"></path>
+                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
+                    <path d="M30 30h-2v-5a5.006 5.006 0 0 0-5-5v-2a7.008 7.008 0 0 1 7 7z" fill="currentColor"></path>
+                    <path d="M22 30h-2v-5a5.006 5.006 0 0 0-5-5H9a5.006 5.006 0 0 0-5 5v5H2v-5a7.008 7.008 0 0 1 7-7h6a7.008 7.008 0 0 1 7 7z" fill="currentColor"></path>
+                    <path d="M20 2v2a5 5 0 0 1 0 10v2a7 7 0 0 0 0-14z" fill="currentColor"></path>
+                    <path d="M12 4a5 5 0 1 1-5 5a5 5 0 0 1 5-5m0-2a7 7 0 1 0 7 7a7 7 0 0 0-7-7z" fill="currentColor"></path>
                   </svg>
                 </n-icon>
               </template>
@@ -129,8 +139,18 @@ onUnmounted(() => {
             <n-statistic label="存储总数" class="flex-grow">
               <template #prefix>
                 <n-icon>
-                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
-                    <path d="M4 20h16c1.1 0 2-.9 2-2s-.9-2-2-2H4c-1.1 0-2 .9-2 2s.9 2 2 2zm0-3h2v2H4v-2zM2 6c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2s-.9-2-2-2H4c-1.1 0-2 .9-2 2zm4 1H4V5h2v2zm-2 7h16c1.1 0 2-.9 2-2s-.9-2-2-2H4c-1.1 0-2 .9-2 2s.9 2 2 2zm0-3h2v2H4v-2z" fill="currentColor"></path>
+                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
+                    <path d="M4 21H2v3a2.006 2.006 0 0 0 2 2h3v-2H4z" fill="currentColor"></path>
+                    <path d="M4 8h3V6H4a2.006 2.006 0 0 0-2 2v3h2z" fill="currentColor"></path>
+                    <path d="M17 6h6v2h-6z" fill="currentColor"></path>
+                    <path d="M9 6h6v2H9z" fill="currentColor"></path>
+                    <path d="M17 24h6v2h-6z" fill="currentColor"></path>
+                    <path d="M28 15H4v-2H2v6h2v-2h24v2h2v-6h-2v2z" fill="currentColor"></path>
+                    <path d="M28 24h-3v2h3a2.006 2.006 0 0 0 2-2v-3h-2z" fill="currentColor"></path>
+                    <path d="M28 6h-3v2h3v3h2V8a2.006 2.006 0 0 0-2-2z" fill="currentColor"></path>
+                    <path d="M9 24h6v2H9z" fill="currentColor"></path>
+                    <circle cx="7" cy="12" r="1" fill="currentColor"></circle>
+                    <circle cx="7" cy="20" r="1" fill="currentColor"></circle>
                   </svg>
                 </n-icon>
               </template>
@@ -139,8 +159,18 @@ onUnmounted(() => {
             <n-statistic label="启用数量" class="flex-grow">
               <template #prefix>
                 <n-icon>
-                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
-                    <path d="M4 20h16c1.1 0 2-.9 2-2s-.9-2-2-2H4c-1.1 0-2 .9-2 2s.9 2 2 2zm0-3h2v2H4v-2zM2 6c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2s-.9-2-2-2H4c-1.1 0-2 .9-2 2zm4 1H4V5h2v2zm-2 7h16c1.1 0 2-.9 2-2s-.9-2-2-2H4c-1.1 0-2 .9-2 2s.9 2 2 2zm0-3h2v2H4v-2z" fill="currentColor"></path>
+                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
+                    <path d="M4 21H2v3a2.006 2.006 0 0 0 2 2h3v-2H4z" fill="currentColor"></path>
+                    <path d="M4 8h3V6H4a2.006 2.006 0 0 0-2 2v3h2z" fill="currentColor"></path>
+                    <path d="M17 6h6v2h-6z" fill="currentColor"></path>
+                    <path d="M9 6h6v2H9z" fill="currentColor"></path>
+                    <path d="M17 24h6v2h-6z" fill="currentColor"></path>
+                    <path d="M28 15H4v-2H2v6h2v-2h24v2h2v-6h-2v2z" fill="currentColor"></path>
+                    <path d="M28 24h-3v2h3a2.006 2.006 0 0 0 2-2v-3h-2z" fill="currentColor"></path>
+                    <path d="M28 6h-3v2h3v3h2V8a2.006 2.006 0 0 0-2-2z" fill="currentColor"></path>
+                    <path d="M9 24h6v2H9z" fill="currentColor"></path>
+                    <circle cx="7" cy="12" r="1" fill="currentColor"></circle>
+                    <circle cx="7" cy="20" r="1" fill="currentColor"></circle>
                   </svg>
                 </n-icon>
               </template>

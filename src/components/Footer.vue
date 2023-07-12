@@ -16,7 +16,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="h-full flex text-center justify-center items-center">
+  <div flex text-center h-full justify-center items-center>
     <a v-if="user.beian" href="https://beian.miit.gov.cn/" target="_blank">{{ user.beian }}</a>
     <span v-else>
       Made with ❤ by Bess Croft.

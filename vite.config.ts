@@ -5,7 +5,6 @@ import Pages from 'vite-plugin-pages'
 import VueDevTools from 'vite-plugin-vue-devtools'
 
 // vite.config.ts
-import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 import generateSitemap from 'vite-ssg-sitemap'
 import Layouts from 'vite-plugin-vue-layouts'
 import Components from 'unplugin-vue-components/vite'
@@ -48,12 +47,7 @@ export default defineConfig({
     VueMacros({
       plugins: {
         vue: Vue({
-          template: {
-            // https://github.com/vuetifyjs/vuetify-loader/tree/next/packages/vite-plugin#image-loading
-            transformAssetUrls,
-          },
           include: [/\.vue$/, /\.md$/],
-          reactivityTransform: true,
         }),
       },
     }),
@@ -175,7 +169,6 @@ export default defineConfig({
     Inspector({
       toggleButtonVisibility: 'never',
     }),
-    vuetify({ autoImport: true }),
   ],
 
   // https://github.com/vitest-dev/vitest

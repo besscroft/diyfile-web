@@ -140,16 +140,37 @@ useUserPage('')
     <n-page-header :title="t('menu.system.user')" class="mx-0.5">
       <template #extra>
         <div class="flex items-center">
-          <v-btn icon="person_add" variant="text" size="x-small" @click="router.push('/@admin/system/user/add')" />
+          <n-button quaternary circle @click="router.push('/@admin/system/user/add')">
+            <template #icon>
+              <n-icon>
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
+                  <path d="M32 14h-4v-4h-2v4h-4v2h4v4h2v-4h4v-2z" fill="currentColor"></path>
+                  <path d="M12 4a5 5 0 1 1-5 5a5 5 0 0 1 5-5m0-2a7 7 0 1 0 7 7a7 7 0 0 0-7-7z" fill="currentColor"></path>
+                  <path d="M22 30h-2v-5a5 5 0 0 0-5-5H9a5 5 0 0 0-5 5v5H2v-5a7 7 0 0 1 7-7h6a7 7 0 0 1 7 7z" fill="currentColor"></path>
+                </svg>
+              </n-icon>
+            </template>
+          </n-button>
           <n-dropdown :options="pageOptions || undefined" @select="useUserPage">
-            <v-btn icon="group" variant="text" size="x-small" />
+            <n-button quaternary circle>
+              <template #icon>
+                <n-icon>
+                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
+                    <path d="M30 30h-2v-5a5.006 5.006 0 0 0-5-5v-2a7.008 7.008 0 0 1 7 7z" fill="currentColor"></path>
+                    <path d="M22 30h-2v-5a5.006 5.006 0 0 0-5-5H9a5.006 5.006 0 0 0-5 5v5H2v-5a7.008 7.008 0 0 1 7-7h6a7.008 7.008 0 0 1 7 7z" fill="currentColor"></path>
+                    <path d="M20 2v2a5 5 0 0 1 0 10v2a7 7 0 0 0 0-14z" fill="currentColor"></path>
+                    <path d="M12 4a5 5 0 1 1-5 5a5 5 0 0 1 5-5m0-2a7 7 0 1 0 7 7a7 7 0 0 0-7-7z" fill="currentColor"></path>
+                  </svg>
+                </n-icon>
+              </template>
+            </n-button>
           </n-dropdown>
         </div>
       </template>
     </n-page-header>
   </n-card>
   <n-card content-style="padding: 0;" class="box-card overflow-auto no-scrollbar" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
-    <div v-if="loading" class="flex justify-center mt-7">
+    <div v-if="loading" flex justify-center mt-7>
       <n-spin size="medium" />
     </div>
     <n-grid v-else cols="1 s:2 m:3 l:4 xl:4 2xl:4" responsive="screen" :x-gap="12" :y-gap="8">
@@ -170,7 +191,7 @@ useUserPage('')
               </n-dropdown>
             </div>
           </template>
-          <div class="justify-center">
+          <div justify-center>
             <img
               class="rounded-full my-1 w-14 h-14 mx-auto"
               alt="avatar"
@@ -179,9 +200,9 @@ useUserPage('')
             {{ item.remark }}
           </div>
           <template #action>
-            <div class="mt-auto">
-              <div class="flex justify-space-between">
-                <div class="flex items-center justify-center space-x-1">
+            <div mta>
+              <div flex justify-between>
+                <div flex items-center justify-center space-x-1>
                   <span
                     class="inline-flex items-center justify-center rounded-full bg-blue-400 px-2.5 py-0.5 text-coolGray-50"
                   >
@@ -331,7 +352,7 @@ useUserPage('')
       v-model:page="pageInfo.pageNum"
       v-model:page-size="pageInfo.pageSize"
       :page-count="pageInfo.totalPage"
-      class="mt-0.5"
+      mt0.5
       @update:page="(current) => { pageInfo.pageNum = current; useUserPage(roleFlag) }"
     />
   </n-card>
