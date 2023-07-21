@@ -18,7 +18,7 @@ const { text, copy, copied } = useClipboard(props.fileInfo.url)
 const { t } = useI18n()
 const router = useRouter()
 const storageType = ref<number>(-1)
-const inited = ref(false)
+const inited = ref(true)
 const dp = ref<DPlayer>()
 
 const copyProxyUrl = (): string => {

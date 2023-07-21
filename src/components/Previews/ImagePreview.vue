@@ -16,7 +16,7 @@ const props = defineProps({
 const { text, copy, copied, isSupported } = useClipboard(props.fileInfo.url)
 const { t } = useI18n()
 const router = useRouter()
-const inited = ref(false)
+const inited = ref(true)
 const storageType = ref<number>(-1)
 
 const handleDownload = (url: string) => {
