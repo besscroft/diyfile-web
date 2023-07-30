@@ -45,24 +45,24 @@ const handleSubmit = () => {
 </script>
 
 <template>
-  <n-card content-style="padding: 0;" my0.5>
-    <n-page-header :title="t('menu.index')" mx0.5 @back="router.back()">
-      <template #extra>
-        <div flex items-center>
-          <n-button quaternary circle @click="handleSubmit">
-            <template #icon>
-              <n-icon>
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
-                  <path d="M13 24l-9-9l1.414-1.414L13 21.171L26.586 7.586L28 9L13 24z" fill="currentColor"></path>
-                </svg>
-              </n-icon>
-            </template>
-          </n-button>
-        </div>
-      </template>
-    </n-page-header>
-  </n-card>
-  <n-card content-style="padding: 0.5rem;" of-auto onscroll class="box-card" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
+  <div flex grid justify-start justify-center items-center h-8>
+    <div mr-auto>
+      <n-icon size="22" @click="router.back()" class="cursor-pointer ml-0.25rem">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
+          <path d="M26 4h2v24h-2z" fill="currentColor"></path>
+          <path d="M11.414 20.586L7.828 17H22v-2H7.828l3.586-3.586L10 10l-6 6l6 6l1.414-1.414z" fill="currentColor"></path>
+        </svg>
+      </n-icon>
+    </div>
+    <div>
+      <n-icon size="22" @click="handleSubmit" class="cursor-pointer mr-0.25rem">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
+          <path d="M13 24l-9-9l1.414-1.414L13 21.171L26.586 7.586L28 9L13 24z" fill="currentColor"></path>
+        </svg>
+      </n-icon>
+    </div>
+  </div>
+  <div content-style="padding: 0;" h-full w-full mt-1 of-auto onscroll style="height: calc(100% - 4rem); -ms-overflow-style: none;">
     <n-grid cols="5" item-responsive responsive="screen">
       <n-grid-item offset="0 m:1 l:1" span="5 m:3 l:3">
         <n-form ref="formRef" :model="pwdForm" :rules="rules">
@@ -89,7 +89,7 @@ const handleSubmit = () => {
         </n-form>
       </n-grid-item>
     </n-grid>
-  </n-card>
+  </div>
 </template>
 
 <route lang="yaml">

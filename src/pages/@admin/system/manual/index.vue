@@ -3,11 +3,12 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <n-card content-style="padding: 0;" my0.5>
-    <n-page-header :title="t('menu.system.manual')" mx0.5>
-    </n-page-header>
-  </n-card>
-  <n-card content-style="padding: 0;" of-auto onscroll class="box-card" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
+  <div flex grid justify-start justify-center items-center h-8>
+    <p mr-auto text-base font-medium ml-0.25rem>{{ t('menu.system.manual') }}</p>
+    <div>
+    </div>
+  </div>
+  <div content-style="padding: 0;" h-full w-full mt-1 of-auto onscroll style="height: calc(100% - 4rem); -ms-overflow-style: none;">
     <n-collapse mx2 my4 :default-expanded-names="['1']">
       <n-collapse-item title="系统有哪些角色，分别能干什么？" name="1">
         <div>超级管理员：管理系统平台中的所有资源，<b>但不允许删除自己。</b></div>
@@ -40,7 +41,7 @@ const { t } = useI18n()
         </div>
       </n-collapse-item>
     </n-collapse>
-  </n-card>
+  </div>
 </template>
 
 <route lang="yaml">

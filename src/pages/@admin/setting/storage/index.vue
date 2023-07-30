@@ -145,38 +145,31 @@ handleStoragePage(-1)
 </script>
 
 <template>
-  <n-card content-style="padding: 0;" my0.5>
-    <n-page-header :title="t('menu.setting.storage')" mx0.5>
-      <template #extra>
-        <div flex items-center>
-          <n-button quaternary circle @click="router.push('/@admin/setting/storage/add')">
-            <template #icon>
-              <n-icon>
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
-                  <path d="M17 15V8h-2v7H8v2h7v7h2v-7h7v-2z" fill="currentColor"></path>
-                </svg>
-              </n-icon>
-            </template>
-          </n-button>
-          <n-dropdown :options="pageOptions || undefined" @select="handleStoragePage">
-            <n-button quaternary circle>
-              <template #icon>
-                <n-icon>
-                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
-                    <path d="M28 20h-2v2h2v6H4v-6h10v-2H4a2.002 2.002 0 0 0-2 2v6a2.002 2.002 0 0 0 2 2h24a2.002 2.002 0 0 0 2-2v-6a2.002 2.002 0 0 0-2-2z" fill="currentColor"></path>
-                    <circle cx="7" cy="25" r="1" fill="currentColor"></circle>
-                    <path d="M30 8h-8v6h-6v8h8v-6h6zm-8 12h-4v-4h4zm6-6h-4v-4h4z" fill="currentColor"></path>
-                    <path d="M18 10h-8V2h8zm-6-2h4V4h-4z" fill="currentColor"></path>
-                  </svg>
-                </n-icon>
-              </template>
-            </n-button>
-          </n-dropdown>
-        </div>
-      </template>
-    </n-page-header>
-  </n-card>
-  <n-card content-style="padding: 0;" of-auto onscroll class="box-card" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
+  <div flex grid justify-start justify-center items-center h-8>
+    <p mr-auto text-base font-medium ml-0.25rem>{{ t('menu.setting.storage') }}</p>
+    <div>
+      <n-icon size="22" @click="router.push('/@admin/setting/storage/add')" class="cursor-pointer mr-0.25rem">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
+          <path d="M17 15V8h-2v7H8v2h7v7h2v-7h7v-2z" fill="currentColor"></path>
+        </svg>
+      </n-icon>
+      <n-dropdown :options="pageOptions || undefined" @select="handleStoragePage">
+        <n-button quaternary circle>
+          <template #icon>
+            <n-icon>
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
+                <path d="M28 20h-2v2h2v6H4v-6h10v-2H4a2.002 2.002 0 0 0-2 2v6a2.002 2.002 0 0 0 2 2h24a2.002 2.002 0 0 0 2-2v-6a2.002 2.002 0 0 0-2-2z" fill="currentColor"></path>
+                <circle cx="7" cy="25" r="1" fill="currentColor"></circle>
+                <path d="M30 8h-8v6h-6v8h8v-6h6zm-8 12h-4v-4h4zm6-6h-4v-4h4z" fill="currentColor"></path>
+                <path d="M18 10h-8V2h8zm-6-2h4V4h-4z" fill="currentColor"></path>
+              </svg>
+            </n-icon>
+          </template>
+        </n-button>
+      </n-dropdown>
+    </div>
+  </div>
+  <div content-style="padding: 0;" h-full w-full mt-1 of-auto onscroll style="height: calc(100% - 4rem); -ms-overflow-style: none;">
     <div v-if="loading" flex justify-center mt-7>
       <n-spin size="medium" />
     </div>
@@ -222,9 +215,9 @@ handleStoragePage(-1)
                     <p class="whitespace-nowrap text-sm">
                       {{
                         item.type === 0 ? '本地存储'
-                        : item.type === 1 ? 'OneDrive'
-                        : item.type === 2 ? '阿里云 OSS'
-                        : item.type === 3 ? 'Amazon S3' : '未知'
+                          : item.type === 1 ? 'OneDrive'
+                            : item.type === 2 ? '阿里云 OSS'
+                              : item.type === 3 ? 'Amazon S3' : '未知'
                       }}
                     </p>
                   </span>
@@ -367,7 +360,7 @@ handleStoragePage(-1)
       mt-0.5
       @update:page="(current) => { pageInfo.pageNum = current; handleStoragePage(typeFlag) }"
     />
-  </n-card>
+  </div>
 </template>
 
 <route lang="yaml">

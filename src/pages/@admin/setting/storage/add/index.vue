@@ -5,10 +5,17 @@ const { isMobile } = useDevice()
 </script>
 
 <template>
-  <n-card content-style="padding: 0;" class="my-0.5">
-    <n-page-header :title="t('tip.cardTitle')" class="mx-0.5" @back="router.back()" />
-  </n-card>
-  <n-card content-style="padding: 0.5rem;" class="box-card overflow-auto no-scrollbar" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
+  <div flex grid justify-start justify-center items-center h-8>
+    <div mr-auto>
+      <n-icon size="22" @click="router.back()" class="cursor-pointer ml-0.25rem">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
+          <path d="M26 4h2v24h-2z" fill="currentColor"></path>
+          <path d="M11.414 20.586L7.828 17H22v-2H7.828l3.586-3.586L10 10l-6 6l6 6l1.414-1.414z" fill="currentColor"></path>
+        </svg>
+      </n-icon>
+    </div>
+  </div>
+  <div content-style="padding: 0;" h-full w-full mt-1 of-auto onscroll style="height: calc(100% - 4rem); -ms-overflow-style: none;">
     <n-grid cols="5" item-responsive responsive="screen">
       <n-grid-item offset="0 m:1 l:1" span="5 m:3 l:3">
         <div flex flex-col class="space-y-3">
@@ -20,7 +27,7 @@ const { isMobile } = useDevice()
         </div>
       </n-grid-item>
     </n-grid>
-  </n-card>
+  </div>
 </template>
 
 <route lang="yaml">

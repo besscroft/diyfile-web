@@ -60,24 +60,17 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <n-card content-style="padding: 0;" my0.5>
-    <n-page-header :title="t('menu.setting.sync')" mx0.5>
-      <template #extra>
-        <div flex items-center>
-          <n-button quaternary circle @click="taskAddHandle">
-            <template #icon>
-              <n-icon>
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
-                  <path d="M13 24l-9-9l1.414-1.414L13 21.171L26.586 7.586L28 9L13 24z" fill="currentColor"></path>
-                </svg>
-              </n-icon>
-            </template>
-          </n-button>
-        </div>
-      </template>
-    </n-page-header>
-  </n-card>
-  <n-card content-style="padding: 0;" h-full w-full of-auto class="box-card" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
+  <div flex grid justify-start justify-center items-center h-8>
+    <p mr-auto text-base font-medium ml-0.25rem>{{ t('menu.setting.sync') }}</p>
+    <div>
+      <n-icon size="22" @click="taskAddHandle" class="cursor-pointer mr-0.25rem">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
+          <path d="M13 24l-9-9l1.414-1.414L13 21.171L26.586 7.586L28 9L13 24z" fill="currentColor"></path>
+        </svg>
+      </n-icon>
+    </div>
+  </div>
+  <div content-style="padding: 0;" h-full w-full mt-1 of-auto onscroll style="height: calc(100% - 4rem); -ms-overflow-style: none;">
     <n-grid cols="5" item-responsive responsive="screen">
       <n-grid-item offset="0 m:1 l:1" span="5 m:3 l:3">
         <div class="flex flex-col space-y-3">
@@ -105,7 +98,7 @@ onBeforeMount(() => {
         </div>
       </n-grid-item>
     </n-grid>
-  </n-card>
+  </div>
 </template>
 
 <route lang="yaml">
