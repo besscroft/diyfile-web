@@ -136,40 +136,33 @@ useUserPage('')
 </script>
 
 <template>
-  <n-card content-style="padding: 0;" class="my-0.5">
-    <n-page-header :title="t('menu.system.user')" class="mx-0.5">
-      <template #extra>
-        <div class="flex items-center">
-          <n-button quaternary circle @click="router.push('/@admin/system/user/add')">
-            <template #icon>
-              <n-icon>
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
-                  <path d="M32 14h-4v-4h-2v4h-4v2h4v4h2v-4h4v-2z" fill="currentColor"></path>
-                  <path d="M12 4a5 5 0 1 1-5 5a5 5 0 0 1 5-5m0-2a7 7 0 1 0 7 7a7 7 0 0 0-7-7z" fill="currentColor"></path>
-                  <path d="M22 30h-2v-5a5 5 0 0 0-5-5H9a5 5 0 0 0-5 5v5H2v-5a7 7 0 0 1 7-7h6a7 7 0 0 1 7 7z" fill="currentColor"></path>
-                </svg>
-              </n-icon>
-            </template>
-          </n-button>
-          <n-dropdown :options="pageOptions || undefined" @select="useUserPage">
-            <n-button quaternary circle>
-              <template #icon>
-                <n-icon>
-                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
-                    <path d="M30 30h-2v-5a5.006 5.006 0 0 0-5-5v-2a7.008 7.008 0 0 1 7 7z" fill="currentColor"></path>
-                    <path d="M22 30h-2v-5a5.006 5.006 0 0 0-5-5H9a5.006 5.006 0 0 0-5 5v5H2v-5a7.008 7.008 0 0 1 7-7h6a7.008 7.008 0 0 1 7 7z" fill="currentColor"></path>
-                    <path d="M20 2v2a5 5 0 0 1 0 10v2a7 7 0 0 0 0-14z" fill="currentColor"></path>
-                    <path d="M12 4a5 5 0 1 1-5 5a5 5 0 0 1 5-5m0-2a7 7 0 1 0 7 7a7 7 0 0 0-7-7z" fill="currentColor"></path>
-                  </svg>
-                </n-icon>
-              </template>
-            </n-button>
-          </n-dropdown>
-        </div>
-      </template>
-    </n-page-header>
-  </n-card>
-  <n-card content-style="padding: 0;" class="box-card overflow-auto no-scrollbar" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
+  <div flex grid justify-start justify-center items-center h-8>
+    <p mr-auto text-base font-medium ml-0.25rem>{{ t('menu.system.user') }}</p>
+    <div>
+      <n-icon size="22" @click="router.push('/@admin/system/user/add')" class="cursor-pointer mr-0.25rem">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
+          <path d="M32 14h-4v-4h-2v4h-4v2h4v4h2v-4h4v-2z" fill="currentColor"></path>
+          <path d="M12 4a5 5 0 1 1-5 5a5 5 0 0 1 5-5m0-2a7 7 0 1 0 7 7a7 7 0 0 0-7-7z" fill="currentColor"></path>
+          <path d="M22 30h-2v-5a5 5 0 0 0-5-5H9a5 5 0 0 0-5 5v5H2v-5a7 7 0 0 1 7-7h6a7 7 0 0 1 7 7z" fill="currentColor"></path>
+        </svg>
+      </n-icon>
+      <n-dropdown :options="pageOptions || undefined" @select="useUserPage">
+        <n-button quaternary circle>
+          <template #icon>
+            <n-icon>
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
+                <path d="M30 30h-2v-5a5.006 5.006 0 0 0-5-5v-2a7.008 7.008 0 0 1 7 7z" fill="currentColor"></path>
+                <path d="M22 30h-2v-5a5.006 5.006 0 0 0-5-5H9a5.006 5.006 0 0 0-5 5v5H2v-5a7.008 7.008 0 0 1 7-7h6a7.008 7.008 0 0 1 7 7z" fill="currentColor"></path>
+                <path d="M20 2v2a5 5 0 0 1 0 10v2a7 7 0 0 0 0-14z" fill="currentColor"></path>
+                <path d="M12 4a5 5 0 1 1-5 5a5 5 0 0 1 5-5m0-2a7 7 0 1 0 7 7a7 7 0 0 0-7-7z" fill="currentColor"></path>
+              </svg>
+            </n-icon>
+          </template>
+        </n-button>
+      </n-dropdown>
+    </div>
+  </div>
+  <div content-style="padding: 0;" h-full w-full mt-1 of-auto onscroll style="height: calc(100% - 4rem); -ms-overflow-style: none;">
     <div v-if="loading" flex justify-center mt-7>
       <n-spin size="medium" />
     </div>
@@ -209,9 +202,9 @@ useUserPage('')
                     <p class="whitespace-nowrap text-sm">
                       {{
                         item.role === 'platform-super-admin' ? '超级管理员'
-                        : item.role === 'platform-admin' ? '平台管理员'
-                        : item.role === 'platform-self-provisioner' ? '平台运维员'
-                        : item.role === 'platform-view' ? '平台观察员' : '游客'
+                          : item.role === 'platform-admin' ? '平台管理员'
+                            : item.role === 'platform-self-provisioner' ? '平台运维员'
+                              : item.role === 'platform-view' ? '平台观察员' : '游客'
                       }}
                     </p>
                   </span>
@@ -355,7 +348,7 @@ useUserPage('')
       mt0.5
       @update:page="(current) => { pageInfo.pageNum = current; useUserPage(roleFlag) }"
     />
-  </n-card>
+  </div>
 </template>
 
 <route lang="yaml">

@@ -3,11 +3,12 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <n-card content-style="padding: 0;" my0.5>
-    <n-page-header :title="t('menu.system.manual')" mx0.5>
-    </n-page-header>
-  </n-card>
-  <n-card content-style="padding: 0;" of-auto onscroll class="box-card" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
+  <div flex grid justify-start justify-center items-center h-8>
+    <p mr-auto text-base font-medium ml-0.25rem>{{ t('menu.system.manual') }}</p>
+    <div>
+    </div>
+  </div>
+  <div content-style="padding: 0;" h-full w-full mt-1 of-auto onscroll style="height: calc(100% - 4rem); -ms-overflow-style: none;">
     <n-collapse mx2 my4 :default-expanded-names="['1']">
       <n-collapse-item title="系统有哪些角色，分别能干什么？" name="1">
         <div>超级管理员：管理系统平台中的所有资源，<b>但不允许删除自己。</b></div>
@@ -21,7 +22,7 @@ const { t } = useI18n()
       </n-collapse-item>
       <n-collapse-item title="有哪些部署方式？" name="3">
         <div>
-          目前打算采用容器化部署，并且是前后端分离部署。当然，我们也支持前后端一起部署的方式，不过这种方式不推荐，而且我也懒得写文件支持。<br />
+          目前打算采用容器化部署，并且是前后端分离部署。当然，我们也支持<b>👉<a href="https://doc.diyfile.besscroft.com/deploy/compose.html" target="_blank">前后端一起部署</a></b>的方式。<br />
           不过，前端已经支持部署在 Netlify、Vercel 等 Edge Network 上，当然 Nginx 也是没问题的，后端可以部署在任何支持容器的地方。<br />
           方便用户白嫖部署，是我们的开发目标之一！
         </div>
@@ -40,7 +41,7 @@ const { t } = useI18n()
         </div>
       </n-collapse-item>
     </n-collapse>
-  </n-card>
+  </div>
 </template>
 
 <route lang="yaml">

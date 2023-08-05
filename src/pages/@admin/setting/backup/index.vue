@@ -94,10 +94,12 @@ const handleSubmitClick = () => {
 </script>
 
 <template>
-  <n-card content-style="padding: 0;" my0.5>
-    <n-page-header :title="t('menu.setting.backup')" mx0.5 />
-  </n-card>
-  <n-card content-style="padding: 0;" h-full w-full of-auto class="box-card" style="height: calc(100% - 4rem); -ms-overflow-style: none;">
+  <div flex grid justify-start justify-center items-center h-8>
+    <p mr-auto text-base font-medium ml-0.25rem>{{ t('menu.setting.backup') }}</p>
+    <div>
+    </div>
+  </div>
+  <div content-style="padding: 0;" h-full w-full mt-1 of-auto style="height: calc(100% - 4rem); -ms-overflow-style: none;">
     <div flex flex-col mx2 my2 ma2>
       <div ma2 w-40>
         <n-button icon-placement="left" quaternary @click="handleBackupFile">
@@ -154,7 +156,7 @@ const handleSubmitClick = () => {
         </n-button>
       </div>
     </div>
-  </n-card>
+  </div>
 </template>
 
 <route lang="yaml">
