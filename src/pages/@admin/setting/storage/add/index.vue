@@ -21,8 +21,9 @@ const { isMobile } = useDevice()
         <div flex flex-col class="space-y-3">
           <n-button @click="router.push({ path: '/@admin/setting/storage/add/local', query: { type: 0 } })" ghost>本地存储</n-button>
           <n-button @click="router.push({ path: '/@admin/setting/storage/add/oneDrive', query: { type: 1 } })" ghost>OneDrive</n-button>
-          <n-button @click="router.push({ path: '/@admin/setting/storage/add/aliyunOSS', query: { type: 2 } })" ghost>阿里云OSS</n-button>
-          <n-button @click="router.push({ path: '/@admin/setting/storage/add/amazonS3', query: { type: 3 } })" ghost>AmazonS3</n-button>
+          <n-button @click="router.push({ path: '/@admin/setting/storage/add/aliyunOSS', query: { type: 2 } })" ghost>阿里云 OSS</n-button>
+          <n-button @click="router.push({ path: '/@admin/setting/storage/add/amazonS3', query: { type: 3 } })" ghost>Amazon S3</n-button>
+          <n-button @click="router.push({ path: '/@admin/setting/storage/add/qCloudCOS', query: { type: 4 } })" ghost>腾讯云 COS</n-button>
           <n-button disabled ghost>更多存储支持中...</n-button>
         </div>
       </n-grid-item>

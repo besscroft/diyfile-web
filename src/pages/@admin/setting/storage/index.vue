@@ -72,12 +72,16 @@ const pageOptions = ref<Array<DropdownOption | DropdownGroupOption | DropdownDiv
     key: 1,
   },
   {
-    label: '阿里云OSS',
+    label: '阿里云 OSS',
     key: 2,
   },
   {
     label: 'Amazon S3',
     key: 3,
+  },
+  {
+    label: '腾讯云 COS',
+    key: 4,
   },
 ])
 const selectOptions = ref<Array<DropdownOption | DropdownGroupOption | DropdownDividerOption | DropdownRenderOption>>([
@@ -104,6 +108,8 @@ const handleSelect = (key: string | number, item: any) => {
       router.push({ path: '/@admin/setting/storage/edit/aliyunOSS', query: { id: item.id } })
     } else if (item.type === 3) {
       router.push({ path: '/@admin/setting/storage/edit/amazonS3', query: { id: item.id } })
+    } else if (item.type === 4) {
+      router.push({ path: '/@admin/setting/storage/edit/qCloudCOS', query: { id: item.id } })
     }
   }
 }
@@ -216,8 +222,10 @@ handleStoragePage(-1)
                       {{
                         item.type === 0 ? '本地存储'
                           : item.type === 1 ? 'OneDrive'
-                            : item.type === 2 ? '阿里云 OSS'
-                              : item.type === 3 ? 'Amazon S3' : '未知'
+                          : item.type === 2 ? '阿里云 OSS'
+                          : item.type === 3 ? 'Amazon S3'
+                          : item.type === 4 ? '腾讯云 COS'
+                          : '未知'
                       }}
                     </p>
                   </span>

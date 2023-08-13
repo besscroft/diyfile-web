@@ -45,6 +45,7 @@ useDetail()
         <n-tag v-if="detail.type === 1" type="info" :bordered="false"> OneDrive </n-tag>
         <n-tag v-if="detail.type === 2" type="info" :bordered="false"> 阿里云 OSS </n-tag>
         <n-tag v-if="detail.type === 3" type="info" :bordered="false"> Amazon S3 </n-tag>
+        <n-tag v-if="detail.type === 4" type="info" :bordered="false"> 腾讯云 COS </n-tag>
       </n-descriptions-item>
       <n-descriptions-item label="存储 Key">
         {{ detail.storageKey }}
