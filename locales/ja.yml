@@ -56,6 +56,7 @@ tip:
   isRememberMe: 覚えて
   cardTitle: 情報を記入してください
   rolePh: 役割を選択してください
+  empty: 何もありません！
 menu:
   index: コンソール
   setting:

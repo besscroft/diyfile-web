@@ -179,7 +179,7 @@ handleStoragePage(-1)
     <div v-if="loading" flex justify-center mt-7>
       <n-spin size="medium" />
     </div>
-    <n-grid v-else cols="1 s:2 m:3 l:4 xl:4 2xl:4" responsive="screen" :x-gap="12" :y-gap="8">
+    <n-grid v-else-if="Array.isArray(dataList) && dataList.length > 0" cols="1 s:2 m:3 l:4 xl:4 2xl:4" responsive="screen" :x-gap="12" :y-gap="8">
       <n-grid-item v-for="item in dataList" :key="item.id">
         <n-card
           :title="item.name"
@@ -360,6 +360,8 @@ handleStoragePage(-1)
         </n-card>
       </n-grid-item>
     </n-grid>
+    <n-empty v-else :description="t('tip.empty')">
+    </n-empty>
     <n-pagination
       v-if="pageInfo.totalPage > 1"
       v-model:page="pageInfo.pageNum"

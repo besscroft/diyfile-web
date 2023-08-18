@@ -57,6 +57,7 @@ tip:
   isRememberMe: Remember Me
   cardTitle: Please fill in the information.
   rolePh: Please select a role.
+  empty: Nothing!
 menu:
   index: Dashboard
   setting:

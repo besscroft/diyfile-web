@@ -57,6 +57,7 @@ tip:
   isRememberMe: 记住我
   cardTitle: 请填写信息
   rolePh: 请选择角色
+  empty: 什么都没有呢！
 menu:
   index: 控制台
   setting:
