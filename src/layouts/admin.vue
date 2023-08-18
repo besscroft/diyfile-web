@@ -52,9 +52,6 @@ const routerPage = (val: string) => {
           <n-layout-footer v-if="isMobile" style="height: 60px">
             <MobileMenu style="height: 60px" @routerPage="routerPage" />
           </n-layout-footer>
-          <n-layout-footer v-else style="height: 60px">
-            <Footer style="height: 60px" />
-          </n-layout-footer>
         </n-layout>
       </n-layout>
     </n-layout>
