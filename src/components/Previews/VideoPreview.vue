@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import DPlayer from 'dplayer'
 import { download } from '~/utils/ButtonUtil'
-import { storageInfoByStorageKey } from '~/api/modules/storage'
 import { getBaseUrl } from '~/utils/WindowUtil'
 
 const props = defineProps({
@@ -17,14 +16,13 @@ const props = defineProps({
 const { text, copy, copied } = useClipboard(props.fileInfo.url)
 const { t } = useI18n()
 const router = useRouter()
-const storageType = ref<number>(-1)
 const inited = ref(true)
 const dp = ref<DPlayer>()
 
 const copyProxyUrl = (): string => {
-  if (storageType.value === 0) {
+  if (props.storageInfo.storageType === 0) {
     if (props.fileInfo.url.startsWith('/@api')) {
-      return `${getBaseUrl()}/api/raw/?path=/${router.currentRoute.value.params.storageKey}/${props.fileInfo.url.substring(6)}`
+      return `${getBaseUrl()}/api/raw/?path=/${props.storageInfo.storageKey}/${props.fileInfo.url.substring(6)}`
     } else {
       return props.fileInfo.url
     }
@@ -53,24 +51,21 @@ const initPlayer = () => {
 }
 
 const handleDownload = (url: string) => {
-  if (storageType.value === 0 && props.fileInfo.url.startsWith('/@api')) {
-    download(`${getBaseUrl()}/api/raw/?path=/${router.currentRoute.value.params.storageKey}/${props.fileInfo.url.substring(6)}`)
+  if (props.storageInfo.storageType === 0 && props.fileInfo.url.startsWith('/@api')) {
+    download(`${getBaseUrl()}/api/raw/?path=/${props.storageInfo.storageKey}/${props.fileInfo.url.substring(6)}`)
   } else {
     download(url)
   }
 }
 
 onMounted(() => {
-  storageInfoByStorageKey(router.currentRoute.value.params.storageKey.toString()).then((res) => {
-    storageType.value = res.data.type
-  }).then(() => {
+  try {
     inited.value = true
     initPlayer()
-  }).catch((error) => {
-    console.log(error)
-    inited.value = false
+  } catch (e) {
     dp.value?.destroy()
-  })
+    inited.value = false
+  }
 })
 
 onUnmounted(() => {
@@ -117,7 +112,7 @@ onUnmounted(() => {
         </template>
         {{ t('button.download') }}
       </n-button>
-      <n-button v-if="storageType !== 0" icon-placement="left" dashed my-1 @click="copy(props.fileInfo.url)">
+      <n-button v-if="props.storageInfo.storageType !== 0" icon-placement="left" dashed my-1 @click="copy(props.fileInfo.url)">
         <template #icon>
           <n-icon>
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">

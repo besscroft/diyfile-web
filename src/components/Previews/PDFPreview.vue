@@ -2,7 +2,6 @@
 import VuePdfEmbed from 'vue-pdf-embed'
 import { createLoadingTask } from 'vue3-pdfjs'
 import { download } from '~/utils/ButtonUtil'
-import { storageInfoByStorageKey } from '~/api/modules/storage'
 import { getBaseUrl } from '~/utils/WindowUtil'
 
 const props = defineProps({
@@ -28,17 +27,17 @@ const pdfInfo = reactive({
 const scale = computed(() => `transform:scale(${pdfInfo.scale})`)
 
 const handleDownload = (url: string) => {
-  if (storageType.value === 0 && props.fileInfo.url.startsWith('/@api')) {
-    download(`${getBaseUrl()}/api/raw/?path=/${router.currentRoute.value.params.storageKey}/${props.fileInfo.url.substring(6)}`)
+  if (props.storageInfo.storageType === 0 && props.fileInfo.url.startsWith('/@api')) {
+    download(`${getBaseUrl()}/api/raw/?path=/${props.storageInfo.storageKey}/${props.fileInfo.url.substring(6)}`)
   } else {
     download(url)
   }
 }
 
 const copyProxyUrl = (): string => {
-  if (storageType.value === 0) {
+  if (props.storageInfo.storageType === 0) {
     if (props.fileInfo.url.startsWith('/@api')) {
-      return `${getBaseUrl()}/api/raw/?path=/${router.currentRoute.value.params.storageKey}/${props.fileInfo.url.substring(6)}`
+      return `${getBaseUrl()}/api/raw/?path=/${props.storageInfo.storageKey}/${props.fileInfo.url.substring(6)}`
     } else {
       return props.fileInfo.url
     }
@@ -48,9 +47,6 @@ const copyProxyUrl = (): string => {
 }
 
 onMounted(() => {
-  storageInfoByStorageKey(router.currentRoute.value.params.storageKey.toString()).then((res) => {
-    storageType.value = res.data.type
-  })
   const loadingTask = createLoadingTask(props.fileInfo.url.startsWith('/@api') ? `${getBaseUrl()}/@api/${props.storageInfo.storageKey}/${props.fileInfo.url.substring(6)}` : props.fileInfo.url)
   loadingTask.promise.then((pdf: { numPages: number }) => {
     pdfInfo.numPages = pdf.numPages

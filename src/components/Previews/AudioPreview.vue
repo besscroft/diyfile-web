@@ -4,7 +4,6 @@ import { getFileInfo } from '~/api/modules/file'
 import { ResultEnum } from '~/enums/httpEnum'
 import { download } from '~/utils/ButtonUtil'
 import { getFileName } from '~/utils/FileUtil'
-import { storageInfoByStorageKey } from '~/api/modules/storage'
 import { getBaseUrl } from '~/utils/WindowUtil'
 
 const props = defineProps({
@@ -25,9 +24,9 @@ const storageType = ref<number>(-1)
 const ap = ref<APlayer>()
 
 const copyProxyUrl = (): string => {
-  if (storageType.value === 0) {
+  if (props.storageInfo.storageType === 0) {
     if (url.startsWith('/@api')) {
-      return `${getBaseUrl()}/api/raw/?path=/${router.currentRoute.value.params.storageKey}/${url.substring(6)}`
+      return `${getBaseUrl()}/api/raw/?path=/${props.storageInfo.storageKey}/${url.substring(6)}`
     } else {
       return url
     }
@@ -62,8 +61,8 @@ const initPlayer = (cover: string) => {
 }
 
 const handleDownload = (url: string) => {
-  if (storageType.value === 0 && props.fileInfo.url.startsWith('/@api')) {
-    download(`${getBaseUrl()}/api/raw/?path=/${router.currentRoute.value.params.storageKey}/${props.fileInfo.url.substring(6)}`)
+  if (props.storageInfo.storageType === 0 && props.fileInfo.url.startsWith('/@api')) {
+    download(`${getBaseUrl()}/api/raw/?path=/${props.storageInfo.storageKey}/${props.fileInfo.url.substring(6)}`)
   } else {
     download(url)
   }
@@ -96,9 +95,6 @@ const handleImagePathPre = (): string => {
 onMounted(() => {
   const key = router.currentRoute.value.params.storageKey.toString()
   const path = router.currentRoute.value.path
-  storageInfoByStorageKey(router.currentRoute.value.params.storageKey.toString()).then((res) => {
-    storageType.value = res.data.type
-  })
   getFileInfo(key, handleImagePath(), getFileName(path)).then((res) => {
     if (res.code === ResultEnum.SUCCESS && res.data.url) {
       initPlayer(res.data.url)

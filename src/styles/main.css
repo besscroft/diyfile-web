@@ -56,3 +56,10 @@ html.dark .el-card {
 .aplayer-title {
   color: #212121 !important;
 }
+
+.n-base-icon n-dialog__icon {
+  display: none;
+}
+.n-dialog.n-dialog--icon-left .n-dialog__icon {
+  display: none;
+}

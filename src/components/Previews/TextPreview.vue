@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { download } from '~/utils/ButtonUtil'
 import { getBaseUrl } from '~/utils/WindowUtil'
-import { storageInfoByStorageKey } from '~/api/modules/storage'
 
 const props = defineProps({
   fileInfo: {
@@ -20,17 +19,17 @@ const contentHtml = ref()
 const storageType = ref<number>(-1)
 
 const handleDownload = (url: string) => {
-  if (storageType.value === 0 && props.fileInfo.url.startsWith('/@api')) {
-    download(`${getBaseUrl()}/api/raw/?path=/${router.currentRoute.value.params.storageKey}/${props.fileInfo.url.substring(6)}`)
+  if (props.storageInfo.storageType === 0 && props.fileInfo.url.startsWith('/@api')) {
+    download(`${getBaseUrl()}/api/raw/?path=/${props.storageInfo.storageKey}/${props.fileInfo.url.substring(6)}`)
   } else {
     download(url)
   }
 }
 
 const copyProxyUrl = (): string => {
-  if (storageType.value === 0) {
+  if (props.storageInfo.storageType === 0) {
     if (props.fileInfo.url.startsWith('/@api')) {
-      return `${getBaseUrl()}/api/raw/?path=/${router.currentRoute.value.params.storageKey}/${props.fileInfo.url.substring(6)}`
+      return `${getBaseUrl()}/api/raw/?path=/${props.storageInfo.storageKey}/${props.fileInfo.url.substring(6)}`
     } else {
       return props.fileInfo.url
     }
@@ -41,9 +40,6 @@ const copyProxyUrl = (): string => {
 
 onBeforeMount(() => {
   const url = props.fileInfo.url.startsWith('/@api') ? `${getBaseUrl()}/@api/${props.storageInfo.storageKey}/${props.fileInfo.url.substring(6)}` : props.fileInfo.url
-  storageInfoByStorageKey(router.currentRoute.value.params.storageKey.toString()).then((res) => {
-    storageType.value = res.data.type
-  })
   fetch(url)
     .then(response => response.text())
     .then((text) => {
