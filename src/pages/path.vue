@@ -5,10 +5,7 @@ import { getEnableStorage, storageInfoByStorageKey } from '~/api/modules/storage
 import { ResultEnum } from '~/enums/httpEnum'
 import type { Storage } from '~/types/storage'
 import {
-  getFileName,
   isAudio,
-  isFile,
-  isFileByRawExtension,
   isImage,
   isMarkdown,
   isPDF,
@@ -31,6 +28,7 @@ const loading = ref<boolean>(true)
 const uploadView = ref<boolean>(false)
 const storageList = ref()
 const storageInfo = ref<Storage>()
+const showModal = ref<boolean>(false)
 // 面包屑路由
 const routes = ref<Array<any>>([
   {
@@ -46,7 +44,7 @@ const handleSelectChange = (value: string) => {
   if (value !== storageKey.value) {
     storageKey.value = value
     fileInfo.value = null
-    dataList.value = null
+    dataList.value = []
     uploadView.value = false
     router.push(`/${value}`)
   }
@@ -77,10 +75,7 @@ const getStorageInfo = (key: string): any => {
 const handleTableOption = (info: Storage, storages: any, path: string) => {
   tableOptions.value = []
   if (path !== '/' && !path.startsWith('/@')) {
-    const params = path.slice(((path.lastIndexOf('/') - 1) >>> 0) + 2)
-    if (params && params.includes('.') && isFile(params)) {
-      console.log('文件')
-    } else {
+    if (storageKey.value === 1) {
       tableOptions.value.push({
         label: '上传',
         key: 'upload',
@@ -158,34 +153,33 @@ const handleShare = (url: string) => {
   }
 }
 
-/** 文件点击事件 */
-const clickFile = (name: string) => {
-  const path = router.currentRoute.value.path.toString()
-  router.push(`${path}/${encodeURIComponent(name)}`)
-}
-
 /** 处理文件路由 */
 const handleFile = (key: string | any, uri: string | any, fileName: string) => {
   loading.value = true
   getFileInfo(key, uri, fileName).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
-      dataList.value = null
+      loading.value = false
       fileInfo.value = res.data
     }
-    loading.value = false
   }).catch((err) => {
-    console.log(err)
-    dataList.value = null
     loading.value = false
+    console.log(err)
   })
 }
 
+/** 文件点击事件 */
+const clickFile = (name: string) => {
+  const path = router.currentRoute.value.path.toString()
+  const uri = `${path.slice(`/${storageKey.value}`.length, path.length)}/${name}`
+  handleFile(storageKey.value, uri, decodeURIComponent(name))
+  showModal.value = true
+}
+
 /** 处理文件夹路由 */
-const handleRouter = () => {
+const handleRouter = (path: string) => {
   const key = router.currentRoute.value.params.storageKey
   getStorageInfo(key.toString())
   storageKey.value = key
-  const path = router.currentRoute.value.path.toString()
   const uri = path.slice(`/${storageKey.value}`.length, path.length)
   if (uri) {
     handleItemByKey(key, uri)
@@ -206,7 +200,7 @@ const handleDelete = (option: any) => {
   deleteFile(storageKey.value, url).then((res) => {
     if (res.code === ResultEnum.SUCCESS) {
       message.success(res.message)
-      handleRouter()
+      handleRouter(router.currentRoute.value.path.toString())
     }
   })
 }
@@ -239,6 +233,10 @@ const handleRouterChange = (key: any, uri: any) => {
   }
 }
 
+const onNegativeClick = () => {
+  showModal.value = false
+}
+
 watch(() => {
   return router.currentRoute.value.path
 }, (path) => {
@@ -251,16 +249,8 @@ watch(() => {
 }, async (path) => {
   const key = router.currentRoute.value.params.storageKey
   if (path !== '/' && !path.startsWith('/@')) {
-    const params = path.slice(((path.lastIndexOf('/') - 1) >>> 0) + 2)
-    if (params && params.includes('.') && isFile(params)) {
-      // 包含 . 的可能是文件
-      handleRouterChange(key, path)
-      handleFile(key, path.slice(`/${key}`.length, path.length), getFileName(path))
-    } else {
-      // 不包含 . 的可能是文件夹
-      handleRouterChange(key, path)
-      handleRouter()
-    }
+    handleRouterChange(key, path)
+    handleRouter(path)
   }
 })
 
@@ -271,41 +261,22 @@ onMounted(() => {
   const fullPath = router.currentRoute.value.path
   handleEnableStorage(getStorageInfo(key.toString()), fullPath)
   try {
-    const uri = fullPath.slice(`/${key}`.length, fullPath.length)
-    const params = uri.slice(((uri.lastIndexOf('.') - 1) >>> 0) + 2)
-    if (params.length > 0 && uri.includes('.') && isFileByRawExtension(params)) {
-      const fileName = fullPath.substring(fullPath.lastIndexOf('/') + 1)
-      // 可能是文件
-      handleRouterChange(key, path)
-      handleFile(key, uri, fileName)
-    } else {
-      // 可能是文件夹
-      handleRouterChange(key, path)
-      handleRouter()
-    }
-  } catch (e) {
+    // 文件夹路由
     handleRouterChange(key, path)
-    handleRouter()
+    handleRouter(fullPath.toString())
+  } catch (e) {
+    console.log(e)
   }
 })
 </script>
 
 <template>
   <div flex justify-center items-center mxa :style="isMobile ? { width: '100%', height: '22px' } : { width: '66%', height: '22px' }">
-    <n-icon size="16">
-      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
-        <path d="M24 10l-1.414 1.414L26.172 15H11.899A5.014 5.014 0 0 0 8 11.101V2H6v9.101A5 5 0 0 0 6 20.9V30h2v-9.101A5.014 5.014 0 0 0 11.899 17h14.273l-3.586 3.586L24 22l6-6zM7 19a3 3 0 1 1 3-3a3.003 3.003 0 0 1-3 3z" fill="currentColor"></path>
-      </svg>
-    </n-icon>
     <n-scrollbar
       x-scrollable
       style="height: 28px"
     >
-      <n-breadcrumb>
-        <n-breadcrumb-item v-for="item in routes" :key="item" :href="item.href">
-          {{ item.title }}
-        </n-breadcrumb-item>
-      </n-breadcrumb>
+      <Breadcrumb :routes="routes" @handleRouterChange="handleRouterChange" @handleRouter="handleRouter" />
     </n-scrollbar>
     <n-dropdown :options="tableOptions || undefined" @select="handleTableSelect">
       <n-icon size="16" class="cursor-pointer">
@@ -344,7 +315,7 @@ onMounted(() => {
     <n-spin size="medium" />
   </div>
   <FileDataTable
-    v-else-if="!loading && !fileInfo && dataList"
+    v-else
     :value="dataList"
     :style="isMobile ? { width: '100%' } : { width: '66%' }"
     mxa
@@ -353,20 +324,29 @@ onMounted(() => {
     @handleDelete="handleDelete"
     @handleShare="handleShare"
   />
-  <v-card v-else>
-    <div mxa :style="isMobile ? { width: '100%' } : { width: '66%' }">
-      <!-- 文件预览 -->
-      <VideoPreview v-if="!loading && fileInfo && isVideo(fileInfo.name)" m-4 :file-info="fileInfo" :storage-info="storageInfo" />
-      <AudioPreview v-else-if="!loading && fileInfo && isAudio(fileInfo.name)" m-4 :file-info="fileInfo" :storage-info="storageInfo" />
-      <ImagePreview v-else-if="!loading && fileInfo && isImage(fileInfo.name)" m-4 :file-info="fileInfo" :storage-info="storageInfo" />
-      <MarkdownPreview v-else-if="!loading && fileInfo && isMarkdown(fileInfo.name)" m-4 :file-info="fileInfo" :storage-info="storageInfo" />
-      <TextPreview v-else-if="!loading && fileInfo && isText(fileInfo.name)" m-4 :file-info="fileInfo" :storage-info="storageInfo" />
-      <PDFPreview v-else-if="!loading && fileInfo && isPDF(fileInfo.name)" m-4 :file-info="fileInfo" :storage-info="storageInfo" />
-      <OtherPreview v-else-if="!loading && fileInfo" :file-info="fileInfo" m-4 :storage-info="storageInfo" />
-      <n-result v-else-if="!fileInfo && !dataList" status="404" title="什么都没有呢！请登录后进入后台进行配置！" description="生活总归带点荒谬" />
-      <n-result v-else status="500" title="Oops！发生了意外情况，也许是网络不稳定、格式不支持或者出现了 Bug~" description="生活总归带点荒谬" />
+  <n-modal
+    v-if="!loading"
+    :style="isMobile ? { width: '100%' } : { width: '72%' }"
+    class="h-4/5 max-h-full"
+    bg-white
+    title="预览"
+    preset="dialog"
+    :mask-closable="false"
+    v-model:show="showModal"
+    transform-origin="center"
+    of-y-auto
+  >
+    <!-- 文件预览 -->
+    <div >
+      <VideoPreview v-if="fileInfo && isVideo(fileInfo.name)" :fileInfo="fileInfo" :storageInfo="storageInfo" />
+      <AudioPreview v-else-if="fileInfo && isAudio(fileInfo.name)" :fileInfo="fileInfo" :storageInfo="storageInfo" />
+      <ImagePreview v-else-if="fileInfo && isImage(fileInfo.name)" :fileInfo="fileInfo" :storageInfo="storageInfo" />
+      <MarkdownPreview v-else-if="fileInfo && isMarkdown(fileInfo.name)" :fileInfo="fileInfo" :storageInfo="storageInfo" />
+      <TextPreview v-else-if="fileInfo && isText(fileInfo.name)" :fileInfo="fileInfo" :storageInfo="storageInfo" />
+      <PDFPreview v-else-if="fileInfo && isPDF(fileInfo.name)" :fileInfo="fileInfo" :storageInfo="storageInfo" />
+      <OtherPreview v-else :fileInfo="fileInfo" :storageInfo="storageInfo" />
     </div>
-  </v-card>
+  </n-modal>
 </template>
 
 <route lang="yaml">
