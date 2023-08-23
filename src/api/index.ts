@@ -2,7 +2,6 @@ import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } fro
 import axios from 'axios'
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
-import { AxiosCanceler } from './helper/axiosCancel'
 import App from '~/App.vue'
 import type { Result } from '~/api/interface'
 import { ResultEnum } from '~/enums/httpEnum'
@@ -19,7 +18,6 @@ const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
 app.use(pinia)
 const user = useUserStore(pinia)
-const axiosCanceler = new AxiosCanceler()
 
 const config = {
   // 默认地址请求地址，可在 .env 开头文件中修改
@@ -43,8 +41,6 @@ class RequestHttp {
      */
     this.service.interceptors.request.use(
       (config: AxiosRequestConfig) => {
-        // 将当前请求添加到 pending 中
-        axiosCanceler.addPending(config)
         // 如果当前请求不需要显示 loading,在 api 服务中通过指定的第三个参数: { headers: { noLoading: true } }来控制不显示loading
         // eslint-disable-next-line no-unused-expressions
         config.headers!.noLoading
@@ -64,8 +60,6 @@ class RequestHttp {
     this.service.interceptors.response.use(
       (response: AxiosResponse) => {
         const { data, config } = response
-        // 在请求结束后，移除本次请求
-        axiosCanceler.removePending(config)
         // https://stackoverflow.com/questions/3297048/403-forbidden-vs-401-unauthorized-http-responses
         // 登陆失效（code == 401）
         if (data.code === ResultEnum.UNAUTHORIZED) {

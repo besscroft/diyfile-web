@@ -61,21 +61,24 @@ const handleTableSelect = (key: string) => {
 }
 
 /** 获取存储信息 */
-const getStorageInfo = (key: string): any => {
-  if (!storageInfo.value || storageInfo.value?.storageKey !== key) {
-    storageInfoByStorageKey(key).then((res) => {
+const getStorageInfo = async (key: string): Promise<any> => {
+  try {
+    if (!storageInfo.value || storageInfo.value?.storageKey !== key) {
+      const res = await storageInfoByStorageKey(key)
       storageInfo.value = res.data
       return res.data
-    })
+    }
+  } catch (error) {
+    console.error(error)
+    return null
   }
-  return undefined
 }
 
 /** 下拉菜单数组处理 */
 const handleTableOption = (info: Storage, storages: any, path: string) => {
   tableOptions.value = []
   if (path !== '/' && !path.startsWith('/@')) {
-    if (storageKey.value === 1) {
+    if (info.type === 1) {
       tableOptions.value.push({
         label: '上传',
         key: 'upload',
@@ -178,7 +181,6 @@ const clickFile = (name: string) => {
 /** 处理文件夹路由 */
 const handleRouter = (path: string) => {
   const key = router.currentRoute.value.params.storageKey
-  getStorageInfo(key.toString())
   storageKey.value = key
   const uri = path.slice(`/${storageKey.value}`.length, path.length)
   if (uri) {
@@ -237,12 +239,6 @@ const onNegativeClick = () => {
   showModal.value = false
 }
 
-watch(() => {
-  return router.currentRoute.value.path
-}, (path) => {
-  handleTableOption(storageInfo.value, storageList.value, path)
-})
-
 /** 路由监听处理 */
 watch(() => {
   return router.currentRoute.value.path
@@ -251,15 +247,16 @@ watch(() => {
   if (path !== '/' && !path.startsWith('/@')) {
     handleRouterChange(key, path)
     handleRouter(path)
+    handleTableOption(await getStorageInfo(key.toString()), storageList.value, path)
   }
 })
 
 /** 第一次进来 */
-onMounted(() => {
+onMounted(async () => {
   const path = router.currentRoute.value.params.path
   const key = router.currentRoute.value.params.storageKey
   const fullPath = router.currentRoute.value.path
-  handleEnableStorage(getStorageInfo(key.toString()), fullPath)
+  handleEnableStorage(await getStorageInfo(key.toString()), fullPath)
   try {
     // 文件夹路由
     handleRouterChange(key, path)
