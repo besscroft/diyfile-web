@@ -11,7 +11,6 @@ import '@unocss/reset/tailwind.css'
 import './styles/main.css'
 import 'uno.css'
 import 'aplayer/dist/APlayer.min.css'
-import { AxiosCanceler } from '~/api/helper/axiosCancel'
 import { ResultEnum } from '~/enums/httpEnum'
 import { getInfo } from '~/api/modules/user'
 import { setupNaiveDiscreteApi } from '~/plugins/naiveDiscreteApi'
@@ -38,7 +37,6 @@ generatedRoutes.push({
 })
 
 const routes = setupLayouts(generatedRoutes)
-const axiosCanceler = new AxiosCanceler()
 
 // https://github.com/antfu/vite-ssg
 export const createApp = ViteSSG(
@@ -53,7 +51,6 @@ export const createApp = ViteSSG(
     ctx.app.use(pinia).use(setupNaiveDiscreteApi)
     if (ctx.isClient) {
       ctx.router.beforeEach(async (to, from, next) => {
-        axiosCanceler.removeAllPending()
         const user = useUserStore()
         if (to.path.startsWith('/api/')) {
           const pathArr = to.query?.path.toString()
