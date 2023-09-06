@@ -60,20 +60,6 @@ const handleTableSelect = (key: string) => {
   handleSelectChange(key)
 }
 
-/** 获取存储信息 */
-const getStorageInfo = async (key: string): Promise<any> => {
-  try {
-    if (!storageInfo.value || storageInfo.value?.storageKey !== key) {
-      const res = await storageInfoByStorageKey(key)
-      storageInfo.value = res.data
-      return res.data
-    }
-  } catch (error) {
-    console.error(error)
-    return null
-  }
-}
-
 /** 下拉菜单数组处理 */
 const handleTableOption = (info: Storage, storages: any, path: string) => {
   tableOptions.value = []
@@ -98,7 +84,7 @@ const handleTableOption = (info: Storage, storages: any, path: string) => {
 }
 
 /** 获取所有可用存储并处理 */
-const handleEnableStorage = (info: Storage, path: string) => {
+const handleEnableStorage = (info: Storage | any, path: string) => {
   getEnableStorage().then((res) => {
     if (res.code === ResultEnum.SUCCESS && Array.isArray(res.data)) {
       // 下拉菜单内容
@@ -235,10 +221,6 @@ const handleRouterChange = (key: any, uri: any) => {
   }
 }
 
-const onNegativeClick = () => {
-  showModal.value = false
-}
-
 /** 路由监听处理 */
 watch(() => {
   return router.currentRoute.value.path
@@ -247,7 +229,13 @@ watch(() => {
   if (path !== '/' && !path.startsWith('/@')) {
     handleRouterChange(key, path)
     handleRouter(path)
-    handleTableOption(await getStorageInfo(key.toString()), storageList.value, path)
+    if (storageInfo.value) {
+      handleTableOption(storageInfo.value, storageList.value, path)
+    } else {
+      const { data } = await storageInfoByStorageKey(key.toString())
+      storageInfo.value = data
+      handleTableOption(data, storageList.value, path)
+    }
   }
 })
 
@@ -256,7 +244,9 @@ onMounted(async () => {
   const path = router.currentRoute.value.params.path
   const key = router.currentRoute.value.params.storageKey
   const fullPath = router.currentRoute.value.path
-  handleEnableStorage(await getStorageInfo(key.toString()), fullPath)
+  const { data } = await storageInfoByStorageKey(key.toString())
+  storageInfo.value = data
+  handleEnableStorage(data, fullPath)
   try {
     // 文件夹路由
     handleRouterChange(key, path)
