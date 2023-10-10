@@ -27,19 +27,6 @@ const { t } = useI18n()
           方便用户白嫖部署，是我们的开发目标之一！
         </div>
       </n-collapse-item>
-      <n-collapse-item title="你这程序开源、免费吗？文档在哪儿？" name="4">
-        <div>
-          <b>开源</b>！我们承诺程序<b>永久免费</b>，会提供<b>👉<a href="https://doc.diyfile.besscroft.com/" target="_blank">完善的文档</a></b>（点击查看详细文档）供您阅读！<br />
-          也就是说，您<b>永远都不需要花钱</b>即可像使用其它开源软件那样使用本程序，当然您如果愿意一起参与完善那就再好不过了！<br />
-          本程序为免费开源项目，旨在分享网盘文件，方便下载以及学习 Java 和 Vue，使用时请遵守相关法律法规，请勿滥用！
-        </div>
-      </n-collapse-item>
-      <n-collapse-item title="你打算支持哪些功能？" name="5">
-        <div>
-          后台管理功能如您所见，还在逐步新增中，我们会根据用户的需求进行开发，如果您有什么好的建议，欢迎分享给我们！<br />
-          首页文件列表和预览，将慢慢完善，目前已支持视频播放、音频播放、图片预览、文本预览等，其它的预览将在后续开发中跟进！
-        </div>
-      </n-collapse-item>
     </n-collapse>
   </div>
 </template>

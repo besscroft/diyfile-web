@@ -17,14 +17,11 @@ const toggleTheme = () => {
       <n-layout-header style="height: 60px" bordered>
         <Header @toggleTheme="toggleTheme" />
       </n-layout-header>
-      <n-layout style="height: calc(100% - 120px)">
+      <n-layout style="height: calc(100% - 60px)">
         <n-layout-content content-style="padding: 0.5rem;">
           <RouterView />
         </n-layout-content>
       </n-layout>
-      <n-layout-footer style="height: 60px" bordered>
-        <Footer />
-      </n-layout-footer>
     </n-layout>
   </div>
 </template>

@@ -115,12 +115,8 @@ onMounted(() => {
 <template>
   <n-grid x-gap="12" :cols="12" h-full>
     <n-gi :span="isMobile ? 4 : 3" flex items-center>
-      <span cursor-pointer inline-block h-10 w-32 rounded-lg ml-0.5 @click="routerPage('/')">
-        <img
-          src="/diyfile.png"
-          :class="!isMobile ? 'transform scale-100' : 'transform scale-75'"
-          alt="logo"
-        >
+      <span flex items-center p2 cursor-pointer inline-block h-12 rounded-lg ml-0.5 @click="routerPage('/')">
+        <p text-xl>Java 对象存储聚合网盘</p>
       </span>
     </n-gi>
     <n-gi :span="isMobile ? 2 : 6" />
